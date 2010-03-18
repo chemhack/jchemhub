@@ -29,7 +29,7 @@
 		assertEquals("O",mol.getAtom(3).symbol);
 		assertEquals("Cl",mol.getAtom(4).symbol);
 	}
-  	
+	
   	function testAddBond() {
 		var atom1=new chem.core.Atom("C");
 		var atom2=new chem.core.Atom("C");
@@ -42,6 +42,60 @@
 
   		assertEquals(3,mol.countBonds());
 	}
+	
+	function testRemoveAtom(){
+		var atom1=new chem.core.Atom("C");
+		var atom2=new chem.core.Atom("C");
+		var atom3=new chem.core.Atom("C");
+		var atom4=new chem.core.Atom("O");
+		
+		mol.addAtom(atom1);
+		mol.addAtom(atom2);
+		mol.addAtom(atom3);
+		mol.addAtom(atom4);
+
+  		assertEquals(4,mol.countAtoms());
+		
+		mol.removeAtom(atom2);
+		
+		assertEquals(3,mol.countAtoms());
+
+		mol.removeAtom(0);
+		
+		assertEquals(2,mol.countAtoms());
+
+	}
+	
+	function testRemoveBond(){
+		var atom1=new chem.core.Atom("C");
+		var atom2=new chem.core.Atom("C");
+		var atom3=new chem.core.Atom("C");
+		var atom4=new chem.core.Atom("O");
+		
+		mol.addAtom(atom1);
+		mol.addAtom(atom2);
+		mol.addAtom(atom3);
+		mol.addAtom(atom4);
+		
+		var bond1=new chem.core.Bond(atom1,atom2);
+		var bond2=new chem.core.Bond(atom2,atom3);
+		var bond3=new chem.core.Bond(atom3,atom4);
+		
+
+		mol.addBond(bond1);
+		mol.addBond(bond2);
+		mol.addBond(bond3);
+
+  		assertEquals(3,mol.countBonds());
+		
+		mol.removeBond(bond3);
+		assertEquals(2,mol.countBonds());
+
+		mol.removeBond(0);		
+		assertEquals(1,mol.countBonds());
+
+	}
+  	
 
 
 </script>
