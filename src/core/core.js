@@ -113,7 +113,7 @@ chem.core.Molecule.prototype.removeAtom=function(atomOrId){
 		id=this.indexOfAtom(atomOrId);	
 	}
 	this.atoms.splice(id,1); 
-	//Do not use Array.remove(). 
+	//Do not use delete array[i]
 	//Otherwise Array.lenth will keep unchanged.
 }
 
