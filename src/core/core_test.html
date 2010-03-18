@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--TODO: License and copyright-->
+<html>
+<head>
+<title>jchemhub unit test-core.js</title>
+<script src="../../closure/goog/base.js"></script>
+<script src="core.js"></script>
+<script>
+	goog.require('goog.testing.jsunit');
+</script>
+</head>
+<script>
+	var mol;
+ 
+  	function setUp() {
+ 		mol=new chem.core.Molecule;
+  	}
+
+
+	function testAddAtom() {
+		mol.addAtom(new chem.core.Atom("C"));
+		mol.addAtom(new chem.core.Atom("C"));
+		mol.addAtom(new chem.core.Atom("N"));
+		mol.addAtom(new chem.core.Atom("O"));
+		mol.addAtom(new chem.core.Atom("Cl"));
+
+  		assertEquals(5,mol.countAtoms());
+		assertEquals("N",mol.getAtom(2).symbol);
+		assertEquals("O",mol.getAtom(3).symbol);
+		assertEquals("Cl",mol.getAtom(4).symbol);
+	}
+  	
+  	function testAddBond() {
+		var atom1=new chem.core.Atom("C");
+		var atom2=new chem.core.Atom("C");
+		var atom3=new chem.core.Atom("C");
+		var atom4=new chem.core.Atom("O");
+		
+		mol.addBond(new chem.core.Bond(atom1,atom2));
+		mol.addBond(new chem.core.Bond(atom2,atom3));
+		mol.addBond(new chem.core.Bond(atom3,atom4));
+
+  		assertEquals(3,mol.countBonds());
+	}
+
+
+</script>
+</head>
+</body>
+</html>
