@@ -112,7 +112,7 @@ chem.core.Molecule.prototype.removeAtom=function(atomOrId){
 	}else if(atomOrId.constructor== chem.core.Atom){
 		id=this.indexOfAtom(atomOrId);	
 	}
-	this.atoms.slice(id,1); 
+	this.atoms.splice(id,1); 
 	//Do not use Array.remove(). 
 	//Otherwise Array.lenth will keep unchanged.
 }
@@ -130,7 +130,7 @@ chem.core.Molecule.prototype.removeBond=function(bondOrId){
 	}else if(bondOrId.constructor== chem.core.Bond){
 		id=this.indexOfBond(bondOrId);	
 	}
-	this.bonds.slice(id,1); 
+	this.bonds.splice(id,1); 
 }
 
 /**
