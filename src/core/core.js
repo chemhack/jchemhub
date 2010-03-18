@@ -26,6 +26,7 @@ chem.core.Atom=function(symbol)
     this.symbol = symbol;
     this.x=0;
 	this.y=0;
+	this.z=0;
 }
 
 
@@ -33,10 +34,11 @@ chem.core.Atom=function(symbol)
  * Creates a new Bond.
  * @constructor
  */
-chem.core.Bond=function(sourceAtom,targetAtom)
+chem.core.Bond=function(sourceAtom,targetAtom,bondType)
 {
     this.source=sourceAtom;
     this.target=targetAtom;
+	this.bondType=bondType;
 }
 
 
