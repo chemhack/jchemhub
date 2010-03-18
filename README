@@ -1,0 +1,11 @@
+To get started, you need a copy of closure library under the git root. 
+
+	svn checkout http://closure-library.googlecode.com/svn/trunk/closure/ closure
+
+If you already have the library, just link it. 
+
+	ln -s -d /usr/lib/closure-library/closure/ closure2
+	
+	On Windows, use command below.
+	
+	mklink /D closure D:\closure-library\closure
