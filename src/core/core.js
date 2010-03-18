@@ -1,5 +1,7 @@
 //Licence and copyright
 
+goog.provide('chem.core.Atom');
+goog.provide('chem.core.Bond');
 goog.provide('chem.core.Molecule');
 
 /**
@@ -41,6 +43,19 @@ chem.core.Bond=function(sourceAtom,targetAtom,bondType)
 	this.bondType=bondType;
 }
 
+/**
+ * BondTypes, values in molfile spec. Values 4 through 8 are for SSS queries only.
+ */
+chem.core.Bond.BondType={
+	Single:1,
+	Double:2,
+	Tripe:3,
+	Aromatic:4,
+	SingleOrDouble:5,
+	SingleOrAromatic:6,
+	DoubleOrAromatic:7,
+	Any:8
+}
 
 /**
  * Add an atom to molecule.
