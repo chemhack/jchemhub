@@ -9,3 +9,5 @@ If you already have the library, just link it.
 	On Windows, use command below.
 	
 	mklink /D closure D:\closure-library\closure
+
+NOTE: DO NOT add closure library to git repository. The library has more than 3000 files.
