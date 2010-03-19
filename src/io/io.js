@@ -3,7 +3,7 @@
 goog.provide('chem.io.Molfile');
 
 /**
- * @fileoverview Core classes including Atom, Bond and Molecule
+ * @fileoverview IO classes
  *
  */
 

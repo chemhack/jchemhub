@@ -1,6 +1,10 @@
 goog.provide('chem.render.Geometry');
 
-//Ported from CDK's GeometryTool
+/**
+ * @fileoverview Ported from CDK's GeometryTool
+ *
+ */
+
 
 /**
  * Calculates the center of the given atoms and returns it as a object.
