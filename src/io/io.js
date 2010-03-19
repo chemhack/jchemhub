@@ -37,8 +37,10 @@ chem.io.Molfile.read=function(molfile)
 	    sourceAtom =mol.getAtom(parseFloat(line.substr( 0,3))-1);
         targetAtom= mol.getAtom(parseFloat(line.substr( 3,3))-1);
 		bondType = parseFloat(line.substr( 6,3));
-	   
+	   	bondSteroType = parseFloat(line.substr( 9,3));
+
 	    bond = new chem.core.Bond(sourceAtom,targetAtom,bondType);
+		bond.steroType=bondSteroType;
         mol.addBond(bond);
 		
     }
