@@ -25,6 +25,20 @@
 		assertRoughlyEquals(8.03,center.x,0.01);
 		assertRoughlyEquals(7.60,center.y,0.01);
 	}
+	function testGetMinMax() {
+		var minMax=chem.render.Geometry.getMinMax(mol);
+	/*	
+		console.debug("maxX:"+minMax.maxX);
+		console.debug("minX:"+minMax.minX);
+		console.debug("maxY:"+minMax.maxY);
+		console.debug("minY:"+minMax.minY);
+	*/
+	  	assertRoughlyEquals(12.8978,minMax.maxX,0.01);
+	  	assertRoughlyEquals(4.387,minMax.minX,0.01);
+	  	assertRoughlyEquals(13.0496,minMax.maxY,0.01);
+	  	assertRoughlyEquals(3.2325,minMax.minY,0.01);
+	}
+
 	
 	function testTranslateAllPositive() {
 		chem.render.Geometry.translateAllPositive(mol);
@@ -33,6 +47,30 @@
 			assertTrue(atom.x>=0);
 			assertTrue(atom.y>=0);
 		}
+	}
+	function testCreateTransform(){
+		chem.render.Geometry.translateAllPositive(mol);
+		var renderParams = {
+			zoomFactor: 0.8,
+			margin: 0.05,
+			canvasSize: {
+				width: 200,
+				height: 400
+			}
+		};	
+		var transform=chem.render.Geometry.createTransform(mol,renderParams);
+		for(var i=0,il=mol.countAtoms();i<il;i++){
+			var atom=mol.getAtom(i);
+			var srcPt=[atom.x,atom.y];
+			var dstPt=[];
+			transform.transform(srcPt,0,dstPt,0,1);
+		/*
+			console.debug("X:"+dstPt[0]+"  Y:"+dstPt[1]);
+		*/
+ 			assertTrue((dstPt[0]>0)||(dstPt[0]<renderParams.canvasSize.width));
+ 			assertTrue((dstPt[1]>0)||(dstPt[0]<renderParams.canvasSize.height));
+		}
+
 	}
 
 

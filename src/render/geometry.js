@@ -1,4 +1,5 @@
 goog.provide('chem.render.Geometry');
+goog.require('goog.graphics'); 	
 
 /**
  * @fileoverview Ported from CDK's GeometryTool
@@ -37,7 +38,7 @@ chem.render.Geometry.getMinMax = function(mol){
 		minX:Number.MAX_VALUE,
 		maxX:-Number.MAX_VALUE,
 		minY:Number.MAX_VALUE,
-		maxY:-Number.MAX_VALU	
+		maxY:-Number.MAX_VALUE	
 	}
 	for(var i=0,il=mol.countAtoms();i<il;i++){
 		var atom = mol.getAtom(i);
@@ -48,10 +49,10 @@ chem.render.Geometry.getMinMax = function(mol){
 			obj.minX=atom.x;
 		}
 		if(atom.y>obj.maxY){
-			obj.maxY=atom.x;
+			obj.maxY=atom.y;
 		}
 		if(atom.y<obj.minY){
-			obj.minY=atom.x;
+			obj.minY=atom.y;
 		}
 	}
 	return obj;
@@ -91,6 +92,7 @@ chem.render.Geometry.translate2D=function(mol,transX,transY){
         return new Dimension((int) (maxX - minX + 1), (int) (maxY - minY + 1));
     }
  */
+
 /**
  *  Adds an automatically calculated offset to the coordinates of all atoms
  *  such that all coordinates are positive and the smallest x or y coordinate
@@ -111,4 +113,56 @@ chem.render.Geometry.translateAllPositive=function(mol){
             }
 		}
 		chem.render.Geometry.translate2D(mol, minX * -1, minY * -1);
+}   
+
+/**
+ *  Adds an automatically calculated offset to the coordinates of all atoms
+ *  such that all coordinates are positive and the smallest x or y coordinate
+ *  is exactly zero.
+ *	TODO:params docs
+ *	@param {chem.core.Molecule} mol Molecule to createTransform
+ */
+chem.render.Geometry.createTransform=function(mol,renderParams){
+	var minMax=chem.render.Geometry.getMinMax(mol);
+/*		
+	console.debug("maxX:"+minMax.maxX);
+	console.debug("minX:"+minMax.minX);
+	console.debug("maxY:"+minMax.maxY);
+	console.debug("minY:"+minMax.minY);
+*/
+	var factor = renderParams.zoomFactor * (1.0 - renderParams.margin * 2.0);
+/*		
+	console.debug("factor:"+factor);
+*/
+	var contextBounds={
+		width:minMax.maxX - minMax.minX,
+		height:minMax.maxY - minMax.minY
+	}
+/*		
+	console.debug("contextBounds.width:"+contextBounds.width);
+	console.debug("contextBounds.height:"+contextBounds.height);
+*/
+	var canvasSize=renderParams.canvasSize;
+    var transform = new goog.graphics.AffineTransform();
+
+	var scaleX = factor * canvasSize.width / contextBounds.width;
+   	var scaleY = factor * canvasSize.height / contextBounds.height;
+
+/*		
+	console.debug("scaleX:"+scaleX);
+	console.debug("scaleY:"+scaleY);
+*/
+    var scale=Math.min(scaleX,scaleY);
+	transform.scale(scale, -scale);
+	
+    var dx = minMax.minX * scale + 0.5 * (canvasSize.width - contextBounds.width * scale);
+    var dy = minMax.minY * scale - 0.5 * (canvasSize.height + contextBounds.width * scale);
+	transform.translate(dx / scale, dy / scale);
+
+/*		
+	console.debug("dx:"+dx);
+	console.debug("dy:"+dy);
+*/
+
+	return transform;
 }   
