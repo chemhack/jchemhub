@@ -44,7 +44,7 @@ chem.core.Bond=function(sourceAtom,targetAtom,bondType)
 }
 
 /**
- * BondTypes, values in molfile spec. Values 4 through 8 are for SSS queries only.
+ * Bond Types, values in molfile spec. Values 4 through 8 are for SSS queries only.
  */
 chem.core.Bond.BondType={
 	Single:1,
@@ -55,6 +55,22 @@ chem.core.Bond.BondType={
 	SingleOrAromatic:6,
 	DoubleOrAromatic:7,
 	Any:8
+}
+
+/**
+ * Bond SteroTypes, values in molfile spec. 
+ */
+chem.core.Bond.BondType={
+	Single:{
+		NotStero:0,
+		Up:1,
+		Down:6,
+		Either:4	
+	},
+	Double:{
+		DetectByCoords:0,
+		Either:	3		
+	}
 }
 
 /**
