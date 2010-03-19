@@ -41,6 +41,7 @@ chem.core.Bond=function(sourceAtom,targetAtom,bondType)
     this.source=sourceAtom;
     this.target=targetAtom;
 	this.bondType=bondType;
+	this.steroType=chem.core.Bond.SteroType.NoStero;
 }
 
 /**
@@ -60,7 +61,7 @@ chem.core.Bond.BondType={
 /**
  * Bond SteroTypes, values in molfile spec. 
  */
-chem.core.Bond.BondType={
+chem.core.Bond.SteroType={
 	Single:{
 		NotStero:0,
 		Up:1,
