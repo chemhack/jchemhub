@@ -61,14 +61,13 @@
 		var transform=chem.render.Geometry.createTransform(mol,renderParams);
 		for(var i=0,il=mol.countAtoms();i<il;i++){
 			var atom=mol.getAtom(i);
-			var srcPt=[atom.x,atom.y];
-			var dstPt=[];
-			transform.transform(srcPt,0,dstPt,0,1);
+			
+			var point=transform.transformPoint(atom.x,atom.y);
 		/*
-			console.debug("X:"+dstPt[0]+"  Y:"+dstPt[1]);
+			console.debug("X:"+point.x+"  Y:"+point.y);
 		*/
- 			assertTrue((dstPt[0]>0)||(dstPt[0]<renderParams.canvasSize.width));
- 			assertTrue((dstPt[1]>0)||(dstPt[0]<renderParams.canvasSize.height));
+ 			assertTrue((point.x>0)||(point.x<renderParams.canvasSize.width));
+ 			assertTrue((point.y>0)||(point.y<renderParams.canvasSize.height));
 		}
 
 	}

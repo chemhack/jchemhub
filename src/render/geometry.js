@@ -164,5 +164,18 @@ chem.render.Geometry.createTransform=function(mol,renderParams){
 	console.debug("dy:"+dy);
 */
 
+	//Extend goog.graphics.AffineTransform to transform point directly
+	if (goog.graphics.AffineTransform.prototype.transformPoint == undefined) {
+		goog.graphics.AffineTransform.prototype.transformPoint = function(x, y){
+			var srcPt = [x, y];
+			var dstPt = [];
+			transform.transform(srcPt, 0, dstPt, 0, 1);
+			//TODO optimaze performance by calling matrix directly
+			return {
+				x: dstPt[0],
+				y: dstPt[1]
+			};
+		};
+	};
 	return transform;
 }   
