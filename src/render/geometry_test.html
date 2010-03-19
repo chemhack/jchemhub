@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!--TODO: License and copyright-->
+<html>
+<head>
+<title>jchemhub unit test-geometry.js</title>
+<script src="../../closure/goog/base.js"></script>
+<script src="../core/core.js"></script>
+<script src="../io/io.js"></script>
+<script src="../io/io_test_molsample.js"></script>
+<script src="geometry.js"></script>
+<script>
+	goog.require('goog.testing.jsunit');
+</script>
+</head>
+<script>
+	var mol;
+ 	var sdfs;
+  	function setUp() {
+		sdfs = sdf.split("$$$$\n");
+		mol=chem.io.Molfile.read(sdfs[3]);
+   	}
+
+
+	function testGetCenter() {
+		var center=chem.render.Geometry.getGeometryCenter(mol);
+		assertRoughlyEquals(8.03,center.x,0.01);
+		assertRoughlyEquals(7.60,center.y,0.01);
+	}
+	
+	function testTranslateAllPositive() {
+		chem.render.Geometry.translateAllPositive(mol);
+		for(var i=0,il=mol.countAtoms();i<il;i++){
+			var atom=mol.getAtom(i);
+			assertTrue(atom.x>=0);
+			assertTrue(atom.y>=0)
+		}
+	}
+
+
+
+</script>
+<body>
+</body>
+</html>
