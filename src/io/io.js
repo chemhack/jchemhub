@@ -44,6 +44,8 @@ chem.io.Molfile.read=function(molfile)
         mol.addBond(bond);
 		
     }
+	
+	//TODO parse Charge, SuperAtom groups, Properties....
 
     return mol;
 

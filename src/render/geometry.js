@@ -54,16 +54,14 @@ chem.render.Geometry.getMinMax = function(mol){
 }
 
 /**
- * Translates the given molecule by the given Vector.
+ * Translates the given molecule by the given x and y.
  * 
- * @param {chem.core.Molecule} mol Molecule to calculate maximum X and Y.
+ * @param {chem.core.Molecule} mol Molecule to translate.
  * @param {number} transX translation in x direction
  * @param {number} transY translation in y direction
- * @param {number} transZ translation in z direction. Optional, default to 0;
  */
 
-chem.render.Geometry.translate2D=function(mol,transX,transY,transZ){
-	if(transZ==undefined)transZ=0;
+chem.render.Geometry.translate2D=function(mol,transX,transY){
 	for (var i = 0, il = mol.countAtoms(); i <= il; i++) {
 		var atom = mol.getAtom(i);
 		atom.x+=transX;
@@ -95,7 +93,7 @@ chem.render.Geometry.translate2D=function(mol,transX,transY,transZ){
  *  such that all coordinates are positive and the smallest x or y coordinate
  *  is exactly zero.
  *
- *	@param {chem.core.Molecule} mol AtomContainer for which all the atoms are translated to positive coordinates
+ *	@param {chem.core.Molecule} mol Molecule for which all the atoms are translated to positive coordinates
  */
 
 chem.render.Geometry.translateAllPositive=function(mol){
