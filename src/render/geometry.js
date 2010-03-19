@@ -39,7 +39,7 @@ chem.render.Geometry.getMinMax = function(mol){
 		minY:Number.MAX_VALUE,
 		maxY:-Number.MAX_VALU	
 	}
-	for(var i=0,il=mol.countAtoms();i<=il;i++){
+	for(var i=0,il=mol.countAtoms();i<il;i++){
 		var atom = mol.getAtom(i);
 		if(atom.x>obj.maxX){
 			obj.maxX=atom.x;
@@ -66,11 +66,10 @@ chem.render.Geometry.getMinMax = function(mol){
  */
 
 chem.render.Geometry.translate2D=function(mol,transX,transY){
-	for (var i = 0, il = mol.countAtoms(); i <= il; i++) {
+	for (var i = 0, il = mol.countAtoms(); i < il; i++) {
 		var atom = mol.getAtom(i);
 		atom.x+=transX;
 		atom.y+=transY;
-		atom.z+=transZ;
 	}
 }
 
@@ -102,7 +101,7 @@ chem.render.Geometry.translate2D=function(mol,transX,transY){
 
 chem.render.Geometry.translateAllPositive=function(mol){
 		var minX=Number.MAX_VALUE,minY=Number.MAX_VALUE;
-		for(var i=0,il=mol.countAtoms();i<=il;i++){
+		for(var i=0,il=mol.countAtoms();i<il;i++){
 			var atom = mol.getAtom(i);	
 			if (atom.x < minX) {
                 minX = atom.x;
@@ -111,5 +110,5 @@ chem.render.Geometry.translateAllPositive=function(mol){
                 minY = atom.y;
             }
 		}
-		translate2D(mol, minX * -1, minY * -1);
+		chem.render.Geometry.translate2D(mol, minX * -1, minY * -1);
 }   
