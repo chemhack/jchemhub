@@ -14,7 +14,8 @@ goog.provide('chem.io.Molfile');
 chem.io.Molfile.read=function(molfile)
 {
 	var mol=new chem.core.Molecule();
-    var mol_lines = molfile.split("\n"); //TODO support windows LR "\r\n" 
+	var lineDelimiter=molfile.indexOf("\r\n")>0?"\r\n":"\n";
+    var mol_lines = molfile.split(lineDelimiter); //TODO support windows LR "\r\n" 
     // Counts line at line 4
     var atom_count = parseInt(mol_lines[3].substr(0,3));
     var bond_count = parseInt(mol_lines[3].substr(3,3));
