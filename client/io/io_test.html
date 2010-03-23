@@ -37,11 +37,11 @@
 	
     function testWriteMolfile(){
 		var mol = chem.io.Molfile.read(molfile);
-		var molFile = chem.io.Molfile.write(mol);
-        var bondToTest=mol.getBond(0);
-        assertEquals(1,bondToTest.bondType);
-		bondToTest=mol.getBond(16);
-        assertEquals(2,bondToTest.bondType);
+		var molfile2 = chem.io.Molfile.write(mol);
+		var mol2 = chem.io.Molfile.read(molfile2);
+		var molfile3 = chem.io.Molfile.write(mol2);
+		assertEquals(molfile2,molfile3);
+
 	}
 		
 	
