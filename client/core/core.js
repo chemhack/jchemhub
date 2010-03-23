@@ -17,6 +17,7 @@ chem.core.Molecule=function()
 {
     this.bonds = new Array();
     this.atoms = new Array();
+	this.name  = new String();
 }
 
 /**
@@ -41,7 +42,7 @@ chem.core.Bond=function(sourceAtom,targetAtom,bondType)
     this.source=sourceAtom;
     this.target=targetAtom;
 	this.bondType=bondType;
-	this.steroType=chem.core.Bond.SteroType.NoStero;
+	this.stereoType=chem.core.Bond.StereoType.NoStereo;
 }
 
 /**
@@ -59,11 +60,11 @@ chem.core.Bond.BondType={
 }
 
 /**
- * Bond SteroTypes, values in molfile spec. 
+ * Bond StereoTypes, values in molfile spec. 
  */
-chem.core.Bond.SteroType={
+chem.core.Bond.StereoType={
 	Single:{
-		NotStero:0,
+		NotStereo:0,
 		Up:1,
 		Down:6,
 		Either:4	
@@ -179,5 +180,14 @@ chem.core.Molecule.prototype.countAtoms=function(){
  */
 chem.core.Molecule.prototype.countBonds=function(){
 	return this.bonds.length;
+}
+
+
+chem.core.Molecule.prototype.setName=function(_name){
+    this.name=_name;  
+}
+
+chem.core.Molecule.prototype.getName=function(){
+    return this.name;  
 }
 

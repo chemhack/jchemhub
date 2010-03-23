@@ -5,6 +5,8 @@
 <title>jchemhub unit test-io.js</title>
 <script src="../../closure/goog/base.js"></script>
 <script src="../core/core.js"></script>
+<script src="../util/date.js"></script>
+<script src="../util/string.js"></script>
 <script src="io.js"></script>
 <script src="io_test_molsample.js"></script>
 <script>
@@ -28,10 +30,20 @@
 
 		assertEquals(1,bondToTest.bondType);
 		assertEquals(mol.getAtom(19),bondToTest.source);
+		assertEquals(mol.indexOfAtom(bondToTest.source),19);
 		assertEquals(mol.getAtom(27),bondToTest.target);
-
+        assertEquals(mol.indexOfAtom(bondToTest.target),27);
 	}
 	
+    function testWriteMolfile(){
+		var mol = chem.io.Molfile.read(molfile);
+		var molFile = chem.io.Molfile.write(mol);
+        var bondToTest=mol.getBond(0);
+        assertEquals(1,bondToTest.bondType);
+		bondToTest=mol.getBond(16);
+        assertEquals(2,bondToTest.bondType);
+	}
+		
 	
 
 
