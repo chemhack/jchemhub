@@ -24,7 +24,7 @@ chem.render.Geometry.getGeometryCenter=function(mol){
         totalY+=atom.y;
 	}
 	return {x:(totalX/atomCount),y:(totalY/atomCount)};
-}
+};
 
 /**
  * Returns the minimum and maximum X and Y coordinates of the atoms in the Molecule
@@ -56,7 +56,7 @@ chem.render.Geometry.getMinMax = function(mol){
 		}
 	}
 	return obj;
-}
+};
 
 /**
  * Translates the given molecule by the given x and y.
@@ -72,7 +72,7 @@ chem.render.Geometry.translate2D=function(mol,transX,transY){
 		atom.x+=transX;
 		atom.y+=transY;
 	}
-}
+};
 
 /*
  * TODO: To migrate
@@ -113,24 +113,23 @@ chem.render.Geometry.translateAllPositive=function(mol){
             }
 		}
 		chem.render.Geometry.translate2D(mol, minX * -1, minY * -1);
-}   
+};   
 
 /**
  *  Adds an automatically calculated offset to the coordinates of all atoms
  *  such that all coordinates are positive and the smallest x or y coordinate
  *  is exactly zero.
  *	TODO:params docs
- *	@param {chem.core.Molecule} mol Molecule to createTransform
  */
-chem.render.Geometry.createTransform=function(mol,renderParams){
-	var minMax=chem.render.Geometry.getMinMax(mol);
+chem.render.Geometry.createTransform=function(context){
+	var minMax=chem.render.Geometry.getMinMax(context.mol);
 /*		
 	console.debug("maxX:"+minMax.maxX);
 	console.debug("minX:"+minMax.minX);
 	console.debug("maxY:"+minMax.maxY);
 	console.debug("minY:"+minMax.minY);
 */
-	var factor = renderParams.zoomFactor * (1.0 - renderParams.margin * 2.0);
+	var factor = context.renderParams.zoomFactor * (1.0 - context.renderParams.margin * 2.0);
 /*		
 	console.debug("factor:"+factor);
 */
@@ -142,11 +141,10 @@ chem.render.Geometry.createTransform=function(mol,renderParams){
 	console.debug("contextBounds.width:"+contextBounds.width);
 	console.debug("contextBounds.height:"+contextBounds.height);
 */
-	var canvasSize=renderParams.canvasSize;
     var transform = new goog.graphics.AffineTransform();
 
-	var scaleX = factor * canvasSize.width / contextBounds.width;
-   	var scaleY = factor * canvasSize.height / contextBounds.height;
+	var scaleX = factor * context.width / contextBounds.width;
+   	var scaleY = factor * context.height / contextBounds.height;
 
 /*		
 	console.debug("scaleX:"+scaleX);
@@ -155,8 +153,8 @@ chem.render.Geometry.createTransform=function(mol,renderParams){
     var scale=Math.min(scaleX,scaleY);
 	transform.scale(scale, -scale);
 	
-    var dx = minMax.minX * scale + 0.5 * (canvasSize.width - contextBounds.width * scale);
-    var dy = minMax.minY * scale - 0.5 * (canvasSize.height + contextBounds.width * scale);
+    var dx = minMax.minX * scale + 0.5 * (context.width - contextBounds.width * scale);
+    var dy = minMax.minY * scale - 0.5 * (context.height + contextBounds.width * scale);
 	transform.translate(dx / scale, dy / scale);
 
 /*		
@@ -178,4 +176,39 @@ chem.render.Geometry.createTransform=function(mol,renderParams){
 		};
 	};
 	return transform;
-}   
+};   
+
+/**
+ *  Gets the coordinates of two points (that represent a bond) and calculates for each the coordinates of two new points that have the given distance vertical to the bond.
+ *  TODO:params docs
+ */
+
+chem.render.Geometry.distanceCalculator=function(bond,dist){
+	var angle=chem.render.Geometry.getBondAngle(bond);
+	var result={
+		source:[{x:(Math.cos(angle + Math.PI / 2) * dist + bond.source.x),
+				y:(Math.sin(angle + Math.PI / 2) * dist + bond.source.y)},
+				{x:(Math.cos(angle - Math.PI / 2) * dist + bond.source.x),
+				y:(Math.sin(angle - Math.PI / 2) * dist + bond.source.y)}],
+		target:[{x:(Math.cos(angle + Math.PI / 2) * dist + bond.target.x),
+				y:(Math.sin(angle + Math.PI / 2) * dist + bond.target.y)},
+				{x:(Math.cos(angle - Math.PI / 2) * dist + bond.target.x),
+				y:(Math.sin(angle - Math.PI / 2) * dist + bond.target.y)}]	
+	};
+	return result;
+}
+
+/**
+ *  Returns bond angle
+ *  TODO:params docs and unit test
+ */
+chem.render.Geometry.getBondAngle=function(bond){
+	var angle;
+	if(bond.target.x-bond.source.x==0){
+		angle = Math.PI / 2;
+	} else{
+		angle = Math.atan((bond.target.y - bond.source.y) / (bond.target.x - bond.source.x));
+	}
+	return angle;
+}
+

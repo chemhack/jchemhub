@@ -4,73 +4,38 @@
 <head>
 <title>Simple graphics demo</title>
 <script src="../../closure/goog/base.js"></script>
-<script src="../core/core.js"></script>
-<script src="../io/io.js"></script>
-<script src="../io/io_test_molsample.js"></script>
-<script src="geometry.js"></script>
 <script>
 	goog.require('goog.dom');
 	goog.require('goog.graphics')
 	goog.require('goog.events');
     goog.require('goog.events.EventType');; 	
-	var sdfs=sdf.split("$$$$\n");
 </script>
+<script src="../core/core.js"></script>
+<script src="../io/io.js"></script>
+<script src="../config/config.js"></script>
+<script src="render_demo_molsample.js"></script>
+<script src="geometry.js"></script>
+<script src="render.js"></script>
 </head>
 <body>
-	<script>
-    var mol = chem.io.Molfile.read(sdfs[5]);
+
+<script>
+    var mol = chem.io.Molfile.read(molsample);
     chem.render.Geometry.translateAllPositive(mol);
-    var renderParams = {
-        zoomFactor: 0.8,
-        margin: 0.05,
-        canvasSize: {
-            width: 400,
-            height: 400
-        }
-    };
-    var transform = chem.render.Geometry.createTransform(mol, renderParams);
-    
-    var graphics = goog.graphics.createGraphics(400, 400);
-    var fillRed = new goog.graphics.SolidFill('red');
-    var fillBlue = new goog.graphics.SolidFill('blue');
-    var stroke = new goog.graphics.Stroke(2, 'green');
 	
-		var events = [goog.events.EventType.MOUSEOVER, goog.events.EventType.MOUSEOUT]
-
+ 	var context={
+		widgetType:"editor",
+		renderParams:chem.config.RenderParams.get(),
+		targetElement:document.getElementById('testGraphics'),
+		width:400,
+		height:400,
+		mol:mol		
+	};
 	
-	for (var i = 0, il = mol.countAtoms(); i < il; i++) {
-		var atom = mol.getAtom(i);
-		var point=transform.transformPoint(atom.x,atom.y);
-		var circle=graphics.drawCircle(point.x, point.y, 6, null, fillRed);
-   		goog.events.listen(circle, events, function(e){
-		if(e.type==goog.events.EventType.MOUSEOVER){
-				e.currentTarget.setFill(fillBlue); 	
-		}else{
-				e.currentTarget.setFill(fillRed); 	
-		}
-		});
-
-    }
-	
-	
-	for (var i = 0, il = mol.countBonds(); i < il; i++) {
-		var bond = mol.getBond(i);
-		var pointSource=transform.transformPoint(bond.source.x,bond.source.y);
-		var pointTarget=transform.transformPoint(bond.target.x,bond.target.y);
-		var path = new goog.graphics.Path();
-     	path.moveTo(pointSource.x, pointSource.y);
-      	path.lineTo(pointTarget.x, pointTarget.y);
-        path.close();
-	    graphics.drawPath(path, stroke, null);
-	}
-
-
-    graphics.render(document.getElementById('testGraphics'));
-
-
+	var renderer=new chem.render.Renderer(context);
 	
 	</script>
 	<div id="testGraphics" />	
-	<p>Simply move your mouse on atoms</p>
+	<p>Simply move your mouse on atoms and bonds</p>
 </body>
 </html>
