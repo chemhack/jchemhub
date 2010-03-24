@@ -121,7 +121,7 @@ chem.render.Renderer.prototype.renderAtoms = function(){
             var group = graphics.createGroup();
             
             var textWidth = chem.render.Renderer.getTextWidth(symbol, context.renderParams.atomFont);
-            var textHeight = renderParams.atomFont.size;
+            var textHeight = context.renderParams.atomFont.size;
             
             //Extend the graphics group object.
             group.highlightCircle = graphics.drawCircle(point.x, point.y, context.renderParams.atomTransparentCircleSize, null, context.renderParams.transparentFill, group);
