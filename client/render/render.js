@@ -12,6 +12,7 @@ chem.render.Renderer = function(context){
     this.graphics = goog.graphics.createGraphics(context.width, context.height);
     this.graphics.render(context.targetElement);
     this.mouseFocusEvents = [goog.events.EventType.MOUSEOVER, goog.events.EventType.MOUSEOUT]
+	this.graphics.drawRect(0,0,context.width, context.height,null,context.renderParams.backgroundFill);
   	this.renderBonds();
    	this.renderAtoms();
 };
@@ -58,6 +59,12 @@ chem.render.Renderer.prototype.renderBonds = function(){
         
         var group = graphics.createGroup();
         
+		result = chem.render.Geometry.distanceCalculator(bond, context.renderParams.atomTransparentCircleSize/transform.getScaleX())
+        ptLine0_source = transform.transformPoint(result.source[0].x, result.source[0].y);
+        ptLine0_target = transform.transformPoint(result.target[0].x, result.target[0].y);
+        ptLine1_source = transform.transformPoint(result.source[1].x, result.source[1].y);
+        ptLine1_target = transform.transformPoint(result.target[1].x, result.target[1].y);
+
         bondBoxPath = new goog.graphics.Path();
         bondBoxPath.moveTo(ptLine0_source.x, ptLine0_source.y);
         bondBoxPath.lineTo(ptLine0_target.x, ptLine0_target.y);
