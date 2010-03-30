@@ -37,8 +37,18 @@ chem.render.Renderer.prototype.renderBonds = function(){
         
         switch (bond.bondType) {
             case chem.core.Bond.BondType.Single:
-                bondPath.moveTo(ptSource.x, ptSource.y);
-                bondPath.lineTo(ptTarget.x, ptTarget.y);
+				switch(bond.stereoType){
+					case chem.core.Bond.StereoType.NotStereo:
+               			bondPath.moveTo(ptSource.x, ptSource.y);
+               			bondPath.lineTo(ptTarget.x, ptTarget.y);
+						break;
+					case chem.core.Bond.StereoType.Up:
+						break;
+					case chem.core.Bond.StereoType.Down:
+						break;
+					case chem.core.Bond.StereoType.Either:
+						break;
+				}
                 break;
             case chem.core.Bond.BondType.Double:
                 bondPath.moveTo(ptLine0_source.x, ptLine0_source.y);
