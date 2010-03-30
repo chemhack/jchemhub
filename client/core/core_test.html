@@ -27,6 +27,10 @@
 		assertEquals("N",mol.getAtom(2).symbol);
 		assertEquals("O",mol.getAtom(3).symbol);
 		assertEquals("Cl",mol.getAtom(4).symbol);
+		
+		assertEquals(2,mol.indexOfAtom(mol.getAtom(2)));
+		assertEquals(0,mol.indexOfAtom(mol.getAtom(0)));
+
 	}
 	
   	function testAddBond() {

@@ -4,6 +4,9 @@ goog.provide('chem.core.Atom');
 goog.provide('chem.core.Bond');
 goog.provide('chem.core.Molecule');
 
+goog.require('goog.structs.Set');
+goog.require('goog.array');
+
 /**
  * @fileoverview Core classes including Atom, Bond and Molecule
  *
@@ -30,8 +33,12 @@ chem.core.Atom=function(symbol)
     this.x=0;
 	this.y=0;
 	this.z=0;
+	this.bonds=new goog.structs.Set();
 }
 
+chem.core.Atom.prototype.countBonds = function() {
+	return this.bonds.length;	
+};
 
 /**
  * Creates a new Bond.
@@ -89,7 +96,9 @@ chem.core.Molecule.prototype.addAtom=function(atom){
  */
 
 chem.core.Molecule.prototype.addBond=function(bond){
-	this.bonds.push(bond);	
+	this.bonds.push(bond);
+	bond.source.bonds.add(bond);
+	bond.target.bonds.add(bond);	
 }
 
 /**
@@ -118,10 +127,13 @@ chem.core.Molecule.prototype.indexOfAtom=function(atom){
 	//Introducing var il will speed the loop up.
 	//Please always do that do get better performance.
 	//We have to do loops because Array.indexOf() is not supported by IE6.
+	/*
 	for (var i=0, il=this.atoms.length; i<il; i++) {
 		if(this.atoms[i]==atom) return i;
 	}	
 	return -1;
+	*/
+	return goog.array.indexOf(this.atoms,atom);
 }
 
 /**
@@ -129,10 +141,13 @@ chem.core.Molecule.prototype.indexOfAtom=function(atom){
  * @param {chem.core.Bond} bond The bond to lookup.
  */
 chem.core.Molecule.prototype.indexOfBond=function(bond){
+	/*
 	for (var i=0, il=this.bonds.length; i<il; i++) {
 		if(this.bonds[i]==bond) return i;
 	}	
 	return -1;
+	*/
+	return goog.array.indexOf(this.bonds,bond);
 }
 
 /**
@@ -149,7 +164,7 @@ chem.core.Molecule.prototype.removeAtom=function(atomOrId){
 	}
 	this.atoms.splice(id,1); 
 	//Do not use delete array[i]
-	//Otherwise Array.lenth will keep unchanged.
+	//Otherwise Array.length will keep unchanged.
 }
 
 
@@ -159,12 +174,15 @@ chem.core.Molecule.prototype.removeAtom=function(atomOrId){
  */
 
 chem.core.Molecule.prototype.removeBond=function(bondOrId){
-	var id;
+	var id,bond;
 	if(bondOrId.constructor == Number){
 		id=bondOrId;
+		bond=this.bonds[id];
 	}else if(bondOrId.constructor== chem.core.Bond){
 		id=this.indexOfBond(bondOrId);	
+		bond=bondOrId;
 	}
+	
 	this.bonds.splice(id,1); 
 }
 
