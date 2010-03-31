@@ -8,6 +8,7 @@ chem.render.Renderer = function(context){
     this.context = context;
     context.mol.renderer = this;
     context.renderParams.atomFont.size = 18 * context.renderParams.zoomFactor;
+    context.renderParams.atomSubFont.size = 14 * context.renderParams.zoomFactor; 
     this.transform = chem.render.Geometry.createTransform(context);
     this.graphics = goog.graphics.createGraphics(context.width, context.height);
     this.graphics.render(context.targetElement);
@@ -139,43 +140,68 @@ chem.render.Renderer.prototype.renderAtoms = function(){
         var point = transform.transformPoint(atom.x, atom.y);
         var symbol = atom.symbol;
         
-        var shouldDraw = (symbol != "H") || (context.renderParams.showExplicitHydrogens);
+        var shouldDrawAtom = false;
+        if(symbol=="C"){
+            if(context.renderParams.drawEndCarbon&&atom.countBonds()==1){
+                shouldDrawAtom=true;
+            }
+        }else if(symbol=="H"){
+            shouldDrawAtom=context.renderParams.showExplicitHydrogens;
+        }
+        else{
+            shouldDrawAtom=true;
+        }
         
-        if (shouldDraw) {
-            var group = graphics.createGroup();
-            
-            var textWidth = chem.render.Renderer.getTextWidth(symbol, context.renderParams.atomFont);
-            var textHeight = context.renderParams.atomFont.size;
-            
+        var group = graphics.createGroup();
+
+        if (shouldDrawAtom) {
+
             //Extend the graphics group object.
-            group.highlightCircle = graphics.drawCircle(point.x, point.y, context.renderParams.atomTransparentCircleSize, null, context.renderParams.transparentFill, group);
-            
-            var shouldDrawAtom;
-            if(symbol=="C"){
-				if(context.renderParams.drawEndCarbon){
-					shouldDrawAtom=true;	
-				}
-			}else{
-				shouldDrawAtom=true;	
-			}
+
+//            var shouldDrawAtom=false;
 			var atomLabelFill = context.renderParams.atomLabelFill;
             var atomLabelBackgroundFill = context.renderParams.backgroundFill;
+            var mainAtomLabel=symbol,subscriptLabel=null,superscriptLabel=null;
             if (shouldDrawAtom) {
-                group.atomLabelBackgroud = graphics.drawRect(point.x - textWidth / 2, point.y - textHeight / 2, textWidth, textHeight, null, atomLabelBackgroundFill, group);
-                group.atomLabel = graphics.drawText(symbol, point.x - textWidth / 2, point.y - textHeight / 2, textWidth, textHeight, 'center', null, context.renderParams.atomFont, context.renderParams.atomLabelStroke, atomLabelFill, group);
-            }
-            
-            if (context.widgetType == "editor") {
-                goog.events.listen(group, this.mouseFocusEvents, function(e){
-                    if (e.type == goog.events.EventType.MOUSEOVER) {
-                        e.currentTarget.highlightCircle.setStroke(context.renderParams.atomHighlightStroke);
-                    }
-                    else 
-                        if (e.type == goog.events.EventType.MOUSEOUT) {
-                            e.currentTarget.highlightCircle.setStroke(null);
+                if (context.renderParams.showImplicitHydrogens) {
+                    var cov = chem.resource.Covalence[symbol];
+                    if (cov) {
+                        var totalBondOrder=0;
+                        goog.array.forEach(atom.bonds.getValues(),function(element,index,array){
+                            totalBondOrder+=element.bondType;//TODO not good enough, need to handle aromatic bonds.        
+                        });
+                        //TODO consider charge in
+                        var hydrogenCount = cov-totalBondOrder;
+                        if(hydrogenCount>0){
+                            mainAtomLabel=symbol+"H";
+                            if(hydrogenCount>1){
+                                subscriptLabel=hydrogenCount+'';
+                            }
                         }
-                });
+                    }
+                }
+                var textWidth = chem.render.Renderer.getTextWidth(mainAtomLabel, context.renderParams.atomFont);
+                var textHeight = context.renderParams.atomFont.size;
+                group.atomLabelBackgroud = graphics.drawRect(point.x - textWidth / 2, point.y - textHeight / 2, textWidth, textHeight, null, atomLabelBackgroundFill, group);                
+                graphics.drawText(mainAtomLabel, point.x - textWidth / 2, point.y - textHeight / 2, textWidth, textHeight, 'center', null, context.renderParams.atomFont, context.renderParams.atomLabelStroke, atomLabelFill, group);
+                if(subscriptLabel){
+                    graphics.drawText(subscriptLabel, point.x + textWidth / 3, point.y , textWidth, textHeight, 'center', null, context.renderParams.atomSubFont, context.renderParams.atomLabelStroke, atomLabelFill, group);
+                }
+
             }
+
+        }
+        if (context.widgetType == "editor") {
+            group.highlightCircle = graphics.drawCircle(point.x, point.y, context.renderParams.atomTransparentCircleSize, null, context.renderParams.transparentFill, group);        
+            goog.events.listen(group, this.mouseFocusEvents, function(e){
+                if (e.type == goog.events.EventType.MOUSEOVER) {
+                    e.currentTarget.highlightCircle.setStroke(context.renderParams.atomHighlightStroke);
+                }
+                else
+                    if (e.type == goog.events.EventType.MOUSEOUT) {
+                        e.currentTarget.highlightCircle.setStroke(null);
+                    }
+            });
         }
         
     }

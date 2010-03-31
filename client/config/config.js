@@ -13,14 +13,15 @@ chem.config.RenderParams.defaultValue= {
         margin: 0.05,
 		bondDistance:3,
 		showExplicitHydrogens:true,
-		showImplicitHydrogens:false,
+		showImplicitHydrogens:true,
 		drawEndCarbon:true,
 		backgroundFill:new goog.graphics.SolidFill('white'),
 		bondStroke:new goog.graphics.Stroke(2, 'black'),
-        upBondStroke:null,
+        upBondStroke:new goog.graphics.Stroke(1, 'black'),
         upBondFill:new goog.graphics.SolidFill('black'),
 		bondHighlightStroke:new goog.graphics.Stroke(2, 'blue'),
-		atomFont:new goog.graphics.Font(10, 'Times'),
+        atomFont:new goog.graphics.Font(0, 'Times'),     //Font size is dynamic
+        atomSubFont:new goog.graphics.Font(0, 'Times'), //Font size is dynamic
 		atomLabelStroke:null,
 		atomLabelFill:new goog.graphics.SolidFill('black'),
 		atomTransparentCircleSize:9,
