@@ -14,6 +14,7 @@ chem.config.RenderParams.defaultValue= {
 		bondDistance:3,
 		showExplicitHydrogens:true,
 		showImplicitHydrogens:false,
+		drawEndCarbon:true,
 		backgroundFill:new goog.graphics.SolidFill('white'),
 		bondStroke:new goog.graphics.Stroke(2, 'black'),
 		bondHighlightStroke:new goog.graphics.Stroke(2, 'blue'),

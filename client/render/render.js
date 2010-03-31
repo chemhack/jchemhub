@@ -143,8 +143,15 @@ chem.render.Renderer.prototype.renderAtoms = function(){
             //Extend the graphics group object.
             group.highlightCircle = graphics.drawCircle(point.x, point.y, context.renderParams.atomTransparentCircleSize, null, context.renderParams.transparentFill, group);
             
-            var shouldDrawAtom = symbol != "C";
-            var atomLabelFill = context.renderParams.atomLabelFill;
+            var shouldDrawAtom;
+            if(symbol=="C"){
+				if(context.renderParams.drawEndCarbon){
+					shouldDrawAtom=true;	
+				}
+			}else{
+				shouldDrawAtom=true;	
+			}
+			var atomLabelFill = context.renderParams.atomLabelFill;
             var atomLabelBackgroundFill = context.renderParams.backgroundFill;
             if (shouldDrawAtom) {
                 group.atomLabelBackgroud = graphics.drawRect(point.x - textWidth / 2, point.y - textHeight / 2, textWidth, textHeight, null, atomLabelBackgroundFill, group);
