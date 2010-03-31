@@ -58,7 +58,7 @@ chem.core.Bond=function(sourceAtom,targetAtom,bondType)
 chem.core.Bond.BondType={
 	Single:1,
 	Double:2,
-	Tripe:3,
+	Triple:3,
 	Aromatic:4,
 	SingleOrDouble:5,
 	SingleOrAromatic:6,
@@ -98,7 +98,7 @@ chem.core.Molecule.prototype.addAtom=function(atom){
 chem.core.Molecule.prototype.addBond=function(bond){
 	this.bonds.push(bond);
 	bond.source.bonds.add(bond);
-	bond.target.bonds.add(bond);	
+	bond.target.bonds.add(bond);
 }
 
 /**

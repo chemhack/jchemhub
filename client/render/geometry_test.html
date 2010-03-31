@@ -7,13 +7,13 @@
 <script src="../core/core.js"></script>
 <script src="../io/io.js"></script>
 <script src="../io/io_test_molsample.js"></script>
+<script src="../config/config.js"></script>
 <script src="geometry.js"></script>
 <script>
 	goog.require('goog.testing.jsunit');
 </script>
 <script>
 	var mol;
- 	var sdfs;
   	function setUp() {
 		sdfs = sdf.split("$$$$\n");
 		mol=chem.io.Molfile.read(sdfs[3]);
@@ -50,15 +50,15 @@
 	}
 	function testCreateTransform(){
 		chem.render.Geometry.translateAllPositive(mol);
-		var renderParams = {
-			zoomFactor: 0.8,
-			margin: 0.05,
-			canvasSize: {
-				width: 200,
-				height: 400
-			}
-		};	
-		var transform=chem.render.Geometry.createTransform(mol,renderParams);
+        var context={
+           widgetType:"editor",
+           renderParams:chem.config.RenderParams.get(),
+           width:400,
+           height:400,
+           mol:mol
+       };
+
+		var transform=chem.render.Geometry.createTransform(context);
 		for(var i=0,il=mol.countAtoms();i<il;i++){
 			var atom=mol.getAtom(i);
 			

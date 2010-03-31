@@ -28,7 +28,8 @@ chem.render.Renderer.prototype.renderBonds = function(){
         var ptTarget = transform.transformPoint(bond.target.x, bond.target.y);
         
         var bondPath = new goog.graphics.Path();
-        
+        var bondStroke =context.renderParams.bondStroke;
+        var bondFill = null;
         var result = chem.render.Geometry.distanceCalculator(bond, context.renderParams.bondDistance / transform.getScaleX())
         var ptLine0_source = transform.transformPoint(result.source[0].x, result.source[0].y);
         var ptLine0_target = transform.transformPoint(result.target[0].x, result.target[0].y);
@@ -38,15 +39,21 @@ chem.render.Renderer.prototype.renderBonds = function(){
         switch (bond.bondType) {
             case chem.core.Bond.BondType.Single:
 				switch(bond.stereoType){
-					case chem.core.Bond.StereoType.NotStereo:
+					case chem.core.Bond.StereoType.Single.NotStereo:
                			bondPath.moveTo(ptSource.x, ptSource.y);
                			bondPath.lineTo(ptTarget.x, ptTarget.y);
 						break;
-					case chem.core.Bond.StereoType.Up:
+					case chem.core.Bond.StereoType.Single.Up:
+                        bondPath.moveTo(ptSource.x, ptSource.y);
+                        bondPath.lineTo(ptLine0_target.x, ptLine0_target.y);
+                        bondPath.lineTo(ptLine1_target.x, ptLine1_target.y);
+//                        bondPath.moveTo(ptSource.x, ptSource.y);
+                        bondStroke=context.renderParams.upBondStroke;
+                        bondFill=context.renderParams.upBondFill;
+                        break;
+					case chem.core.Bond.StereoType.Single.Down:
 						break;
-					case chem.core.Bond.StereoType.Down:
-						break;
-					case chem.core.Bond.StereoType.Either:
+					case chem.core.Bond.StereoType.Single.Either:
 						break;
 				}
                 break;
@@ -82,7 +89,7 @@ chem.render.Renderer.prototype.renderBonds = function(){
         bondBoxPath.lineTo(ptLine1_source.x, ptLine1_source.y);
         bondBoxPath.close();
         
-        group.bondPath = graphics.drawPath(bondPath, context.renderParams.bondStroke, null, group);
+        group.bondPath = graphics.drawPath(bondPath, bondStroke, bondFill, group);
         group.bondBoxPath = graphics.drawPath(bondBoxPath, null, context.renderParams.transparentFill, group);
         group.bond = bond;
         if (context.widgetType == "editor") {

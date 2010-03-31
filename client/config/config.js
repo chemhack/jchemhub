@@ -17,6 +17,8 @@ chem.config.RenderParams.defaultValue= {
 		drawEndCarbon:true,
 		backgroundFill:new goog.graphics.SolidFill('white'),
 		bondStroke:new goog.graphics.Stroke(2, 'black'),
+        upBondStroke:null,
+        upBondFill:new goog.graphics.SolidFill('black'),
 		bondHighlightStroke:new goog.graphics.Stroke(2, 'blue'),
 		atomFont:new goog.graphics.Font(10, 'Times'),
 		atomLabelStroke:null,
