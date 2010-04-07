@@ -31,11 +31,10 @@ chem.ring.RingFinder.findRings = function(_molecule){
 
     var molecule = _molecule;
     var rings = new Array();
-    var cntAtom = molecule.countAtoms();
-    
+
     graph = new chem.ring.PathGraph(molecule)
-    
-    for (var i = 0; i < molecule.countAtoms(); i++) {
+
+    for (var i = 0,il = molecule.countAtoms(); i < il; i++) {
         var edges = graph.remove(molecule.getAtom(i));
         for (var j = 0; j < edges.length; j++) {
             edge = edges[j];
@@ -59,13 +58,13 @@ chem.ring.PathGraph = function(molecule){
     this.edges = new Array();
     this.atoms = new Array();
     // load edges
-    for (var i = 0; i < molecule.countBonds(); i++) {
+    for (var i = 0,il = molecule.countBonds(); i < il; i++) {
         bond = molecule.getBond(i);
         var edge = [bond.source, bond.target];
         this.edges.push(new chem.ring.PathEdge(edge));
     }
     // load atoms
-    for (var i = 0; i < molecule.countAtoms(); i++) {
+    for (var i = 0,il=molecule.countAtoms(); i < il; i++) {
         this.atoms.push(molecule.getAtom(i));
     }
 }
@@ -73,13 +72,13 @@ chem.ring.PathGraph = function(molecule){
 chem.ring.PathGraph.prototype.remove = function(atom){
     var oldEdges = this.getEdges(atom);
     result = new Array();
-    for (var i = 0; i < oldEdges.length; i++) {
+    for (var i = 0, il = oldEdges.length; i < il; i++) {
         if (oldEdges[i].isCycle()) {
             result.push(oldEdges[i]);
         }
     }
-    
-    for (var i = 0; i < result.length; i++) {
+
+    for (var i = 0,il = result.length; i < il; i++) {
         if (goog.array.contains(oldEdges, result[i])) {
             goog.array.remove(oldEdges, result[i]);
         }
@@ -90,13 +89,13 @@ chem.ring.PathGraph.prototype.remove = function(atom){
     
     newEdges = this.spliceEdges(oldEdges);
     
-    for (var i = 0; i < oldEdges.length; i++) {
+    for (var i = 0,il=oldEdges.length; i < il; i++) {
         if (goog.array.contains(this.edges, oldEdges[i])) {
             goog.array.remove(this.edges, oldEdges[i]);
         }
     }
     
-    for (var i = 0; i < newEdges.length; i++) {
+    for (var i = 0,il=newEdges.length; i < il; i++) {
         if (!goog.array.contains(this.edges, newEdges[i])) {
             this.edges.push(newEdges[i]);
         }
@@ -109,7 +108,7 @@ chem.ring.PathGraph.prototype.remove = function(atom){
 chem.ring.PathGraph.prototype.getEdges = function(atom){
     var result = new Array();
     
-    for (var i = 0; i < this.edges.length; i++) {
+    for (var i = 0,il=this.edges.length; i < il; i++) {
         edge = this.edges[i];
         
         if (edge.isCycle()) {
@@ -130,8 +129,8 @@ chem.ring.PathGraph.prototype.getEdges = function(atom){
 chem.ring.PathGraph.prototype.spliceEdges = function(_edges){
     var result = new Array();
     
-    for (var i = 0; i < _edges.length; i++) {
-        for (var j = i + 1; j < _edges.length; j++) {
+    for (var i = 0,il=_edges.length; i < il; i++) {
+        for (var j = i + 1; j < il; j++) {
             spliced = _edges[j].splice(_edges[i]);
             if (spliced != null) {
                 result.push(spliced);
@@ -160,7 +159,7 @@ chem.ring.PathEdge.prototype.isCycle = function(){
 chem.ring.PathEdge.prototype.splice = function(other){
     intersection = this.getIntersection(other.atoms);
     newAtoms = new Array();
-    for (var i = 0; i < this.atoms.length; i++) {
+    for (var i = 0,il=this.atoms.length; i < il; i++) {
         newAtoms.push(this.atoms[i]);
     }
     
@@ -169,7 +168,7 @@ chem.ring.PathEdge.prototype.splice = function(other){
     }
     
     if (other.atoms[0] == intersection) {
-        for (var i = 1; i < other.atoms.length; i++) {
+        for (var i = 1,il=other.atoms.length; i < il; i++) {
             newAtoms.push(other.atoms[i]);
         }
     }
@@ -188,8 +187,8 @@ chem.ring.PathEdge.prototype.splice = function(other){
 
 
 chem.ring.PathEdge.prototype.isRealPath = function(atoms){
-    for (var i = 1; i < atoms.length - 1; i++) {
-        for (var j = 1; j < atoms.length - 1; j++) {
+    for (var i = 1,il=atoms.length - 1; i < il; i++) {
+        for (var j = 1; j < il; j++) {
             if (i == j) {
                 continue;
             }
