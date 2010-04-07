@@ -22,11 +22,28 @@ Copyright (c) 2010 Mark Rijnbeek (markr@ebi.ac.uk)
         </script>
         <script>
             goog.require('goog.testing.jsunit');
+            goog.require('goog.debug');
+            goog.require('goog.debug.FancyWindow');
+            goog.require('goog.debug.Logger');
+    		var setup=false;
+			var debugWindow=null;
+			var theLogger = null;
         </script>
-
         <script>
             function setUp(){
                 ringFinder = new chem.ring.RingFinder();
+                if (!setup) {					
+                  debugWindow = new goog.debug.DebugWindow('main');
+				  theLogger = goog.debug.Logger.getLogger('chem.ring.RingFinder');
+				  setup=true;
+				}
+            }
+
+            function debug(name, rings){
+                var debugStmt = name+": ";
+                for (var i = 0; i < rings.length; i++)
+                    debugStmt += rings[i].length + " ";
+                theLogger.info(debugStmt);
             }
             
             function testBenzene(){
@@ -37,6 +54,7 @@ Copyright (c) 2010 Mark Rijnbeek (markr@ebi.ac.uk)
             function testCubane(){
                 var cubane = "\n  xxx     02140917482D          \n\n  8 12  0  0  0  0            999 V2000\n    0.0001    0.4125    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000   -0.4125    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.8250    0.4125    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.8250   -0.4125    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.4628    0.0050    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.3623    0.0052    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.4627   -0.8200    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.3623   -0.8200    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n  4  7  1  0  0  0  0\n  4  3  1  0  0  0  0\n  3  5  1  0  0  0  0\n  1  3  1  0  0  0  0\n  1  6  1  0  0  0  0\n  2  4  1  0  0  0  0\n  2  8  1  0  0  0  0\n  8  6  1  0  0  0  0\n  5  7  1  0  0  0  0\n  7  8  1  0  0  0  0\n  1  2  1  0  0  0  0\n  6  5  1  0  0  0  0\nM  END\n";
                 findRings("cubane", cubane, 28);
+
             }
             
             
@@ -51,7 +69,6 @@ Copyright (c) 2010 Mark Rijnbeek (markr@ebi.ac.uk)
                 findRings("naphtalene", naphtalene, 3);
             }
             
-            //______________
             
             function findRings(name, mdlString, count){
                 var mol = chem.io.Molfile.read(mdlString);
@@ -59,15 +76,8 @@ Copyright (c) 2010 Mark Rijnbeek (markr@ebi.ac.uk)
                 assertEquals(count, rings.length);
                 debug(name, rings);
             }
+
             
-            function debug(name, rings){
-                var debugStmt = new String();
-                for (var i = 0; i < rings.length; i++) {
-                    debugStmt += rings[i].length + " ";
-                }
-				//TODO = debug to HTML somehow..
-                //alert(name + "\n" + debugStmt);
-            }
         </script>
     </head>
     <body>
