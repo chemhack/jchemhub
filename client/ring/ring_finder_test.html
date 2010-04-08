@@ -20,6 +20,8 @@ Copyright (c) 2010 Mark Rijnbeek (markr@ebi.ac.uk)
         </script>
         <script src="ring_finder.js">
         </script>
+        <script src="ring.js">
+        </script>
         <script>
             goog.require('goog.testing.jsunit');
             goog.require('goog.debug');
@@ -31,7 +33,6 @@ Copyright (c) 2010 Mark Rijnbeek (markr@ebi.ac.uk)
         </script>
         <script>
             function setUp(){
-                ringFinder = new chem.ring.RingFinder();
                 if (!setup) {					
                   debugWindow = new goog.debug.DebugWindow('main');
 				  theLogger = goog.debug.Logger.getLogger('chem.ring.RingFinder');
@@ -42,7 +43,7 @@ Copyright (c) 2010 Mark Rijnbeek (markr@ebi.ac.uk)
             function debug(name, rings){
                 var debugStmt = name+": ";
                 for (var i = 0; i < rings.length; i++)
-                    debugStmt += rings[i].length + " ";
+                    debugStmt += rings[i].atoms.length + " ";
                 theLogger.info(debugStmt);
             }
             

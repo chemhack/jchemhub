@@ -10,6 +10,8 @@
  * http://metamolecular.com/mx
  */
 goog.provide('chem.ring.RingFinder');
+
+goog.require('goog.structs.Set');
 goog.require('goog.structs.Set');
 goog.require('goog.array');
 
@@ -27,10 +29,14 @@ goog.require('goog.array');
 chem.ring.RingFinder = function(){
 }
 
+/**
+ * Hanser main loop, produces the rings for a given molecule.
+ * @param {Object} _molecule
+ */
 chem.ring.RingFinder.findRings = function(_molecule){
 
     var molecule = _molecule;
-    var rings = new Array();
+    var atomOnlyRings = new Array();
 
     graph = new chem.ring.PathGraph(molecule)
 
@@ -38,17 +44,42 @@ chem.ring.RingFinder.findRings = function(_molecule){
         var edges = graph.remove(molecule.getAtom(i));
         for (var j = 0; j < edges.length; j++) {
             edge = edges[j];
-            ring = edge.atoms;
-            
-            // xtra: last atom is same as first atom, remove it..
-            goog.array.removeAt(ring, ring.length - 1);
-            rings.push(ring);
+            atom_ring = edge.atoms;
+            atomOnlyRings.push(atom_ring);
         }
     }
     //xtra: sort array according to ring size
-    goog.array.sort(rings);
+    goog.array.sort(atomOnlyRings);
+	
+	var rings=new Array();
+    for (var i = 0, il = atomOnlyRings.length; i < il; i++) {
+		rings.push(this.createRing(atomOnlyRings[i],molecule));
+	}
     return rings;
 }
+
+/**
+ * The Hanser Ring Finder produces a ring as just a series of atoms.
+ * Here we complete this information with the bonds and the ring center,
+ * creating a ring object.
+ * @param {Object} atoms
+ */
+chem.ring.RingFinder.createRing = function(atoms,molecule){
+	
+    var bonds = new Array();
+    for (var i = 0, il = atoms.length-1; i < il; i++) {
+		bond = molecule.findBond(atoms[i],atoms[i+1]);
+		if(bond!=null) {
+			bonds.push(bond);
+		}
+	}
+    //Hanser last atom is same as first atom, remove it..
+    goog.array.removeAt(atoms, atoms.length - 1);
+    
+	var ring = new chem.ring.Ring(atoms,bonds);  
+    return ring;
+}
+
 
 //_____________________________________________________________________________
 // PathGraph

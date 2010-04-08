@@ -120,6 +120,21 @@ chem.core.Molecule.prototype.getBond=function(id){
 }
 
 /**
+ * Find the bond between two given atoms if it exists. Otherwise return null.
+ * @param {Object} atom1
+ * @param {Object} atom2
+ */
+chem.core.Molecule.prototype.findBond=function(atom1, atom2){
+    for (var i = 0, il = this.bonds.length; i < il; i++) {
+		var bond = this.bonds[i];
+		if ((atom1==bond.source && atom2==bond.target)||(atom2==bond.source && atom1==bond.target))
+		  return bond;
+	}
+	return null;
+}
+
+
+/**
  * Return id of given atom. If not found, return -1;
  * @param {chem.core.Atom} atom The atom to lookup.
  */
@@ -197,4 +212,6 @@ chem.core.Molecule.prototype.setName=function(_name){
 chem.core.Molecule.prototype.getName=function(){
     return this.name;  
 }
+
+
 

@@ -23,6 +23,9 @@ chem.render.Renderer.prototype.renderBonds = function(){
 	var context=this.context;
 	var transform=this.transform;
 	var graphics=this.graphics;
+
+    var all_rings=chem.ring.RingFinder.findRings(context.mol);
+
     for (var i = 0, il = context.mol.countBonds(); i < il; i++) {
         var bond = context.mol.getBond(i);
         var ptSource = transform.transformPoint(bond.source.x, bond.source.y);
@@ -38,32 +41,53 @@ chem.render.Renderer.prototype.renderBonds = function(){
         var ptLine1_target = transform.transformPoint(result.target[1].x, result.target[1].y);
         
         switch (bond.bondType) {
-            case chem.core.Bond.BondType.Single:
-				switch(bond.stereoType){
+			case chem.core.Bond.BondType.Single:
+				switch (bond.stereoType) {
 					case chem.core.Bond.StereoType.Single.NotStereo:
-               			bondPath.moveTo(ptSource.x, ptSource.y);
-               			bondPath.lineTo(ptTarget.x, ptTarget.y);
+						bondPath.moveTo(ptSource.x, ptSource.y);
+						bondPath.lineTo(ptTarget.x, ptTarget.y);
 						break;
 					case chem.core.Bond.StereoType.Single.Up:
-                        bondPath.moveTo(ptSource.x, ptSource.y);
-                        bondPath.lineTo(ptLine0_target.x, ptLine0_target.y);
-                        bondPath.lineTo(ptLine1_target.x, ptLine1_target.y);
-//                        bondPath.moveTo(ptSource.x, ptSource.y);
-                        bondStroke=context.renderParams.upBondStroke;
-                        bondFill=context.renderParams.upBondFill;
-                        break;
+						bondPath.moveTo(ptSource.x, ptSource.y);
+						bondPath.lineTo(ptLine0_target.x, ptLine0_target.y);
+						bondPath.lineTo(ptLine1_target.x, ptLine1_target.y);
+						bondStroke = context.renderParams.upBondStroke;
+						bondFill = context.renderParams.upBondFill;
+						break;
 					case chem.core.Bond.StereoType.Single.Down:
 						break;
 					case chem.core.Bond.StereoType.Single.Either:
 						break;
 				}
-                break;
-            case chem.core.Bond.BondType.Double:
-                bondPath.moveTo(ptLine0_source.x, ptLine0_source.y);
-                bondPath.lineTo(ptLine0_target.x, ptLine0_target.y);
-                bondPath.moveTo(ptLine1_source.x, ptLine1_source.y);
-                bondPath.lineTo(ptLine1_target.x, ptLine1_target.y);
-                break;
+				break;
+			case chem.core.Bond.BondType.Double:
+				var inRing = false;
+				var ring=null;
+				for (var r = 0, rl = all_rings.length; r < rl; r++) {
+					ring = all_rings[r];
+					if (goog.array.contains(ring.bonds, bond)) {
+						inRing = true;
+						break;
+					}
+				}
+				if (!inRing) {
+                    bondPath.moveTo(ptLine0_source.x, ptLine0_source.y);
+                    bondPath.lineTo(ptLine0_target.x, ptLine0_target.y);
+                    bondPath.moveTo(ptLine1_source.x, ptLine1_source.y);
+                    bondPath.lineTo(ptLine1_target.x, ptLine1_target.y);
+                    break;
+				}
+				else {
+					// draw inner line element in the case of a double bond in a ring
+                    bondPath.moveTo(ptSource.x, ptSource.y);
+                    bondPath.lineTo(ptTarget.x, ptTarget.y);
+					var ringCenter= transform.transformPoint(ring.ringCenter[0], ring.ringCenter[1]);
+					var innerLineFromCoords=chem.render.Geometry.interpolate(ptSource.x, ptSource.y,ringCenter.x,ringCenter.y,0.20);
+                    var innerLineToCoords  =chem.render.Geometry.interpolate(ptTarget.x, ptTarget.y,ringCenter.x,ringCenter.y,0.20);
+                    bondPath.moveTo(innerLineFromCoords[0],innerLineFromCoords[1]);
+                    bondPath.lineTo(innerLineToCoords[0],innerLineToCoords[1]);
+                    break;
+				}
             case chem.core.Bond.BondType.Triple:
                 bondPath.moveTo(ptSource.x, ptSource.y);
                 bondPath.lineTo(ptTarget.x, ptTarget.y);
@@ -137,8 +161,9 @@ chem.render.Renderer.prototype.renderAtoms = function(){
 
     for (var i = 0, il = context.mol.countAtoms(); i < il; i++) {
         var atom = context.mol.getAtom(i);
-        var point = transform.transformPoint(atom.x, atom.y);
-        var symbol = atom.symbol;
+        var point = transform.transformPoint(atom.x,atom.y);
+        
+		var symbol = atom.symbol;
         
         var shouldDrawAtom = false;
         if(symbol=="C"){

@@ -212,3 +212,19 @@ chem.render.Geometry.getBondAngle=function(bond){
 	return angle;
 }
 
+
+
+/**
+ *  Linearly interpolates between tuples t1 and t2 and returns 
+ *  result (1-alpha)*t1 + alpha*t2.
+ *  @param {Object} x1 tuple1 x coords
+ *  @param {Object} y1 tuple1 y coords
+ *  @param {Object} x2 tuple2 x coords
+ *  @param {Object} y2 tuple2 y coords
+ *  @param {Object} aplha
+ */
+chem.render.Geometry.interpolate = function(x1,y1,x2,y2, alpha){
+	var x=((1-alpha)*x1 + alpha*x2);
+	var y=((1-alpha)*y1 + alpha*y2);
+    return new Array(x,y);
+}
