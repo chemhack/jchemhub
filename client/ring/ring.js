@@ -24,7 +24,7 @@ chem.ring.Ring=function(_atoms,_bonds)
 
     var avgX=0;
 	var avgY=0;
-    for (var j = 0, jl = _atoms.length-1; j < jl; j++) {
+    for (var j = 0, jl = _atoms.length; j < jl; j++) {
         avgX += _atoms[j].x;
         avgY += _atoms[j].y;
     }
