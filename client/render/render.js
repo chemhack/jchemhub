@@ -55,14 +55,19 @@ chem.render.Renderer.prototype.renderBonds = function(){
 						bondFill = context.renderParams.upBondFill;
 						break;
 					case chem.core.Bond.StereoType.Single.Down:
+                        bondPath.moveTo(ptSource.x, ptSource.y);
+                        bondPath.lineTo(ptTarget.x, ptTarget.y);
 						break;
 					case chem.core.Bond.StereoType.Single.Either:
+                        bondPath.moveTo(ptSource.x, ptSource.y);
+                        bondPath.lineTo(ptTarget.x, ptTarget.y);
 						break;
 				}
 				break;
 			case chem.core.Bond.BondType.Double:
 				var inRing = false;
 				var ring=null;
+                    //TODO remove this step by assigning rings to atom in ring finder
 				for (var r = 0, rl = all_rings.length; r < rl; r++) {
 					ring = all_rings[r];
 					if (goog.array.contains(ring.bonds, bond)) {
