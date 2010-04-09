@@ -21,7 +21,7 @@ chem.core.Molecule=function()
     this.bonds = new Array();
     this.atoms = new Array();
 	this.name  = new String();
-}
+};
 
 /**
  * Creates a new Atom.
@@ -34,7 +34,8 @@ chem.core.Atom=function(symbol)
 	this.y=0;
 	this.z=0;
 	this.bonds=new goog.structs.Set();
-}
+    this.charge=0;
+};
 
 chem.core.Atom.prototype.countBonds = function() {
 	return this.bonds.getCount();	
@@ -50,7 +51,7 @@ chem.core.Bond=function(sourceAtom,targetAtom,bondType)
     this.target=targetAtom;
 	this.bondType=bondType;
 	this.stereoType=chem.core.Bond.StereoType.NoStereo;
-}
+};
 
 /**
  * Bond Types, values in molfile spec. Values 4 through 8 are for SSS queries only.
@@ -64,7 +65,7 @@ chem.core.Bond.BondType={
 	SingleOrAromatic:6,
 	DoubleOrAromatic:7,
 	Any:8
-}
+};
 
 /**
  * Bond StereoTypes, values in molfile spec. 
@@ -80,7 +81,7 @@ chem.core.Bond.StereoType={
 		DetectByCoords:0,
 		Either:	3		
 	}
-}
+};
 
 /**
  * Add an atom to molecule.
@@ -88,7 +89,7 @@ chem.core.Bond.StereoType={
  */
 chem.core.Molecule.prototype.addAtom=function(atom){
 	this.atoms.push(atom);		
-}
+};
 
 /**
  * Add a bond to molecule.
@@ -99,7 +100,7 @@ chem.core.Molecule.prototype.addBond=function(bond){
 	this.bonds.push(bond);
 	bond.source.bonds.add(bond);
 	bond.target.bonds.add(bond);
-}
+};
 
 /**
  * Get the atom of given id.
@@ -108,7 +109,7 @@ chem.core.Molecule.prototype.addBond=function(bond){
 
 chem.core.Molecule.prototype.getAtom=function(id){
 	return this.atoms[id];	
-}
+};
 
 /**
  * Get the bond of given id.
@@ -117,7 +118,7 @@ chem.core.Molecule.prototype.getAtom=function(id){
 
 chem.core.Molecule.prototype.getBond=function(id){
 	return this.bonds[id];	
-}
+};
 
 /**
  * Find the bond between two given atoms if it exists. Otherwise return null.
@@ -131,7 +132,7 @@ chem.core.Molecule.prototype.findBond=function(atom1, atom2){
 		  return bond;
 	}
 	return null;
-}
+};
 
 
 /**
@@ -140,7 +141,7 @@ chem.core.Molecule.prototype.findBond=function(atom1, atom2){
  */
 chem.core.Molecule.prototype.indexOfAtom=function(atom){
 	return goog.array.indexOf(this.atoms,atom);
-}
+};
 
 /**
  * Return id of given bond. If not found, return -1;
@@ -148,7 +149,7 @@ chem.core.Molecule.prototype.indexOfAtom=function(atom){
  */
 chem.core.Molecule.prototype.indexOfBond=function(bond){
 	return goog.array.indexOf(this.bonds,bond);
-}
+};
 
 /**
  * Remove a atom from molecule.
@@ -170,7 +171,7 @@ chem.core.Molecule.prototype.removeAtom=function(atomOrId){
     atom.bonds.clear();
     goog.array.remove(this.atoms,atom);
 
-}
+};
 
 
 /**
@@ -188,30 +189,30 @@ chem.core.Molecule.prototype.removeBond=function(bondOrId){
     bond.source.bonds.remove(bond);
     bond.target.bonds.remove(bond);
     goog.array.remove(this.bonds,bond);
-}
+};
 
 /**
  * Count atoms.
  */
 chem.core.Molecule.prototype.countAtoms=function(){
 	return this.atoms.length;
-}
+};
 
 /**
  * Count bonds.
  */
 chem.core.Molecule.prototype.countBonds=function(){
 	return this.bonds.length;
-}
+};
 
 
 chem.core.Molecule.prototype.setName=function(_name){
     this.name=_name;  
-}
+};
 
 chem.core.Molecule.prototype.getName=function(){
     return this.name;  
-}
+};
 
 
 
