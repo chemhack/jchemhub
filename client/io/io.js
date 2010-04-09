@@ -22,13 +22,34 @@ chem.io.Molfile.read=function(molfile)
     var bond_count = parseInt(mol_lines[3].substr(3,3));
 
     for(i=1; i<=atom_count; i++) {
-    	var line = mol_lines[i+3];
-		var symbol=line.substr(30,4).replace(/(^\s*)|(\s*$)/g, "");
-        
-		var atom = new chem.core.Atom(symbol);
-		atom.x = parseFloat(line.substr( 0,10));
-        atom.y = parseFloat(line.substr(10,10));
-        atom.z = parseFloat(line.substr(20,10));
+        var line = mol_lines[i + 3];
+        var symbol = line.substr(30, 4).replace(/(^\s*)|(\s*$)/g, "");
+
+        var atom = new chem.core.Atom(symbol);
+        atom.x = parseFloat(line.substr(0, 10));
+        atom.y = parseFloat(line.substr(10, 10));
+        atom.z = parseFloat(line.substr(20, 10));
+        //see page 15 of ctfile for details http://www.symyx.com/downloads/public/ctfile/ctfile.pdf
+        var ctfile_dd = parseInt(line.substr(34, 2)); //TODO implement isotopic support
+        var ctfile_ccc = parseInt(line.substr(36, 3));
+        //TODO support old-fashioned M ISO
+
+        if (ctfile_ccc == 0) {
+        } else if (ctfile_ccc == 1) {
+            atom.charge = 3;
+        } else if (ctfile_ccc == 2) {
+            atom.charge = 2;
+        } else if (ctfile_ccc == 3) {
+            atom.charge = 1;
+        } else if (ctfile_ccc == 4) {
+            //TODO support doublet radical
+        } else if (ctfile_ccc == 5) {
+            atom.charge = -1;
+        } else if (ctfile_ccc == 6) {
+            atom.charge = -2;
+        } else if (ctfile_ccc == 7) {
+            atom.charge = -3;
+        }
         mol.addAtom(atom);
     }
 

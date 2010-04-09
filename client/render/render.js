@@ -169,6 +169,8 @@ chem.render.Renderer.prototype.renderAtoms = function(){
         if(symbol=="C"){
             if(context.renderParams.drawEndCarbon&&atom.countBonds()==1){
                 shouldDrawAtom=true;
+            }else if(atom.charge!=0){
+                shouldDrawAtom=true;
             }
         }else if(symbol=="H"){
             shouldDrawAtom=context.renderParams.showExplicitHydrogens;
@@ -181,9 +183,6 @@ chem.render.Renderer.prototype.renderAtoms = function(){
 
         if (shouldDrawAtom) {
 
-            //Extend the graphics group object.
-
-//            var shouldDrawAtom=false;
 			var atomLabelFill = context.renderParams.atomLabelFill[symbol]?context.renderParams.atomLabelFill[symbol]:context.renderParams.atomLabelFill['C'];
             var atomLabelBackgroundFill = context.renderParams.backgroundFill;
             var mainAtomLabel=symbol,subscriptLabel=null,superscriptLabel=null;
@@ -196,7 +195,7 @@ chem.render.Renderer.prototype.renderAtoms = function(){
                             totalBondOrder+=element.bondType;//TODO not good enough, need to handle aromatic bonds.        
                         });
                         //TODO consider charge in
-                        var hydrogenCount = cov-totalBondOrder;
+                        var hydrogenCount = cov-totalBondOrder-Math.abs(atom.charge);
                         if(hydrogenCount>0){
                             mainAtomLabel=symbol+"H";
                             if(hydrogenCount>1){
@@ -204,15 +203,31 @@ chem.render.Renderer.prototype.renderAtoms = function(){
                             }
                         }
                     }
+                    if(atom.charge!=0){
+                        if(atom.charge==1){
+                            superscriptLabel='+';
+                        }else if(atom.charge>1){
+                            superscriptLabel=atom.charge+'+';
+                        }else if(atom.charge==-1){
+                            superscriptLabel='-';
+                        }else if(atom.charge<-1){
+                            superscriptLabel=(-atom.charge)+'-';
+                        }
+                    }
                 }
                 var textWidth = chem.render.Renderer.getTextWidth(mainAtomLabel, context.renderParams.atomFont);
                 var textHeight = context.renderParams.atomFont.size;
                 group.atomLabelBackgroud = graphics.drawRect(point.x - textWidth / 2, point.y - textHeight / 2, textWidth, textHeight, null, atomLabelBackgroundFill, group);                
                 graphics.drawText(mainAtomLabel, point.x - textWidth / 2, point.y - textHeight / 2, textWidth, textHeight, 'center', null, context.renderParams.atomFont, context.renderParams.atomLabelStroke, atomLabelFill, group);
-                if(subscriptLabel){
-                    graphics.drawText(subscriptLabel, point.x + textWidth / 3, point.y , textWidth, textHeight, 'center', null, context.renderParams.atomSubFont, context.renderParams.atomLabelStroke, atomLabelFill, group);
+                if(subscriptLabel||superscriptLabel){
+                    var subSize = context.renderParams.atomSubFont.size;
+                    if(subscriptLabel){
+                    graphics.drawText(subscriptLabel, point.x + textWidth / 3, point.y , subSize, subSize, 'center', null, context.renderParams.atomSubFont, context.renderParams.atomLabelStroke, atomLabelFill, group);
                 }
-
+                if(superscriptLabel){
+                    graphics.drawText(superscriptLabel, point.x + textWidth *0.6, point.y-textHeight*0.8 , subSize, subSize, 'center', null, context.renderParams.atomSubFont, context.renderParams.atomLabelStroke, atomLabelFill, group);
+                }
+                }
             }
 
         }
