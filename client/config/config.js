@@ -21,6 +21,8 @@ chem.config.RenderParams.defaultValue = {
     upBondFill:new goog.graphics.SolidFill('black'),
     downBondStroke:new goog.graphics.Stroke(1, 'black'),
     downBondFill:null,
+    upOrDownBondStroke:new goog.graphics.Stroke(1, 'black'),
+    upOrDownBondFill:null,    
     bondHighlightStroke:new goog.graphics.Stroke(2, 'blue'),
     atomFont:new goog.graphics.Font(0, 'Times'),     //Font size is dynamic
     atomSubFont:new goog.graphics.Font(0, 'Times'), //Font size is dynamic

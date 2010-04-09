@@ -63,8 +63,16 @@ chem.render.Renderer.prototype.renderBonds = function(){
                         bondFill = context.renderParams.downBondFill;
 						break;
 					case chem.core.Bond.StereoType.Single.Either:
-                        bondPath.moveTo(ptSource.x, ptSource.y);
-                        bondPath.lineTo(ptTarget.x, ptTarget.y);
+                        bondPath.moveTo(ptSource.x, ptSource.y);                            
+                        for(var j=0,lines=10;j<lines;j++){
+                            if(j%2){
+                                bondPath.lineTo(ptSource.x*(1-j/lines)+ptLine0_target.x*j/lines, ptSource.y*(1-j/lines)+ptLine0_target.y*j/lines);
+                            }else{
+                                bondPath.lineTo(ptSource.x*(1-j/lines)+ptLine1_target.x*j/lines, ptSource.y*(1-j/lines)+ptLine1_target.y*j/lines);
+                            }
+                        }
+                        bondStroke = context.renderParams.upOrDownBondStroke;
+                        bondFill = context.renderParams.upOrDownBondFill;
 						break;
 				}
 				break;
@@ -106,7 +114,6 @@ chem.render.Renderer.prototype.renderBonds = function(){
                 bondPath.lineTo(ptLine1_target.x, ptLine1_target.y);
                 break;
         }
-        bondPath.close();
         
         var group = graphics.createGroup();
         
@@ -257,6 +264,7 @@ chem.render.Renderer.prototype.renderAtoms = function(){
 };
 
 chem.render.Renderer.getTextWidth = function(text, font){
+    //TODO measure text width with div
     return text.length * 0.55 * font.size;
 };
 
