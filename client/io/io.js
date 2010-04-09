@@ -15,13 +15,13 @@ chem.io.Molfile.read=function(molfile)
 {
 	var mol=new chem.core.Molecule();
 	var lineDelimiter=molfile.indexOf("\r\n")>0?"\r\n":"\n";
-    var mol_lines = molfile.split(lineDelimiter); //TODO support windows LR "\r\n" 
+    var mol_lines = molfile.split(lineDelimiter); 
 
     mol.setName(mol_lines[0]);
     var atom_count = parseInt(mol_lines[3].substr(0,3));
     var bond_count = parseInt(mol_lines[3].substr(3,3));
 
-    for(i=1; i<=atom_count; i++) {
+    for(var i=1; i<=atom_count; i++) {
         var line = mol_lines[i + 3];
         var symbol = line.substr(30, 4).replace(/(^\s*)|(\s*$)/g, "");
 
@@ -53,10 +53,9 @@ chem.io.Molfile.read=function(molfile)
         mol.addAtom(atom);
     }
 
-    for(i=1; i<=bond_count; i++) {
+    for(var i=1; i<=bond_count; i++) {
         var line = mol_lines[i+3+atom_count];
-    
-		//Don't forget to -1 because molfile numbering from 1 instead of 0  
+		//Don't forget to -1 because molfile numbering from 1 instead of 0
 	    sourceAtom =mol.getAtom(parseFloat(line.substr( 0,3))-1);
         targetAtom= mol.getAtom(parseFloat(line.substr( 3,3))-1);
 		bondType = parseFloat(line.substr( 6,3));
@@ -67,7 +66,42 @@ chem.io.Molfile.read=function(molfile)
         mol.addBond(bond);
 		
     }
-	
+
+    //Read M CHG
+    var i=4+atom_count+bond_count,il=mol_lines.length;
+    var superseded=false;
+    while(true) {
+        var line = mol_lines[i++];
+        if(i==il||line.indexOf("M  END")>=0){
+            break;
+        }
+        if(line.indexOf("M  CHG")>=0){
+            /* TODO Charge  [Generic]
+             M  CHGnn8 aaa vvv ...
+             vvv: -15 to +15. Default of 0 = uncharged atom. When present, this property supersedes
+             all charge and radical values in the atom block, forcing a 0 charge on all atoms not
+             listed in an M  CHG or M  RAD line.
+             *
+             * */
+            if(!superseded){
+                for(var j=0,jl=mol.countAtoms();j<jl;j++){
+                    mol.getAtom(j).charge=0;    
+                }
+                superseded=true;
+            }
+            var nn=parseInt(line.substr(6,3));
+            for (var k = 0; k < nn; k++) {
+                var atomNum=parseInt(line.substr(10+8*k,3));
+//                console.debug(atomNum);
+                var charge = parseInt(line.substr(14+8*k,3));
+//                console.debug(charge);
+                mol.getAtom(atomNum-1).charge=charge;
+            }
+
+        }
+//		console.debug(line);
+    }
+
 	//TODO parse Charge, SuperAtom groups, Properties....
 
     return mol;
