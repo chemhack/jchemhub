@@ -55,8 +55,12 @@ chem.render.Renderer.prototype.renderBonds = function(){
 						bondFill = context.renderParams.upBondFill;
 						break;
 					case chem.core.Bond.StereoType.Single.Down:
-                        bondPath.moveTo(ptSource.x, ptSource.y);
-                        bondPath.lineTo(ptTarget.x, ptTarget.y);
+                        for(var j=0,lines=10;j<lines;j++){
+                            bondPath.moveTo(ptSource.x*(1-j/lines)+ptLine0_target.x*j/lines, ptSource.y*(1-j/lines)+ptLine0_target.y*j/lines);
+                            bondPath.lineTo(ptSource.x*(1-j/lines)+ptLine1_target.x*j/lines, ptSource.y*(1-j/lines)+ptLine1_target.y*j/lines);
+                        }
+                        bondStroke = context.renderParams.downBondStroke;
+                        bondFill = context.renderParams.downBondFill;
 						break;
 					case chem.core.Bond.StereoType.Single.Either:
                         bondPath.moveTo(ptSource.x, ptSource.y);
@@ -230,7 +234,7 @@ chem.render.Renderer.prototype.renderAtoms = function(){
                     graphics.drawText(subscriptLabel, point.x + textWidth / 3, point.y , subSize, subSize, 'center', null, context.renderParams.atomSubFont, context.renderParams.atomLabelStroke, atomLabelFill, group);
                 }
                 if(superscriptLabel){
-                    graphics.drawText(superscriptLabel, point.x + textWidth *0.6, point.y-textHeight*0.8 , subSize, subSize, 'center', null, context.renderParams.atomSubFont, context.renderParams.atomLabelStroke, atomLabelFill, group);
+                    graphics.drawText(superscriptLabel, point.x + textWidth *0.4, point.y-textHeight*0.8 , subSize, subSize, 'center', null, context.renderParams.atomSubFont, context.renderParams.atomLabelStroke, atomLabelFill, group);
                 }
                 }
             }
