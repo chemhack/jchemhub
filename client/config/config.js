@@ -23,7 +23,10 @@ chem.config.RenderParams.defaultValue= {
         atomFont:new goog.graphics.Font(0, 'Times'),     //Font size is dynamic
         atomSubFont:new goog.graphics.Font(0, 'Times'), //Font size is dynamic
 		atomLabelStroke:null,
-		atomLabelFill:new goog.graphics.SolidFill('black'),
+		atomLabelFill:{"C":new goog.graphics.SolidFill('black'),
+            "N":new goog.graphics.SolidFill('blue'),
+            "O":new goog.graphics.SolidFill('red')
+        },
 		atomTransparentCircleSize:9,
 		atomHighlightStroke:new goog.graphics.Stroke(2, 'blue'),
 		transparentFill:new goog.graphics.SolidFill('blue',0.00001) //This is a closure library bug. Transparent can not set to zero. I've submitted a patch, waiting for their fix.
