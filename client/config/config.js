@@ -15,7 +15,7 @@ chem.config.RenderParams.defaultValue = {
     showExplicitHydrogens:true,
     showImplicitHydrogens:true,
     drawEndCarbon:true,
-    backgroundFill:new goog.graphics.SolidFill('honeydew'),
+    backgroundFill:new goog.graphics.SolidFill('#F0FFF0'),
     bondStroke:new goog.graphics.Stroke(2, 'black'),
     upBondStroke:new goog.graphics.Stroke(1, 'black'),
     upBondFill:new goog.graphics.SolidFill('black'),

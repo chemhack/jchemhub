@@ -1,0 +1,16 @@
+<component name="libraryTable">
+  <library name="AppEngine ORM">
+    <CLASSES>
+      <root url="file://D:/Applications/appengine-java-sdk-1.3.2/lib/user/orm" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://D:/Applications/appengine-java-sdk-1.3.2/src/orm/datanucleus-appengine-1.0.6.final-src.zip!/" />
+      <root url="jar://D:/Applications/appengine-java-sdk-1.3.2/src/orm/datanucleus-core-1.1.5-src.zip!/datanucleus-core-1.1.5/src/java" />
+      <root url="jar://D:/Applications/appengine-java-sdk-1.3.2/src/orm/datanucleus-enhancer-1.1.4-src.zip!/" />
+      <root url="jar://D:/Applications/appengine-java-sdk-1.3.2/src/orm/datanucleus-jpa-1.1.5-src.zip!/datanucleus-jpa-1.1.5/src/java" />
+      <root url="jar://D:/Applications/appengine-java-sdk-1.3.2/src/orm/jdo2-api-2.3-SNAPSHOT-src.zip!/" />
+    </SOURCES>
+    <jarDirectory url="file://D:/Applications/appengine-java-sdk-1.3.2/lib/user/orm" recursive="false" />
+  </library>
+</component>

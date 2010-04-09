@@ -113,6 +113,8 @@ chem.render.Renderer.prototype.renderBonds = function(){
                 bondPath.moveTo(ptLine1_source.x, ptLine1_source.y);
                 bondPath.lineTo(ptLine1_target.x, ptLine1_target.y);
                 break;
+            case chem.core.Bond.BondType.Aromatic:
+                break;
         }
         
         var group = graphics.createGroup();
@@ -210,7 +212,6 @@ chem.render.Renderer.prototype.renderAtoms = function(){
                         goog.array.forEach(atom.bonds.getValues(),function(element,index,array){
                             totalBondOrder+=element.bondType;//TODO not good enough, need to handle aromatic bonds.        
                         });
-                        //TODO consider charge in
                         var hydrogenCount = cov-totalBondOrder-Math.abs(atom.charge);
                         if(hydrogenCount>0){
                             mainAtomLabel=symbol+"H";
