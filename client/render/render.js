@@ -159,7 +159,7 @@ chem.render.Renderer.prototype.renderAtoms = function(){
             //Extend the graphics group object.
 
 //            var shouldDrawAtom=false;
-			var atomLabelFill = context.renderParams.atomLabelFill;
+			var atomLabelFill = context.renderParams.atomLabelFill[symbol]?context.renderParams.atomLabelFill[symbol]:context.renderParams.atomLabelFill['C'];
             var atomLabelBackgroundFill = context.renderParams.backgroundFill;
             var mainAtomLabel=symbol,subscriptLabel=null,superscriptLabel=null;
             if (shouldDrawAtom) {
