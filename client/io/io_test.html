@@ -9,6 +9,7 @@
 <script src="../util/string.js"></script>
 <script src="io.js"></script>
 <script src="io_test_molsample.js"></script>
+<script src="io_test_rxnsample.js"></script>    
 <script>
 	goog.require('goog.testing.jsunit');
 </script>
@@ -43,6 +44,12 @@
 		assertEquals(molfile2,molfile3);
 
 	}
+
+    function testReadRxnfile(){
+        var reaction=chem.io.Rxnfile.read(rxnsample);
+        assertEquals(3,reaction.reactants.length);
+        assertEquals(4,reaction.products.length);
+    }
 		
 	
 

@@ -3,6 +3,7 @@
 goog.provide('chem.core.Atom');
 goog.provide('chem.core.Bond');
 goog.provide('chem.core.Molecule');
+goog.provide('chem.core.Reaction');
 
 goog.require('goog.structs.Set');
 goog.require('goog.array');
@@ -215,4 +216,23 @@ chem.core.Molecule.prototype.getName=function(){
 };
 
 
+/**
+ * Creates a new Reaction.
+ * @constructor
+ */
+chem.core.Reaction=function()
+{
+    this.header="";
+    this.reactants = new Array();
+    this.products = new Array();
+};
+//TODO add docs
+chem.core.Reaction.prototype.addReactant=function(mol)
+{
+    this.reactants.push(mol);
+};
+chem.core.Reaction.prototype.addProduct=function(mol)
+{
+    this.products.push(mol);
+};
 
