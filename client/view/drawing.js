@@ -22,7 +22,6 @@ chem.view.Drawing.prototype.render = goog.abstractMethod;
  * layout drawing and all children
  */
 chem.view.Drawing.prototype.layout = function(transform){
-	console.log("layout");
 	this.setTransform(transform);
 	this.layoutChildren(transform);
 }
@@ -154,7 +153,7 @@ chem.view.Drawing.prototype.getTransform = function() {
 /**
  * set transform
  * 
- * @param {goog.graphics.AffineTransform}
+ * @param transform {goog.graphics.AffineTransform}
  */
 chem.view.Drawing.prototype.setTransform = function(transform) {
 	this._transform = transform
@@ -166,7 +165,8 @@ chem.view.Drawing.prototype.setTransform = function(transform) {
 /**
  * TTD:  this probably should be an extension of AffileTransform
  * transform array of coordinates 
- * @param {!Array.<goog.math.Coordinate>}
+ * @param trans {goog.graphics.AffineTransform}
+ * @param source_coords{!Array.<goog.math.Coordinate>}
  * @return {!Array.<goog.math.Coordinate>}
  */
 chem.view.Drawing.prototype.transformCoords=function(trans, source_coords){
@@ -195,7 +195,7 @@ chem.view.Drawing.Error = {
 			 * Error when an attempt is made to set the parent of a drawing in a
 			 * way that would result in an inconsistent object graph.
 			 */
-		  PARENT_UNABLE_TO_BE_SET: 'Unable to set parent component',
+		  PARENT_UNABLE_TO_BE_SET: 'Unable to set parent component'
 };
 
 

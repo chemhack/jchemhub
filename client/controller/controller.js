@@ -1,20 +1,38 @@
 goog.provide('chem.controller.Controller');
+goog.require('chem.view.ReactionEditor');
 goog.require('chem.view.ReactionDrawing');
+goog.require('chem.view.ArrowDrawing');
+goog.require('chem.view.PlusDrawing');
+goog.require('chem.io.Rxnfile');
 
-chem.controller.Controller = function(model, view) {
+chem.controller.Controller = function(model, element, opt_editor_config) {
 	this._model = model;
-	this._view = view;
-	view.add(model);
-	view.layoutAndRender();
+	this._view = new chem.view.ReactionEditor(element, opt_editor_config);
+	this._view.add(model);
+	this._view.layoutAndRender();
 }
 
 chem.controller.Controller.buildReactionDrawing = function(rxn) {
 	var rxn_drawing = new chem.view.ReactionDrawing();
+	var first = true;
 	goog.array.forEach(rxn.reactants, function(r) {
-
+		if (first) {
+			first = false;
+		} else {
+			rxn_drawing.add(new chem.view.PlusDrawing());
+		}
 		rxn_drawing.add(chem.controller.Controller.buildMoleculeDrawing(r));
 	});
+
+	rxn_drawing.add(new chem.view.ArrowDrawing());
+
+	first = true;
 	goog.array.forEach(rxn.products, function(p) {
+		if (first) {
+			first = false;
+		} else {
+			rxn_drawing.add(new chem.view.PlusDrawing());
+		}
 		rxn_drawing.add(chem.controller.Controller.buildMoleculeDrawing(p));
 	});
 	return rxn_drawing;
@@ -29,8 +47,9 @@ chem.controller.Controller.buildMoleculeDrawing = function(molecule) {
 						atom.symbol));
 			});
 	goog.array.forEach(molecule.bonds, function(bond) {
-		mol_drawing.add(chem.controller.Controller.createBondDrawing(bond.source.x, bond.source.y,
-				bond.target.x, bond.target.y, bond.bondType, bond.stereoType));
+		mol_drawing.add(chem.controller.Controller.createBondDrawing(
+				bond.source.x, bond.source.y, bond.target.x, bond.target.y,
+				bond.bondType, bond.stereoType));
 	});
 	return mol_drawing;
 };

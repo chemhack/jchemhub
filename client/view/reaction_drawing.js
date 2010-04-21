@@ -64,7 +64,7 @@ chem.view.ReactionDrawing.prototype.getSize = function() {
 /**
  * create scaling transform to scale to targetSize while retaining aspect ratio
  * 
- * @param {goog.math.Size}
+ * @param targetSize{goog.math.Size}
  */
 chem.view.ReactionDrawing.prototype.createScalingTransform = function(targetSize) {
 	var size = this.getSize();

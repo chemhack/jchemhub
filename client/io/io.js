@@ -2,6 +2,7 @@
 
 goog.provide('chem.io.Molfile');
 goog.provide('chem.io.Rxnfile');
+goog.require('chem.core.Reaction');
 
 /**
  * @fileoverview IO classes

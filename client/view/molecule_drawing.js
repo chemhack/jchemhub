@@ -8,7 +8,6 @@ goog.require("chem.view.DoubleBondDrawing");
 goog.require("chem.view.TripleBondDrawing");
 goog.require("goog.math.Box");
 
-
 /**
  * A molecule graphical element in the reaction editor.
  * 
@@ -24,7 +23,6 @@ chem.view.MoleculeDrawing = function(name) {
 };
 goog.inherits(chem.view.MoleculeDrawing, chem.view.Drawing);
 
-
 /**
  * render this drawing and all its children
  */
@@ -34,39 +32,43 @@ chem.view.MoleculeDrawing.prototype.render = function() {
 
 /**
  * layout molecule to zero-based coords
+ * 
  * @override
  */
-chem.view.MoleculeDrawing.prototype.layout = function(transform){
+chem.view.MoleculeDrawing.prototype.layout = function(transform) {
 
 	var size = this.getSize();
 	var bbox = this.getBoundingBox();
 	var dx = size.height - Math.min(bbox.top, bbox.bottom);
 	var dy = size.width - Math.min(bbox.left, bbox.right);
-	transform = transform.clone().preConcatenate(goog.graphics.AffineTransform.getTranslateInstance(dx, dy));
+	transform = transform.clone().preConcatenate(
+			goog.graphics.AffineTransform.getTranslateInstance(dx, dy));
 	chem.view.MoleculeDrawing.superClass_.layout.call(this, transform);
 }
 
 /**
  * get bounding box of all the atoms and bonds in this molecule
- * @return {goog.math.Box} 
+ * 
+ * @return {goog.math.Box}
  */
 chem.view.MoleculeDrawing.prototype.getBoundingBox = function() {
 	var coords = []
-	goog.array.forEach(this.getChildren(), function(child){
+	goog.array.forEach(this.getChildren(), function(child) {
 		coords.push.apply(coords, child.getCoordinates());
 	});
 
 	return goog.math.Box.boundingBox.apply(null, coords);
-	
+
 };
 
 /**
  * get bounding box size
+ * 
  * @return {goog.math.Size}
  */
-chem.view.MoleculeDrawing.prototype.getSize = function(){
+chem.view.MoleculeDrawing.prototype.getSize = function() {
 	var box = this.getBoundingBox();
-	var size = new goog.math.Size(box.right - box.left, box.bottom - box.top);
+	var size = new goog.math.Size(Math.abs(box.right - box.left), Math
+			.abs(box.bottom - box.top));
 	return size;
 }
-

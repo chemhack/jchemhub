@@ -30,7 +30,7 @@ chem.view.BondDrawing.prototype.getCoordinates = function() {
  */
 chem.view.BondDrawing.prototype.render = function() {
 	// render bond box path
-	var fill = new goog.graphics.SolidFill('red', 0.0001);
+	var fill = new goog.graphics.SolidFill('red', 0.001);
 	var stroke = null;
 	var radius = this.getConfig().get("highlight").radius;
 	var slope = this.perpendicularSlope(new goog.math.Line(this._coord0.x,
