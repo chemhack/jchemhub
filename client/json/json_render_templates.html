@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!--TODO: License and copyright-->
+<html>
+<head>
+<title>Render templates</title>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<script src="../../closure/goog/base.js"></script>
+<script>
+	goog.require('goog.dom');
+	goog.require('goog.graphics')
+	goog.require('goog.events');
+    goog.require('goog.events.EventType');; 	
+</script>
+<script src="../core/core.js"></script>
+<script src="../io/io.js"></script>
+<script src="../config/config.js"></script>
+<script src="../resource/atomic_system.js"></script>
+<script src="../ring/ring_finder.js"></script>
+<script src="../ring/ring.js"></script>
+
+<script src="json_templates.js"></script>
+<script src="../render/geometry.js"></script>
+<script src="../render/render.js"></script>
+<script>
+function showJSON(mol) {
+	document.write(chem.io.JSNOMolecule.write(mol));
+}
+function showMol(i) {
+    var mol = chem.io.JSONMolecule.read(templates[i]);
+    chem.render.Geometry.translateAllPositive(mol);
+	var target = document.getElementById('testGraphics');
+	target.innerHTML = "";
+ 	var context={
+		widgetType:"editor",
+		renderParams:chem.config.RenderParams.get(),
+		targetElement:target,
+		width:600,
+		height:300,
+		mol:mol		
+	};
+
+	var renderer=new chem.render.Renderer(context);
+	
+}
+</script>
+</head>
+<body>
+
+
+
+	<div id="testGraphics"></div>
+	<p>Simply move your mouse on atoms and bonds</p>
+    <p>Select template below</p>
+<script>
+
+showMol(0);
+for (i in templates) {
+	document.write('<a href="javascript:showMol(' +i+ ')">[' +templates[i].name+ ']</a>&nbsp;&nbsp;');
+}
+</script>
+
+</body>
+</html>
