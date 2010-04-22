@@ -3,6 +3,8 @@
 goog.provide('chem.io.Molfile');
 goog.provide('chem.io.Rxnfile');
 goog.require('chem.core.Reaction');
+goog.provide('chem.io.JSONMolecule');
+goog.provide('chem.io.JSONReaction');
 
 /**
  * @fileoverview IO classes
@@ -197,4 +199,100 @@ chem.io.Rxnfile.read=function(rxnfile)
     }
     return reaction;
 
+};
+
+/**
+ uses JSON.parse and .stringify;  needs def for IE and ??
+ This allows for a JSON external representation that uses bond atom-index
+  instead of atom objects.  So, there are 3 types of things of import here:
+  1. The actual Molecule object (typically mol here)
+  2. The object (typically jmol here) in which bond's atom objects are recast as atom indexes
+  3. The string representaion of jmol
+  There is not use for the JSON string represention of the actual Molecule object.
+*/
+
+/**
+ * Static method for reading JSON representation of mol object.
+ * import data into mol object
+ * @param {Object} The JSON object string or object itself
+ */
+chem.io.JSONMolecule.read = function(arg)
+{
+	var jmol;
+	if (arg.constructor == String) {
+		jmol = JSON.parse(arg);
+	} else {
+		jmol = arg;
+	}
+	var mol = new chem.core.Molecule();
+    mol.name=jmol.name;
+    for (i in jmol.atoms) {
+	    var a = jmol.atoms[i];
+	    var newatom = new chem.core.Atom();
+	    newatom.symbol = a.symbol;
+	    newatom.x = a.x;
+	    newatom.y = a.y;
+	    newatom.z = a.z;
+	    newatom.charge = a.charge;
+	    mol.addAtom(newatom);
+    }
+    var atoms = mol.atoms;
+    for (i in jmol.bondindex) {
+	    var b = jmol.bondindex[i];
+	    var newbond = new chem.core.Bond();
+	    newbond.source = atoms[b.source];
+	    newbond.target = atoms[b.target];
+	    newbond.bondType = b.type;
+	    newbond.stereoType = b.stereo;
+	    mol.addBond(newbond);
+    }
+    return mol;
+};
+/**
+ * export data from mol object
+ * returns The JSON representation of mol object.
+ */
+chem.io.JSONMolecule.write = function(mol) {
+	var atoms = new Array();
+	for (i in mol.atoms) {
+		var a = mol.atoms[i];
+		atoms.push({symbol: a.symbol, x: a.x, y: a.y, z: a.z, charge: a.charge});
+	}
+	var bonds = new Array();
+	for (i in mol.bonds) {
+		var b = mol.bonds[i];
+		bonds.push( {source: mol.indexOfAtom(b.source), target: mol.indexOfAtom(b.target), type: b.bondType, stereo:b.stereoType} );
+	}
+	return JSON.stringify( {name: mol.name, atoms: atoms, bondindex: bonds} );
+};
+
+/**
+ * Static method for reading JSON representation of reaction object.
+ * import data into reaction object
+ * @param {Object} The JSON object string, or object itself
+ */
+chem.io.JSONReaction.read = function(arg) {
+	var jrxn;
+	if (arg.constructor == String) {
+		jrxn = JSON.parse(arg);
+	} else {
+		jrxn = arg;
+	}
+	var rxn = new chem.core.Reaction();
+	rxn.header = jrxn.header;
+	for (i in jrxn.reactants) {
+		rxn.reactants.push(chem.io.JSONMolecule.read(jrxn.reactants[i]));
+	}
+	for (i in jrxn.products) {
+		rxn.products.push(chem.io.JSONMolecule.read(jrxn.products[i]));
+	}
+	return rxn;
+}
+
+/**
+ * export data from reaction object
+ * returns The JSON representation of reaction object.
+ */
+chem.io.JSONReaction.write = function(rxn) {
+	return JSON.stringify(rxn);
 };
