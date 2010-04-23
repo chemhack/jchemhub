@@ -4,7 +4,7 @@ jchemhub directory.
 
 	After you cd to your workspace:
 
-	For read-only (change the URL for read-write):
+	For read-only (replace the URL for read-write access):
 	git clone git://github.com/chemhack/jchemhub.git
 	
 	mkdir third-party
@@ -13,8 +13,34 @@ jchemhub directory.
 	
 	svn checkout http://closure-library.googlecode.com/svn/trunk/closure/ closure
 
-If you make and edit that changes a goog.provide or goog.require statement, 
+If you make an edit that changes a goog.provide or goog.require statement, 
 execute the calcdeps.py python script as follows to re-generate deps.js:
 
 	cd third-party/closure/goog/
-	../bin/calcdeps.py -o deps -p ../../../jchemhub -p ../../closure > ../../../jchemhub/deps.js 
+	
+	python ../bin/calcdeps.py -o deps -p ../../../jchemhub -p ../../closure > ../../../jchemhub/deps.js 
+
+The foregoing is sufficient to edit and run the code, but it is also a good idea to use the closure compiler as follows described below. 
+
+Create a directory for the compiler to live in, then retrieve and unpack it (the example below assumes that is it in a directory named 'closure-compiler' 
+adjacent to the jchemhub directory:
+	
+	mkdir closure-compiler
+	
+	cd closure-compiler
+	
+	wget http://closure-compiler.googlecode.com/files/compiler-latest.zip
+	
+	unzip compiler-latest.zip
+	
+	rm compiler-latest.zip
+	
+Not that the compiler.jar file can go into any convenient location, just adjust the --compiler_jar argument below accordingly
+
+Execute the compiler with a command like:
+	
+	cd third-party/closure/goog/
+	
+	python ../bin/calcdeps.py -o compiled -p ../../closure -p ../../../jchemhub --compiler_jar ../../../closure-compiler/compiler.jar --input ../../../jchemhub/controller/controller.js > ../../../controller_compiled.js
+
+

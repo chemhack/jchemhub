@@ -18,7 +18,6 @@ goog.addDependency("../../../jchemhub/render/renderer.js", ['jchemhub.render.Ren
 goog.addDependency("../../../jchemhub/resource/covalence.js", ['jchemhub.resource.Covalence'], []);
 goog.addDependency("../../../jchemhub/ring/ring.js", ['jchemhub.ring.Ring'], ['goog.array', 'goog.structs.Map']);
 goog.addDependency("../../../jchemhub/ring/ring_finder.js", ['jchemhub.ring.RingFinder'], ['goog.structs.Set', 'goog.structs.Set', 'goog.array', 'jchemhub.ring.Ring']);
-goog.addDependency("../../../jchemhub/util/string.js", ['jchemhub.util'], []);
 goog.addDependency("../../../jchemhub/view/arrow_drawing.js", ['jchemhub.view.ArrowDrawing'], []);
 goog.addDependency("../../../jchemhub/view/atom_drawing.js", ['jchemhub.view.AtomDrawing'], ['goog.math.Coordinate']);
 goog.addDependency("../../../jchemhub/view/bond_drawing.js", ['jchemhub.view.BondDrawing'], ['jchemhub.view.Drawing', 'goog.events']);
