@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!--TODO: License and copyright-->
+<html>
+<head>
+<title>jchemhub unit test-io.js</title>
+<script src="../../third-party/closure/goog/base.js"></script>
+<script src="../deps.js"></script>
+<script src="io_test_molsample.js"></script>
+<script src="io_test_rxnsample.js"></script>    
+<script>
+	goog.require('goog.testing.jsunit');
+	goog.require('jchemhub.io.Molfile');
+	goog.require('jchemhub.io.Rxnfile');
+</script>
+<script>
+	var molfile;
+ 	var sdfs;
+  	function setUp() {
+		sdfs = sdf.split("$$$$\n");
+		molfile=sdfs[3];
+   	}
+
+
+	function testReadMolfile() {
+		var mol=jchemhub.io.Molfile.read(molfile);
+		assertEquals(45,mol.countAtoms());
+		assertEquals(44,mol.countBonds());
+		
+		var bondToTest=mol.getBond(43);
+
+		assertEquals(1,bondToTest.bondType);
+		assertEquals(mol.getAtom(19),bondToTest.source);
+		assertEquals(mol.indexOfAtom(bondToTest.source),19);
+		assertEquals(mol.getAtom(27),bondToTest.target);
+        assertEquals(mol.indexOfAtom(bondToTest.target),27);
+	}
+	
+    function testWriteMolfile(){
+		var mol = jchemhub.io.Molfile.read(molfile);
+		console.log(molfile);
+		var molfile2 = jchemhub.io.Molfile.write(mol);
+		console.log(molfile2);
+		var mol2 = jchemhub.io.Molfile.read(molfile2);
+		var molfile3 = jchemhub.io.Molfile.write(mol2);
+		assertEquals(molfile2,molfile3);
+
+	}
+
+    function testReadRxnfile(){
+        var reaction=jchemhub.io.Rxnfile.read(rxnsample);
+        assertEquals(3,reaction.reactants.length);
+        assertEquals(4,reaction.products.length);
+    }
+		
+	
+
+
+</script>
+</head>
+<body>
+</body>
+</html>

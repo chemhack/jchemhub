@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!--TODO: License and copyright-->
+<html>
+<head>
+<title>Molblock to JSON with render</title>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<script src="../../third-party/closure/goog/base.js"></script>
+<script src="../deps.js"></script>
+<script>
+	goog.require('goog.dom');
+	goog.require('goog.graphics')
+	goog.require('goog.events');
+    goog.require('goog.events.EventType');; 	
+</script>
+
+<script src="../render/render_demo_molsample.js"></script>
+
+<script>
+function loadMol() {
+	molblock = document.getElementById("molblock");
+	molblock.value = molsample;
+}
+function showMol(molblock) {
+	var mol = jchemhub.io.Molfile.read(molblock);
+	renderMol(mol);
+	showJSON(mol);
+}
+function showJSON(mol) {
+	jblock = document.getElementById("jsonblock");
+	jblock.value = jchemhub.io.JSONMolecule.write(mol);
+}
+function renderMol(mol) {
+
+    jchemhub.render.Geometry.translateAllPositive(mol);
+	
+ 	var context={
+		widgetType:"editor",
+		renderParams:jchemhub.config.RenderParams.get(),
+		targetElement:document.getElementById('testGraphics'),
+		width:400,
+		height:400,
+		mol:mol		
+	};
+	
+	var renderer=new jchemhub.render.Renderer(context);
+}
+	
+</script>
+</head>
+<body onLoad="loadMol()">
+<form>
+<textarea id="molblock" name="molblock" cols=80>Paste molblock here</textarea>
+<input type=button value="render" onClick="showMol(molblock.value)">
+<BR>
+<textarea id="jsonblock" cols=80>JSON will appear here</textarea>
+</form>
+
+	<div id="testGraphics" />
+	<p>Simply move your mouse on atoms and bonds</p>
+    
+</body>
+</html>

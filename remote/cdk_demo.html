@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--TODO: License and copyright-->
+<html>
+<head>
+<title>Simple graphics demo</title>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<script src="../../third-party/closure/goog/base.js"></script>
+<script src="../deps.js"></script>
+<script>
+	goog.require('goog.dom');
+	goog.require('goog.graphics')
+	goog.require('goog.events');
+    goog.require('goog.events.EventType'); 	
+</script>
+</head>
+<body>
+
+<script>
+    function onDrawClick(e){
+        var smilesInput=document.getElementById('smiles');
+        if(!smilesInput.value){
+            alert("SMILES is empty");
+            return;
+        }
+        var cdkService=new jchemhub.remote.CDK();
+        cdkService.smilesToMolfile({'smiles':smilesInput.value},function(val){
+            if(!val.exception){
+                var mol = jchemhub.io.Molfile.read(val.molfile);
+                jchemhub.render.Geometry.translateAllPositive(mol);
+                 var context={
+                    widgetType:"editor",
+                    renderParams:jchemhub.config.RenderParams.get(),
+                    targetElement:document.getElementById('testGraphics'),
+                    width:400,
+                    height:400,
+                    mol:mol
+                };
+                context.renderParams.zoomFactor=0.5;
+                var renderer=new jchemhub.render.Renderer(context);
+            }
+        },function(e){
+
+        });
+    }
+
+	</script>
+	<div id="testGraphics"></div>
+    <p>SMILES:<input type="text" value="" id="smiles" /> <input type="button" value="Draw" id="draw" onclick="onDrawClick();" /></p>
+</body>
+</html>

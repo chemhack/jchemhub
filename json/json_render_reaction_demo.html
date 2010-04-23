@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<!--TODO: License and copyright-->
+<html>
+<head>
+<title>Reaction graphics demo</title>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<script src="../../third-party/closure/goog/base.js"></script>
+<script src="../deps.js"></script>
+<script>
+	goog.require('goog.dom');
+	goog.require('goog.graphics')
+	goog.require('goog.events');
+    goog.require('goog.events.EventType');
+    goog.require('jchemhub.io.JSONMolecule');	
+    goog.require('jchemhub.render.Geometry');
+    goog.require('jchemhub.config.RenderParams');
+    goog.require('jchemhub.render.Renderer');	
+</script>
+<script src="json_test_mol.js"></script>
+<script>
+function showJSON(mol) {
+	document.write(jchemhub.io.JSONMolecule.write(mol));
+}
+</script>
+</head>
+<body>
+
+<script>
+	var mol = jchemhub.io.JSONMolecule.read(jproduct1);
+    jchemhub.render.Geometry.translateAllPositive(mol);
+    
+ 	var context = {
+		widgetType:"editor",
+		renderParams:jchemhub.config.RenderParams.get(),
+		targetElement:document.getElementById('testGraphics'),
+		width:200,
+		height:200,
+		mol: mol	
+	};
+	var renderer = new jchemhub.render.Renderer(context);
+		
+	mol = jchemhub.io.JSONMolecule.read(jreactant1);
+	context.mol = mol;
+    jchemhub.render.Geometry.translateAllPositive(mol);
+	var renderer = new jchemhub.render.Renderer(context);
+
+	mol = jchemhub.io.JSONMolecule.read(jreactant2);
+	context.mol = mol;
+    jchemhub.render.Geometry.translateAllPositive(mol);
+	renderer = new jchemhub.render.Renderer(context);
+		
+	mol = jchemhub.io.JSONMolecule.read(jreactant3);
+	context.mol = mol;
+    jchemhub.render.Geometry.translateAllPositive(mol);
+	renderer = new jchemhub.render.Renderer(context);
+		
+	mol = jchemhub.io.JSONMolecule.read(jproduct1);
+	context.mol = mol;
+    jchemhub.render.Geometry.translateAllPositive(mol);
+	renderer = new jchemhub.render.Renderer(context);
+	
+	</script>
+	<div id="testGraphics" />
+	<p>Simply move your mouse on atoms and bonds</p>
+    
+</body>
+</html>

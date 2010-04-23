@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!--TODO: License and copyright-->
+<html>
+<head>
+<title>jchemhub unit test-json.js</title>
+<script src="../../third-party/closure/goog/base.js"></script>
+<script src="../deps.js"></script>
+<script>
+	goog.require('goog.testing.jsunit');
+	goog.require('jchemhub.io.JSONMolecule');
+</script>
+<script src="json_test_mol.js"></script>
+<script>
+ 
+  	function setUp() {
+  	}
+
+ 
+  	function test0ImportMol() {
+	  	var mol = jchemhub.io.JSONMolecule.read(jmol);
+	  	assertEquals(mol.name,"test");
+	  	assertEquals(mol.countAtoms(), 26);
+	  	assertEquals(mol.countBonds(), 27);
+	  	// test the string representation
+	  	mol = jchemhub.io.JSONMolecule.read( JSON.stringify(jmol) );
+	  	assertEquals(mol.name,"test");
+	  	assertEquals(mol.countAtoms(), 26);
+	  	assertEquals(mol.countBonds(), 27);
+	}
+	
+  	function test1ExportMol() {
+	  	var mol = jchemhub.io.JSONMolecule.read(jmol);
+	  	jmolstr = jchemhub.io.JSONMolecule.write(mol);
+	  	assertEquals(jmolstr.length,2586);
+	  	// test the string representation
+	  	var mol = jchemhub.io.JSONMolecule.read( JSON.stringify(jmol) );
+	  	jmolstr = jchemhub.io.JSONMolecule.write(mol);
+	  	assertEquals(jmolstr.length,2586);
+	}
+	
+	function test2ImportReaction() {
+		var rxn = jchemhub.io.JSONReaction.read(jreaction);
+		assertEquals(rxn.header, "3-component UGI");
+		assertEquals(rxn.reactants.length, 3);
+		assertEquals(rxn.reactants[1].name, "isocyanoethane");
+		assertEquals(rxn.reactants[1].countAtoms(), 4);
+		assertEquals(rxn.products[0].countBonds(), 15);
+		assertEquals(rxn.products.length, 1);
+		// test the string representation
+		rxn = jchemhub.io.JSONReaction.read( JSON.stringify(jreaction) );
+		assertEquals(rxn.header, "3-component UGI");
+		assertEquals(rxn.reactants.length, 3);
+		assertEquals(rxn.reactants[1].name, "isocyanoethane");
+		assertEquals(rxn.reactants[1].countAtoms(), 4);
+		assertEquals(rxn.products[0].countBonds(), 15);
+		assertEquals(rxn.products.length, 1);
+	}
+	
+  	function test3ExportReaction() {
+	  	var rxn = jchemhub.io.JSONReaction.read(jreaction);
+		var jrxnstr = jchemhub.io.JSONReaction.write(rxn);
+		assertEquals(jrxnstr.length, 8851);
+		// test the string representation
+		var rxn = jchemhub.io.JSONReaction.read( JSON.stringify(jreaction) );
+		var jrxnstr = jchemhub.io.JSONReaction.write(rxn);
+		assertEquals(jrxnstr.length, 8851);
+	}
+</script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<!--TODO: License and copyright-->
+<html>
+<head>
+<title>jchemhub unit test-geometry.js</title>
+<script src="../../third-party/closure/goog/base.js"></script>
+<script src="../deps.js"></script>
+<script>
+	goog.require('goog.testing.jsunit');
+	goog.require('jchemhub.render.Geometry');
+	goog.require('jchemhub.io.Molfile');
+	goog.require('jchemhub.config.RenderParams');
+</script>
+<script src="../io/io_test_molsample.js"></script>
+<script>
+	var mol;
+  	function setUp() {
+		sdfs = sdf.split("$$$$\n");
+		mol=jchemhub.io.Molfile.read(sdfs[3]);
+   	}
+
+
+	function testGetCenter() {
+		var center=jchemhub.render.Geometry.getGeometryCenter(mol);
+		assertRoughlyEquals(8.03,center.x,0.01);
+		assertRoughlyEquals(7.60,center.y,0.01);
+	}
+	function testGetMinMax() {
+		var minMax=jchemhub.render.Geometry.getMinMax(mol);
+	/*	
+		console.debug("maxX:"+minMax.maxX);
+		console.debug("minX:"+minMax.minX);
+		console.debug("maxY:"+minMax.maxY);
+		console.debug("minY:"+minMax.minY);
+	*/
+	  	assertRoughlyEquals(12.8978,minMax.maxX,0.01);
+	  	assertRoughlyEquals(4.387,minMax.minX,0.01);
+	  	assertRoughlyEquals(13.0496,minMax.maxY,0.01);
+	  	assertRoughlyEquals(3.2325,minMax.minY,0.01);
+	}
+
+	
+	function testTranslateAllPositive() {
+		jchemhub.render.Geometry.translateAllPositive(mol);
+		for(var i=0,il=mol.countAtoms();i<il;i++){
+			var atom=mol.getAtom(i);
+			assertTrue(atom.x>=0);
+			assertTrue(atom.y>=0);
+		}
+	}
+	function testCreateTransform(){
+		jchemhub.render.Geometry.translateAllPositive(mol);
+        var context={
+           widgetType:"editor",
+           renderParams:jchemhub.config.RenderParams.get(),
+           width:400,
+           height:400,
+           mol:mol
+       };
+
+		var transform=jchemhub.render.Geometry.createTransform(context);
+		for(var i=0,il=mol.countAtoms();i<il;i++){
+			var atom=mol.getAtom(i);
+			
+			var point=transform.transformPoint(atom.x,atom.y);
+		/*
+			console.debug("X:"+point.x+"  Y:"+point.y);
+		*/
+ 			assertTrue((point.x>0)||(point.x<renderParams.canvasSize.width));
+ 			assertTrue((point.y>0)||(point.y<renderParams.canvasSize.height));
+		}
+
+	}
+	
+	function testDistanceCalculator() {
+		var result=jchemhub.render.Geometry.distanceCalculator(mol.getBond(3),2);
+		//TODO asserts
+	}
+
+
+
+</script>
+</head>
+<body>
+	
+</body>
+</html>

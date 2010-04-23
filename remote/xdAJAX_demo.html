@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!--TODO: License and copyright-->
+<html>
+<head>
+<title>Cross domain AJAX demo</title>
+<script src="../../third-party/closure/goog/base.js"></script>
+<script src="../deps.js"></script>
+<script>
+	goog.require('goog.net.Jsonp');
+	var doRes=function(result){
+		alert(result.molfile);
+	};
+	
+</script>
+</head>
+<body>
+	<script>
+        var jsonp = new goog.net.Jsonp(new goog.Uri('http://localhost:8080/parseSmiles'));
+        var payload = { 'smiles': 'CCCC',"params":{"b":"c","c":"d"} };
+         jsonp.send(payload, function(reply) {
+            if(!reply.exception){
+                alert(reply.molfile);
+            }else{
+                alert(reply.exception);
+            }
+         },function(){
+           alert("failed")  
+         }
+                 );
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!--TODO: License and copyright-->
+<html>
+<head>
+<title>Render templates</title>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<script src="../../third-party/closure/goog/base.js"></script>
+<script src="../deps.js"></script>
+<script>
+	goog.require('goog.dom');
+	goog.require('goog.graphics')
+	goog.require('goog.events');
+    goog.require('goog.events.EventType');
+    goog.require('jchemhub.io.JSONMolecule');	
+    goog.require('jchemhub.render.Geometry');
+    goog.require('jchemhub.config.RenderParams');
+    goog.require('jchemhub.render.Renderer'); 	
+</script>
+<script src="json_templates.js"></script>
+<script>
+function showJSON(mol) {
+	document.write(jchemhub.io.JSONMolecule.write(mol));
+}
+function showMol(i) {
+    var mol = jchemhub.io.JSONMolecule.read(templates[i]);
+    jchemhub.render.Geometry.translateAllPositive(mol);
+	var target = document.getElementById('testGraphics');
+	target.innerHTML = "";
+ 	var context={
+		widgetType:"editor",
+		renderParams:jchemhub.config.RenderParams.get(),
+		targetElement:target,
+		width:600,
+		height:300,
+		mol:mol		
+	};
+
+	var renderer=new jchemhub.render.Renderer(context);
+	
+}
+</script>
+</head>
+<body>
+
+
+
+	<div id="testGraphics"></div>
+	<p>Simply move your mouse on atoms and bonds</p>
+    <p>Select template below</p>
+<script>
+
+showMol(0);
+for (i in templates) {
+	document.write('<a href="javascript:showMol(' +i+ ')">[' +templates[i].name+ ']</a>&nbsp;&nbsp;');
+}
+</script>
+
+</body>
+</html>
