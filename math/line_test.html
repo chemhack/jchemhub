@@ -1,0 +1,24 @@
+
+<html>
+<head>
+<title>jchemhub.math.Line test</title>
+<script src="../../third-party/closure/goog/base.js"></script>
+<script src="../deps.js"></script>
+<script>
+	goog.require('goog.testing.jsunit');
+	goog.require('jchemhub.math.Line');
+</script>
+<script>
+
+	function testTheta(){
+		var l = new jchemhub.math.Line(new goog.math.Coordinate(0,0), new goog.math.Coordinate(1,1));
+		assertEquals(Math.PI/4, l.getTheta());
+		var l = new jchemhub.math.Line(new goog.math.Coordinate(1,0), new goog.math.Coordinate(1,1));
+		assertEquals(Math.PI/2, l.getTheta());
+		var l = new jchemhub.math.Line(new goog.math.Coordinate(0,1), new goog.math.Coordinate(1,1));
+		assertEquals(0, l.getTheta());
+	}
+</script>
+</head>
+<body />
+</html>
