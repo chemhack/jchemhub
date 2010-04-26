@@ -19,7 +19,7 @@ goog.inherits(jchemhub.view.SingleBondUpDrawing, jchemhub.view.BondDrawing);
  * render this drawing and all its children
  */
 jchemhub.view.SingleBondUpDrawing.prototype.render = function() {
-	// TTD implement wedge-shape
+
 	var bondPath = new goog.graphics.Path();
 	var strokeWidth = this.getConfig().get("bond").stroke.width / 6;
 	var bondStroke = new goog.graphics.Stroke(strokeWidth, this.getConfig()
