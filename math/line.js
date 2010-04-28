@@ -37,7 +37,7 @@ jchemhub.math.Line.prototype.getStart = function(){
 
 /**
  * 
- * @return {goog.math.Coordinate" end point of line
+ * @return {goog.math.Coordinate} end point of line
  */
 jchemhub.math.Line.prototype.getEnd = function(){
 	return new goog.math.Coordinate(this.x1, this.y1);	

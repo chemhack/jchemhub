@@ -20,8 +20,21 @@ goog.require("goog.math.Box");
 jchemhub.view.MoleculeDrawing = function(name) {
 	jchemhub.view.Drawing.call(this);
 	this._name = name;
+	// this.addEventListener(goog.events.EventType.CLICK, this.toggleHighlight);
+	this.addEventListener(goog.events.EventType.MOUSEDOWN, this.drag);
+
 };
 goog.inherits(jchemhub.view.MoleculeDrawing, jchemhub.view.Drawing);
+
+/**
+ * @override
+ * does not call children's layout function, just sets their transform
+ */
+jchemhub.view.MoleculeDrawing.prototype.layoutChildren = function() {
+	goog.array.forEach(this.getChildren(), function(child) {
+		child.setTransform(this.getTransform());
+	}, this);
+};
 
 /**
  * render this drawing and all its children
@@ -30,45 +43,48 @@ jchemhub.view.MoleculeDrawing.prototype.render = function() {
 	this.renderChildren();
 };
 
-/**
- * layout molecule to zero-based coords
- * 
- * @override
- */
-jchemhub.view.MoleculeDrawing.prototype.layout = function(transform) {
-
-	var size = this.getSize();
-	var bbox = this.getBoundingBox();
-	var dx = size.height - Math.min(bbox.top, bbox.bottom);
-	var dy = size.width - Math.min(bbox.left, bbox.right);
-	transform = transform.clone().preConcatenate(
-			goog.graphics.AffineTransform.getTranslateInstance(dx, dy));
-	jchemhub.view.MoleculeDrawing.superClass_.layout.call(this, transform);
-}
-
-/**
- * get bounding box of all the atoms and bonds in this molecule
- * 
- * @return {goog.math.Box}
- */
-jchemhub.view.MoleculeDrawing.prototype.getBoundingBox = function() {
-	var coords = []
+jchemhub.view.MoleculeDrawing.prototype.toggleHighlight = function(e) {
+	if (!this.isSelected) {
+		this.isSelected = true;
+	} else {
+		this.isSelected = false;
+	}
 	goog.array.forEach(this.getChildren(), function(child) {
-		coords.push.apply(coords, child.getCoordinates());
+		child.toggleHighlight();
 	});
-
-	return goog.math.Box.boundingBox.apply(null, coords);
-
 };
 
-/**
- * get bounding box size
- * 
- * @return {goog.math.Size}
- */
-jchemhub.view.MoleculeDrawing.prototype.getSize = function() {
-	var box = this.getBoundingBox();
-	var size = new goog.math.Size(Math.abs(box.right - box.left), Math
-			.abs(box.bottom - box.top));
-	return size;
-}
+jchemhub.view.MoleculeDrawing.prototype.drag = function(e) {
+	var mol = e.currentTarget;
+	var d = new goog.fx.Dragger(mol.getGroup().getElement());
+	d._prevX = e.clientX;
+	d._prevY = e.clientY;
+	d._startX = e.clientX;
+	d._startY = e.clientY;
+
+	d.molecule = mol;
+	d.addEventListener(goog.fx.Dragger.EventType.DRAG, function(e) {
+
+		goog.array.forEach(d.molecule.getChildren(), function(child) {
+			var trans = child.getGroup().getTransform();
+			var newX = e.clientX - d._prevX + trans.getTranslateX();
+			var newY = e.clientY - d._prevY + trans.getTranslateY();
+			child.getGroup().setTransformation(newX, newY, 0, 0, 0);
+		});
+
+		d._prevX = e.clientX;
+		d._prevY = e.clientY;
+
+	});
+	d.addEventListener(goog.fx.Dragger.EventType.END, function(e) {
+		var base_trans = d.molecule.getTransform();
+		var trans = new goog.graphics.AffineTransform.getTranslateInstance(
+				e.clientX - d._startX, e.clientY - d._startY);
+
+		d.molecule.transformDrawing(trans);
+		d.molecule.clear();
+		d.molecule.render();
+		d.dispose();
+	});
+	d.startDrag(e);
+};

@@ -30,8 +30,8 @@ jchemhub.view.SingleBondDrawing.prototype.render = function() {
 	bondPath.moveTo(coords[0].x, coords[0].y);
 	bondPath.lineTo(coords[1].x, coords[1].y);
 
-	this.getGraphics()
-			.drawPath(bondPath, bondStroke, bondFill, this.getGroup());
+	this._elements.push(this.getGraphics()
+			.drawPath(bondPath, bondStroke, bondFill, this.getGroup()));
 	jchemhub.view.SingleBondDrawing.superClass_.render.call(this);
 
 }

@@ -32,10 +32,12 @@ jchemhub.view.DoubleBondDrawing.prototype.render = function(){
 	var pathElement1 = this.getGraphics().drawPath(bondPath1, bondStroke,
 			bondFill, this.getGroup());
 	pathElement1.setTransformation(-slope.x * strokeWidth, -slope.y * strokeWidth, 0, 0, 0);
+	this._elements.push(pathElement1);
 
 	var pathElement2 = this.getGraphics().drawPath(bondPath2, bondStroke,
 			bondFill, this.getGroup());
 	pathElement2.setTransformation(slope.x * strokeWidth, slope.y * strokeWidth, 0, 0, 0);
+	this._elements.push(pathElement2);
 
 	jchemhub.view.DoubleBondDrawing.superClass_.render.call(this);
 }

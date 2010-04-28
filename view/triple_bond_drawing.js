@@ -43,6 +43,9 @@ jchemhub.view.TripleBondDrawing.prototype.render = function() {
 	pathElement3.setTransformation(-slope.x * 1.5 * strokeWidth, -slope.y * strokeWidth, 0, 0, 0);
 
 	pathElement2.setTransformation(slope.x * 1.5 * strokeWidth, slope.y * strokeWidth, 0, 0, 0);
+	this._elements.push(pathElement1);
+	this._elements.push(pathElement2);
+	this._elements.push(pathElement3);
 	jchemhub.view.TripleBondDrawing.superClass_.render.call(this);
 
 }

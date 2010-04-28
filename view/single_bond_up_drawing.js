@@ -21,7 +21,7 @@ goog.inherits(jchemhub.view.SingleBondUpDrawing, jchemhub.view.BondDrawing);
 jchemhub.view.SingleBondUpDrawing.prototype.render = function() {
 
 	var bondPath = new goog.graphics.Path();
-	var strokeWidth = this.getConfig().get("bond").stroke.width / 6;
+	var strokeWidth = this.getConfig().get("bond").stroke.width / 10;
 	var bondStroke = new goog.graphics.Stroke(strokeWidth, this.getConfig()
 			.get("bond").stroke.color);
 	var bondFill = new goog.graphics.SolidFill(
@@ -47,8 +47,8 @@ jchemhub.view.SingleBondUpDrawing.prototype.render = function() {
 	bondPath.lineTo(coords[1].x, coords[1].y);
 	bondPath.lineTo(coords[2].x, coords[2].y);
 
-	this.getGraphics()
-			.drawPath(bondPath, bondStroke, bondFill, this.getGroup());
+	this._elements.push(this.getGraphics()
+			.drawPath(bondPath, bondStroke, bondFill, this.getGroup()));
 
 	jchemhub.view.SingleBondUpDrawing.superClass_.render.call(this);
 }

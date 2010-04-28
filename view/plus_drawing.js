@@ -9,6 +9,11 @@ goog.provide("jchemhub.view.PlusDrawing");
  */
 jchemhub.view.PlusDrawing = function() {
 	jchemhub.view.Drawing.call(this);
+	this._h0 = new goog.math.Coordinate(0,0);
+	var width = 1;
+	this._h1 = new goog.math.Coordinate(width,0);
+	this._v0 = new goog.math.Coordinate(width/2, width/2);
+	this._v1 = new goog.math.Coordinate(width/2, -width/2);
 
 };
 goog.inherits(jchemhub.view.PlusDrawing, jchemhub.view.Drawing);
@@ -23,14 +28,10 @@ jchemhub.view.PlusDrawing.prototype.render = function(){
 					"plus").stroke.color);
 	var fill = null;
 	
-	var c0 = new goog.math.Coordinate(0,0);
-	var width = this.getConfig().get("plus").width;
-	var c1 = new goog.math.Coordinate(width,0);
-	var c2 = new goog.math.Coordinate(width/2, width/2);
-	var c3 = new goog.math.Coordinate(width/2, -width/2);
-	var tip = new goog.math.Coordinate(width, 0);
 
-	var coords = this.transformCoords(this.getTransform(), [c0, c1, c2, c3]);
+
+
+	var coords = this.transformCoords(this.getTransform(), [this._h0, this._h1, this._v0, this._v1]);
 
 	path.moveTo(coords[0].x, coords[0].y);
 	path.lineTo(coords[1].x, coords[1].y);
@@ -43,12 +44,12 @@ jchemhub.view.PlusDrawing.prototype.render = function(){
 };
 
 /**
- * get bounding box size
- * 
- * @return {goog.math.Size}
+ * @override
  */
-jchemhub.view.PlusDrawing.prototype.getSize = function(){
+jchemhub.view.PlusDrawing.prototype.getCoords = function(){
 
-	return new goog.math.Size(this.getConfig().get("plus").width, this.getConfig().get("plus").width)
+	return [this._h0, this._h1, this._v0, this._v1];
 }
+
+jchemhub.view.Drawing.prototype.updateTransformedCoords = function(){};
 
