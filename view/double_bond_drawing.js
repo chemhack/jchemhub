@@ -5,9 +5,6 @@ goog.require("goog.math.Line");
 /**
  * A double bond graphical element in the reaction editor.
  * 
- * @param {jchemhub.view.Drawing}
- *            parent Drawing object
- * 
  * @constructor
  * @extends {jchemhub.view.BondDrawing}
  */

@@ -19,7 +19,6 @@ goog.inherits(jchemhub.view.TripleBondDrawing, jchemhub.view.BondDrawing);
  */
 jchemhub.view.TripleBondDrawing.prototype.render = function() {
 
-	jchemhub.view.TripleBondDrawing.superClass_.render.call();
 	var strokeWidth = this.getConfig().get("bond").stroke.width;
 	var bondStroke = new goog.graphics.Stroke(strokeWidth, this.getConfig().get(
 					"bond").stroke.color);
@@ -40,9 +39,9 @@ jchemhub.view.TripleBondDrawing.prototype.render = function() {
 			bondFill, this.getGroup());
 	var pathElement3 = this.getGraphics().drawPath(bondPath3, bondStroke, bondFill, this.getGroup());
 	
-	pathElement3.setTransformation(-slope.x * 1.5 * strokeWidth, -slope.y * strokeWidth, 0, 0, 0);
+	pathElement3.setTransformation(-slope.x * 2 * strokeWidth, -slope.y * 2 * strokeWidth, 0, 0, 0);
 
-	pathElement2.setTransformation(slope.x * 1.5 * strokeWidth, slope.y * strokeWidth, 0, 0, 0);
+	pathElement2.setTransformation(slope.x * 2 * strokeWidth, slope.y * 2 * strokeWidth, 0, 0, 0);
 	this._elements.push(pathElement1);
 	this._elements.push(pathElement2);
 	this._elements.push(pathElement3);
