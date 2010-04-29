@@ -11,13 +11,14 @@
 </script>
 <script src="json_test_mol.js"></script>
 <script>
- 
+ 	var rxn;
+ 	var mol;
   	function setUp() {
   	}
 
  
   	function test0ImportMol() {
-	  	var mol = jchemhub.io.JSONMolecule.read(jmol);
+	  	mol = jchemhub.io.JSONMolecule.read(jmol);
 	  	assertEquals(mol.name,"test");
 	  	assertEquals(mol.countAtoms(), 26);
 	  	assertEquals(mol.countBonds(), 27);
@@ -29,17 +30,17 @@
 	}
 	
   	function test1ExportMol() {
-	  	var mol = jchemhub.io.JSONMolecule.read(jmol);
+	  	mol = jchemhub.io.JSONMolecule.read(jmol);
 	  	jmolstr = jchemhub.io.JSONMolecule.write(mol);
-	  	assertEquals(jmolstr.length,2586);
+	  	assertEquals(jmolstr.length,3044);
 	  	// test the string representation
 	  	var mol = jchemhub.io.JSONMolecule.read( JSON.stringify(jmol) );
 	  	jmolstr = jchemhub.io.JSONMolecule.write(mol);
-	  	assertEquals(jmolstr.length,2586);
+	  	assertEquals(jmolstr.length,3044);
 	}
 	
 	function test2ImportReaction() {
-		var rxn = jchemhub.io.JSONReaction.read(jreaction);
+		rxn = jchemhub.io.JSONReaction.read(jreaction);
 		assertEquals(rxn.header, "3-component UGI");
 		assertEquals(rxn.reactants.length, 3);
 		assertEquals(rxn.reactants[1].name, "isocyanoethane");
@@ -57,13 +58,13 @@
 	}
 	
   	function test3ExportReaction() {
-	  	var rxn = jchemhub.io.JSONReaction.read(jreaction);
+	  	rxn = jchemhub.io.JSONReaction.read(jreaction);
 		var jrxnstr = jchemhub.io.JSONReaction.write(rxn);
-		assertEquals(jrxnstr.length, 8851);
+		assertEquals(jrxnstr.length, 3958);
 		// test the string representation
 		var rxn = jchemhub.io.JSONReaction.read( JSON.stringify(jreaction) );
 		var jrxnstr = jchemhub.io.JSONReaction.write(rxn);
-		assertEquals(jrxnstr.length, 8851);
+		assertEquals(jrxnstr.length, 3958);
 	}
 </script>
 </head>

@@ -242,6 +242,30 @@ jchemhub.io.Rxnfile.read = function(rxnfile) {
  * @param {Object}
  *            The JSON object string or object itself
  */
+ /** get string representation for bond type from integer
+ */
+jchemhub.io.JSONMolecule.getBondType = function(i) {
+	for (var key in jchemhub.model.Bond.BondType) {
+		if (jchemhub.model.Bond.BondType[key] == i) return key;
+	}
+	return undefined;
+};
+
+/** get string representation for bond stereo type from integer
+ */
+jchemhub.io.JSONMolecule.getBondStereoType = function(i, btype) {
+	if (btype == jchemhub.model.Bond.BondType.Single) {
+		for (var key in jchemhub.model.Bond.StereoType.Single) {
+			if (jchemhub.model.Bond.StereoType.Single[key] == i) return key;
+		}
+	} else if (btype == jchemhub.model.Bond.BondType.Double) {
+		for (var key in jchemhub.model.Bond.StereoType.Double) {
+			if (jchemhub.model.Bond.StereoType.Double[key] == i) return key;
+		}
+	}
+	return undefined;
+};
+
 jchemhub.io.JSONMolecule.read = function(arg) {
 	var jmol;
 	if (arg.constructor == String) {
@@ -251,7 +275,7 @@ jchemhub.io.JSONMolecule.read = function(arg) {
 	}
 	var mol = new jchemhub.model.Molecule();
 	mol.name = jmol.name;
-	for (i in jmol.atoms) {
+	for (var i in jmol.atoms) {
 		var a = jmol.atoms[i];
 		var newatom = new jchemhub.model.Atom();
 		newatom.symbol = a.symbol;
@@ -262,7 +286,7 @@ jchemhub.io.JSONMolecule.read = function(arg) {
 		mol.addAtom(newatom);
 	}
 	var atoms = mol.atoms;
-	for (i in jmol.bondindex) {
+	for (var i in jmol.bondindex) {
 		var b = jmol.bondindex[i];
 		var newbond = new jchemhub.model.Bond();
 		newbond.source = atoms[b.source];
@@ -276,10 +300,10 @@ jchemhub.io.JSONMolecule.read = function(arg) {
 /**
  * export data from mol object returns The JSON representation of mol object.
  */
-jchemhub.io.JSONMolecule.write = function(mol) {
+jchemhub.model.Molecule.prototype.toString = function() {
 	var atoms = new Array();
-	for (i in mol.atoms) {
-		var a = mol.atoms[i];
+	for (var i in this.atoms) {
+		var a = this.atoms[i];
 		atoms.push( {
 			symbol : a.symbol,
 			x : a.x,
@@ -289,21 +313,26 @@ jchemhub.io.JSONMolecule.write = function(mol) {
 		});
 	}
 	var bonds = new Array();
-	for (i in mol.bonds) {
-		var b = mol.bonds[i];
+	for (var i in this.bonds) {
+		var b = this.bonds[i];
+		var btype =   jchemhub.io.JSONMolecule.getBondType(b.bondType);
+		var bstereo = jchemhub.io.JSONMolecule.getBondStereoType(b.stereoType, b.bondType);
 		bonds.push( {
-			source : mol.indexOfAtom(b.source),
-			target : mol.indexOfAtom(b.target),
-			type : b.bondType,
-			stereo : b.stereoType
+			source : this.indexOfAtom(b.source),
+			target : this.indexOfAtom(b.target),
+			type : btype,
+			stereo : bstereo
 		});
 	}
 	return JSON.stringify( {
-		name : mol.name,
+		name : this.name,
 		atoms : atoms,
 		bondindex : bonds
 	});
 };
+jchemhub.io.JSONMolecule.write = function(mol) {
+	return mol.toString();
+}
 
 /**
  * Static method for reading JSON representation of reaction object. import data
@@ -321,19 +350,35 @@ jchemhub.io.JSONReaction.read = function(arg) {
 	}
 	var rxn = new jchemhub.model.Reaction();
 	rxn.header = jrxn.header;
-	for (i in jrxn.reactants) {
+	for (var i in jrxn.reactants) {
 		rxn.reactants.push(jchemhub.io.JSONMolecule.read(jrxn.reactants[i]));
 	}
-	for (i in jrxn.products) {
+	for (var i in jrxn.products) {
 		rxn.products.push(jchemhub.io.JSONMolecule.read(jrxn.products[i]));
 	}
 	return rxn;
 }
 
 /**
- * export data from reaction object returns The JSON representation of reaction
- * object.
+ * export data from reaction object
+ * returns The JSON representation of reaction object.
  */
+jchemhub.model.Reaction.prototype.toString = function () {
+	var jstring = '{"header":"' + this.header + '"';
+	jstring += ', "reactants":[';
+	for (i in this.reactants) {
+		jstring += this.reactants[i].toString() + ',';
+	}
+	jstring += ']';
+	jstring += ', "products":[';
+	for (var i in this.products) {
+		jstring += this.products[i].toString() + ',';
+	}
+	jstring += ']';
+	
+	jstring += '}';
+	return jstring;
+};
 jchemhub.io.JSONReaction.write = function(rxn) {
-	return JSON.stringify(rxn);
+	return rxn.toString();
 };
