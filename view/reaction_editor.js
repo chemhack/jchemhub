@@ -90,7 +90,7 @@ jchemhub.view.ReactionEditor.defaultConfig = {
 		fill : {
 			color : 'blue'
 		},
-		fontName : "Times"
+		fontName : "Arial"
 	},
 	bond : {
 		stroke : {
