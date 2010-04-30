@@ -9,8 +9,103 @@ goog.require('goog.i18n.DateTimeFormat');
 goog.require('goog.string');
 goog.require('jchemhub.model.Reaction');
 goog.require('jchemhub.model.Molecule');
+goog.require('jchemhub.model.SingleBond');
+goog.require('jchemhub.model.SingleBondUp');
+goog.require('jchemhub.model.SingleBondDown');
+goog.require('jchemhub.model.SingleBondUpOrDown');
+goog.require('jchemhub.model.DoubleBond');
+goog.require('jchemhub.model.TripleBond');
+goog.require('jchemhub.model.QuadrupleBond');
 goog.require('jchemhub.model.Bond');
 goog.require('jchemhub.model.Atom');
+
+/** @const */ jchemhub.io.Molfile.SINGLE_BOND = 1;
+/** @const */ jchemhub.io.Molfile.DOUBLE_BOND = 2;
+/** @const */ jchemhub.io.Molfile.TRIPLE_BOND = 3;
+/** @const */ jchemhub.io.Molfile.AROMATIC = 4;
+/** @const */ jchemhub.io.Molfile.SINGLE_OR_DOUBLE = 5;
+/** @const */ jchemhub.io.Molfile.SINGLE_OR_AROMATIC = 6;
+/** @const */ jchemhub.io.Molfile.DOUBLE_OR_AROMATIC = 7;
+/** @const */ jchemhub.io.Molfile.ANY = 8;
+/** @const */ jchemhub.io.Molfile.TRIPLE_BOND = 3;
+
+/** @const */ jchemhub.io.Molfile.NOT_STEREO = 0;
+/** @const */ jchemhub.io.Molfile.SINGLE_BOND_UP = 1;
+/** @const */ jchemhub.io.Molfile.SINGLE_BOND_UP_OR_DOWN = 4;
+/** @const */ jchemhub.io.Molfile.SINGLE_BOND_DOWN = 6;
+/**
+ * returns molfile bond type code
+ * 
+ * @param{jchemhub.model.Bond}
+ * @return{number}
+ */
+jchemhub.io.Molfile.getTypeCode = function(bond){
+	if (bond instanceof jchemhub.model.SingleBond){
+		return jchemhub.io.Molfile.SINGLE_BOND;
+	}
+	if (bond instanceof jchemhub.model.DoubleBond){
+		return jchemhub.io.Molfile.DOUBLE_BOND;
+	}
+	if (bond instanceof jchemhub.model.TripleBond){
+		return jchemhub.io.Molfile.TRIPLE_BOND;
+	}
+	throw new Error("Invalid bond type [" + bond + "]");
+	
+};
+
+jchemhub.io.Molfile.getStereoCode = function(bond){
+	if (bond instanceof jchemhub.model.SingleBondUp){
+		return jchemhub.io.Molfile.SINGLE_BOND_UP;
+	}
+	if (bond instanceof jchemhub.model.SingleBondDown){
+		return jchemhub.io.Molfile.SINGLE_BOND_DOWN;
+	}
+	if (bond instanceof jchemhub.model.SingleBondUpOrDown){
+		return jchemhub.io.Molfile.SINGLE_BOND_UP_OR_DOWN;
+	}
+	return jchemhub.io.Molfile.NOT_STEREO;
+	
+	
+}
+/**
+ * Bond Types, values in molfile spec. Values 4 through 8 are for SSS queries
+ * only.
+ */
+jchemhub.io.Molfile.BondFactory = function(type, stereo, source, target) {
+	switch (type) {
+	case jchemhub.io.Molfile.SINGLE_BOND:
+		switch (stereo) {
+		case jchemhub.io.Molfile.NOT_STEREO:
+			return new jchemhub.model.SingleBond(source, target);
+		case jchemhub.io.Molfile.SINGLE_BOND_UP:
+			return new jchemhub.model.SingleBondUp(source, target);
+		case jchemhub.io.Molfile.SINGLE_BOND_UP_OR_DOWN:
+			return new jchemhub.model.SingleBondUpOrDown(source, target);
+		case jchemhub.io.Molfile.SINGLE_BOND_DOWN:
+			return new jchemhub.model.SingleBondDown(source, target);
+		default:
+			throw new Error("invalid bond type/stereo [" + type + "]/["
+					+ stereo + "]");
+		};
+	case jchemhub.io.Molfile.DOUBLE_BOND:
+		return new jchemhub.model.DoubleBond(source, target);
+	case jchemhub.io.Molfile.TRIPLE_BOND:
+		return new jchemhub.model.TripleBond(source, target);
+	case jchemhub.io.Molfile.AROMATIC:
+		throw new Error("type not implemented [" + type + "]");
+	case jchemhub.io.Molfile.SINGLE_OR_DOUBLE:
+		throw new Error("type not implemented [" + type + "]");
+	case jchemhub.io.Molfile.SINGLE_OR_AROMATIC:
+		throw new Error("type not implemented [" + type + "]");
+	case jchemhub.io.Molfile.DOUBLE_OR_AROMATIC: 
+		throw new Error("type not implemented [" + type + "]");
+	case jchemhub.io.Molfile.ANY: 
+		throw new Error("type not implemented [" + type + "]");
+	default:
+		throw new Error("invalid bond type/stereo [" + type + "]/[" + stereo
+				+ "]");
+	};
+};
 
 /**
  * @fileoverview IO classes
@@ -24,23 +119,22 @@ goog.require('jchemhub.model.Atom');
  *            molfile Content of molfile to read.
  */
 jchemhub.io.Molfile.read = function(molfile) {
-	var mol = new jchemhub.model.Molecule();
+
 	var lineDelimiter = molfile.indexOf("\r\n") > 0 ? "\r\n" : "\n";
 	var mol_lines = molfile.split(lineDelimiter);
-
-	mol.setName(mol_lines[0]);
+	var name = mol_lines[0]
+	var mol = new jchemhub.model.Molecule(name);
 	var atom_count = parseInt(mol_lines[3].substr(0, 3));
 	var bond_count = parseInt(mol_lines[3].substr(3, 3));
-
 
 	for ( var i = 1; i <= atom_count; i++) {
 		var line = mol_lines[i + 3];
 		var symbol = line.substr(30, 4).replace(/(^\s*)|(\s*$)/g, "");
 
-		var atom = new jchemhub.model.Atom(symbol);
-		atom.x = parseFloat(line.substr(0, 10));
-		atom.y = parseFloat(line.substr(10, 10));
-		atom.z = parseFloat(line.substr(20, 10));
+		var x = parseFloat(line.substr(0, 10));
+		var y = parseFloat(line.substr(10, 10));
+		// atom.z = parseFloat(line.substr(20, 10));
+
 		// see page 15 of ctfile for details
 		// http://www.symyx.com/downloads/public/ctfile/ctfile.pdf
 		var ctfile_dd = parseInt(line.substr(34, 2)); // TODO implement
@@ -48,22 +142,25 @@ jchemhub.io.Molfile.read = function(molfile) {
 		var ctfile_ccc = parseInt(line.substr(36, 3));
 		// TODO support old-fashioned M ISO
 
+		var charge = 0;
+
 		if (ctfile_ccc == 0) {
 		} else if (ctfile_ccc == 1) {
-			atom.charge = 3;
+			charge = 3;
 		} else if (ctfile_ccc == 2) {
-			atom.charge = 2;
+			charge = 2;
 		} else if (ctfile_ccc == 3) {
-			atom.charge = 1;
+			charge = 1;
 		} else if (ctfile_ccc == 4) {
 			// TODO support doublet radical
 		} else if (ctfile_ccc == 5) {
-			atom.charge = -1;
+			charge = -1;
 		} else if (ctfile_ccc == 6) {
-			atom.charge = -2;
+			charge = -2;
 		} else if (ctfile_ccc == 7) {
-			atom.charge = -3;
+			charge = -3;
 		}
+		var atom = new jchemhub.model.Atom(symbol, x, y, charge);
 		mol.addAtom(atom);
 	}
 
@@ -72,14 +169,14 @@ jchemhub.io.Molfile.read = function(molfile) {
 		// Don't forget to -1 because molfile numbering from 1 instead of 0
 
 		var sourceAtom = mol.getAtom(parseInt(line.substr(0, 3)) - 1);
-	
+
 		var targetAtom = mol.getAtom(parseInt(line.substr(3, 3)) - 1);
-	
+
 		var bondType = parseInt(line.substr(6, 3));
 		var bondStereoType = parseInt(line.substr(9, 3));
-	
-		var bond = new jchemhub.model.Bond(sourceAtom, targetAtom, bondType);
-		bond.stereoType = bondStereoType;
+		var bond = jchemhub.io.Molfile.BondFactory(bondType, bondStereoType,
+				sourceAtom, targetAtom);
+
 		mol.addBond(bond);
 
 	}
@@ -146,9 +243,8 @@ jchemhub.io.Molfile.write = function(mol) {
 	// Line 3: A line for comments. If no comment is entered, a blank line must
 	// be present.
 	var now = new Date();
-	var line1 = mol.getName() + "\n";
-	var fmt = new goog.i18n.DateTimeFormat(
-			'mmddyyHHMM');
+	var line1 = mol.name + "\n";
+	var fmt = new goog.i18n.DateTimeFormat('mmddyyHHMM');
 	var line2 = " " + "JChemHub" + fmt.format(now) + "\n";
 	var line3 = "\n";
 	var headerBlock = line1 + line2 + line3;
@@ -163,8 +259,8 @@ jchemhub.io.Molfile.write = function(mol) {
 	// Atom block
 	for (i = 0; i < mol.countAtoms(); i++) {
 		var atom = mol.getAtom(i);
-		var xPos = (goog.string.repeat(" ", 10) + atom.x.toFixed(4)).slice(-10);
-		var yPos = (goog.string.repeat(" ", 10) + atom.y.toFixed(4)).slice(-10);
+		var xPos = (goog.string.repeat(" ", 10) + atom.coord.x.toFixed(4)).slice(-10);
+		var yPos = (goog.string.repeat(" ", 10) + atom.coord.y.toFixed(4)).slice(-10);
 		var zPos = (goog.string.repeat(" ", 10) + (0).toFixed(4)).slice(-10);
 		var atomSymbol = (goog.string.repeat(" ", 3) + atom.symbol).slice(-3);
 
@@ -182,9 +278,9 @@ jchemhub.io.Molfile.write = function(mol) {
 		var secondAtomNumber = mol.indexOfAtom(bond.target) + 1;
 		var secondAtomString = (goog.string.repeat(" ", 3) + secondAtomNumber)
 				.slice(-3);
-		var bondTypeString = (goog.string.repeat(" ", 3) + bond.bondType)
+		var bondTypeString = (goog.string.repeat(" ", 3) + jchemhub.io.Molfile.getTypeCode(bond))
 				.slice(-3);
-		var stereoTypeString = (goog.string.repeat(" ", 3) + bond.stereoType)
+		var stereoTypeString = (goog.string.repeat(" ", 3) + jchemhub.io.Molfile.getStereoCode(bond))
 				.slice(-3);
 		bondBlock += firstAtomString + secondAtomString + bondTypeString
 				+ stereoTypeString + "\n";

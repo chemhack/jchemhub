@@ -16,7 +16,7 @@ jchemhub.view.Drawing = function() {
 	this._config = null;
 	this._transform = null;
 	this._elements = [];
-	this._transformedCoords = null;
+
 	/**
 	 * @type {!goog.events.EventHandler}
 	 * @protected
@@ -252,9 +252,6 @@ jchemhub.view.Drawing.prototype.setTransform = function(transform) {
 	}, this);
 };
 
-/**
- */
-jchemhub.view.Drawing.prototype.updateTransformedCoords = goog.abstractMethod;
 /**
  * back-calculate coords from transform
  */

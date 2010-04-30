@@ -28,7 +28,7 @@
 		
 		var bondToTest=mol.getBond(43);
 
-		assertEquals(1,bondToTest.bondType);
+		assertTrue(bondToTest instanceof jchemhub.model.SingleBond);
 		assertEquals(mol.getAtom(19),bondToTest.source);
 		assertEquals(mol.indexOfAtom(bondToTest.source),19);
 		assertEquals(mol.getAtom(27),bondToTest.target);

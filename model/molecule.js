@@ -2,14 +2,33 @@ goog.provide('jchemhub.model.Molecule');
 goog.require('goog.array');
 
 /**
- * Creates a new Molecule.
+ * Class representing a Molecule
  * 
+ * @param {string=} opt_name, Name of molecule, defaults to empty string.
  * @constructor
  */
-jchemhub.model.Molecule = function() {
-	this.bonds = new Array();
-	this.atoms = new Array();
-	this.name = new String();
+jchemhub.model.Molecule = function(opt_name) {
+	/**
+	 * bonds belonging to this molecule
+	 * 
+	 * @type {Array.<jchemhub.model.Bond>}
+	 * 
+	 */
+	this.bonds = [];
+	
+	/** 
+	 * atoms belonging to this molecule
+	 * 
+	 * @type {Array.<jchemhub.model.Atom>}
+	 */
+	this.atoms = [];
+	
+	/**
+	 * name of molecule
+	 * 
+	 * @type {string}
+	 */
+	this.name = "";
 };
 
 /**
@@ -29,6 +48,7 @@ jchemhub.model.Molecule.prototype.addBond = function(bond) {
  * 
  * @param {number}
  *            id The atom id.
+ * @return {jchemhub.model.Atom}
  */
 
 jchemhub.model.Molecule.prototype.getAtom = function(id) {
@@ -40,6 +60,7 @@ jchemhub.model.Molecule.prototype.getAtom = function(id) {
  * 
  * @param {number}
  *            id The bond id.
+ * @return {jchemhub.model.Bond}
  */
 
 jchemhub.model.Molecule.prototype.getBond = function(id) {
@@ -53,6 +74,7 @@ jchemhub.model.Molecule.prototype.getBond = function(id) {
  *            atom1
  * @param {Object}
  *            atom2
+ * @return{jchemhub.model.Bond}
  */
 jchemhub.model.Molecule.prototype.findBond = function(atom1, atom2) {
 	for ( var i = 0, il = this.bonds.length; i < il; i++) {
@@ -69,6 +91,7 @@ jchemhub.model.Molecule.prototype.findBond = function(atom1, atom2) {
  * 
  * @param {jchemhub.model.Atom}
  *            atom The atom to lookup.
+ * @return{jchemhub.model.number}
  */
 jchemhub.model.Molecule.prototype.indexOfAtom = function(atom) {
 	return goog.array.indexOf(this.atoms, atom);
@@ -79,6 +102,7 @@ jchemhub.model.Molecule.prototype.indexOfAtom = function(atom) {
  * 
  * @param {jchemhub.model.Bond}
  *            bond The bond to lookup.
+ * @return{jchemhub.model.number}
  */
 jchemhub.model.Molecule.prototype.indexOfBond = function(bond) {
 	return goog.array.indexOf(this.bonds, bond);
@@ -87,7 +111,7 @@ jchemhub.model.Molecule.prototype.indexOfBond = function(bond) {
 /**
  * Remove a atom from molecule.
  * 
- * @param atomOrId
+ * @param {number|jchemhub.model.Atom}
  *            Instance or id of the atom to remove.
  */
 
@@ -111,7 +135,7 @@ jchemhub.model.Molecule.prototype.removeAtom = function(atomOrId) {
 /**
  * Remove a bond from molecule.
  * 
- * @param bondOrId
+ * @param {number|jchemhub.model.Bond}
  *            Instance or id of the bond to remove.
  */
 
@@ -129,6 +153,7 @@ jchemhub.model.Molecule.prototype.removeBond = function(bondOrId) {
 
 /**
  * Count atoms.
+ * @return{number}
  */
 jchemhub.model.Molecule.prototype.countAtoms = function() {
 	return this.atoms.length;
@@ -139,14 +164,6 @@ jchemhub.model.Molecule.prototype.countAtoms = function() {
  */
 jchemhub.model.Molecule.prototype.countBonds = function() {
 	return this.bonds.length;
-};
-
-jchemhub.model.Molecule.prototype.setName = function(_name) {
-	this.name = _name;
-};
-
-jchemhub.model.Molecule.prototype.getName = function() {
-	return this.name;
 };
 
 /**

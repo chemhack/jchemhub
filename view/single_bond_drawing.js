@@ -3,14 +3,14 @@ goog.provide("jchemhub.view.SingleBondDrawing");
 /**
  * A single bond graphical element in the reaction editor.
  * 
- * @param {jchemhub.view.Drawing}
- *            parent Drawing object
+ * @param {jchemhub.model.Bond}
+ *            bond
  * 
  * @constructor
  * @extends {jchemhub.view.BondDrawing}
  */
-jchemhub.view.SingleBondDrawing = function(x0, y0, x1, y1) {
-	jchemhub.view.BondDrawing.call(this, x0, y0, x1, y1);
+jchemhub.view.SingleBondDrawing = function(bond) {
+	jchemhub.view.BondDrawing.call(this, bond);
 };
 goog.inherits(jchemhub.view.SingleBondDrawing, jchemhub.view.BondDrawing);
 
@@ -25,7 +25,7 @@ jchemhub.view.SingleBondDrawing.prototype.render = function() {
 					"bond").stroke.color);
 	var bondFill = null;
 	
-	var coords = this.transformCoords(this.getTransform(), [this._coord0, this._coord1]);
+	var coords = this.transformCoords(this.getTransform(), this.getCoords());
 
 	bondPath.moveTo(coords[0].x, coords[0].y);
 	bondPath.lineTo(coords[1].x, coords[1].y);
