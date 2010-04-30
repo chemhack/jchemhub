@@ -5,11 +5,13 @@ goog.require("goog.math.Line");
 /**
  * A double bond graphical element in the reaction editor.
  * 
+ * @param {jchemhub.model.Bond}
+ *            bond
  * @constructor
  * @extends {jchemhub.view.BondDrawing}
  */
-jchemhub.view.DoubleBondDrawing = function(x0, y0, x1, y1) {
-	jchemhub.view.BondDrawing.call(this, x0, y0, x1, y1);
+jchemhub.view.DoubleBondDrawing = function(bond) {
+	jchemhub.view.BondDrawing.call(this, bond);
 };
 goog.inherits(jchemhub.view.DoubleBondDrawing, jchemhub.view.BondDrawing);
 
@@ -22,12 +24,13 @@ jchemhub.view.DoubleBondDrawing.prototype.render = function() {
 	var bondStroke = new goog.graphics.Stroke(strokeWidth, this.getConfig()
 			.get("bond").stroke.color);
 	var bondFill = null;
-	var theta = this._line.getTheta();
+
+	var theta = this.getTheta();
 
 	var angle_left = theta + (Math.PI / 2);
 	var angle_right = theta - (Math.PI / 2);
 
-	var bondWidth = strokeWidth /15;
+	var bondWidth = strokeWidth / 15;
 	var transleft = goog.graphics.AffineTransform.getTranslateInstance(Math
 			.cos(angle_left)
 			* bondWidth, Math.sin(angle_left) * bondWidth, 0, 0, 0);
@@ -36,10 +39,8 @@ jchemhub.view.DoubleBondDrawing.prototype.render = function() {
 			.cos(angle_right)
 			* bondWidth, Math.sin(angle_right) * bondWidth, 0, 0, 0);
 
-	var leftside = this.transformCoords(transleft, [ this._line.getStart(),
-			this._line.getEnd() ]);
-	var rightside = this.transformCoords(transright, [ this._line.getStart(),
-			this._line.getEnd() ]);
+	var leftside = this.transformCoords(transleft, this.getCoords());
+	var rightside = this.transformCoords(transright, this.getCoords());
 
 	var coords = this.transformCoords(this.getTransform(), [ leftside[0],
 			leftside[1], rightside[0], rightside[1] ]);

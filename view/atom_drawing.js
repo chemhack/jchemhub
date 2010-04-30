@@ -4,17 +4,14 @@ goog.require("goog.math.Coordinate");
 /**
  * An atom graphical element in the reaction editor.
  * 
- * @param {jchemhub.view.Drawing}
- *            parent Drawing object
+ * @param {jchemhub.model.Atom} atom
  * 
  * @constructor
  * @extends {jchemhub.view.Drawing}
  */
-jchemhub.view.AtomDrawing = function(x, y, symbol) {
+jchemhub.view.AtomDrawing = function(atom) {
 	jchemhub.view.Drawing.call(this);
-	this._coord = new goog.math.Coordinate(x, y);
-	this._symbol = symbol;
-	this._trans_coord = null;
+	this.atom = atom;
 };
 goog.inherits(jchemhub.view.AtomDrawing, jchemhub.view.Drawing);
 
@@ -27,10 +24,10 @@ jchemhub.view.AtomDrawing.prototype.render = function() {
 	var stroke = new goog.graphics.Stroke(config.get("atom").stroke.width,
 			config.get("atom").stroke.color);
 	var fill = new goog.graphics.SolidFill(config.get("atom").fill.color);
-	var w = this._symbol.length * 0.55 * font.size;
+	var w = this.atom.symbol.length * 0.55 * font.size;
 	var h = font.size;
-	var coord = this.transformCoords(this.getTransform(), [this._coord])[0];
-	this.getGraphics().drawText(this._symbol, coord.x - w / 2, coord.y
+	var coord = this.transformCoords(this.getTransform(), [this.atom.coord])[0];
+	this.getGraphics().drawText(this.atom.symbol, coord.x - w / 2, coord.y
 			- h / 2, w, h, 'center', null,
 			font,
 			stroke, fill, this.getGroup());
@@ -41,7 +38,7 @@ jchemhub.view.AtomDrawing.prototype.render = function() {
  * @override
  */
 jchemhub.view.AtomDrawing.prototype.getCoords = function() {
-	return [ this._coord ];
+	return [ this.atom.coord ];
 };
 
 /**
@@ -55,8 +52,8 @@ jchemhub.view.AtomDrawing.prototype.getBoundingBox = function() {
 	var r = this.getConfig().get("atom").diameter / 2;
 
 	return goog.math.Box.boundingBox.apply(null, [
-			new goog.math.Coordinate(this._coord.x - r, this._coord.y - r),
-			new goog.math.Coordinate(this._coord.x + r, this._coord.y + r) ]);
+			new goog.math.Coordinate(this.atom.coord.x - r, this.atom.coord.y - r),
+			new goog.math.Coordinate(this.atom.coord.x + r, this.atom.coord.y + r) ]);
 };
 
 jchemhub.view.AtomDrawing.prototype.updateTransformedCoords = function() {
@@ -71,9 +68,9 @@ jchemhub.view.AtomDrawing.prototype.updateTransformedCoords = function() {
  * @return
  */
 jchemhub.view.AtomDrawing.prototype.transformDrawing = function(trans) {
-		var trans_coords = this.transformCoords(this.getTransform(), [this._coord]);
+		var trans_coords = this.transformCoords(this.getTransform(), [this.atom.coord]);
 		var new_coords = trans_coords;
 		var new_base_coords = this.transformCoords(this.getTransform().createInverse(), new_coords);
-		this._coord = new_base_coords[0];
+		this.atom.coord = new_base_coords[0];
 		jchemhub.view.BondDrawing.superClass_.transformDrawing(trans);
 	}
