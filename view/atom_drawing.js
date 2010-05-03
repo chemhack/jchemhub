@@ -64,7 +64,7 @@ jchemhub.view.AtomDrawing.prototype.updateTransformedCoords = function() {
 /**
  * transform drawing and update base coords
  * 
- * @param trans
+ * @param{goog.graphics.AffineTransform} trans
  * @return
  */
 jchemhub.view.AtomDrawing.prototype.transformDrawing = function(trans) {

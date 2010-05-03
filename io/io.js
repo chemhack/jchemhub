@@ -36,7 +36,7 @@ goog.require('jchemhub.model.Atom');
 /**
  * returns molfile bond type code
  * 
- * @param{jchemhub.model.Bond}
+ * @param{jchemhub.model.Bond} bond
  * @return{number}
  */
 jchemhub.io.Molfile.getTypeCode = function(bond){
