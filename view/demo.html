@@ -5,7 +5,10 @@
 <title>jchemhub.view.ReactionEditor</title>
 <script src="../../third-party/closure/closure/goog/base.js"></script>
 <script src="../deps.js"></script>
-<script src="../io/io_test_rxnsample.js"></script>
+<!-- 
+ <script src="../../jchemhub_compiled.js"></script>
+ -->
+<script src="test_json_rxn.js"></script>
 
 <script>
 	goog.require('jchemhub.controller.Controller');
@@ -16,7 +19,7 @@
 <script>
     
 function initPage(){
-	var model = jchemhub.controller.Controller.buildReactionDrawing(jchemhub.io.mdl.readRxnfile(rxnsample));
+	var model = jchemhub.controller.Controller.buildReactionDrawing(jchemhub.io.json.readReaction(reactionDrawing));
 	var controller = new jchemhub.controller.Controller(model, goog.dom.getElement('reactionEditorContainer'));
 };
 

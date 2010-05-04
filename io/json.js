@@ -60,7 +60,7 @@ jchemhub.io.json.StereoType = {
 		NOT_STEREO:"NOT_STEREO",
 		SINGLE_BOND_UP:"SINGLE_BOND_UP",
 		SINGLE_BOND_UP_OR_DOWN:"SINGLE_BOND_UP_OR_DOWN",
-		SINGLE_BOND_DOWN:"SINGLE_BOND_DOWN",
+		SINGLE_BOND_DOWN:"SINGLE_BOND_DOWN"
 };
 
 /**
@@ -163,12 +163,7 @@ jchemhub.io.json.readMolecule = function(arg) {
 	mol.name = jmol.name;
 	for (var i in jmol.atoms) {
 		var a = jmol.atoms[i];
-		var newatom = new jchemhub.model.Atom();
-		newatom.symbol = a.symbol;
-		newatom.x = a.x;
-		newatom.y = a.y;
-		newatom.z = a.z;
-		newatom.charge = a.charge;
+		var newatom = new jchemhub.model.Atom(a.symbol, a.x, a.y, a.charge);
 		mol.addAtom(newatom);
 	}
 	var atoms = mol.atoms;

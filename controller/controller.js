@@ -13,6 +13,8 @@ goog.require('jchemhub.model.QuadrupleBond');
 goog.require('jchemhub.model.Bond');
 goog.require('jchemhub.model.Atom');
 goog.require('jchemhub.view.SingleBondDrawing');
+goog.require('jchemhub.io.json');
+goog.require('jchemhub.io.mdl');
 
 jchemhub.controller.Controller = function(model, element, opt_editor_config) {
 	this._model = model;
