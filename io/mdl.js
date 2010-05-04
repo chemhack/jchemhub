@@ -1,10 +1,10 @@
-//Licence and copyright
+//License and copyright
 
 /**
- * @fileoverview MDL molfile utility functions and factory methods.
+ * @fileoverview io utility functions and factory methods for MDL formats
  */
 
-goog.provide('jchemhub.io.molfile');
+goog.provide('jchemhub.io.mdl');
 
 goog.require('goog.i18n.DateTimeFormat');
 goog.require('goog.string');
@@ -20,87 +20,98 @@ goog.require('jchemhub.model.QuadrupleBond');
 goog.require('jchemhub.model.Bond');
 goog.require('jchemhub.model.Atom');
 
-/** @const */ jchemhub.io.Molfile.SINGLE_BOND = 1;
-/** @const */ jchemhub.io.Molfile.DOUBLE_BOND = 2;
-/** @const */ jchemhub.io.Molfile.TRIPLE_BOND = 3;
-/** @const */ jchemhub.io.Molfile.AROMATIC = 4;
-/** @const */ jchemhub.io.Molfile.SINGLE_OR_DOUBLE = 5;
-/** @const */ jchemhub.io.Molfile.SINGLE_OR_AROMATIC = 6;
-/** @const */ jchemhub.io.Molfile.DOUBLE_OR_AROMATIC = 7;
-/** @const */ jchemhub.io.Molfile.ANY = 8;
-/** @const */ jchemhub.io.Molfile.TRIPLE_BOND = 3;
+/** @const */ jchemhub.io.mdl.SINGLE_BOND = 1;
+/** @const */ jchemhub.io.mdl.DOUBLE_BOND = 2;
+/** @const */ jchemhub.io.mdl.TRIPLE_BOND = 3;
+/** @const */ jchemhub.io.mdl.AROMATIC = 4;
+/** @const */ jchemhub.io.mdl.SINGLE_OR_DOUBLE = 5;
+/** @const */ jchemhub.io.mdl.SINGLE_OR_AROMATIC = 6;
+/** @const */ jchemhub.io.mdl.DOUBLE_OR_AROMATIC = 7;
+/** @const */ jchemhub.io.mdl.ANY = 8;
+/** @const */ jchemhub.io.mdl.TRIPLE_BOND = 3;
 
-/** @const */ jchemhub.io.Molfile.NOT_STEREO = 0;
-/** @const */ jchemhub.io.Molfile.SINGLE_BOND_UP = 1;
-/** @const */ jchemhub.io.Molfile.SINGLE_BOND_UP_OR_DOWN = 4;
-/** @const */ jchemhub.io.Molfile.SINGLE_BOND_DOWN = 6;
+/** @const */ jchemhub.io.mdl.NOT_STEREO = 0;
+/** @const */ jchemhub.io.mdl.SINGLE_BOND_UP = 1;
+/** @const */ jchemhub.io.mdl.SINGLE_BOND_UP_OR_DOWN = 4;
+/** @const */ jchemhub.io.mdl.SINGLE_BOND_DOWN = 6;
+
 /**
- * returns molfile bond type code
- * 
+ * maps bond class to mdl molfile bond type code
  * @param{jchemhub.model.Bond} bond
  * @return{number}
  */
-jchemhub.io.Molfile.getTypeCode = function(bond){
+jchemhub.io.mdl.getTypeCode = function(bond){
 	if (bond instanceof jchemhub.model.SingleBond){
-		return jchemhub.io.Molfile.SINGLE_BOND;
+		return jchemhub.io.mdl.SINGLE_BOND;
 	}
 	if (bond instanceof jchemhub.model.DoubleBond){
-		return jchemhub.io.Molfile.DOUBLE_BOND;
+		return jchemhub.io.mdl.DOUBLE_BOND;
 	}
 	if (bond instanceof jchemhub.model.TripleBond){
-		return jchemhub.io.Molfile.TRIPLE_BOND;
+		return jchemhub.io.mdl.TRIPLE_BOND;
 	}
 	throw new Error("Invalid bond type [" + bond + "]");
 	
 };
 
-jchemhub.io.Molfile.getStereoCode = function(bond){
+/**
+ * maps bond class to mdl molfile stereo type code
+ * @param{jchemhub.model.Bond}
+ * @return{number}
+ */
+jchemhub.io.mdl.getStereoCode = function(bond){
 	if (bond instanceof jchemhub.model.SingleBondUp){
-		return jchemhub.io.Molfile.SINGLE_BOND_UP;
+		return jchemhub.io.mdl.SINGLE_BOND_UP;
 	}
 	if (bond instanceof jchemhub.model.SingleBondDown){
-		return jchemhub.io.Molfile.SINGLE_BOND_DOWN;
+		return jchemhub.io.mdl.SINGLE_BOND_DOWN;
 	}
 	if (bond instanceof jchemhub.model.SingleBondUpOrDown){
-		return jchemhub.io.Molfile.SINGLE_BOND_UP_OR_DOWN;
+		return jchemhub.io.mdl.SINGLE_BOND_UP_OR_DOWN;
 	}
-	return jchemhub.io.Molfile.NOT_STEREO;
+	return jchemhub.io.mdl.NOT_STEREO;
 	
 	
 }
 /**
- * Bond Types, values in molfile spec. Values 4 through 8 are for SSS queries
- * only.
+ * factory method for bonds
+ * 
+ * @param{number}type mdl type code
+ * @param{number}stereo mdl stereo type code
+ * @param{jchemhub.model.Atom} source atom at source end of bond
+ * @param{jchemhub.model.Atom} target atom at target end of bond
+ * 
+ * @return{jchemhub.model.Bond}
  */
-jchemhub.io.Molfile.BondFactory = function(type, stereo, source, target) {
+jchemhub.io.mdl.createBond = function(type, stereo, source, target) {
 	switch (type) {
-	case jchemhub.io.Molfile.SINGLE_BOND:
+	case jchemhub.io.mdl.SINGLE_BOND:
 		switch (stereo) {
-		case jchemhub.io.Molfile.NOT_STEREO:
+		case jchemhub.io.mdl.NOT_STEREO:
 			return new jchemhub.model.SingleBond(source, target);
-		case jchemhub.io.Molfile.SINGLE_BOND_UP:
+		case jchemhub.io.mdl.SINGLE_BOND_UP:
 			return new jchemhub.model.SingleBondUp(source, target);
-		case jchemhub.io.Molfile.SINGLE_BOND_UP_OR_DOWN:
+		case jchemhub.io.mdl.SINGLE_BOND_UP_OR_DOWN:
 			return new jchemhub.model.SingleBondUpOrDown(source, target);
-		case jchemhub.io.Molfile.SINGLE_BOND_DOWN:
+		case jchemhub.io.mdl.SINGLE_BOND_DOWN:
 			return new jchemhub.model.SingleBondDown(source, target);
 		default:
 			throw new Error("invalid bond type/stereo [" + type + "]/["
 					+ stereo + "]");
 		};
-	case jchemhub.io.Molfile.DOUBLE_BOND:
+	case jchemhub.io.mdl.DOUBLE_BOND:
 		return new jchemhub.model.DoubleBond(source, target);
-	case jchemhub.io.Molfile.TRIPLE_BOND:
+	case jchemhub.io.mdl.TRIPLE_BOND:
 		return new jchemhub.model.TripleBond(source, target);
-	case jchemhub.io.Molfile.AROMATIC:
+	case jchemhub.io.mdl.AROMATIC:
 		throw new Error("type not implemented [" + type + "]");
-	case jchemhub.io.Molfile.SINGLE_OR_DOUBLE:
+	case jchemhub.io.mdl.SINGLE_OR_DOUBLE:
 		throw new Error("type not implemented [" + type + "]");
-	case jchemhub.io.Molfile.SINGLE_OR_AROMATIC:
+	case jchemhub.io.mdl.SINGLE_OR_AROMATIC:
 		throw new Error("type not implemented [" + type + "]");
-	case jchemhub.io.Molfile.DOUBLE_OR_AROMATIC: 
+	case jchemhub.io.mdl.DOUBLE_OR_AROMATIC: 
 		throw new Error("type not implemented [" + type + "]");
-	case jchemhub.io.Molfile.ANY: 
+	case jchemhub.io.mdl.ANY: 
 		throw new Error("type not implemented [" + type + "]");
 	default:
 		throw new Error("invalid bond type/stereo [" + type + "]/[" + stereo
@@ -109,17 +120,12 @@ jchemhub.io.Molfile.BondFactory = function(type, stereo, source, target) {
 };
 
 /**
- * @fileoverview IO classes
- * 
+ * convert a mdl block string to a molecule
+ *  
+ * @param {String} mdl to convert
+ * @return {jchemhub.model.Molecule}
  */
-
-/**
- * Static method for reading molfile
- * 
- * @param {String}
- *            molfile Content of molfile to read.
- */
-jchemhub.io.Molfile.read = function(molfile) {
+jchemhub.io.mdl.readMolfile = function(molfile) {
 
 	var lineDelimiter = molfile.indexOf("\r\n") > 0 ? "\r\n" : "\n";
 	var mol_lines = molfile.split(lineDelimiter);
@@ -175,7 +181,7 @@ jchemhub.io.Molfile.read = function(molfile) {
 
 		var bondType = parseInt(line.substr(6, 3));
 		var bondStereoType = parseInt(line.substr(9, 3));
-		var bond = jchemhub.io.Molfile.BondFactory(bondType, bondStereoType,
+		var bond = jchemhub.io.mdl.createBond(bondType, bondStereoType,
 				sourceAtom, targetAtom);
 
 		mol.addBond(bond);
@@ -225,12 +231,13 @@ jchemhub.io.Molfile.read = function(molfile) {
 };
 
 /**
- * Static method for writing molfile
+ * convert Molecule to molfile string
  * 
- * @param {jchemhub.model.Molecule}
- *            molecule to write
+ * @param {jchemhub.model.Molecule} mol molecule to write
+ * 
+ * @return{string}
  */
-jchemhub.io.Molfile.write = function(mol) {
+jchemhub.io.mdl.writeMolfile = function(mol) {
 	var molFile = new String();
 	var headerBlock = new String();
 	var countsLine = new String();
@@ -279,9 +286,9 @@ jchemhub.io.Molfile.write = function(mol) {
 		var secondAtomNumber = mol.indexOfAtom(bond.target) + 1;
 		var secondAtomString = (goog.string.repeat(" ", 3) + secondAtomNumber)
 				.slice(-3);
-		var bondTypeString = (goog.string.repeat(" ", 3) + jchemhub.io.Molfile.getTypeCode(bond))
+		var bondTypeString = (goog.string.repeat(" ", 3) + jchemhub.io.mdl.getTypeCode(bond))
 				.slice(-3);
-		var stereoTypeString = (goog.string.repeat(" ", 3) + jchemhub.io.Molfile.getStereoCode(bond))
+		var stereoTypeString = (goog.string.repeat(" ", 3) + jchemhub.io.mdl.getStereoCode(bond))
 				.slice(-3);
 		bondBlock += firstAtomString + secondAtomString + bondTypeString
 				+ stereoTypeString + "\n";
@@ -290,6 +297,36 @@ jchemhub.io.Molfile.write = function(mol) {
 	molFile = headerBlock + countsLine + atomBlock + bondBlock;
 	// alert(molFile);
 	return molFile;
+
+};
+
+
+/**
+ * convert rxnfile format string to reaction
+ * 
+ * @param {String} rxnfile to parse
+ * @return{jchemhub.model.Reaction}
+ */
+jchemhub.io.mdl.readRxnfile = function(rxnfile) {
+	var lineDelimiter = rxnfile.indexOf("\r\n") > 0 ? "\r\n" : "\n";
+	var rxn_lines = rxnfile.split(lineDelimiter, 5);// only need first 5 lines
+	if (rxn_lines[0].indexOf("$RXN") < 0) {
+		throw "not a RXN file";
+	}
+	var reaction = new jchemhub.model.Reaction();
+	reaction.header = rxn_lines[2] + lineDelimiter + rxn_lines[3];
+	var reactant_count = parseInt(rxn_lines[4].substr(0, 3));
+	var product_count = parseInt(rxn_lines[4].substr(3, 3));
+	var rxn_blocks = rxnfile.split("$MOL" + lineDelimiter);
+	for ( var i = 1, il = reactant_count; i <= il; i++) {
+		var mol = jchemhub.io.mdl.readMolfile(rxn_blocks[i]);
+		reaction.addReactant(mol);
+	}
+	for ( var i = 1, il = product_count; i <= il; i++) {
+		var mol = jchemhub.io.mdl.readMolfile(rxn_blocks[i + reactant_count]);
+		reaction.addProduct(mol);
+	}
+	return reaction;
 
 };
 
