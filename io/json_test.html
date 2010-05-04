@@ -7,8 +7,8 @@
 <script src="../deps.js"></script>
 <script>
 	goog.require('goog.testing.jsunit');
-	goog.require('jchemhub.io.JSONMolecule');
-	goog.require('jchemhub.io.JSONReaction');
+	goog.require('jchemhub.io.json');
+	goog.require('goog.json.Serializer');
 </script>
 <script src="json_test_mol.js"></script>
 <script>
@@ -18,30 +18,38 @@
   	}
 
  
-  	function test0ImportMol() {
-	  	mol = jchemhub.io.JSONMolecule.read(jmol);
+  	function test0ReadMolecule() {
+	  	mol = jchemhub.io.json.readMolecule(jmol);
 	  	assertEquals(mol.name,"test");
 	  	assertEquals(mol.countAtoms(), 26);
 	  	assertEquals(mol.countBonds(), 27);
 	  	// test the string representation
-	  	mol = jchemhub.io.JSONMolecule.read( JSON.stringify(jmol) );
+	  //	var str = goog.json.Serializer.serialize(mol);
+	  //	mol = goog.json.unsafeParse( str );
+	  //	assertEquals(mol.name,"test");
+	  //	assertEquals(mol.countAtoms(), 26);
+	  //	assertEquals(mol.countBonds(), 27);
+	}
+	
+	 function testReadMoleculeAromatic() {
+	  	mol = jchemhub.io.json.readMolecule(jmol2);
 	  	assertEquals(mol.name,"test");
 	  	assertEquals(mol.countAtoms(), 26);
 	  	assertEquals(mol.countBonds(), 27);
 	}
 	
   	function test1ExportMol() {
-	  	mol = jchemhub.io.JSONMolecule.read(jmol);
-	  	jmolstr = jchemhub.io.JSONMolecule.write(mol);
-	  	assertEquals(jmolstr.length,3044);
+	  	mol = jchemhub.io.json.readMolecule(jmol);
+	  	jmolstr = jchemhub.io.json.writeMolecule(mol);
+	  	assertEquals(3227, jmolstr.length);
 	  	// test the string representation
-	  	var mol = jchemhub.io.JSONMolecule.read( JSON.stringify(jmol) );
-	  	jmolstr = jchemhub.io.JSONMolecule.write(mol);
-	  	assertEquals(jmolstr.length,3044);
+	  	var mol = jchemhub.io.json.readMolecule( JSON.stringify(jmol) );
+	  	jmolstr = jchemhub.io.json.writeMolecule(mol);
+	  	assertEquals(3227, jmolstr.length);
 	}
 	
 	function test2ImportReaction() {
-		rxn = jchemhub.io.JSONReaction.read(jreaction);
+		rxn = jchemhub.io.json.readReaction(jreaction);
 		assertEquals(rxn.header, "3-component UGI");
 		assertEquals(rxn.reactants.length, 3);
 		assertEquals(rxn.reactants[1].name, "isocyanoethane");
@@ -49,7 +57,7 @@
 		assertEquals(rxn.products[0].countBonds(), 15);
 		assertEquals(rxn.products.length, 1);
 		// test the string representation
-		rxn = jchemhub.io.JSONReaction.read( JSON.stringify(jreaction) );
+		rxn = jchemhub.io.json.readReaction( JSON.stringify(jreaction) );
 		assertEquals(rxn.header, "3-component UGI");
 		assertEquals(rxn.reactants.length, 3);
 		assertEquals(rxn.reactants[1].name, "isocyanoethane");
@@ -59,13 +67,13 @@
 	}
 	
   	function test3ExportReaction() {
-	  	rxn = jchemhub.io.JSONReaction.read(jreaction);
-		var jrxnstr = jchemhub.io.JSONReaction.write(rxn);
-		assertEquals(jrxnstr.length, 3958);
+	  	rxn = jchemhub.io.json.readReaction(jreaction);
+		var jrxnstr = jchemhub.io.json.writeReaction(rxn);
+		assertEquals(4011, jrxnstr.length);
 		// test the string representation
-		var rxn = jchemhub.io.JSONReaction.read( JSON.stringify(jreaction) );
-		var jrxnstr = jchemhub.io.JSONReaction.write(rxn);
-		assertEquals(jrxnstr.length, 3958);
+		var rxn = jchemhub.io.json.readReaction( JSON.stringify(jreaction) );
+		var jrxnstr = jchemhub.io.json.writeReaction(rxn);
+		assertEquals(4011, jrxnstr.length);
 	}
 </script>
 </head>
