@@ -9,13 +9,14 @@
 
 <script>
 	goog.require('jchemhub.controller.Controller');
+	goog.require('jchemhub.io.mdl');
 	goog.require('goog.events.EventType');
 	goog.require('goog.dom');
 </script>
 <script>
     
 function initPage(){
-	var model = jchemhub.controller.Controller.buildReactionDrawing(jchemhub.io.Rxnfile.read(rxnsample));
+	var model = jchemhub.controller.Controller.buildReactionDrawing(jchemhub.io.mdl.readRxnfile(rxnsample));
 	var controller = new jchemhub.controller.Controller(model, goog.dom.getElement('reactionEditorContainer'));
 };
 

@@ -3,7 +3,6 @@ goog.require('jchemhub.view.ReactionEditor');
 goog.require('jchemhub.view.ReactionDrawing');
 goog.require('jchemhub.view.ArrowDrawing');
 goog.require('jchemhub.view.PlusDrawing');
-goog.require('jchemhub.io.Rxnfile');
 goog.require('jchemhub.model.SingleBond');
 goog.require('jchemhub.model.SingleBondUp');
 goog.require('jchemhub.model.SingleBondDown');
