@@ -10,7 +10,7 @@ Copyright (c) 2010 Mark Rijnbeek (markr@ebi.ac.uk)
 <script src="../deps.js"></script>
 <script>
             goog.require('goog.testing.jsunit');
-            goog.require('jchemhub.io.Molfile');
+            goog.require('jchemhub.io.mdl');
             goog.require('jchemhub.ring.RingFinder');
         </script>
 <script>
@@ -48,7 +48,7 @@ Copyright (c) 2010 Mark Rijnbeek (markr@ebi.ac.uk)
             
             
             function findRings(name, mdlString, count){
-                var mol = jchemhub.io.Molfile.read(mdlString);
+                var mol = jchemhub.io.mdl.readMolfile(mdlString);
                 var rings = jchemhub.ring.RingFinder.findRings(mol);
                 assertEquals(count, rings.length);
                 debug(name, rings);
