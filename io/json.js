@@ -20,6 +20,7 @@ goog.require('jchemhub.model.Atom');
 goog.require('jchemhub.model.DoubleBond');
 
 goog.require('goog.json');
+goog.require('goog.array');
 
 
 
@@ -161,17 +162,13 @@ jchemhub.io.json.readMolecule = function(arg) {
 	}
 	var mol = new jchemhub.model.Molecule();
 	mol.name = jmol.name;
-	for (var i in jmol.atoms) {
-		var a = jmol.atoms[i];
-		var newatom = new jchemhub.model.Atom(a.symbol, a.x, a.y, a.charge);
-		mol.addAtom(newatom);
-	}
-	var atoms = mol.atoms;
-	for (var i in jmol.bondindex) {
-		var b = jmol.bondindex[i];
-		var newbond = this.createBond(b.type, b.stereo, atoms[b.source], atoms[b.target]);
-		mol.addBond(newbond);
-	}
+	goog.array.forEach(jmol.atoms, function(a){
+		mol.addAtom(new jchemhub.model.Atom(a.symbol, a.x, a.y, a.charge));
+	});
+	goog.array.forEach(jmol.bondindex, function(b){
+		mol.addBond(jchemhub.io.json.createBond(b.type, b.stereo, mol.getAtom(b.source), mol.getAtom(b.target)));
+	});
+	
 	return mol;
 };
 
@@ -233,12 +230,8 @@ jchemhub.io.json.readReaction = function(arg) {
 	}
 	var rxn = new jchemhub.model.Reaction();
 	rxn.header = jrxn.header;
-	for (var i in jrxn.reactants) {
-		rxn.reactants.push(jchemhub.io.json.readMolecule(jrxn.reactants[i]));
-	}
-	for (var i in jrxn.products) {
-		rxn.products.push(jchemhub.io.json.readMolecule(jrxn.products[i]));
-	}
+	rxn.reactants = goog.array.map(jrxn.reactants, jchemhub.io.json.readMolecule);
+	rxn.products = goog.array.map(jrxn.products, jchemhub.io.json.readMolecule);
 	return rxn;
 };
 

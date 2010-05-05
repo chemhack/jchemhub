@@ -8,12 +8,12 @@ templates = [
       {"symbol":"C","x":0,"y":0.75,"z":0,"charge":0},
       {"symbol":"C","x":1.30,"y":0,"z":0,"charge":0}],
     "bondindex":[
-      {"source":0,"target":1,"type":2,"stereo":0},
-      {"source":1,"target":2,"type":1,"stereo":0},
-      {"source":2,"target":3,"type":2,"stereo":0},
-      {"source":3,"target":4,"type":1,"stereo":0},
-      {"source":4,"target":5,"type":2,"stereo":0},
-      {"source":5,"target":0,"type":1,"stereo":0}]
+      {"source":0,"target":1,"type":"DOUBLE_BOND","stereo":"NOT_STEREO"},
+      {"source":1,"target":2,"type":"SINGLE_BOND","stereo":"NOT_STEREO"},
+      {"source":2,"target":3,"type":"DOUBLE_BOND","stereo":"NOT_STEREO"},
+      {"source":3,"target":4,"type":"SINGLE_BOND","stereo":"NOT_STEREO"},
+      {"source":4,"target":5,"type":"DOUBLE_BOND","stereo":"NOT_STEREO"},
+      {"source":5,"target":0,"type":"SINGLE_BOND","stereo":"NOT_STEREO"}]
   },
   {"name":"cyclohexane",
    "atoms":[
@@ -24,12 +24,12 @@ templates = [
      {"symbol":"C","x":0,"y":0.75,"z":0,"charge":0},
      {"symbol":"C","x":1.30,"y":0,"z":0,"charge":0}],
    "bondindex":[
-     {"source":0,"target":1,"type":1,"stereo":0},
-     {"source":1,"target":2,"type":1,"stereo":0},
-     {"source":2,"target":3,"type":1,"stereo":0},
-     {"source":3,"target":4,"type":1,"stereo":0},
-     {"source":4,"target":5,"type":1,"stereo":0},
-     {"source":5,"target":0,"type":1,"stereo":0}]
+     {"source":0,"target":1,"type":"SINGLE_BOND","stereo":"NOT_STEREO"},
+     {"source":1,"target":2,"type":"SINGLE_BOND","stereo":"NOT_STEREO"},
+     {"source":2,"target":3,"type":"SINGLE_BOND","stereo":"NOT_STEREO"},
+     {"source":3,"target":4,"type":"SINGLE_BOND","stereo":"NOT_STEREO"},
+     {"source":4,"target":5,"type":"SINGLE_BOND","stereo":"NOT_STEREO"},
+     {"source":5,"target":0,"type":"SINGLE_BOND","stereo":"NOT_STEREO"}]
   },
   {"name":"cyclopentane",
    "atoms":[
@@ -39,11 +39,11 @@ templates = [
     {"symbol":"C","x":0,"y":1.2135,"z":0,"charge":0},
     {"symbol":"C","x":-0.8817,"y":0,"z":0,"charge":0}],
   "bondindex":[
-    {"source":0,"target":1,"type":1,"stereo":0},
-    {"source":1,"target":2,"type":1,"stereo":0},
-    {"source":2,"target":3,"type":1,"stereo":0},
-    {"source":3,"target":4,"type":1,"stereo":0},
-    {"source":4,"target":0,"type":1,"stereo":0}]
+    {"source":0,"target":1,"type":"SINGLE_BOND","stereo":"NOT_STEREO"},
+    {"source":1,"target":2,"type":"SINGLE_BOND","stereo":"NOT_STEREO"},
+    {"source":2,"target":3,"type":"SINGLE_BOND","stereo":"NOT_STEREO"},
+    {"source":3,"target":4,"type":"SINGLE_BOND","stereo":"NOT_STEREO"},
+    {"source":4,"target":0,"type":"SINGLE_BOND","stereo":"NOT_STEREO"}]
   },
   {"name":"cyclopentane",
    "atoms":[
@@ -53,11 +53,11 @@ templates = [
      {"symbol":"C","x":0,"y":0.75,"z":0,"charge":0},
      {"symbol":"C","x":1.30,"y":0,"z":0,"charge":0}],
    "bondindex":[
-     {"source":0,"target":1,"type":1,"stereo":0},
-     {"source":1,"target":2,"type":1,"stereo":0},
-     {"source":2,"target":3,"type":1,"stereo":0},
-     {"source":3,"target":4,"type":1,"stereo":0},
-     {"source":4,"target":0,"type":1,"stereo":0}]
+     {"source":0,"target":1,"type":"SINGLE_BOND","stereo":"NOT_STEREO"},
+     {"source":1,"target":2,"type":"SINGLE_BOND","stereo":"NOT_STEREO"},
+     {"source":2,"target":3,"type":"SINGLE_BOND","stereo":"NOT_STEREO"},
+     {"source":3,"target":4,"type":"SINGLE_BOND","stereo":"NOT_STEREO"},
+     {"source":4,"target":0,"type":"SINGLE_BOND","stereo":"NOT_STEREO"}]
   },
   {"name":"pyrrole",
    "atoms":[
@@ -67,11 +67,11 @@ templates = [
      {"symbol":"C","x":0,"y":0.75,"z":0,"charge":0},
      {"symbol":"N","x":1.30,"y":0,"z":0,"charge":0}],
    "bondindex":[
-     {"source":0,"target":1,"type":2,"stereo":0},
-     {"source":1,"target":2,"type":1,"stereo":0},
-     {"source":2,"target":3,"type":2,"stereo":0},
-     {"source":3,"target":4,"type":1,"stereo":0},
-     {"source":4,"target":0,"type":1,"stereo":0}]
+     {"source":0,"target":1,"type":"DOUBLE_BOND","stereo":"NOT_STEREO"},
+     {"source":1,"target":2,"type":"SINGLE_BOND","stereo":"NOT_STEREO"},
+     {"source":2,"target":3,"type":"DOUBLE_BOND","stereo":"NOT_STEREO"},
+     {"source":3,"target":4,"type":"SINGLE_BOND","stereo":"NOT_STEREO"},
+     {"source":4,"target":0,"type":"SINGLE_BOND","stereo":"NOT_STEREO"}]
   },
     {"name":"pyrrole",
    "atoms":[
@@ -81,11 +81,11 @@ templates = [
     {"symbol":"C","x":0,"y":1.2135,"z":0,"charge":0},
     {"symbol":"N","x":-0.8817,"y":0,"z":0,"charge":0}],
   "bondindex":[
-    {"source":0,"target":1,"type":2,"stereo":0},
-    {"source":1,"target":2,"type":1,"stereo":0},
-    {"source":2,"target":3,"type":2,"stereo":0},
-    {"source":3,"target":4,"type":1,"stereo":0},
-    {"source":4,"target":0,"type":1,"stereo":0}]
+    {"source":0,"target":1,"type":"DOUBLE_BOND","stereo":"NOT_STEREO"},
+    {"source":1,"target":2,"type":"SINGLE_BOND","stereo":"NOT_STEREO"},
+    {"source":2,"target":3,"type":"DOUBLE_BOND","stereo":"NOT_STEREO"},
+    {"source":3,"target":4,"type":"SINGLE_BOND","stereo":"NOT_STEREO"},
+    {"source":4,"target":0,"type":"SINGLE_BOND","stereo":"NOT_STEREO"}]
   },
   {"name":"naphthalene",
    "atoms":[
@@ -100,16 +100,16 @@ templates = [
      {"symbol":"C","x":5.1962,"y":0.75,"z":0,"charge":0},
      {"symbol":"C","x":3.8971,"y":0,"z":0,"charge":0}],
    "bondindex":[
-     {"source":0,"target":1,"type":2,"stereo":0},
-     {"source":1,"target":2,"type":1,"stereo":0},
-     {"source":2,"target":3,"type":2,"stereo":0},
-     {"source":3,"target":4,"type":1,"stereo":0},
-     {"source":4,"target":5,"type":2,"stereo":0},
-     {"source":5,"target":0,"type":1,"stereo":0},
-     {"source":1,"target":6,"type":1,"stereo":0},
-     {"source":6,"target":7,"type":2,"stereo":0},
-     {"source":7,"target":8,"type":1,"stereo":0},
-     {"source":8,"target":9,"type":2,"stereo":0},
-     {"source":9,"target":0,"type":1,"stereo":0}]
+     {"source":0,"target":1,"type":"DOUBLE_BOND","stereo":"NOT_STEREO"},
+     {"source":1,"target":2,"type":"SINGLE_BOND","stereo":"NOT_STEREO"},
+     {"source":2,"target":3,"type":"DOUBLE_BOND","stereo":"NOT_STEREO"},
+     {"source":3,"target":4,"type":"SINGLE_BOND","stereo":"NOT_STEREO"},
+     {"source":4,"target":5,"type":"DOUBLE_BOND","stereo":"NOT_STEREO"},
+     {"source":5,"target":0,"type":"SINGLE_BOND","stereo":"NOT_STEREO"},
+     {"source":1,"target":6,"type":"SINGLE_BOND","stereo":"NOT_STEREO"},
+     {"source":6,"target":7,"type":"DOUBLE_BOND","stereo":"NOT_STEREO"},
+     {"source":7,"target":8,"type":"SINGLE_BOND","stereo":"NOT_STEREO"},
+     {"source":8,"target":9,"type":"DOUBLE_BOND","stereo":"NOT_STEREO"},
+     {"source":9,"target":0,"type":"SINGLE_BOND","stereo":"NOT_STEREO"}]
   }
 ];
