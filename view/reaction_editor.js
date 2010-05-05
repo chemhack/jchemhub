@@ -25,7 +25,8 @@ jchemhub.view.ReactionEditor = function(element, opt_config) {
 	}
 	this._graphics = goog.graphics.createGraphics(element.clientWidth,
 			element.clientHeight);
-	var fill = new goog.graphics.SolidFill('#F0FFF0');
+	var fill = new goog.graphics.SolidFill(
+			this.getConfig().get("background").color);
 
 	this._graphics.drawRect(0, 0, element.clientWidth, element.clientHeight,
 			null, fill);
@@ -39,8 +40,8 @@ goog.inherits(jchemhub.view.ReactionEditor, jchemhub.view.Drawing);
  */
 
 jchemhub.view.ReactionEditor.prototype.layoutAndRender = function() {
-	this.layout(new goog.math.Rect(10, 10, this.getSize().width-10,
-			this.getSize().height-10));
+	this.layout(new goog.math.Rect(10, 10, this.getSize().width - 10, this
+			.getSize().height - 10));
 	this.render();
 }
 
@@ -91,6 +92,9 @@ jchemhub.view.ReactionEditor.defaultConfig = {
 			color : 'blue'
 		},
 		fontName : "Arial"
+	},
+	background : {
+		color : '#F0FFF0'
 	},
 	bond : {
 		stroke : {

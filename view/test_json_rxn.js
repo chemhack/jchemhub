@@ -22,7 +22,7 @@ reactionDrawing = {
 			"x" : 1.2990381056766584
 		} ],
 		"name" : null,
-		"bonds" : [ {
+		"bondindex" : [ {
 			"source" : 1,
 			"stereo" : "NOT_STEREO",
 			"target" : 0,
@@ -61,7 +61,7 @@ reactionDrawing = {
 			"x" : 7.995190528383288
 		} ],
 		"name" : null,
-		"bonds" : [ {
+		"bondindex" : [ {
 			"source" : 1,
 			"stereo" : "NOT_STEREO",
 			"target" : 0,
@@ -121,7 +121,7 @@ reactionDrawing = {
 			"x" : 13.235621678108064
 		} ],
 		"name" : null,
-		"bonds" : [ {
+		"bondindex" : [ {
 			"source" : 1,
 			"stereo" : "NOT_STEREO",
 			"target" : 0,
