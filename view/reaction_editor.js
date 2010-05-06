@@ -188,6 +188,7 @@ jchemhub.view.ReactionEditor.defaultConfig = {
 		color : '#F0FFF0'
 	},
 	margin: 10,
+	subscriptSize: 5,
 	bond : {
 		stroke : {
 			width : 2,

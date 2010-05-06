@@ -25,17 +25,28 @@ jchemhub.view.AtomDrawing.prototype.render = function() {
 	var font = new goog.graphics.Font(11, atom_config.fontName);
 	var stroke = new goog.graphics.Stroke(atom_config.stroke.width, atom_config.stroke.color);
 	var fill = new goog.graphics.SolidFill(atom_config.fill.color);
-	var w = this.atom.symbol.length * 0.55 * font.size;
+
+	var point = this.transformCoords(this.getTransform(), [this.atom.coord])[0];
+	var symbol = this.compoundSymbol();
+	var graphics = this.getGraphics();
+	var group = graphics.createGroup();
+	var w = symbol.text.length * 0.55 * font.size;
 	var h = font.size;
-	var coord = this.transformCoords(this.getTransform(), [this.atom.coord])[0];
-	var drawn_symbol = this.compoundSymbol();
-	if (drawn_symbol.symbol) this.getGraphics().drawEllipse(coord.x, coord.y, w, w,
-		new goog.graphics.Stroke(1, config.get("background").color),
-		new goog.graphics.SolidFill(config.get("background").color) );
-	this.getGraphics().drawText(drawn_symbol.symbol, coord.x - w / 2, coord.y
-			- h / 2, w, h, drawn_symbol.justification, null,
-			font,
-			stroke, fill, this.getGroup());
+	if (symbol.text) {
+		group.atomLabelBackground = graphics.drawEllipse(point.x, point.y, h*0.7, h*0.7,
+			new goog.graphics.Stroke(1, config.get("background").color),
+			new goog.graphics.SolidFill(config.get("background").color), group );
+	}                
+	graphics.drawText(symbol.text, point.x - w / 2, point.y - h / 2, w, h, 'center', null, font, stroke, fill, group);
+	if(symbol.subscript || symbol.superscript){
+		var subSize = config.get("subscriptSize");
+		if(symbol.subscript){
+ 			graphics.drawText(symbol.subscript,   point.x + w*0.7, point.y , subSize, subSize, 'center', null, font, stroke, fill, group);
+		}
+		if(symbol.superscript){
+			graphics.drawText(symbol.superscript, point.x + w*0.7, point.y-h*0.8 , subSize, subSize, 'center', null, font, stroke, fill, group);
+		}
+	}
 
 };
 
@@ -87,39 +98,38 @@ jchemhub.view.AtomDrawing.prototype.transformDrawing = function(trans) {
  * @return String
  */
 jchemhub.view.AtomDrawing.prototype.compoundSymbol = function() {
-	var retval = {symbol: this.atom.symbol, justification: 'center'};
+	var retval = {text: this.atom.symbol, justification: 'center', superscript: '', subscript: ''};
 	if (this.atom.countBonds() == 1) {
 	// terminal atom may need compound atom name
-		retval.symbol = this.atom.symbol;
+		retval.text = this.atom.symbol;
 		var hydrogen_count = this.hydrogenCount();
 		switch  (hydrogen_count) {
 		// could have H on left, depending on bond slope
 		case 0:
 			break;
 		case 1:
-			retval.symbol += 'H';
+			retval.text += 'H';
 			break;
 		default:
-			retval.symbol += 'H' + hydrogen_count;
+			retval.text += 'H';
+			retval.subscript = String(hydrogen_count);
 			break;
 		}
-		switch (this.atom.charge) {
-		case 0:
-			break;
-		case 1:
-			retval.symbol += '+';
-			break;
-		case -1:
-			retval.symbol += '-';
-			break;
-		default:
-			retval.symbol += this.atom.charge;
-			break;
+		if (this.atom.charge) {
+			if (this.atom.charge > 1) {
+				retval.superscript += '+' + this.atom.charge;
+			} else if (this.atom.charge < -1) {
+				retval.superscript += this.atom.charge;
+			} else if (this.atom.charge == -1) {
+				retval.superscript = '-';
+			} else if (this.atom.charge == 1) {
+				retval.superscript = '+';
+			}
 		}
 		// could be 'right' depending on bond slope
 		retval.justification = 'left';
 	} else {
-		if (this.atom.symbol == "C") retval.symbol = "";
+		if (this.atom.symbol == "C") retval.text = "";
 	}
 	return retval;
 };
