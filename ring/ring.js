@@ -25,8 +25,8 @@ jchemhub.ring.Ring=function(_atoms,_bonds)
     var avgX=0;
 	var avgY=0;
     for (var j = 0, jl = _atoms.length; j < jl; j++) {
-        avgX += _atoms[j].x;
-        avgY += _atoms[j].y;
+        avgX += _atoms[j].coord.x;
+        avgY += _atoms[j].coord.y;
     }
-    this.ringCenter=new Array(avgX/_atoms.length,avgY/_atoms.length);
+    this.ringCenter=new goog.math.Coordinate(avgX/_atoms.length, avgY/_atoms.length);
 }
