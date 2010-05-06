@@ -19,11 +19,12 @@ goog.require("goog.math.Box");
 jchemhub.view.MoleculeDrawing = function(molecule) {
 	jchemhub.view.Drawing.call(this);
 	this.molecule = molecule;
-	goog.array.forEach(molecule.atoms, function(atom) {
-		this.add(new jchemhub.view.AtomDrawing(atom));
-	}, this);
+
 	goog.array.forEach(molecule.bonds, function(bond) {
 		this.add(jchemhub.controller.Controller.createBondDrawing(bond));
+	}, this);
+	goog.array.forEach(molecule.atoms, function(atom) {
+		this.add(new jchemhub.view.AtomDrawing(atom));
 	}, this);
 
 	// this.addEventListener(goog.events.EventType.CLICK, this.toggleHighlight);
