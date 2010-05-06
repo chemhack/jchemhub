@@ -37,14 +37,14 @@ jchemhub.view.AtomDrawing.prototype.render = function() {
 			new goog.graphics.Stroke(1, config.get("background").color),
 			new goog.graphics.SolidFill(config.get("background").color), group );
 	}                
-	graphics.drawText(symbol.text, point.x - w / 2, point.y - h / 2, w, h, 'center', null, font, stroke, fill, group);
+	graphics.drawText(symbol.text, point.x - w / 2, point.y - h / 2, w, h, symbol.justification, null, font, stroke, fill, group);
 	if(symbol.subscript || symbol.superscript){
 		var subSize = config.get("subscriptSize");
 		if(symbol.subscript){
- 			graphics.drawText(symbol.subscript,   point.x + w*0.7, point.y , subSize, subSize, 'center', null, font, stroke, fill, group);
+ 			graphics.drawText(symbol.subscript,   point.x + w, point.y , subSize, subSize, 'center', null, font, stroke, fill, group);
 		}
 		if(symbol.superscript){
-			graphics.drawText(symbol.superscript, point.x + w*0.7, point.y-h*0.8 , subSize, subSize, 'center', null, font, stroke, fill, group);
+			graphics.drawText(symbol.superscript, point.x + w, point.y-h*0.8 , subSize, subSize, 'center', null, font, stroke, fill, group);
 		}
 	}
 
