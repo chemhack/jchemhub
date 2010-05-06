@@ -163,7 +163,7 @@ jchemhub.io.json.readMolecule = function(arg) {
 	var mol = new jchemhub.model.Molecule();
 	mol.name = jmol.name;
 	goog.array.forEach(jmol.atoms, function(a){
-		mol.addAtom(new jchemhub.model.Atom(a.symbol, a.x, a.y, a.charge));
+		mol.addAtom(new jchemhub.model.Atom(a.symbol, a.coord.x, a.coord.y, a.charge));
 	});
 	goog.array.forEach(jmol.bondindex, function(b){
 		mol.addBond(jchemhub.io.json.createBond(b.type, b.stereo, mol.getAtom(b.source), mol.getAtom(b.target)));
@@ -189,9 +189,7 @@ jchemhub.io.json.moleculeToJson = function(mol) {
 		var a = mol.atoms[i];
 		atoms.push( {
 			symbol : a.symbol,
-			x : a.x,
-			y : a.y,
-			z : a.z,
+			coord : {x: a.coord.x, y: a.coord.y},
 			charge : a.charge
 		});
 	}
@@ -208,7 +206,7 @@ jchemhub.io.json.moleculeToJson = function(mol) {
 		});
 	}
 	return {
-		name : this.name,
+		name : mol.name,
 		atoms : atoms,
 		bondindex : bonds
 	};

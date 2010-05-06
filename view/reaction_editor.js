@@ -40,8 +40,9 @@ goog.inherits(jchemhub.view.ReactionEditor, jchemhub.view.Drawing);
  */
 
 jchemhub.view.ReactionEditor.prototype.layoutAndRender = function() {
-	this.layout(new goog.math.Rect(10, 10, this.getSize().width - 10, this
-			.getSize().height - 10));
+	margin = 20; // how to get from config?
+	this.layout(new goog.math.Rect(margin, margin, this.getSize().width - margin*2,
+		this.getSize().height - margin*2));
 	this.render();
 }
 
@@ -86,19 +87,110 @@ jchemhub.view.ReactionEditor.defaultConfig = {
 		diameter : .05,
 		stroke : {
 			width : 1,
+			color : '#FF9999'
+		},
+		fill : {
+			color : '#FF9999'
+		},
+		fontName : "Arial"
+	},
+	N: {
+		stroke : {
+			width : 1,
 			color : 'blue'
 		},
 		fill : {
 			color : 'blue'
+		}
+	},
+	O: {
+		stroke : {
+			width : 1,
+			color : 'red'
 		},
-		fontName : "Arial"
+		fill : {
+			color : 'red'
+		}
+	},
+	S: {
+		stroke : {
+			width : 1,
+			color : 'yellow'
+		},
+		fill : {
+			color : 'yellow'
+		}
+	},
+	P: {
+		stroke : {
+			width : 1,
+			color : 'orange'
+		},
+		fill : {
+			color : 'orange'
+		}
+	},
+	Cl: {
+		stroke : {
+			width : 1,
+			color : 'green'
+		},
+		fill : {
+			color : 'green'
+		}
+	},
+	F: {
+		stroke : {
+			width : 1,
+			color : 'green'
+		},
+		fill : {
+			color : 'green'
+		}
+	},
+	Br: {
+		stroke : {
+			width : 1,
+			color : 'dark red'
+		},
+		fill : {
+			color : 'dark red'
+		}
+	},
+	I: {
+		stroke : {
+			width : 1,
+			color : 'purple'
+		},
+		fill : {
+			color : 'purple'
+		}
+	},
+	C: {
+		stroke : {
+			width : 1,
+			color : 'black'
+		},
+		fill : {
+			color : 'black'
+		}
+	},
+	H: {
+		stroke : {
+			width : 1,
+			color : 'black'
+		},
+		fill : {
+			color : 'white'
+		}
 	},
 	background : {
 		color : '#F0FFF0'
 	},
+	margin: 10,
 	bond : {
 		stroke : {
-			width : 1,
+			width : 2,
 			color : 'black'
 		},
 		fill : {

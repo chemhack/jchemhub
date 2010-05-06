@@ -28,7 +28,7 @@ jchemhub.model.Molecule = function(opt_name) {
 	 * 
 	 * @type {string}
 	 */
-	this.name = "";
+	this.name = opt_name ? opt_name : "";
 };
 
 /**

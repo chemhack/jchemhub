@@ -41,11 +41,11 @@
   	function test1ExportMol() {
 	  	mol = jchemhub.io.json.readMolecule(jmol);
 	  	jmolstr = jchemhub.io.json.writeMolecule(mol);
-	  	assertEquals(3227, jmolstr.length);
+	  	assertEquals(3366, jmolstr.length);
 	  	// test the string representation
 	  	var mol = jchemhub.io.json.readMolecule( JSON.stringify(jmol) );
 	  	jmolstr = jchemhub.io.json.writeMolecule(mol);
-	  	assertEquals(3227, jmolstr.length);
+	  	assertEquals(3366, jmolstr.length);
 	}
 	
 	function test2ImportReaction() {
@@ -69,11 +69,11 @@
   	function test3ExportReaction() {
 	  	rxn = jchemhub.io.json.readReaction(jreaction);
 		var jrxnstr = jchemhub.io.json.writeReaction(rxn);
-		assertEquals(4011, jrxnstr.length);
+		assertEquals(3908, jrxnstr.length);
 		// test the string representation
 		var rxn = jchemhub.io.json.readReaction( JSON.stringify(jreaction) );
 		var jrxnstr = jchemhub.io.json.writeReaction(rxn);
-		assertEquals(4011, jrxnstr.length);
+		assertEquals(3908, jrxnstr.length);
 	}
 </script>
 </head>

@@ -8,10 +8,12 @@
 <script src="../deps.js"></script>
 <script>
 	goog.require('goog.dom');
-	goog.require('goog.graphics')
+	goog.require('goog.graphics');
+	goog.require('goog.format.JsonPrettyPrinter');
 	goog.require('goog.events');
     goog.require('goog.events.EventType');
-    goog.require('jchemhub.io.Molfile');
+    goog.require('jchemhub.io.mdl');
+    goog.require('jchemhub.io.json');
     goog.require('jchemhub.render.Renderer');
     goog.require('jchemhub.render.Geometry');
     goog.require('jchemhub.config.RenderParams');
@@ -25,13 +27,14 @@ function loadMol() {
 	molblock.value = molsample;
 }
 function showMol(molblock) {
-	var mol = jchemhub.io.Molfile.read(molblock);
-	renderMol(mol);
+	var mol = jchemhub.io.mdl.readMolfile(molblock);
+	//renderMol(mol);
 	showJSON(mol);
 }
 function showJSON(mol) {
-	jblock = document.getElementById("jsonblock");
-	jblock.value = jchemhub.io.JSONMolecule.write(mol);
+	var jblock = document.getElementById("jsonblock");
+	var pretty = new goog.format.JsonPrettyPrinter();
+	jblock.value = pretty.format(jchemhub.io.json.writeMolecule(mol));
 }
 function renderMol(mol) {
 

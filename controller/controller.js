@@ -56,14 +56,14 @@ jchemhub.controller.Controller.buildReactionDrawing = function(rxn) {
 jchemhub.controller.Controller.buildMoleculeDrawing = function(molecule) {
 	var mol_drawing = new jchemhub.view.MoleculeDrawing(molecule.name);
 
-	goog.array.forEach(molecule.atoms, function(atom) {
-		mol_drawing.add(new jchemhub.view.AtomDrawing(atom));
-	});
 	goog.array.forEach(molecule.bonds,
 			function(bond) {
 				mol_drawing.add(jchemhub.controller.Controller
 						.createBondDrawing(bond));
 			});
+	goog.array.forEach(molecule.atoms, function(atom) {
+		mol_drawing.add(new jchemhub.view.AtomDrawing(atom));
+	});
 	return mol_drawing;
 };
 

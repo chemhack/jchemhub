@@ -1,5 +1,6 @@
 goog.provide("jchemhub.view.AtomDrawing");
 goog.require("goog.math.Coordinate");
+goog.require("jchemhub.resource.Covalence");
 
 /**
  * An atom graphical element in the reaction editor.
@@ -20,15 +21,19 @@ goog.inherits(jchemhub.view.AtomDrawing, jchemhub.view.Drawing);
  */
 jchemhub.view.AtomDrawing.prototype.render = function() {
 	var config = this.getConfig();
-	var font = new goog.graphics.Font(10, config.get("atom").fontName);
-	var stroke = new goog.graphics.Stroke(config.get("atom").stroke.width,
-			config.get("atom").stroke.color);
-	var fill = new goog.graphics.SolidFill(config.get("atom").fill.color);
+	var atom_config = config.get(this.atom.symbol) ? config.get(this.atom.symbol) : config.get("atom");
+	var font = new goog.graphics.Font(11, atom_config.fontName);
+	var stroke = new goog.graphics.Stroke(atom_config.stroke.width, atom_config.stroke.color);
+	var fill = new goog.graphics.SolidFill(atom_config.fill.color);
 	var w = this.atom.symbol.length * 0.55 * font.size;
 	var h = font.size;
 	var coord = this.transformCoords(this.getTransform(), [this.atom.coord])[0];
-	this.getGraphics().drawText(this.atom.symbol, coord.x - w / 2, coord.y
-			- h / 2, w, h, 'center', null,
+	var drawn_symbol = this.compoundSymbol();
+	if (drawn_symbol.symbol) this.getGraphics().drawEllipse(coord.x, coord.y, w, w,
+		new goog.graphics.Stroke(1, config.get("background").color),
+		new goog.graphics.SolidFill(config.get("background").color) );
+	this.getGraphics().drawText(drawn_symbol.symbol, coord.x - w / 2, coord.y
+			- h / 2, w, h, drawn_symbol.justification, null,
 			font,
 			stroke, fill, this.getGroup());
 
@@ -73,4 +78,73 @@ jchemhub.view.AtomDrawing.prototype.transformDrawing = function(trans) {
 		var new_base_coords = this.transformCoords(this.getTransform().createInverse(), new_coords);
 		this.atom.coord = new_base_coords[0];
 		jchemhub.view.BondDrawing.superClass_.transformDrawing(trans);
+};
+
+/**
+ * return a compound symbol (e.g. NH, CH3), the plain symbol, or ""
+ * 
+ * @param{}
+ * @return String
+ */
+jchemhub.view.AtomDrawing.prototype.compoundSymbol = function() {
+	var retval = {symbol: this.atom.symbol, justification: 'center'};
+	if (this.atom.countBonds() == 1) {
+	// terminal atom may need compound atom name
+		retval.symbol = this.atom.symbol;
+		var hydrogen_count = this.hydrogenCount();
+		switch  (hydrogen_count) {
+		// could have H on left, depending on bond slope
+		case 0:
+			break;
+		case 1:
+			retval.symbol += 'H';
+			break;
+		default:
+			retval.symbol += 'H' + hydrogen_count;
+			break;
+		}
+		switch (this.atom.charge) {
+		case 0:
+			break;
+		case 1:
+			retval.symbol += '+';
+			break;
+		case -1:
+			retval.symbol += '-';
+			break;
+		default:
+			retval.symbol += this.atom.charge;
+			break;
+		}
+		// could be 'right' depending on bond slope
+		retval.justification = 'left';
+	} else {
+		if (this.atom.symbol == "C") retval.symbol = "";
 	}
+	return retval;
+};
+
+jchemhub.view.AtomDrawing.prototype.hydrogenCount = function() {
+	var cov = jchemhub.resource.Covalence[this.atom.symbol];
+	var totalBondOrder = 0;
+	goog.array.forEach(this.atom.bonds.getValues(),function(element,index,array){
+		//totalBondOrder+=element.bondType;//TODO not good enough, need to handle aromatic bonds.
+		if (element instanceof jchemhub.model.SingleBond) {
+			totalBondOrder += 1;
+		} else if (element instanceof jchemhub.model.SingleBondUp) {
+			totalBondOrder += 1;
+		} else if (element instanceof jchemhub.model.SingleBondDown) {
+			totalBondOrder += 1;
+		} else if (element instanceof jchemhub.model.SingleBondUpOrDown) {
+			totalBondOrder += 1;
+		} else if (element instanceof jchemhub.model.DoubleBond) {
+			totalBondOrder += 2;
+		} else if (element instanceof jchemhub.model.TripleBond) {
+			totalBondOrder += 3;
+		} else if (element instanceof jchemhub.model.QuadrupleBond) {
+			totalBondOrder += 4;
+		}
+	});
+	var hydrogenCount = cov - totalBondOrder + this.atom.charge;
+	return hydrogenCount;
+};
