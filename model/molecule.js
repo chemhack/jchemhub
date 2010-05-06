@@ -1,5 +1,6 @@
 goog.provide('jchemhub.model.Molecule');
 goog.require('goog.array');
+goog.require('jchemhub.ring.RingFinder');
 
 /**
  * Class representing a Molecule
@@ -29,6 +30,13 @@ jchemhub.model.Molecule = function(opt_name) {
 	 * @type {string}
 	 */
 	this.name = "";
+	
+	/**
+	 * rings found in this molecule
+	 * 
+	 * @type {Array.<jchemhub.ring.Ring>}
+	 */
+	this.rings = [];
 };
 
 /**
@@ -41,6 +49,7 @@ jchemhub.model.Molecule.prototype.addBond = function(bond) {
 	this.bonds.push(bond);
 	bond.source.bonds.add(bond);
 	bond.target.bonds.add(bond);
+	this.findRings();
 };
 
 /**
@@ -129,6 +138,7 @@ jchemhub.model.Molecule.prototype.removeAtom = function(atomOrId) {
 	});
 	atom.bonds.clear();
 	goog.array.remove(this.atoms, atom);
+	this.findRings();
 
 };
 
@@ -149,6 +159,7 @@ jchemhub.model.Molecule.prototype.removeBond = function(bondOrId) {
 	bond.source.bonds.remove(bond);
 	bond.target.bonds.remove(bond);
 	goog.array.remove(this.bonds, bond);
+	this.findRings();
 };
 
 /**
@@ -174,4 +185,9 @@ jchemhub.model.Molecule.prototype.countBonds = function() {
  */
 jchemhub.model.Molecule.prototype.addAtom = function(atom) {
 	this.atoms.push(atom);
+	this.findRings();
 };
+
+jchemhub.model.Molecule.prototype.findRings = function(){
+	this.rings = jchemhub.ring.RingFinder.findRings(this);
+}

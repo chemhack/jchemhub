@@ -11,15 +11,21 @@ goog.require("goog.math.Box");
 /**
  * A molecule graphical element in the reaction editor.
  * 
- * @param {jchemhub.view.Drawing}
- *            parent Drawing object
+ * @param {jchemhub.model.Molecule} molecule. The molecule to render.
  * 
  * @constructor
  * @extends {jchemhub.view.Drawing}
  */
-jchemhub.view.MoleculeDrawing = function(name) {
+jchemhub.view.MoleculeDrawing = function(molecule) {
 	jchemhub.view.Drawing.call(this);
-	this._name = name;
+	this.molecule = molecule;
+	goog.array.forEach(molecule.atoms, function(atom) {
+		this.add(new jchemhub.view.AtomDrawing(atom));
+	}, this);
+	goog.array.forEach(molecule.bonds, function(bond) {
+		this.add(jchemhub.controller.Controller.createBondDrawing(bond));
+	}, this);
+
 	// this.addEventListener(goog.events.EventType.CLICK, this.toggleHighlight);
 	this.addEventListener(goog.events.EventType.MOUSEDOWN, this.drag);
 
@@ -27,8 +33,7 @@ jchemhub.view.MoleculeDrawing = function(name) {
 goog.inherits(jchemhub.view.MoleculeDrawing, jchemhub.view.Drawing);
 
 /**
- * @override
- * does not call children's layout function, just sets their transform
+ * @override does not call children's layout function, just sets their transform
  */
 jchemhub.view.MoleculeDrawing.prototype.layoutChildren = function() {
 	goog.array.forEach(this.getChildren(), function(child) {
