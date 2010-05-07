@@ -163,6 +163,7 @@ jchemhub.io.json.readMolecule = function(arg) {
 	var mol = new jchemhub.model.Molecule();
 	mol.name = jmol.name;
 	goog.array.forEach(jmol.atoms, function(a){
+		console.log(a);
 		mol.addAtom(new jchemhub.model.Atom(a.symbol, a.coord.x, a.coord.y, a.charge));
 	});
 	goog.array.forEach(jmol.bondindex, function(b){
