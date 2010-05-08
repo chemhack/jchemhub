@@ -155,6 +155,9 @@ jchemhub.view.AtomDrawing.prototype.hydrogenCount = function() {
 			totalBondOrder += 4;
 		}
 	});
-	var hydrogenCount = cov - totalBondOrder + this.atom.charge;
+	var hydrogenCount = 0;
+	if (cov) {
+		hydrogenCount = cov - totalBondOrder + this.atom.charge;
+	}
 	return hydrogenCount;
 };
