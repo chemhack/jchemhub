@@ -13,10 +13,15 @@
 	function testTheta(){
 		var l = new jchemhub.math.Line(new goog.math.Coordinate(0,0), new goog.math.Coordinate(1,1));
 		assertEquals(Math.PI/4, l.getTheta());
-		var l = new jchemhub.math.Line(new goog.math.Coordinate(1,0), new goog.math.Coordinate(1,1));
+		
+		l = new jchemhub.math.Line(new goog.math.Coordinate(0,0), new goog.math.Coordinate(0,1));
 		assertEquals(Math.PI/2, l.getTheta());
-		var l = new jchemhub.math.Line(new goog.math.Coordinate(0,1), new goog.math.Coordinate(1,1));
-		assertEquals(0, l.getTheta());
+		
+		l = new jchemhub.math.Line(new goog.math.Coordinate(0,0), new goog.math.Coordinate(1,0));
+		assertEquals(0, l.getTheta());	var l = new jchemhub.math.Line(new goog.math.Coordinate(0,1), new goog.math.Coordinate(1,1));
+		
+		l = new jchemhub.math.Line(new goog.math.Coordinate(0,0), new goog.math.Coordinate(Math.sqrt(3),1));
+		assertRoughlyEquals(Math.PI/6, l.getTheta(), .0000000000001);
 	}
 </script>
 </head>

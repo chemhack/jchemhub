@@ -20,9 +20,10 @@ goog.inherits(jchemhub.view.DoubleBondDrawing, jchemhub.view.BondDrawing);
  * @return{jchemhub.ring.Ring} first ring that contains this bond
  */
 jchemhub.view.DoubleBondDrawing.prototype.getFirstRing = function() {
-	return goog.array.find(this.getParent().molecule.getRings(), function(ring) {
-		return goog.array.contains(ring.bonds, this.bond);
-	}, this);
+	return goog.array.find(this.getParent().molecule.getRings(),
+			function(ring) {
+				return goog.array.contains(ring.bonds, this.bond);
+			}, this);
 }
 
 /**
@@ -42,13 +43,13 @@ jchemhub.view.DoubleBondDrawing.prototype.render = function() {
 		var source_offset = goog.math.Coordinate.difference(center,
 				this.bond.source.coord);
 		var inner_line_source = goog.math.Coordinate.sum(
-				new goog.math.Coordinate(source_offset.x / 5, source_offset.y / 5),
-				this.bond.source.coord);
+				new goog.math.Coordinate(source_offset.x / 5,
+						source_offset.y / 5), this.bond.source.coord);
 		var target_offset = goog.math.Coordinate.difference(center,
 				this.bond.target.coord);
 		var inner_line_target = goog.math.Coordinate.sum(
-				new goog.math.Coordinate(target_offset.x / 5, target_offset.y / 5),
-				this.bond.target.coord);
+				new goog.math.Coordinate(target_offset.x / 5,
+						target_offset.y / 5), this.bond.target.coord);
 
 		var coords = this.transformCoords(this.getTransform(), [
 				this.bond.source.coord, this.bond.target.coord,
@@ -62,13 +63,12 @@ jchemhub.view.DoubleBondDrawing.prototype.render = function() {
 		this._elements.push(this.getGraphics().drawPath(bondPath, bondStroke,
 				bondFill, this.getGroup()));
 	} else {
-
 		var theta = this.getTheta();
 
 		var angle_left = theta + (Math.PI / 2);
 		var angle_right = theta - (Math.PI / 2);
 
-		var bondWidth = strokeWidth / 15;
+		var bondWidth = strokeWidth /60;
 		var transleft = goog.graphics.AffineTransform.getTranslateInstance(Math
 				.cos(angle_left)
 				* bondWidth, Math.sin(angle_left) * bondWidth, 0, 0, 0);
@@ -83,18 +83,15 @@ jchemhub.view.DoubleBondDrawing.prototype.render = function() {
 		var coords = this.transformCoords(this.getTransform(), [ leftside[0],
 				leftside[1], rightside[0], rightside[1] ]);
 
-		var bondPath1 = new goog.graphics.Path();
-		bondPath1.moveTo(coords[0].x, coords[0].y);
-		bondPath1.lineTo(coords[1].x, coords[1].y);
-		this._elements.push(this.getGraphics().drawPath(bondPath1, bondStroke,
-				bondFill, this.getGroup()));
+		var bondPath = new goog.graphics.Path();
+		bondPath.moveTo(coords[0].x, coords[0].y);
+		bondPath.lineTo(coords[1].x, coords[1].y);
 
-		var bondPath2 = new goog.graphics.Path();
-		bondPath2.moveTo(coords[2].x, coords[0].y);
-		bondPath2.lineTo(coords[3].x, coords[1].y);
-		this._elements.push(this.getGraphics().drawPath(bondPath2, bondStroke,
-				bondFill, this.getGroup()));
+		bondPath.moveTo(coords[2].x, coords[2].y);
+		bondPath.lineTo(coords[3].x, coords[3].y);
 
+		this._elements.push(this.getGraphics().drawPath(bondPath, bondStroke,
+				bondFill, this.getGroup()));
 	}
 	jchemhub.view.DoubleBondDrawing.superClass_.render.call(this);
 }
