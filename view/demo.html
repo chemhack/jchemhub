@@ -9,6 +9,7 @@
  <script src="../../jchemhub_compiled.js"></script>
  -->
 <script src="test_json_rxn.js"></script>
+<script src="../io/json_test_mol.js"></script>
 
 <script>
 	goog.require('jchemhub.controller.Controller');
@@ -19,7 +20,8 @@
 <script>
     
 function initPage(){
-	var model = jchemhub.controller.Controller.buildReactionDrawing(jchemhub.io.json.readReaction(reactionDrawing));
+	//var model = jchemhub.controller.Controller.buildReactionDrawing(jchemhub.io.json.readReaction(reactionDrawing));
+	var model = jchemhub.controller.Controller.buildReactionDrawing(jchemhub.io.json.readReaction(jreaction));
 	var controller = new jchemhub.controller.Controller(model, goog.dom.getElement('reactionEditorContainer'));
 };
 

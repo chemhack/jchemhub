@@ -11,13 +11,11 @@
 	goog.require('goog.graphics')
 	goog.require('goog.events');
     goog.require('goog.events.EventType');
-    goog.require('jchemhub.io.JSONMolecule');	
-    goog.require('jchemhub.render.Geometry');
-    goog.require('jchemhub.config.RenderParams');
-    goog.require('jchemhub.render.Renderer');
+    goog.require('jchemhub.io.json');	
+    goog.require('jchemhub.controller.Controller');
 </script>
 
-<script src="json_test_mol.js"></script>
+<script src="../io/json_test_mol.js"></script>
 
 <script>
 function showJSON(mol) {
@@ -28,19 +26,9 @@ function showJSON(mol) {
 <body>
 
 <script>
-    var mol = jchemhub.io.JSONMolecule.read(jmol);
-    jchemhub.render.Geometry.translateAllPositive(mol);
-	
- 	var context={
-		widgetType:"editor",
-		renderParams:jchemhub.config.RenderParams.get(),
-		targetElement:document.getElementById('testGraphics'),
-		width:400,
-		height:400,
-		mol:mol		
-	};
-	
-	var renderer=new jchemhub.render.Renderer(context);
+	var mol = jchemhub.io.json.readMolecule(jmol);
+	var model = jchemhub.controller.Controller.buildMoleculeDrawing(mol);
+	var controller = new jchemhub.controller.Controller(model, goog.dom.getElement('reactionEditorContainer'));
 	
 	</script>
 	<div id="testGraphics" ></div>
