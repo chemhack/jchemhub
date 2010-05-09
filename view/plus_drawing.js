@@ -10,7 +10,7 @@ goog.provide("jchemhub.view.PlusDrawing");
 jchemhub.view.PlusDrawing = function() {
 	jchemhub.view.Drawing.call(this);
 	this._h0 = new goog.math.Coordinate(0,0);
-	var width = 1;
+	var width = .25;
 	this._h1 = new goog.math.Coordinate(width,0);
 	this._v0 = new goog.math.Coordinate(width/2, width/2);
 	this._v1 = new goog.math.Coordinate(width/2, -width/2);

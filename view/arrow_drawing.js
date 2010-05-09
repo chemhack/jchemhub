@@ -10,8 +10,8 @@ goog.provide("jchemhub.view.ArrowDrawing");
 jchemhub.view.ArrowDrawing = function() {
 	jchemhub.view.Drawing.call(this);
 	this._nock = new goog.math.Coordinate(0, 0);
-	var width = 3;
-	var height = 1;
+	var width = 1;
+	var height = .25;
 	this._tip = new goog.math.Coordinate(width, 0);
 	this._head1 = new goog.math.Coordinate(width - height, height / 2);
 	this._head2 = new goog.math.Coordinate(width - height, -height / 2);
