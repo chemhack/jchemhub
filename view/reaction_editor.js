@@ -79,7 +79,7 @@ jchemhub.view.Drawing.prototype.updateTransformedCoords = function() {
 jchemhub.view.ReactionEditor.defaultConfig = {
 	arrow : {
 		stroke : {
-			width : 1,
+			width : 2,
 			color : "black"
 		}
 	},
@@ -204,7 +204,7 @@ jchemhub.view.ReactionEditor.defaultConfig = {
 	},
 	plus : {
 		stroke : {
-			width : 1,
+			width : 2,
 			color : "black"
 		}
 	}
