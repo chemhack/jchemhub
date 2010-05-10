@@ -29,7 +29,7 @@ jchemhub.view.AtomDrawing.prototype.render = function() {
 	var point = this.transformCoords(this.getTransform(), [this.atom.coord])[0];
 	var symbol = this.compoundSymbol();
 	var graphics = this.getGraphics();
-	var group = graphics.createGroup();
+	var group = this.getGroup();
 	var w = symbol.text.length * 0.55 * font.size;
 	var h = font.size;
 	if (symbol.text) {
