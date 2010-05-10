@@ -70,8 +70,6 @@ jchemhub.view.ReactionEditor.prototype.render = function() {
 	this.renderChildren();
 }
 
-jchemhub.view.Drawing.prototype.updateTransformedCoords = function() {
-};
 
 /**
  * A default configuration for the reaction editor.
