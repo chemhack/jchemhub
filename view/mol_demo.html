@@ -16,7 +16,7 @@
 <script>
     
 function initPage(){
-	var model = jchemhub.controller.Controller.buildMoleculeDrawing(jchemhub.io.mdl.readMolfile(molsample));
+	var model = jchemhub.io.mdl.readMolfile(molsample);
 	var controller = new jchemhub.controller.Controller(model, goog.dom.getElement('reactionEditorContainer'));
 };
 

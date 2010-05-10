@@ -21,7 +21,7 @@
     
 function initPage(){
 	//var model = jchemhub.controller.Controller.buildReactionDrawing(jchemhub.io.json.readReaction(reactionDrawing));
-	var model = jchemhub.controller.Controller.buildReactionDrawing(jchemhub.io.json.readReaction(jreaction));
+	var model = jchemhub.io.json.readReaction(jreaction);
 	var controller = new jchemhub.controller.Controller(model, goog.dom.getElement('reactionEditorContainer'));
 };
 

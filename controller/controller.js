@@ -18,39 +18,17 @@ goog.require('jchemhub.io.mdl');
 
 jchemhub.controller.Controller = function(model, element, opt_editor_config) {
 	this._model = model;
-	this._view = new jchemhub.view.ReactionEditor(element, opt_editor_config);
-	this._view.add(model);
+	this._view = new jchemhub.view.ReactionEditor(element, model, opt_editor_config);
+
 	this._view.layoutAndRender();
+};
+
+jchemhub.controller.Controller.prototype.getModel = function(){
+	return this._model;
 }
 
 jchemhub.controller.Controller.buildReactionDrawing = function(rxn) {
-	var rxn_drawing = new jchemhub.view.ReactionDrawing();
-	var first = true;
-	goog.array.forEach(rxn.reactants,
-			function(r) {
-				if (first) {
-					first = false;
-				} else {
-					rxn_drawing.add(new jchemhub.view.PlusDrawing());
-				}
-				rxn_drawing.add(jchemhub.controller.Controller
-						.buildMoleculeDrawing(r));
-			});
-
-	rxn_drawing.add(new jchemhub.view.ArrowDrawing());
-
-	first = true;
-	goog.array.forEach(rxn.products,
-			function(p) {
-				if (first) {
-					first = false;
-				} else {
-					rxn_drawing.add(new jchemhub.view.PlusDrawing());
-				}
-				rxn_drawing.add(jchemhub.controller.Controller
-						.buildMoleculeDrawing(p));
-			});
-	return rxn_drawing;
+	return new jchemhub.view.ReactionDrawing(rxn);
 };
 
 jchemhub.controller.Controller.buildMoleculeDrawing = function(molecule) {

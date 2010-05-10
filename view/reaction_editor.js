@@ -14,7 +14,7 @@ goog.require('goog.fx.Dragger.EventType');
  * @constructor
  * @extends {jchemhub.view.Drawing}
  */
-jchemhub.view.ReactionEditor = function(element, opt_config) {
+jchemhub.view.ReactionEditor = function(element, model, opt_config) {
 	jchemhub.view.Drawing.call(this);
 	this._element = element;
 	this._config = new goog.structs.Map(
@@ -22,6 +22,12 @@ jchemhub.view.ReactionEditor = function(element, opt_config) {
 	if (opt_config) {
 		this._config.addAll(opt_config); // merge optional config into
 		// defaults
+	}
+	if (model instanceof jchemhub.model.Reaction ){
+		this.add(new jchemhub.view.ReactionDrawing(model));
+	} 
+	if (model instanceof jchemhub.model.Molecule){
+		this.add(new jchemhub.view.MoleculeDrawing(model));
 	}
 	this._graphics = goog.graphics.createGraphics(element.clientWidth,
 			element.clientHeight);
@@ -70,6 +76,16 @@ jchemhub.view.ReactionEditor.prototype.render = function() {
 	this.renderChildren();
 }
 
+/**
+ * gets model from contained reaction drawing
+ * 
+ * @return{jchemhub.model.Reaction | jchemhub.model.Molecule}
+ */
+jchemhub.view.ReactionEditor.prototype.getModel = function(){
+	var children = this.getChildren();
+	
+	return this.getChildren()[0]
+}
 
 /**
  * A default configuration for the reaction editor.

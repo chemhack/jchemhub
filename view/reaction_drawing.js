@@ -11,8 +11,30 @@ goog.require("goog.graphics.AffineTransform");
  * @constructor
  * @extends {jchemhub.view.Drawing}
  */
-jchemhub.view.ReactionDrawing = function() {
+jchemhub.view.ReactionDrawing = function(reaction) {
 	jchemhub.view.Drawing.call(this);
+	this.reaction = reaction;
+	var first = true;
+	goog.array.forEach(reaction.reactants, function(r) {
+		if (first) {
+			first = false;
+		} else {
+			this.add(new jchemhub.view.PlusDrawing());
+		}
+		this.add(jchemhub.controller.Controller.buildMoleculeDrawing(r));
+	}, this);
+
+	this.add(new jchemhub.view.ArrowDrawing());
+
+	first = true;
+	goog.array.forEach(reaction.products, function(p) {
+		if (first) {
+			first = false;
+		} else {
+			this.add(new jchemhub.view.PlusDrawing());
+		}
+		this.add(jchemhub.controller.Controller.buildMoleculeDrawing(p));
+	}, this);
 };
 goog.inherits(jchemhub.view.ReactionDrawing, jchemhub.view.Drawing);
 
@@ -32,8 +54,8 @@ jchemhub.view.ReactionDrawing.prototype.layoutChildren = function(to_rect) {
 			// reaction
 			var h = to_rect.height;
 			var x = to_rect.left + h_offset;
-			//TTD fix this margin hack
-			var y = to_rect.top - this.getConfig().get('margin')*5 + h / 2
+			// TTD fix this margin hack
+			var y = to_rect.top - this.getConfig().get('margin') * 5 + h / 2
 					- (h * child_size.width / size.width) / 2;
 			var child_rect = new goog.math.Rect(x, y, w, h);
 			child.layout(child_rect);
