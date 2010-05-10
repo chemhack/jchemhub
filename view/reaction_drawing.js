@@ -33,7 +33,7 @@ jchemhub.view.ReactionDrawing.prototype.layoutChildren = function(to_rect) {
 			var h = to_rect.height;
 			var x = to_rect.left + h_offset;
 			//TTD fix this margin hack
-			var y = to_rect.top - this.getConfig().get('margin')*10 + h / 2
+			var y = to_rect.top - this.getConfig().get('margin')*5 + h / 2
 					- (h * child_size.width / size.width) / 2;
 			var child_rect = new goog.math.Rect(x, y, w, h);
 			child.layout(child_rect);
