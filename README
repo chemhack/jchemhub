@@ -1,24 +1,25 @@
-To get started, you need to checkout both jchemhub and the google closure library, 
-which jchemhub expects to find in a directory named 'third-party' adjacent to the
-jchemhub directory.
+To get started, you need to checkout jchemhub:
 
 	After you cd to your workspace:
 
 	For read-only (replace the URL for read-write access):
 	git clone git://github.com/chemhack/jchemhub.git
+
+	cd jchemhub
+
+This will pull in the google closure library:
+
+	git submodule init
+
+	git submodule update
 	
-	mkdir third-party
-	
-	cd third-party
-	
-	svn checkout http://closure-library.googlecode.com/svn/trunk/ closure
 
 If you make an edit that changes a goog.provide or goog.require statement, 
 execute the calcdeps.py python script as follows to re-generate deps.js:
 
 	cd third-party/closure/closure/goog/
 	
-	python ../bin/calcdeps.py -o deps -p ../../../../jchemhub/ -p ../../closure/ > ../../../../jchemhub/deps.js 
+	python ../bin/calcdeps.py -o deps -p ../../../jchemhub/ -p ../closure/ > ../../../jchemhub/deps.js 
 
 
 The foregoing is sufficient to edit and run the code, but it is also a good idea to use the closure compiler as follows described below. 
@@ -42,6 +43,6 @@ Execute the compiler with a command like:
 	
 	cd third-party/closure/goog/
 	
-	python ../bin/calcdeps.py -o compiled -p ../../closure -p ../../../../jchemhub --compiler_jar ../../../../closure-compiler/compiler.jar --input ../../../../jchemhub/controller/controller.js > ../../../../controller_compiled.js
+	python ../bin/calcdeps.py -o compiled -p ../closure -p ../../../jchemhub --compiler_jar ../../../closure-compiler/compiler.jar --input ../../../../jchemhub/controller/controller.js > ../../../../controller_compiled.js
 
 
