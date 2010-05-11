@@ -27,13 +27,14 @@ goog.require('jchemhub.util.BondUtil.Orders');
 /*  
  * SMILES parsing.
  * For more on SMILES, see: http://www.daylight.com/dayhtml_tutorials/languages/smiles/index.html
- * This parser is a Java->Javascript port of the CDK's SMILES parser.
+ * This parser is more or less a Java->Javascript port of the CDK's SMILES parser.
  * See: http://cdk.git.sourceforge.net/git/gitweb.cgi?p=cdk/cdk;a=summary
  * 
  * @author Mark Rijnbeek (markr@ebi.ac.uk)
  */
 
 jchemhub.smiles.SmilesParser = function(){
+	alert("jchemhub.smiles.SmilesParser = function()")
 }
 
 /**
@@ -143,19 +144,16 @@ jchemhub.smiles.SmilesParser.parse = function(smiles){
             currentSymbol = mychar; //new String(chars);
             thisRing = currentSymbol;
 
-            //_____ 
+            //Handle ring__________			 
 			var bondOrd = bondOrderForRingClosure;
 			if (ringbonds[thisRing] > bondOrd) 
 			    bondOrd = ringbonds[thisRing];
-
 			ringBond = null;
 			ringPartner = null;
 			ringNode = rings[thisRing];
-			
 			if (ringNode != null) {
 			    ringPartner = ringNode;
-			    ringBond = jchemhub.util.BondUtil.getBond(atom, ringPartner, bondOrd);
-			
+			    ringBond = jchemhub.util.BondUtil.getBond(lastNode, ringPartner, bondOrd);
 			    if (bondIsAromatic) {
 			        ringBond.setFlag(CDKConstants.ISAROMATIC, true);
 			    }
@@ -165,56 +163,86 @@ jchemhub.smiles.SmilesParser.parse = function(smiles){
 			    ringbonds[thisRing] = null;
 			} 
 			else {
-			    rings[thisRing] = atom;
+			    rings[thisRing] = lastNode;
 			    ringbonds[thisRing] = bondOrderForRingClosure;
 			}
 			bondOrderForRingClosure = jchemhub.util.BondUtil.Orders.SINGLE;
+            //______________________
             position++;
 
         }
-        /*
 		else if (mychar == '%')
         {
-            currentSymbol = getRingNumber(smiles, position);
-            thisRing = (Integer.valueOf(currentSymbol)).intValue();
-            handleRing(lastNode);
-            position += currentSymbol.length() + 1;
+            pos=position+1;
+	        if (pos >= smiles.length - 1)
+	            throw "Percent sign ring closure numbers must be two-digit.";
+	
+	        currentSymbol = smiles.substring(pos, pos + 2);
+	
+	        if (currentSymbol.charAt(0) < '0' || currentSymbol.charAt(0) > '9' || 
+	            currentSymbol.charAt(1) < '0' || currentSymbol.charAt(1) > '9')
+	            throw "Percent sign ring closure numbers must be two-digit.";
+
+            thisRing = currentSymbol;
+
+            //Handle ring_______________            
+            var bondOrd = bondOrderForRingClosure;
+            if (ringbonds[thisRing] > bondOrd) 
+                bondOrd = ringbonds[thisRing];
+            ringBond = null;
+            ringPartner = null;
+            ringNode = rings[thisRing];
+            if (ringNode != null) {
+                ringPartner = ringNode;
+                ringBond = jchemhub.util.BondUtil.getBond(lastNode, ringPartner, bondOrd);
+                if (bondIsAromatic) {
+                    ringBond.setFlag(CDKConstants.ISAROMATIC, true);
+                }
+                molecule.addBond(ringBond);
+                bondIsAromatic = false;
+                rings[thisRing] = null;
+                ringbonds[thisRing] = null;
+            } 
+            else {
+                rings[thisRing] = lastNode;
+                ringbonds[thisRing] = bondOrderForRingClosure;
+            }
+            bondOrderForRingClosure = jchemhub.util.BondUtil.Orders.SINGLE;
+			//_____________
+
+            position += currentSymbol.length + 1;
         } 
-		else if (mychar == '[')
-        {
-            currentSymbol = getAtomString(smiles, position);
-            atom = assembleAtom(currentSymbol);
+		else if (mychar == '[')  {
+            currentSymbol = this.getAtomString(smiles, position);
+            atom = this.assembleAtom(currentSymbol);
             molecule.addAtom(atom);
-            logger.debug("Added atom: ", atom);
-            if (lastNode != null && bondExists)
-            {
-                bond = builder.newInstance(IBond.class,atom, lastNode, bondOrder);
-                            if (bondIsAromatic) {
-                    bond.setFlag(CDKConstants.ISAROMATIC, true);
+            if (lastNode != null && bondExists) {
+                bond = jchemhub.util.BondUtil.getBond (atom, lastNode,bondOrder);
+                if (bondIsAromatic) {
+                    bond.aromatic=true;
                 }
                 molecule.addBond(bond);
-                logger.debug("Added bond: ", bond);
             }
-            bondOrder = CDKConstants.BONDORDER_SINGLE;
+            bondOrder = jchemhub.util.BondUtil.Orders.SINGLE;
             bondIsAromatic = false;
             lastNode = atom;
             nodeCounter++;
-            position = position + currentSymbol.length() + 2;
-            // plus two for [ and ]
-            atom.setProperty(HAS_HARDCODED_HYDROGEN_COUNT, "yes");
-            if (atom.getHydrogenCount() == null) {
+            position = position + currentSymbol.length + 2;
+
+            //TODO change atom class
+            //if (atom.getHydrogenCount() == null) {
                 // zero implicit hydrogens is implied when the Hx syntax is not used
-                atom.setHydrogenCount(0);
-            }
+            //    atom.setHydrogenCount(0);
+            //}
             bondExists = true;
-        } else if (mychar == '.')
+        }
+		else if (mychar == '.')
         {
             bondExists = false;
             position++;
         } else if (mychar == '-')
         {
             bondExists = true;
-            // a simple single bond
             position++;
         } else if (mychar == ':') {
             bondExists = true;
@@ -222,22 +250,18 @@ jchemhub.smiles.SmilesParser.parse = function(smiles){
             position++;
         } else if (mychar == '/' || mychar == '\\')
         {
-            logger.warn("Ignoring stereo information for double bond");
             position++;
         } else if (mychar == '@')
         {
-            if (position < smiles.length() - 1 && smiles.charAt(position + 1) == '@')
+            if (position < smiles.length - 1 && smiles.charAt(position + 1) == '@')
             {
                 position++;
             }
-            logger.warn("Ignoring stereo information for atom");
             position++;
         } else
         {
-            throw new InvalidSmilesException("Unexpected character found: " + mychar);
+            throw "Invalid SMILES: found unexpected char: " + mychar;
         }
-        */  
-
         
 	}
 	while (position < smiles.length)
@@ -267,3 +291,149 @@ jchemhub.smiles.SmilesParser.getSymbolForOrganicSubsetElement = function(s, pos)
     alert("SMILES parser problem: subset element not found at position "+pos);
     return null;
 }
+
+
+jchemhub.smiles.SmilesParser.getAtomString = function(smiles, pos) {
+    atomString = "";
+    for (f=pos+1; f<smiles.length; f++) {
+        character = smiles.charAt(f);
+        if (character == ']')
+           break;
+        else
+           atomString+=character;
+    }
+    return atomString;
+}
+
+
+jchemhub.smiles.SmilesParser.getElementSymbol = function(s,pos) {
+    // Try to match elements not in the organic subset.
+    // first, the two char elements
+    if (pos < s.length - 1)
+    {
+        possibleSymbol = s.substring(pos, pos + 2);
+        if (("HeLiBeNeNaMgAlSiClArCaScTiCrMnFeCoNiCuZnGaGeAsSe".indexOf(possibleSymbol) >= 0) ||
+            ("BrKrRbSrZrNbMoTcRuRhPdAgCdInSnSbTeXeCsBaLuHfTaRe".indexOf(possibleSymbol) >= 0) ||
+            ("OsIrPtAuHgTlPbBiPoAtRnFrRaLrRfDbSgBhHsMtDs".indexOf(possibleSymbol) >= 0))
+            return possibleSymbol;
+    }
+
+    // if that fails, the one char elements
+    possibleSymbol = s.substring(pos, pos + 1);
+    if (("HKUVYW".indexOf(possibleSymbol) >= 0))
+        return possibleSymbol;
+
+    // if that failed too, then possibly a organic subset element
+    return this.getSymbolForOrganicSubsetElement(s, pos);
+}
+
+
+
+jchemhub.smiles.SmilesParser.getImplicitHydrogenCount = function(s,position) {
+    count = 0;  
+    if (s.charAt(position) == 'H') {
+        multiplier = "";
+        while (position < (s.length - 1) && isDigit(s.charAt(position + 1))){
+            multiplier+=s.charAt(position + 1);
+            position++;
+        }
+        if (multiplier.length > 0) {
+            count = parseInt(multiplier);
+        } 
+		else count = -1; 
+    }
+    return count;
+}
+
+
+jchemhub.smiles.SmilesParser.assembleAtom = function(s) {
+    atom = null;
+    position = 0;
+    currentSymbol = null;
+    isotopicNumber = "";
+    mychar='';
+    do {
+        mychar = s.charAt(position);
+        if ((mychar >= 'A' && mychar <= 'Z') || (mychar >= 'a' && mychar <= 'z'))
+        {
+            currentSymbol = this.getElementSymbol(s, position);
+            if (currentSymbol == null) {
+                throw "Expected element symbol, found null!";
+            } 
+			else {
+                position = position + currentSymbol.length;
+                if (currentSymbol.length == 1){
+                    if ( currentSymbol.toUpperCase()!=currentSymbol ) {
+                        currentSymbol = currentSymbol.toUpperCase();
+                        atom = new jchemhub.model.Atom(currentSymbol);
+                        atom.hybridization=jchemhub.model.Atom.Hybridizations.SP2;
+                        //TODO here: hydrogen count
+
+                    } else
+                        atom = new jchemhub.model.Atom(currentSymbol);
+                } else
+                        atom = new jchemhub.model.Atom(currentSymbol);
+            }
+            break;
+
+        } else if (mychar >= '0' && mychar <= '9'){
+            isotopicNumber+=mychar;
+            position++;
+        } else if (mychar == '*') {
+            currentSymbol = "*";
+            atom = new jchemhub.model.PseudoAtom("*",0,0);
+            position++;
+            break;
+        } else
+            throw "Invalid SMILES: found unexpected char: " + mychar;
+    } 
+	while (position < s.length);
+
+
+    //TODO >>> change atom class
+    //if (isotopicNumber.toString().length() > 0)
+    //{
+    //   atom.setMassNumber(Integer.parseInt(isotopicNumber.toString()));
+    //}
+	
+    charge = 0;
+    implicitHydrogens = 0;
+    while (position < s.length)
+    {
+        mychar = s.charAt(position);
+        if (mychar == 'H')
+        {
+            implicitHydrogens = this.getImplicitHydrogenCount(s, position);
+            position++;
+            if (implicitHydrogens >= 0) {
+                position++;
+            }
+            //TODO >> change atom class                     
+            //if (implicitHydrogens == -1) implicitHydrogens = 1;
+            //  atom.setHydrogenCount(implicitHydrogens);
+        } else if (mychar == '+' || mychar == '-')
+        {
+            charge = getCharge(s, position);
+            position++; 
+            while (position < s.length && isDigit(s.charAt(position))) {
+                position++;
+            }
+            //TODO >> change atom class                     
+            atom.setFormalCharge(charge);
+        } else if (mychar == '@')
+        {
+            if (position < s.length- 1 && s.charAt(position + 1) == '@'){
+                position++;
+            }
+            position++;
+        } else
+        {
+            throw "Invalid SMILES: found unexpected char: " + mychar;
+        }
+    }
+    return atom;
+}
+
+
+
+
