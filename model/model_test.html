@@ -9,7 +9,9 @@
 	goog.require('goog.testing.jsunit');
 	goog.require('jchemhub.model.Molecule');
 	goog.require('jchemhub.model.Atom');
+    goog.require('jchemhub.model.Atom.Hybridizations');
 	goog.require('jchemhub.model.Bond');
+    goog.require('jchemhub.model.PseudoAtom');
 </script>
 <script>
 	var mol;
@@ -115,9 +117,21 @@
 
 		mol.removeBond(0);		
 		assertEquals(1,mol.countBonds());
-
 	}
   	
+
+    function testPseudoAtom(){
+		var pseudoAtom= new jchemhub.model.PseudoAtom();
+		assertEquals("R",pseudoAtom.symbol);
+        assertEquals("*",pseudoAtom.label);
+	}
+
+    function testHybridization(){
+        var atom=new jchemhub.model.Atom("C");
+		atom.hybridization=jchemhub.model.Atom.Hybridizations.SP2;
+        assertEquals(jchemhub.model.Atom.Hybridizations.SP2,atom.hybridization);
+    }
+
 
 
 </script>
