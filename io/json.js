@@ -185,27 +185,16 @@ jchemhub.io.json.writeMolecule = function(mol) {
  * @returns{object} in json molecule format
  */
 jchemhub.io.json.moleculeToJson = function(mol) {
-	var atoms = new Array();
-	for (var i in mol.atoms) {
-		var a = mol.atoms[i];
-		atoms.push( {
-			symbol : a.symbol,
-			coord : {x: a.coord.x, y: a.coord.y},
-			charge : a.charge
-		});
-	}
-	var bonds = new Array();
-	for (var i in mol.bonds) {
-		var b = mol.bonds[i];
+	var atoms = goog.array.map(mol.atoms, function(a){
+		return {symbol: a.symbol, coord:{x: a.coord.x, y: a.coord.y}, charge: a.charge};
+	});
+	var bonds = goog.array.map(mol.bonds, function(b){
 		var btype =   jchemhub.io.json.getTypeCode(b);
 		var bstereo = jchemhub.io.json.getStereoCode(b);
-		bonds.push( {
-			source : mol.indexOfAtom(b.source),
-			target : mol.indexOfAtom(b.target),
-			type : btype,
-			stereo : bstereo
-		});
-	}
+		return { source : mol.indexOfAtom(b.source), target : mol.indexOfAtom(b.target), type : btype, stereo : bstereo
+		}
+	});
+
 	return {
 		name : mol.name,
 		atoms : atoms,
