@@ -20,7 +20,7 @@ Copyright (c) 2010 Mark Rijnbeek (markr@ebi.ac.uk)
                 var debugStmt = name+": ";
                 for (var i = 0; i < rings.length; i++)
                     debugStmt += rings[i].atoms.length + " ";
-                console.log(debugStmt);
+                //console.log(debugStmt);
             }
             
             function testBenzene(){
@@ -51,7 +51,7 @@ Copyright (c) 2010 Mark Rijnbeek (markr@ebi.ac.uk)
                 var mol = jchemhub.io.mdl.readMolfile(mdlString);
                 var rings = jchemhub.ring.RingFinder.findRings(mol);
                 assertEquals(count, rings.length);
-                debug(name, rings);
+                //debug(name, rings);
             }
 
             

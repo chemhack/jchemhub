@@ -23,5 +23,7 @@ jchemhub.model.Bond = function(source, target) {
 	 * @type{jchemhub.model.Atom}
 	 */
 	this.target = target;
+	
+	this.aromatic=false;
 };
 
