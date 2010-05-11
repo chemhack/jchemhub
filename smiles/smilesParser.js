@@ -33,6 +33,9 @@ goog.require('jchemhub.util.BondUtil.Orders');
  * @author Mark Rijnbeek (markr@ebi.ac.uk)
  */
 
+
+//TODO - why is stereo information ignored in the parser??
+
 jchemhub.smiles.SmilesParser = function(){
 	alert("jchemhub.smiles.SmilesParser = function()")
 }

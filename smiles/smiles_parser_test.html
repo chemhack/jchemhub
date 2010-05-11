@@ -20,28 +20,37 @@
         <script>
             goog.require('goog.testing.jsunit');
             goog.require('jchemhub.smiles.SmilesParser');
+            goog.require('jchemhub.ring.RingFinder');
         </script>
 
         <script>            
             function test01(){
-                parse("CBrClON");
+                var mol=jchemhub.smiles.SmilesParser.parse("CBrClON");
             }
 
             function test02(){
-                parse("CCCC(C(=O)O)CCC");
+                var mol=jchemhub.smiles.SmilesParser.parse("CCCC(C(=O)O)CCC");
             }
             function test03(){
-                parse("C1CCNC1");
+                var mol=jchemhub.smiles.SmilesParser.parse("C1CCNC1");
+                var rings = jchemhub.ring.RingFinder.findRings(mol);
+                assertEquals(1, rings.length);
+
             }
             function test04(){
-                parse("[Na]Cl");
+                var mol=jchemhub.smiles.SmilesParser.parse("F[Au](F)F");
+				gold = mol.getAtom(1);
+                assertEquals(mol.countBonds(),3);
+                assertEquals(gold.symbol,"Au");
+            }
+
+            function test05(){
+                var mol=jchemhub.smiles.SmilesParser.parse("[H][C@@]1(CC[C@@]2([H])C3=CC=C4C[C@H](CC[C@]4(C)[C@@]3([H])CC[C@]12C)O[C@@H]1O[C@H](CO)[C@@H](O)[C@H](O)[C@H]1O)[C@H](C)\C=C\[C@H](C)C(C)C");
+                var rings = jchemhub.ring.RingFinder.findRings(mol);
+                assertEquals(11, rings.length);
             }
 
             
-            function parse(smiles){
-                var mol=jchemhub.smiles.SmilesParser.parse(smiles);
-
-            }
         </script>
     </head>
     <body>
