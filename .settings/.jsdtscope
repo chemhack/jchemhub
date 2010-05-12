@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="config/|core/|io/|resource/|json/|remote/|ring/|util/|render/|controller/|view/" kind="src" path="client"/>
+	<classpathentry kind="src" path="config"/>
+	<classpathentry kind="src" path="client/controller"/>
+	<classpathentry kind="src" path="client/core"/>
+	<classpathentry kind="src" path="client/io"/>
+	<classpathentry kind="src" path="client/json"/>
+	<classpathentry kind="src" path="client/remote"/>
+	<classpathentry kind="src" path="client/render"/>
+	<classpathentry kind="src" path="client/resource"/>
+	<classpathentry kind="src" path="client/ring"/>
+	<classpathentry kind="src" path="client/util"/>
+	<classpathentry kind="src" path="client/view"/>
+	<classpathentry kind="con" path="org.eclipse.wst.jsdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.wst.jsdt.USER_LIBRARY/closure"/>
+</classpath>
