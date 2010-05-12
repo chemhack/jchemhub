@@ -23,34 +23,33 @@ function loadMol() {
 }
 function showMol(molblock) {
 	var mol = jchemhub.io.mdl.readMolfile(molblock);
-	var jmol = showJSON(mol);
-	renderMol(jmol);
+	showJSON(mol);
+	renderMol(mol);
 }
 function showJSON(mol) {
 	var jblock = document.getElementById("jsonblock");
 	var pretty = new goog.format.JsonPrettyPrinter();
-	var jmol = jchemhub.io.json.writeMolecule(mol);
-	jblock.value = pretty.format(jmol);
-	return jmol;
+	jblock.value = pretty.format( jchemhub.io.json.writeMolecule(mol));
 }
-function renderMol(jmol) {
+function renderMol(mol) {
 
-	var model = jchemhub.io.json.readMolecule(jmol);
+	//var model = jchemhub.io.json.readMolecule(jmol);
 	var controller = new jchemhub.controller.Controller(goog.dom.getElement('reactionEditorContainer'));
-	controller.setModel(model);
+	controller.setModel(mol);
 }
 	
 </script>
 </head>
 <body onLoad="loadMol()">
 <form>
-<textarea id="molblock" name="molblock" cols=80>Paste molblock here</textarea>
-<input type=button value="render" onClick="showMol(molblock.value)">
+Paste molfile here and <input type=button value="render" onClick="showMol(molblock.value)"><br>
+<textarea id="molblock" name="molblock" cols=80 rows=16>Paste molblock here</textarea>
+
 <BR>
-<textarea id="jsonblock" cols=80>JSON will appear here</textarea>
+<textarea id="jsonblock" cols=80 rows=16>JSON will appear here</textarea>
 </form>
 
-	<div id="reactionEditorContainer" style="width: 400px; height: 400px"></div>
+	<div id="reactionEditorContainer" style="width: 400px; height: 400px; position: absolute; top: 200px; left: 600px;"></div>
     
 </body>
 </html>
