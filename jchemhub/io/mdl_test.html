@@ -36,9 +36,9 @@
 	
     function testWriteMolfile(){
 		var mol = jchemhub.io.mdl.readMolfile(molfile);
-		console.log(molfile);
+
 		var molfile2 = jchemhub.io.mdl.writeMolfile(mol);
-		console.log(molfile2);
+	
 		var mol2 = jchemhub.io.mdl.readMolfile(molfile2);
 		var molfile3 = jchemhub.io.mdl.writeMolfile(mol2);
 		assertEquals(molfile2,molfile3);
