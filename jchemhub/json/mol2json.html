@@ -7,16 +7,11 @@
 <script src="../../third-party/closure/closure/goog/base.js"></script>
 <script src="../deps.js"></script>
 <script>
+    goog.require('jchemhub.controller.Controller');
+	goog.require('jchemhub.io.json');
+	goog.require('goog.events.EventType');
 	goog.require('goog.dom');
-	goog.require('goog.graphics');
 	goog.require('goog.format.JsonPrettyPrinter');
-	goog.require('goog.events');
-    goog.require('goog.events.EventType');
-    goog.require('jchemhub.io.mdl');
-    goog.require('jchemhub.io.json');
-    goog.require('jchemhub.render.Renderer');
-    goog.require('jchemhub.render.Geometry');
-    goog.require('jchemhub.config.RenderParams');
 </script>
 
 <script src="../render/render_demo_molsample.js"></script>
@@ -28,28 +23,21 @@ function loadMol() {
 }
 function showMol(molblock) {
 	var mol = jchemhub.io.mdl.readMolfile(molblock);
-	//renderMol(mol);
-	showJSON(mol);
+	var jmol = showJSON(mol);
+	renderMol(jmol);
 }
 function showJSON(mol) {
 	var jblock = document.getElementById("jsonblock");
 	var pretty = new goog.format.JsonPrettyPrinter();
-	jblock.value = pretty.format(jchemhub.io.json.writeMolecule(mol));
+	var jmol = jchemhub.io.json.writeMolecule(mol);
+	jblock.value = pretty.format(jmol);
+	return jmol;
 }
-function renderMol(mol) {
+function renderMol(jmol) {
 
-    jchemhub.render.Geometry.translateAllPositive(mol);
-	
- 	var context={
-		widgetType:"editor",
-		renderParams:jchemhub.config.RenderParams.get(),
-		targetElement:document.getElementById('testGraphics'),
-		width:400,
-		height:400,
-		mol:mol		
-	};
-	
-	var renderer=new jchemhub.render.Renderer(context);
+	var model = jchemhub.io.json.readMolecule(jmol);
+	var controller = new jchemhub.controller.Controller(goog.dom.getElement('reactionEditorContainer'));
+	controller.setModel(model);
 }
 	
 </script>
@@ -62,8 +50,7 @@ function renderMol(mol) {
 <textarea id="jsonblock" cols=80>JSON will appear here</textarea>
 </form>
 
-	<div id="testGraphics" />
-	<p>Simply move your mouse on atoms and bonds</p>
+	<div id="reactionEditorContainer" style="width: 400px; height: 400px"></div>
     
 </body>
 </html>
