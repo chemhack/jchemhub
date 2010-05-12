@@ -11,7 +11,8 @@
 	goog.require('goog.json.Serializer');
 </script>
 <script src="json_test_mol.js"></script>
-<script>
+<script src="json_test_rxn.js"></script>
+<script><!--
  	var rxn;
  	var mol;
   	function setUp() {
@@ -19,10 +20,11 @@
 
  
   	function test0ReadMolecule() {
-	  	mol = jchemhub.io.json.readMolecule(jmol);
+	  	var mol = jchemhub.io.json.readMolecule(jmol);
 	  	assertEquals(mol.name,"test");
 	  	assertEquals(mol.countAtoms(), 26);
 	  	assertEquals(mol.countBonds(), 27);
+
 	  	// test the string representation
 	  //	var str = goog.json.Serializer.serialize(mol);
 	  //	mol = goog.json.unsafeParse( str );
@@ -74,8 +76,17 @@
 		var rxn = jchemhub.io.json.readReaction( JSON.stringify(jreaction) );
 		var jrxnstr = jchemhub.io.json.writeReaction(rxn);
 		assertEquals(3908, jrxnstr.length);
+		
 	}
-</script>
+	
+	function test4ReactionToJson(){
+		var rxn = jchemhub.io.json.readReaction(reactionDrawing);
+		var rxn_json = jchemhub.io.json.reactionToJson(rxn);
+		assertEquals(rxn.reactants.length, rxn_json.reactants.length);
+		assertEquals(rxn.products.length, rxn_json.products.length);
+		assertEquals(rxn.reactants[0].countAtoms(), rxn_json.reactants[0].atoms.length);
+	}
+--></script>
 </head>
 <body>
 </body>

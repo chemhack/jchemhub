@@ -8,8 +8,6 @@ goog.require('goog.fx.Dragger.EventType');
 /**
  * A graphical editor for reactions
  * 
- * @param {jchemhub.view.Drawing}
- *            parent Drawing object
  * 
  * @constructor
  * @extends {jchemhub.view.Drawing}
@@ -23,17 +21,33 @@ jchemhub.view.ReactionEditor = function(element, opt_config) {
 		this._config.addAll(opt_config); // merge optional config into
 		// defaults
 	}
+
 	this._graphics = goog.graphics.createGraphics(element.clientWidth,
 			element.clientHeight);
-	var fill = new goog.graphics.SolidFill(
-			this.getConfig().get("background").color);
 
-	this._graphics.drawRect(0, 0, element.clientWidth, element.clientHeight,
-			null, fill);
 	this._graphics.render(this._element);
 
 };
 goog.inherits(jchemhub.view.ReactionEditor, jchemhub.view.Drawing);
+
+jchemhub.view.ReactionEditor.prototype.clear = function() {
+	this._graphics.clear();
+	var fill = new goog.graphics.SolidFill(
+			this.getConfig().get("background").color);
+
+	this._graphics.drawRect(0, 0, this._element.clientWidth, this._element.clientHeight,
+			null, fill);
+}
+
+jchemhub.view.ReactionEditor.prototype.setModel = function(model) {
+	this.clear();
+	if (model instanceof jchemhub.model.Reaction) {
+		this.add(new jchemhub.view.ReactionDrawing(model));
+	}
+	if (model instanceof jchemhub.model.Molecule) {
+		this.add(new jchemhub.view.MoleculeDrawing(model));
+	}
+}
 
 /**
  * layout and render
@@ -41,8 +55,8 @@ goog.inherits(jchemhub.view.ReactionEditor, jchemhub.view.Drawing);
 
 jchemhub.view.ReactionEditor.prototype.layoutAndRender = function() {
 	margin = 20; // how to get from config?
-	this.layout(new goog.math.Rect(margin, margin, this.getSize().width - margin*2,
-		this.getSize().height - margin*2));
+	this.layout(new goog.math.Rect(margin, margin, this.getSize().width
+			- margin * 2, this.getSize().height - margin * 2));
 	this.render();
 }
 
@@ -70,8 +84,16 @@ jchemhub.view.ReactionEditor.prototype.render = function() {
 	this.renderChildren();
 }
 
-jchemhub.view.Drawing.prototype.updateTransformedCoords = function() {
-};
+/**
+ * gets model from contained reaction drawing
+ * 
+ * @return{jchemhub.model.Reaction | jchemhub.model.Molecule}
+ */
+jchemhub.view.ReactionEditor.prototype.getModel = function() {
+	var children = this.getChildren();
+
+	return this.getChildren()[0]
+}
 
 /**
  * A default configuration for the reaction editor.
@@ -94,7 +116,7 @@ jchemhub.view.ReactionEditor.defaultConfig = {
 		},
 		fontName : "Arial"
 	},
-	N: {
+	N : {
 		stroke : {
 			width : 1,
 			color : 'blue'
@@ -103,7 +125,7 @@ jchemhub.view.ReactionEditor.defaultConfig = {
 			color : 'blue'
 		}
 	},
-	O: {
+	O : {
 		stroke : {
 			width : 1,
 			color : 'red'
@@ -112,7 +134,7 @@ jchemhub.view.ReactionEditor.defaultConfig = {
 			color : 'red'
 		}
 	},
-	S: {
+	S : {
 		stroke : {
 			width : 1,
 			color : 'yellow'
@@ -121,7 +143,7 @@ jchemhub.view.ReactionEditor.defaultConfig = {
 			color : 'yellow'
 		}
 	},
-	P: {
+	P : {
 		stroke : {
 			width : 1,
 			color : 'orange'
@@ -130,7 +152,7 @@ jchemhub.view.ReactionEditor.defaultConfig = {
 			color : 'orange'
 		}
 	},
-	Cl: {
+	Cl : {
 		stroke : {
 			width : 1,
 			color : 'green'
@@ -139,7 +161,7 @@ jchemhub.view.ReactionEditor.defaultConfig = {
 			color : 'green'
 		}
 	},
-	F: {
+	F : {
 		stroke : {
 			width : 1,
 			color : 'green'
@@ -148,7 +170,7 @@ jchemhub.view.ReactionEditor.defaultConfig = {
 			color : 'green'
 		}
 	},
-	Br: {
+	Br : {
 		stroke : {
 			width : 1,
 			color : 'dark red'
@@ -157,7 +179,7 @@ jchemhub.view.ReactionEditor.defaultConfig = {
 			color : 'dark red'
 		}
 	},
-	I: {
+	I : {
 		stroke : {
 			width : 1,
 			color : 'purple'
@@ -166,7 +188,7 @@ jchemhub.view.ReactionEditor.defaultConfig = {
 			color : 'purple'
 		}
 	},
-	C: {
+	C : {
 		stroke : {
 			width : 1,
 			color : 'black'
@@ -175,7 +197,7 @@ jchemhub.view.ReactionEditor.defaultConfig = {
 			color : 'black'
 		}
 	},
-	H: {
+	H : {
 		stroke : {
 			width : 1,
 			color : 'black'
@@ -187,8 +209,8 @@ jchemhub.view.ReactionEditor.defaultConfig = {
 	background : {
 		color : '#F0FFF0'
 	},
-	margin: 10,
-	subscriptSize: 5,
+	margin : 10,
+	subscriptSize : 5,
 	bond : {
 		stroke : {
 			width : 2,

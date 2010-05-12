@@ -26,13 +26,16 @@ function showJSON(mol) {
 <body>
 
 <script>
+function initPage() {
 	var mol = jchemhub.io.json.readMolecule(jmol);
 	var model = jchemhub.controller.Controller.buildMoleculeDrawing(mol);
-	var controller = new jchemhub.controller.Controller(model, goog.dom.getElement('reactionEditorContainer'));
-	
+	var controller = new jchemhub.controller.Controller(goog.dom.getElement('testGraphics'));
+	controller.setModel(model);
+	};
+	goog.events.listen(window, goog.events.EventType.LOAD, initPage);
 	</script>
-	<div id="testGraphics" ></div>
-	<p>Simply move your mouse on atoms and bonds</p>
-    
+<div id="testGraphics" style="width: 300px; height: 300px"></div>
+<p>Simply move your mouse on atoms and bonds</p>
+
 </body>
 </html>

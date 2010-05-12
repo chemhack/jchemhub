@@ -16,41 +16,28 @@ goog.require('jchemhub.view.SingleBondDrawing');
 goog.require('jchemhub.io.json');
 goog.require('jchemhub.io.mdl');
 
-jchemhub.controller.Controller = function(model, element, opt_editor_config) {
-	this._model = model;
+jchemhub.controller.Controller = function(element, opt_editor_config) {
+
 	this._view = new jchemhub.view.ReactionEditor(element, opt_editor_config);
-	this._view.add(model);
+};
+
+jchemhub.controller.Controller.prototype.getModel = function(){
+	return this._model;
+};
+
+jchemhub.controller.Controller.prototype.clear = function(){
+	this._model = null;
+	this._view.clear();
+};
+
+jchemhub.controller.Controller.prototype.setModel = function(model){
+	this._model = model;
+	this._view.setModel(model);
 	this._view.layoutAndRender();
-}
+};
 
 jchemhub.controller.Controller.buildReactionDrawing = function(rxn) {
-	var rxn_drawing = new jchemhub.view.ReactionDrawing();
-	var first = true;
-	goog.array.forEach(rxn.reactants,
-			function(r) {
-				if (first) {
-					first = false;
-				} else {
-					rxn_drawing.add(new jchemhub.view.PlusDrawing());
-				}
-				rxn_drawing.add(jchemhub.controller.Controller
-						.buildMoleculeDrawing(r));
-			});
-
-	rxn_drawing.add(new jchemhub.view.ArrowDrawing());
-
-	first = true;
-	goog.array.forEach(rxn.products,
-			function(p) {
-				if (first) {
-					first = false;
-				} else {
-					rxn_drawing.add(new jchemhub.view.PlusDrawing());
-				}
-				rxn_drawing.add(jchemhub.controller.Controller
-						.buildMoleculeDrawing(p));
-			});
-	return rxn_drawing;
+	return new jchemhub.view.ReactionDrawing(rxn);
 };
 
 jchemhub.controller.Controller.buildMoleculeDrawing = function(molecule) {
