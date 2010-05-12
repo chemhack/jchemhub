@@ -54,7 +54,7 @@ jchemhub.view.ReactionEditor.prototype.setModel = function(model) {
  */
 
 jchemhub.view.ReactionEditor.prototype.layoutAndRender = function() {
-	margin = 20; // how to get from config?
+	var margin = this.getConfig().get("margin");
 	this.layout(new goog.math.Rect(margin, margin, this.getSize().width
 			- margin * 2, this.getSize().height - margin * 2));
 	this.render();
@@ -209,7 +209,7 @@ jchemhub.view.ReactionEditor.defaultConfig = {
 	background : {
 		color : '#F0FFF0'
 	},
-	margin : 10,
+	margin : 20,
 	subscriptSize : 5,
 	bond : {
 		stroke : {
