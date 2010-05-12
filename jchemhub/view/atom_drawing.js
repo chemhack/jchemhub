@@ -38,15 +38,28 @@ jchemhub.view.AtomDrawing.prototype.render = function() {
 		group.atomLabelBackground = graphics.drawEllipse(point.x, point.y, h*0.7, h*0.7,
 			new goog.graphics.Stroke(1, config.get("background").color),
 			new goog.graphics.SolidFill(config.get("background").color), group );
-	}                
-	graphics.drawText(symbol.text, point.x - w / 2, point.y - h / 2, w, h, symbol.justification, null, font, stroke, fill, group);
-	if(symbol.subscript || symbol.superscript){
-		var subSize = config.get("subscriptSize");
-		if(symbol.subscript){
- 			graphics.drawText(symbol.subscript,   point.x + w, point.y , subSize, subSize, 'center', null, font, stroke, fill, group);
-		}
-		if(symbol.superscript){
-			graphics.drawText(symbol.superscript, point.x + w, point.y-h*0.8 , subSize, subSize, 'center', null, font, stroke, fill, group);
+			
+		graphics.drawText(symbol.text, point.x - w / 2, point.y - h / 2, w, h, symbol.justification, null, font, stroke, fill, group);
+        if (symbol.justification == 'left') {
+        	if(symbol.subscript || symbol.superscript){
+				var subSize = config.get("subscriptSize");
+				if(symbol.subscript){
+ 					graphics.drawText(symbol.subscript,   point.x + w, point.y , subSize, subSize, 'center', null, font, stroke, fill, group);
+				}
+				if(symbol.superscript){
+					graphics.drawText(symbol.superscript, point.x + w, point.y-h*0.8 , subSize, subSize, 'center', null, font, stroke, fill, group);
+				}
+			}
+        } else if (symbol.justification == 'right') {
+			if(symbol.subscript || symbol.superscript){
+				var subSize = config.get("subscriptSize");
+				if(symbol.subscript){
+ 					graphics.drawText(symbol.subscript,   point.x - w*0.2, point.y , subSize, subSize, 'center', null, font, stroke, fill, group);
+				}
+				if(symbol.superscript){
+					graphics.drawText(symbol.superscript, point.x + w, point.y-h*0.8 , subSize, subSize, 'center', null, font, stroke, fill, group);
+				}
+			}
 		}
 	}
 
@@ -103,19 +116,23 @@ jchemhub.view.AtomDrawing.prototype.compoundSymbol = function() {
 	var retval = {text: this.atom.symbol, justification: 'center', superscript: '', subscript: ''};
 	if (this.atom.countBonds() == 1) {
 	// terminal atom may need compound atom name
-		retval.text = this.atom.symbol;
-		var hydrogen_count = this.hydrogenCount();
-		switch  (hydrogen_count) {
+		var hydrogen_count = this.atom.hydrogenCount();
+		if  (hydrogen_count == 0) {
+			retval.text = this.atom.symbol;
 		// could have H on left, depending on bond slope
-		case 0:
-			break;
-		case 1:
-			retval.text += 'H';
-			break;
-		default:
-			retval.text += 'H';
-			retval.subscript = String(hydrogen_count);
-			break;
+		} else {
+			bond_direction = this.bondDirection();
+			var justification = 'center';
+			if (bond_direction == "SW" || bond_direction == "W" || bond_direction == "NW") {
+				justification = 'right';
+				retval.text = 'H';
+				if (hydrogen_count > 1) retval.text += ' ';
+				retval.text += this.atom.symbol;	
+			} else {
+				justification = 'left';
+				retval.text = this.atom.symbol + 'H';
+			}
+			if (hydrogen_count > 1) retval.subscript = String(hydrogen_count);
 		}
 		if (this.atom.charge) {
 			if (this.atom.charge > 1) {
@@ -128,38 +145,49 @@ jchemhub.view.AtomDrawing.prototype.compoundSymbol = function() {
 				retval.superscript = '+';
 			}
 		}
-		// could be 'right' depending on bond slope
-		retval.justification = 'left';
+
 	} else {
 		if (this.atom.symbol == "C") retval.text = "";
 	}
+	retval.justification = justification;
 	return retval;
 };
 
-jchemhub.view.AtomDrawing.prototype.hydrogenCount = function() {
-	var cov = jchemhub.resource.Covalence[this.atom.symbol];
-	var totalBondOrder = 0;
-	goog.array.forEach(this.atom.bonds.getValues(),function(element,index,array){
-		//totalBondOrder+=element.bondType;//TODO not good enough, need to handle aromatic bonds.
-		if (element instanceof jchemhub.model.SingleBond) {
-			totalBondOrder += 1;
-		} else if (element instanceof jchemhub.model.SingleBondUp) {
-			totalBondOrder += 1;
-		} else if (element instanceof jchemhub.model.SingleBondDown) {
-			totalBondOrder += 1;
-		} else if (element instanceof jchemhub.model.SingleBondUpOrDown) {
-			totalBondOrder += 1;
-		} else if (element instanceof jchemhub.model.DoubleBond) {
-			totalBondOrder += 2;
-		} else if (element instanceof jchemhub.model.TripleBond) {
-			totalBondOrder += 3;
-		} else if (element instanceof jchemhub.model.QuadrupleBond) {
-			totalBondOrder += 4;
-		}
-	});
-	var hydrogenCount = 0;
-	if (cov) {
-		hydrogenCount = cov - totalBondOrder + this.atom.charge;
+jchemhub.view.AtomDrawing.prototype.bondDirection = function() {
+// returns the bond compass direction
+//     N
+//  NW   NE
+// W       E
+//  SW   SE
+//     S
+	var bond =  this.atom.bonds.getValues()[0];
+	var target = bond.target.coord;
+	var source = bond.source.coord;
+	//console.log("bond" + String(this.atom == bond.target));
+	var dy = target.y - source.y;
+	var dx = target.x - source.x;
+	if (this.atom == bond.source) {
+		dx = -dx;
+		dy = -dy;
 	}
-	return hydrogenCount;
+	var angle = Math.atan2(dy, dx) * 180/Math.PI;
+	if (angle < 0) angle = 360 + angle;  // now angle is 0 - 360
+	//console.log(angle);
+	if (angle > 350 || angle <= 10) {
+		return "E";
+	} else if (angle > 10 && angle <= 80) {
+		return "SE";
+	} else if (angle > 80 && angle <= 100) {
+		return "S";
+	} else if (angle > 100 && angle <= 170) {
+		return "SW";
+	} else if (angle > 170 && angle <= 190) {
+		return "W";
+	} else if (angle > 190 && angle <= 260) {
+		return "NW";
+	} else if (angle > 260 && angle <= 280) {
+		return "N";
+	} else {
+		return "NE";
+	}
 };

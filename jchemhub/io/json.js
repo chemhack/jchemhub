@@ -136,6 +136,7 @@ jchemhub.io.json.createBond = function(type, stereo, source, target) {
 	case jchemhub.io.json.BondType.TRIPLE_BOND:
 		return new jchemhub.model.TripleBond(source, target);
 	case jchemhub.io.json.BondType.AROMATIC:
+		return new jchemhub.model.AromaticBond(source, target);
 	case jchemhub.io.json.BondType.SINGLE_OR_DOUBLE:
 	case jchemhub.io.json.BondType.SINGLE_OR_AROMATIC:
 	case jchemhub.io.json.BondType.DOUBLE_OR_AROMATIC: 
