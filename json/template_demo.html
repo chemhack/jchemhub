@@ -24,7 +24,8 @@ function initPage(){
 		var model = jchemhub.controller.Controller.buildMoleculeDrawing(jchemhub.io.json.readMolecule(t));
 	  	var el = goog.dom.createDom('div', {'style': 'width: 400px; height: 400px'});
 	   	goog.dom.appendChild(container, el);
-		var controller = new jchemhub.controller.Controller(model, el);
+		var controller = new jchemhub.controller.Controller(el);
+		controller.setModel(model);
 	});
 	
 };

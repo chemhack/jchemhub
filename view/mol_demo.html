@@ -17,7 +17,9 @@
     
 function initPage(){
 	var model = jchemhub.io.mdl.readMolfile(molsample);
-	var controller = new jchemhub.controller.Controller(model, goog.dom.getElement('reactionEditorContainer'));
+	var controller = new jchemhub.controller.Controller(goog.dom.getElement('reactionEditorContainer'));
+	controller.setModel(model);
+
 };
 
 goog.events.listen(window, goog.events.EventType.LOAD, initPage);

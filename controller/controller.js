@@ -16,16 +16,25 @@ goog.require('jchemhub.view.SingleBondDrawing');
 goog.require('jchemhub.io.json');
 goog.require('jchemhub.io.mdl');
 
-jchemhub.controller.Controller = function(model, element, opt_editor_config) {
-	this._model = model;
-	this._view = new jchemhub.view.ReactionEditor(element, model, opt_editor_config);
+jchemhub.controller.Controller = function(element, opt_editor_config) {
 
-	this._view.layoutAndRender();
+	this._view = new jchemhub.view.ReactionEditor(element, opt_editor_config);
 };
 
 jchemhub.controller.Controller.prototype.getModel = function(){
 	return this._model;
-}
+};
+
+jchemhub.controller.Controller.prototype.clear = function(){
+	this._model = null;
+	this._view.clear();
+};
+
+jchemhub.controller.Controller.prototype.setModel = function(model){
+	this._model = model;
+	this._view.setModel(model);
+	this._view.layoutAndRender();
+};
 
 jchemhub.controller.Controller.buildReactionDrawing = function(rxn) {
 	return new jchemhub.view.ReactionDrawing(rxn);

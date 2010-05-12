@@ -4,10 +4,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>jchemhub.view.ReactionEditor</title>
 <!-- 
+ <script src="../../jchemhub_compiled.js"></script>
+ -->
 <script src="../../third-party/closure/closure/goog/base.js"></script>
 <script src="../deps.js"></script>
- -->
- <script src="../../jchemhub_compiled.js"></script>
 
 <script src="../io/json_test_rxn.js"></script>
 
@@ -21,10 +21,12 @@
     
 function initPage(){
 	var model = jchemhub.io.json.readReaction(reactionDrawing);
-	console.log(model);
-	console.log(jchemhub.io.json.reactionToJson(model));
-	var controller = new jchemhub.controller.Controller(model, goog.dom.getElement('reactionEditorContainer'));
-	//console.log(jchemhub.io.json.reactionToJson(controller.getModel()));
+
+	var controller = new jchemhub.controller.Controller(goog.dom.getElement('reactionEditorContainer'));
+	controller.setModel(model);
+	controller.clear();
+	controller.setModel(model);
+	console.log(jchemhub.io.json.reactionToJson(controller.getModel()));
 };
 
 goog.events.listen(window, goog.events.EventType.LOAD, initPage);
