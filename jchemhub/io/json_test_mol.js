@@ -640,8 +640,8 @@ var jmol2 = {
 	}, {
 		"source" : 19,
 		"target" : 20,
-		"type" : "SINGLE_BOND",
-		"stereo" : "SINGLE_OR_AROMATIC"
+		"type" : "AROMATIC",
+		"stereo" : "NOT_STEREO"
 	}, {
 		"source" : 14,
 		"target" : 21,
@@ -650,8 +650,8 @@ var jmol2 = {
 	}, {
 		"source" : 21,
 		"target" : 22,
-		"type" : "SINGLE_BOND",
-		"stereo" : "AROMATIC"
+		"type" : "AROMATIC",
+		"stereo" : "NOT_STEREO"
 	}, {
 		"source" : 0,
 		"target" : 23,
