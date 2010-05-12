@@ -28,7 +28,7 @@ jchemhub.view.TripleBondDrawing.prototype.render = function() {
 	var angle_left = theta + (Math.PI / 2);
 	var angle_right = theta - (Math.PI / 2);
 
-	var bondWidth = strokeWidth / 30;
+	var bondWidth = goog.math.Coordinate.distance(this.bond.source.coord, this.bond.target.coord)/6;
 	var transleft = goog.graphics.AffineTransform.getTranslateInstance(Math
 			.cos(angle_left)
 			* bondWidth, Math.sin(angle_left) * bondWidth, 0, 0, 0);
