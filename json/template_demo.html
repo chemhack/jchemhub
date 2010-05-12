@@ -19,10 +19,11 @@
 <script>
     
 function initPage(){
-	var container = goog.dom.getElement('theContainer')
+	var container = goog.dom.getElement('theContainer');
+		
 	goog.array.forEach(templates, function(t){
-		var model = jchemhub.controller.Controller.buildMoleculeDrawing(jchemhub.io.json.readMolecule(t));
-	  	var el = goog.dom.createDom('div', {'style': 'width: 400px; height: 400px'});
+		var model = jchemhub.io.json.readMolecule(t);
+	  	var el = goog.dom.createDom('div', {'style': 'width: 200px; height: 200px'});
 	   	goog.dom.appendChild(container, el);
 		var controller = new jchemhub.controller.Controller(el);
 		controller.setModel(model);
@@ -35,7 +36,7 @@ goog.events.listen(window, goog.events.EventType.LOAD, initPage);
 </head>
 
 <body>
-<div id="theContainer" style="width: 400px; height: 400px"></div>
+<div id="theContainer" style="width: 200px; height: 200px"></div>
 
 </body>
 </html>

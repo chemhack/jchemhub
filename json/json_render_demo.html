@@ -6,36 +6,29 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 <script src="../../third-party/closure/closure/goog/base.js"></script>
 <script src="../deps.js"></script>
-<script>
-	goog.require('goog.dom');
-	goog.require('goog.graphics')
-	goog.require('goog.events');
-    goog.require('goog.events.EventType');
-    goog.require('jchemhub.io.json');	
+<script src="../io/json_test_mol.js"></script>
+<script>  
     goog.require('jchemhub.controller.Controller');
+	goog.require('jchemhub.io.json');
+	goog.require('goog.events.EventType');
+	goog.require('goog.dom');
 </script>
 
-<script src="../io/json_test_mol.js"></script>
-
 <script>
-function showJSON(mol) {
-	document.write(jchemhub.io.JSONMolecule.write(mol));
-}
+function initPage(){
+	var model = jchemhub.io.json.readMolecule(jmol);
+	var controller = new jchemhub.controller.Controller(goog.dom.getElement('reactionEditorContainer'));
+	controller.setModel(model);
+};
+
+goog.events.listen(window, goog.events.EventType.LOAD, initPage);
 </script>
 </head>
+
 <body>
 
-<script>
-function initPage() {
-	var mol = jchemhub.io.json.readMolecule(jmol);
-	var model = jchemhub.controller.Controller.buildMoleculeDrawing(mol);
-	var controller = new jchemhub.controller.Controller(goog.dom.getElement('testGraphics'));
-	controller.setModel(model);
-	};
-	goog.events.listen(window, goog.events.EventType.LOAD, initPage);
-	</script>
-<div id="testGraphics" style="width: 300px; height: 300px"></div>
-<p>Simply move your mouse on atoms and bonds</p>
-
+	<div id="reactionEditorContainer" style="width: 400px; height: 200px"></div>
+	<p>Simply move your mouse on atoms and bonds</p>
+    
 </body>
 </html>
