@@ -10,7 +10,7 @@ goog.addDependency("../../../../jchemhub/io/json_test_rxn.js", [], []);
 goog.addDependency("../../../../jchemhub/io/mdl.js", ['jchemhub.io.mdl'], ['goog.i18n.DateTimeFormat', 'goog.string', 'jchemhub.model.Reaction', 'jchemhub.model.Molecule', 'jchemhub.model.SingleBond', 'jchemhub.model.SingleBondUp', 'jchemhub.model.SingleBondDown', 'jchemhub.model.SingleBondUpOrDown', 'jchemhub.model.DoubleBond', 'jchemhub.model.TripleBond', 'jchemhub.model.QuadrupleBond', 'jchemhub.model.Bond', 'jchemhub.model.Atom']);
 goog.addDependency("../../../../jchemhub/json/json_templates.js", [], []);
 goog.addDependency("../../../../jchemhub/math/line.js", ['jchemhub.math.Line'], ['goog.math.Line']);
-goog.addDependency("../../../../jchemhub/model/atom.js", ['jchemhub.model.Atom', 'jchemhub.model.Atom.Hybridizations'], ['goog.structs.Set', 'goog.math.Coordinate']);
+goog.addDependency("../../../../jchemhub/model/atom.js", ['jchemhub.model.Atom', 'jchemhub.model.Atom.Hybridizations'], ['jchemhub.resource.Covalence', 'goog.structs.Set', 'goog.math.Coordinate']);
 goog.addDependency("../../../../jchemhub/model/bond.js", ['jchemhub.model.Bond'], ['jchemhub.model.Atom']);
 goog.addDependency("../../../../jchemhub/model/double_bond.js", ['jchemhub.model.DoubleBond'], ['jchemhub.model.Bond']);
 goog.addDependency("../../../../jchemhub/model/molecule.js", ['jchemhub.model.Molecule'], ['goog.array', 'jchemhub.ring.RingFinder']);
@@ -32,7 +32,7 @@ goog.addDependency("../../../../jchemhub/ring/ring_finder.js", ['jchemhub.ring.R
 goog.addDependency("../../../../jchemhub/smiles/smilesParser.js", ['jchemhub.smiles.SmilesParser'], ['goog.array', 'jchemhub.model.Atom', 'jchemhub.model.Atom.Hybridizations', 'jchemhub.model.PseudoAtom', 'jchemhub.model.Molecule', 'jchemhub.model.Bond', 'jchemhub.model.SingleBond', 'jchemhub.model.DoubleBond', 'jchemhub.model.TripleBond', 'jchemhub.model.QuadrupleBond', 'jchemhub.util.BondUtil', 'jchemhub.util.BondUtil.Orders']);
 goog.addDependency("../../../../jchemhub/util/bond_util.js", ['jchemhub.util.BondUtil', 'jchemhub.util.BondUtil.Orders'], ['jchemhub.model.Atom', 'jchemhub.model.PseudoAtom', 'jchemhub.model.Bond', 'jchemhub.model.SingleBond', 'jchemhub.model.DoubleBond', 'jchemhub.model.TripleBond', 'jchemhub.model.QuadrupleBond']);
 goog.addDependency("../../../../jchemhub/view/arrow_drawing.js", ['jchemhub.view.ArrowDrawing'], []);
-goog.addDependency("../../../../jchemhub/view/atom_drawing.js", ['jchemhub.view.AtomDrawing'], ['goog.math.Coordinate', 'jchemhub.resource.Covalence']);
+goog.addDependency("../../../../jchemhub/view/atom_drawing.js", ['jchemhub.view.AtomDrawing'], ['goog.math.Coordinate']);
 goog.addDependency("../../../../jchemhub/view/bond_drawing.js", ['jchemhub.view.BondDrawing'], ['jchemhub.view.Drawing', 'jchemhub.math.Line', 'goog.events', 'goog.fx.Dragger']);
 goog.addDependency("../../../../jchemhub/view/double_bond_drawing.js", ['jchemhub.view.DoubleBondDrawing'], ['jchemhub.view.BondDrawing', 'goog.math.Line']);
 goog.addDependency("../../../../jchemhub/view/drawing.js", ['jchemhub.view.Drawing'], ['goog.Disposable', 'goog.events.EventTarget']);
