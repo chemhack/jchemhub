@@ -1,0 +1,55 @@
+<head> 
+<title>smiles unit test-smiles.js</title>
+<script src="../../third-party/closure/closure/goog/base.js"></script>
+<script src="../deps.js"></script>
+<script>
+	//goog.require('goog.testing.jsunit');
+	//goog.require('jchemhub.io.smiles');
+</script>
+<script src="smiles.js"></script>
+<script>
+function parseMany(smiles_lines) {
+        var start = new Date().getTime();
+        var smiles = smiles_lines.split("\n");
+        var nsmiles = 0;
+        for (var i in smiles) {
+                if (smiles[i]) jchemhub.io.smiles.parse(smiles[i]);
+                ++nsmiles;
+        }
+        var stop = new Date().getTime();
+        var exectime = (stop-start);
+        console.log(nsmiles + " smiles; " + exectime + " msec");
+}
+</script>
+</head>
+
+<body>
+<form>
+<input type=button onClick=parseMany(smiles.value) value="parse">
+<BR>
+<!--
+<input type=text name=smiles value="CN1C2CCC1CC(C2)OC(=O)C(CO)c3ccccc3" size=100>
+-->
+<textarea name=smiles cols=80 rows=50>
+CN1C2CCC1CC(C2)OC(=O)C(CO)c3ccccc3
+c1cc(ccc1C(C(CO)NC(=O)C(Cl)Cl)O)N(=O)=O
+c1c2c(cc(c1Cl)S(=O)(=O)N)S(=O)(=O)N=CN2
+CN(C)CCCN1c2ccccc2Sc3c1cc(cc3)Cl
+C(/N=C/c1ccccc1)(/N=C/c1ccccc1)c1ccccc1
+C(C(C)(C)C)[C@@]1(C)NC(=O)NC1=O
+C(C(OCC)=O)(C(OCC)=O)C(C)C
+N([C@@H](c1c(O)c2c(cccn2)cc1)c1ccccc1)c1ccccc1
+O=C1C2(NC(N1)=O)CCCC2
+C([C@@](CC)(C)O)#C[C@@](CC)(C)O
+C(=O)(O)C1(N)CCCC1
+C(C(Br)(C)C)(C(Br)Br)=O
+C(/C=C/c1ccccc1)(NC(OCC)=O)NC(OCC)=O
+C(C(C)C)CO
+C(O)[C@H]1[C@@H](O)[C@@H](O)C(O1)=O
+[13C]Cl
+c12-c3c(cc(N)cc3)Cc1cccc2
+c12c3c4c5c1c1c6c7c5c5c8c4c4c9c3c3c%10c9c9c%11c4c8c4c8c5c7c5c7c6c6c%12c%13c7c7c5c8c5c4c%11c4c9c8c%10c9c%10c8c8c4c5c7c8c%13c%10c%12c4c9c3c2c4c16
+c12c3c(ccc2)c(ccc4)c5c4cccc5c3ccc1
+</textarea>
+</form>
+</body>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!--TODO: License and copyright-->
+<html>
+<head>
+<title>jchemhub unit test-smiles.js</title>
+<script src="../../third-party/closure/closure/goog/base.js"></script>
+<script src="../deps.js"></script>
+<script>
+	goog.require('goog.testing.jsunit');
+	//goog.require('jchemhub.io.smiles');
+	goog.require('jchemhub.resource');
+</script>
+<script src="smiles.js"></script>
+<script src="smiles_test_mols.js"></script>
+<script><!--
+ 	var rxn;
+ 	var mol;
+  	function setUp() {
+  	}
+
+  	function testAtomCount() {
+		var mol = jchemhub.io.smiles.parse('CCC');
+		assertEquals(mol.countAtoms(), 3);
+		mol = jchemhub.io.smiles.parse('C(=O)(c1c([NH2+])cccc1)c1c(C)cccc1');
+		assertEquals(mol.countAtoms(), 16);
+		var a = mol.getAtom(4);
+		assertEquals(a.symbol, 'N');
+		assertEquals(a.charge, 1);
+		assertEquals(a.hydrogenCount(), 3);
+	}
+
+  	function testTimeParse() {
+		for (var i in smiles) {
+			jchemhub.io.smiles.parse(smiles[i]);
+		}
+
+	}
+--></script>
+</head>
+<body>
+</body>
+</html>

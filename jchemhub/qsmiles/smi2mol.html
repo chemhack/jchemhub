@@ -1,0 +1,28 @@
+<head> 
+<title>smiles unit test-smiles.js</title>
+<script src="../../third-party/closure/closure/goog/base.js"></script>
+<script src="../deps.js"></script>
+<script>
+	//goog.require('goog.testing.jsunit');
+	//goog.require('jchemhub.io.smiles');
+	goog.require('jchemhub.io.mdl');
+</script>
+<script src="smiles.js"></script>
+<script>
+function parse(smiles) {
+	mol = jchemhub.io.smiles.parse(smiles);
+	return jchemhub.io.mdl.writeMolfile(mol);
+}
+</script>
+</head>
+
+<body>
+<form>
+Enter SMILES and 
+<input type=button onClick="molblock.value = parse(smiles.value)" value="parse">
+<BR>
+<input type=text name=smiles value="CN1C2CCC1CC(C2)OC(=O)C(CO)c3ccccc3" size=80>
+<BR>
+<textarea id=molblock cols=80 rows=40>molblock will appear here</textarea>
+</form>
+</body>
