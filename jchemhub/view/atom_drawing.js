@@ -21,7 +21,9 @@ goog.inherits(jchemhub.view.AtomDrawing, jchemhub.view.Drawing);
 jchemhub.view.AtomDrawing.prototype.render = function() {
 	var config = this.getConfig();
 	var atom_config = config.get(this.atom.symbol) ? config.get(this.atom.symbol) : config.get("atom");
-	var font = new goog.graphics.Font(11, atom_config.fontName);
+	var scale = this.getTransform().getScaleX();
+	console.log(scale);
+	var font = new goog.graphics.Font(scale/1.8, atom_config.fontName);
 	var stroke = new goog.graphics.Stroke(atom_config.stroke.width, atom_config.stroke.color);
 	var fill = new goog.graphics.SolidFill(atom_config.fill.color);
 
