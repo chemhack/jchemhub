@@ -19,7 +19,7 @@ goog.require('goog.math.Coordinate');
  *            opt_charge, Charge of atom, defaults to 0.
  * @constructor
  */
-jchemhub.model.Atom=function(symbol, x, y, opt_charge)
+jchemhub.model.Atom=function(symbol, x, y, opt_charge, opt_aromatic, opt_isotope)
 {
 	/**
 	 * Atom symbol
@@ -43,6 +43,18 @@ jchemhub.model.Atom=function(symbol, x, y, opt_charge)
 	 * @type{number} 
 	 */
     this.charge = goog.isDef(opt_charge) ? opt_charge : 0;
+    
+    /**
+	 * isotope
+	 * @type{number} 
+	 */
+    this.isotope = goog.isDef(opt_isotope) ? opt_isotope : 0;
+    
+    /**
+	 * aromatic
+	 * @type{bool} 
+	 */
+    this.aromatic = goog.isDef(opt_aromatic) ? opt_aromatic : false;
 
     this.hybridization=null;
 };

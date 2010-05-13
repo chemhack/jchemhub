@@ -11,6 +11,7 @@ goog.require('jchemhub.model.DoubleBond');
 goog.require('jchemhub.model.TripleBond');
 goog.require('jchemhub.model.QuadrupleBond');
 goog.require('jchemhub.model.DoubleBond');
+goog.require('jchemhub.model.AromaticBond');
 
 /**
  * enum for bond types
@@ -23,6 +24,7 @@ jchemhub.io.smiles.BondType = {
                 DOUBLE_BOND:"=",
                 TRIPLE_BOND:"#",
                 QUAD_BOND:"$",
+                AROMATIC_BOND:":",
                 ANY:"~"
 };
 
@@ -31,10 +33,10 @@ jchemhub.io.smiles.BondType = {
  *
  * @enum {string}
  */
-jchemhub.io.smiles.StereoType = {
+jchemhub.io.smiles.BondStereo = {
                 NONE:"NONE",
-                SINGLE_BOND_UP:"@",
-                SINGLE_BOND_DOWN:"@@"
+                CLOCKWISE:"@",
+                COUNTER_CLOCKWISE:"@@"
 };
 
 
@@ -46,6 +48,7 @@ jchemhub.io.smiles.punctuation = {
  doublebond:  jchemhub.io.smiles.BondType.DOUBLE_BOND,
  triplebond:  jchemhub.io.smiles.BondType.TRIPLE_BOND,
  quadbond:    jchemhub.io.smiles.BondType.QUAD_BOND,
+ aromaticbond:jchemhub.io.smiles.BondType.AROMATIC_BOND,
  ringclosure: '%',
  cis:         '/',
  trans:       '\\',
@@ -54,16 +57,17 @@ jchemhub.io.smiles.punctuation = {
 jchemhub.io.smiles.smiPattern =  new RegExp(/\[[^[]+\]|Br|B|Cl|C|N|F|O|P]|S|c|n|o|s|-|=|#|%[0-9][0-9]|[0-9]|\(|\)|./g);
 jchemhub.io.smiles.atomPattern = new RegExp(/^\[([0-9]*)([A-Z][a-z]?|c|n|o|se|s|as)(@|@@)?(H)?([0-9])?([+-][\d]?)?\]$/);
 jchemhub.io.smiles.specialAtoms = { C:1, c:1, N:1, n:1, O:1, o:1, S:1, s:1, P:1, F:1, Br:1, Cl:1, I:1, B:1 };
+jchemhub.io.smiles.aromaticAtoms = { c:1, n:1, o:1, s:1, as:1, se:1 };
 
 jchemhub.io.smiles.parse = function (smi) {
 	items = smi.match(this.smiPattern);
 	//console.log(items);
 	//console.log(smi);
-	var mol = new jchemhub.model.Molecule("say cheese");
+	var mol = new jchemhub.model.Molecule(smi);
 	var natoms = 0;
 	var previous_atom;
 	var bond_type = jchemhub.io.smiles.BondType.NONE;
-	var bond_stereo = "";
+	var bond_stereo = jchemhub.io.smiles.BondStereo.NONE;
 	var branch = new Array();
 	var ring   = new Array();
 	var errstr = "";
@@ -79,20 +83,23 @@ jchemhub.io.smiles.parse = function (smi) {
 				errstr = " unbalanced parens";
 			}
 		} else if (item == this.punctuation.singlebond) {
-			bond_type = jchemhub.io.smiles.BondType.SINGLE_BOND
+			bond_type = jchemhub.io.smiles.BondType.SINGLE_BOND;
 		} else if (item == this.punctuation.doublebond) {
-			bond_type = jchemhub.io.smiles.BondType.DOUBLE_BOND
+			bond_type = jchemhub.io.smiles.BondType.DOUBLE_BOND;
 		} else if (item == this.punctuation.triplebond) {
-			bond_type = jchemhub.io.smiles.BondType.TRIPLE_BOND
+			bond_type = jchemhub.io.smiles.BondType.TRIPLE_BOND;
 		} else if (item == this.punctuation.quadbond) {
-			bond_type = jchemhub.io.smiles.BondType.QUAD_BOND
+			bond_type = jchemhub.io.smiles.BondType.QUAD_BOND;
+		} else if (item == this.punctuation.aromaticbond) {
+			bond_type = jchemhub.io.smiles.BondType.AROMATIC_BOND
 		} else if (item[0] == this.punctuation.ringclosure) {
 			ringid = parseInt(item[1]+item[2]);
 			ring_atom = ring[ringid];
 			if (ring_atom) {
-				var bond_stereo = jchemhub.io.smiles.StereoType.NONE;
+				//var bond_stereo = jchemhub.io.smiles.BondStereo.NONE;
 				mol.addBond(this.createBond(bond_type, bond_stereo, previous_atom, ring_atom));
 				bond_type = jchemhub.io.smiles.BondType.NONE;
+				bond_stereo = jchemhub.io.smiles.BondStereo.NONE;
 				ring[ringid] = null;
 			} else {
 				ring[ringid] = previous_atom;
@@ -102,9 +109,10 @@ jchemhub.io.smiles.parse = function (smi) {
  		} else if (!isNaN(ringid = parseInt(item))) {
 			ring_atom = ring[ringid];
 			if (ring_atom) {
-				var bond_stereo = jchemhub.io.smiles.StereoType.NONE;
+				//var bond_stereo = jchemhub.io.smiles.BondStereo.NONE;
 				mol.addBond(this.createBond(bond_type, bond_stereo, previous_atom, ring_atom));
 				bond_type = jchemhub.io.smiles.BondType.NONE;
+				bond_stereo = jchemhub.io.smiles.BondStereo.NONE;
 				ring[ringid] = null;
 			} else {
 				ring[ringid] = previous_atom;
@@ -113,45 +121,75 @@ jchemhub.io.smiles.parse = function (smi) {
   			smi_atom = this.parseAtom(item);
   			if (smi_atom.symbol) {
 				natoms += 1;
-				var atom = new jchemhub.model.Atom(smi_atom.symbol,0,0,smi_atom.charge);
+				var atom = new jchemhub.model.Atom(smi_atom.symbol,0,0,smi_atom.charge,smi_atom.aromatic,smi_atom.isotope);
 				if (previous_atom) {
-					var bond_stereo = jchemhub.io.smiles.StereoType.NONE;
-					if (smi_atom.stereo) bond_stereo = smi_atom.stereo;
+					//var bond_stereo = jchemhub.io.smiles.BondStereo.NONE;
+					//if (smi_atom.stereo) bond_stereo = smi_atom.stereo;
 					mol.addBond(this.createBond(bond_type, bond_stereo, previous_atom, atom));
+					bond_type = jchemhub.io.smiles.BondType.NONE;
+					bond_stereo = jchemhub.io.smiles.BondStereo.NONE;
 				}
 				mol.addAtom(atom);
-				bond_type = jchemhub.io.smiles.BondType.NONE;
+				bond_stereo = smi_atom.stereo; // bond to next atom specified in this atom spec
 				previous_atom = atom;
 			} else {
 				errstr =  " unknown atom " + item;
 			}
 		}
 		if (errstr) {
-			console.log(smi + errstr);
+			throw new Error(smi + errstr);
 			break;
 		}
 	}
 	//console.log(natoms + " atoms");
+	if (this.sanityCheck(branch, ring, bond_type, bond_stereo)) {
+		return mol;
+	} else {
+		return null;
+	}
+};
+
+jchemhub.io.smiles.sanityCheck = function (branch, ring, bond_type, bond_stereo) {
 	if (branch.length) {
-		console.log(smi + " unbalanced parens");
+		throw new Error(smi + " unbalanced parens");
+		return false;
 	}
 	for (var i=0; i<ring.length; ++i) {
-		if (ring[i]) console.log(smi + " unclosed rings");
+		if (ring[i]) {
+			throw new Error(smi + " unclosed rings");
+			return false;
+		}
 	}
-	if (bond_type != jchemhub.io.smiles.BondType.NONE) {
-		console.log(smi + " unpaired bond " + bond_type);
+	if (bond_type != this.BondType.NONE) {
+		throw new Error(smi + " unpaired bond " + bond_type);
+		return false;
 	}
-	return mol;
+	/*
+	if (bond_stereo != this.BondStereo.NONE) {
+		throw new Error(smi + " unpaired stereo " + bond_stereo);
+		return false;
+	}
+	*/
+	return true;
 };
 
 jchemhub.io.smiles.parseAtom = function (item) {
-  var atom = {isotope:null, symbol:null, stereo:null, hcount:null, charge:null};
+  var atom = {isotope:null, symbol:null, stereo:jchemhub.io.smiles.BondStereo.NONE, hcount:null, charge:null, aromatic:false};
   var atomProp = this.atomPattern.exec(item);
   if (atomProp) {
     atom.isotope = atomProp[1];
+
     // periodicTable has entries for c,n,o,s,as,se
     if (this.periodicTable[atomProp[2]]) atom.symbol = atomProp[2];
-    atom.stereo = atomProp[3];
+    
+    if (atomProp[3] == jchemhub.io.smiles.BondStereo.CLOCKWISE) {
+	    atom.stereo = atomProp[3];
+	} else if (atomProp[3] == jchemhub.io.smiles.BondStereo.COUNTER_CLOCKWISE) {
+	    atom.stereo = atomProp[3]; 
+	} else {
+		atom.stereo = jchemhub.io.smiles.BondStereo.NONE;
+	}
+    
     if (atomProp[4] == 'H') {
       if (atomProp[5]) {
         atom.hcount = atomProp[5];
@@ -159,6 +197,7 @@ jchemhub.io.smiles.parseAtom = function (item) {
         atom.hcount = 1;
       }
     }
+    
     if (atomProp[6] == "+") {
       atom.charge = 1;
     } else if (atomProp[6] == "-") {
@@ -166,10 +205,19 @@ jchemhub.io.smiles.parseAtom = function (item) {
     } else {
       atom.charge = parseInt(atomProp[6]);
     }
-  } else {
+  
+    } else {
     if (this.specialAtoms[item]) {
       atom.symbol = item;
     }
+  }
+  if (this.aromaticAtoms[atom.symbol]) {
+	  atom.aromatic = true;
+	  if (atom.symbol.length == 1) {
+		  atom.symbol = atom.symbol.toUpperCase();
+	  } else {
+		  atom.symbol = atom.symbol[0].toUpperCase() + atom.symbol[1];
+	  }
   }
   return atom;
 };
@@ -178,22 +226,30 @@ jchemhub.io.smiles.parseAtom = function (item) {
  * factory method for bonds
  *
  * @param{jchemhub.io.smiles.BondType}type bond-type code
- * @param{jchemhub.io.smiles.StereoType}stereo stereo-type code
+ * @param{jchemhub.io.smiles.BondStereo}stereo stereo-type code
  * @param{jchemhub.model.Atom} source atom at source end of bond
  * @param{jchemhub.model.Atom} target atom at target end of bond
  *
  * @return{jchemhub.model.Bond}
  */
 jchemhub.io.smiles.createBond = function(type, stereo, source, target) {
-        switch (type) {
-        case jchemhub.io.smiles.BondType.NONE:
+		var atype = type;
+		if (type == jchemhub.io.smiles.BondType.NONE) {
+			if (source.aromatic && target.aromatic) {
+				atype = jchemhub.io.smiles.BondType.AROMATIC_BOND;
+			} else {
+				atype = jchemhub.io.smiles.BondType.SINGLE_BOND;
+			}
+		}
+        switch (atype) {
+        
         case jchemhub.io.smiles.BondType.SINGLE_BOND:
                 switch (stereo) {
-                case jchemhub.io.smiles.StereoType.SINGLE_BOND_UP:
+                case jchemhub.io.smiles.BondStereo.CLOCKWISE:
                         return new jchemhub.model.SingleBondUp(source, target);
-                case jchemhub.io.smiles.StereoType.SINGLE_BOND_DOWN:
+                case jchemhub.io.smiles.BondStereo.COUNTER_CLOCKWISE:
                         return new jchemhub.model.SingleBondDown(source, target);
-                case jchemhub.io.smiles.StereoType.NONE:
+                case jchemhub.io.smiles.BondStereo.NONE:
                         return new jchemhub.model.SingleBond(source, target);
                 default:
                         throw new Error("invalid bond type/stereo [" + type + "]/["
@@ -203,8 +259,8 @@ jchemhub.io.smiles.createBond = function(type, stereo, source, target) {
                 return new jchemhub.model.DoubleBond(source, target);
         case jchemhub.io.smiles.BondType.TRIPLE_BOND:
                 return new jchemhub.model.TripleBond(source, target);
-        //case jchemhub.io.smiles.BondType.AROMATIC:
-        //        return new jchemhub.model.AromaticBond(source, target);
+        case jchemhub.io.smiles.BondType.AROMATIC_BOND:
+                return new jchemhub.model.AromaticBond(source, target);
         case jchemhub.io.smiles.BondType.ANY:
         default:
                 throw new Error("invalid bond type/stereo [" + type + "]/[" + stereo

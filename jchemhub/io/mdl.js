@@ -16,6 +16,7 @@ goog.require('jchemhub.model.SingleBondDown');
 goog.require('jchemhub.model.SingleBondUpOrDown');
 goog.require('jchemhub.model.DoubleBond');
 goog.require('jchemhub.model.TripleBond');
+goog.require('jchemhub.model.AromaticBond');
 goog.require('jchemhub.model.QuadrupleBond');
 goog.require('jchemhub.model.Bond');
 goog.require('jchemhub.model.Atom');
@@ -23,7 +24,7 @@ goog.require('jchemhub.model.Atom');
 /** @const */ jchemhub.io.mdl.SINGLE_BOND = 1;
 /** @const */ jchemhub.io.mdl.DOUBLE_BOND = 2;
 /** @const */ jchemhub.io.mdl.TRIPLE_BOND = 3;
-/** @const */ jchemhub.io.mdl.AROMATIC = 4;
+/** @const */ jchemhub.io.mdl.AROMATIC_BOND = 4;
 /** @const */ jchemhub.io.mdl.SINGLE_OR_DOUBLE = 5;
 /** @const */ jchemhub.io.mdl.SINGLE_OR_AROMATIC = 6;
 /** @const */ jchemhub.io.mdl.DOUBLE_OR_AROMATIC = 7;
@@ -49,6 +50,9 @@ jchemhub.io.mdl.getTypeCode = function(bond){
 	}
 	if (bond instanceof jchemhub.model.TripleBond){
 		return jchemhub.io.mdl.TRIPLE_BOND;
+	}
+	if (bond instanceof jchemhub.model.AromaticBond){
+		return jchemhub.io.mdl.AROMATIC_BOND;
 	}
 	throw new Error("Invalid bond type [" + bond + "]");
 	
@@ -104,8 +108,8 @@ jchemhub.io.mdl.createBond = function(type, stereo, source, target) {
 		return new jchemhub.model.DoubleBond(source, target);
 	case jchemhub.io.mdl.TRIPLE_BOND:
 		return new jchemhub.model.TripleBond(source, target);
-	case jchemhub.io.mdl.AROMATIC:
-		throw new Error("type not implemented [" + type + "]");
+	case jchemhub.io.mdl.AROMATIC_BOND:
+		return new jchemhub.model.AromaticBond(source, target);
 	case jchemhub.io.mdl.SINGLE_OR_DOUBLE:
 		throw new Error("type not implemented [" + type + "]");
 	case jchemhub.io.mdl.SINGLE_OR_AROMATIC:
