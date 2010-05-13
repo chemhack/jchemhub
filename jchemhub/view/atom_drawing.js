@@ -1,6 +1,5 @@
 goog.provide("jchemhub.view.AtomDrawing");
 goog.require("goog.math.Coordinate");
-goog.require("jchemhub.resource.Covalence");
 
 /**
  * An atom graphical element in the reaction editor.

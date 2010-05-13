@@ -2,6 +2,7 @@
 
 goog.provide('jchemhub.model.Atom');
 goog.provide('jchemhub.model.Atom.Hybridizations');
+goog.require("jchemhub.resource.Covalence");
 goog.require('goog.structs.Set');
 goog.require('goog.math.Coordinate');
 
