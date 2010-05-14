@@ -10,7 +10,10 @@
 	goog.require('jchemhub.model.Molecule');
 	goog.require('jchemhub.model.Atom');
     goog.require('jchemhub.model.Atom.Hybridizations');
-	goog.require('jchemhub.model.Bond');
+	goog.require('jchemhub.model.SingleBond');
+	goog.require('jchemhub.model.SingleBondUp');
+	goog.require('jchemhub.model.AromaticBond');
+	goog.require('jchemhub.model.DoubleBond');
     goog.require('jchemhub.model.PseudoAtom');
 </script>
 <script>
@@ -131,6 +134,43 @@
 		atom.hybridization=jchemhub.model.Atom.Hybridizations.SP2;
         assertEquals(jchemhub.model.Atom.Hybridizations.SP2,atom.hybridization);
     }
+    
+    function testImplicitHydrogenCountAromatic(){
+    
+		var atom1=new jchemhub.model.Atom("C");
+		var atom2=new jchemhub.model.Atom("C");
+		var atom3=new jchemhub.model.Atom("C");
+		var atom4=new jchemhub.model.Atom("C");
+		var atom5=new jchemhub.model.Atom("C");
+		var atom6=new jchemhub.model.Atom("C");
+		
+		mol.addBond(new jchemhub.model.AromaticBond(atom1,atom2));
+		mol.addBond(new jchemhub.model.AromaticBond(atom2,atom3));
+		mol.addBond(new jchemhub.model.AromaticBond(atom3,atom4));
+		mol.addBond(new jchemhub.model.AromaticBond(atom4,atom5));
+		mol.addBond(new jchemhub.model.AromaticBond(atom5,atom6));
+		mol.addBond(new jchemhub.model.AromaticBond(atom6,atom1));
+		
+		assertEquals(1, atom1.hydrogenCount());
+		assertEquals(1, atom2.hydrogenCount());
+		assertEquals(1, atom3.hydrogenCount());
+	}
+	
+	    function testImplicitHydrogenCount(){
+    
+		var atom1=new jchemhub.model.Atom("C");
+		var atom2=new jchemhub.model.Atom("C");
+		var atom3=new jchemhub.model.Atom("C");
+		var atom4=new jchemhub.model.Atom("C");
+		
+		mol.addBond(new jchemhub.model.SingleBond(atom1,atom2));
+		mol.addBond(new jchemhub.model.SingleBondUp(atom2,atom3));
+		mol.addBond(new jchemhub.model.DoubleBond(atom3,atom4));
+		
+		assertEquals(3, atom1.hydrogenCount());
+		assertEquals(2, atom2.hydrogenCount());
+		assertEquals(1, atom3.hydrogenCount());
+	}
 
 
 

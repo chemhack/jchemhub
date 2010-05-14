@@ -13,3 +13,9 @@ jchemhub.model.DoubleBond = function(source, target){
 }
 goog.inherits(jchemhub.model.DoubleBond, jchemhub.model.Bond);	
 
+/**
+ * static value for order of this type of bond
+ * @type{number}
+ */
+jchemhub.model.DoubleBond.ORDER = 2;
+

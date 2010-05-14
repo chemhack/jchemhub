@@ -12,3 +12,9 @@ jchemhub.model.SingleBond = function(source, target){
 	jchemhub.model.Bond.call(this, source, target);
 }
 goog.inherits(jchemhub.model.SingleBond, jchemhub.model.Bond);	
+
+/**
+ * static value for order of this type of bond
+ * @type{number}
+ */
+jchemhub.model.SingleBond.ORDER = 1;

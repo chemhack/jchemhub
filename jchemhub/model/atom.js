@@ -68,25 +68,9 @@ jchemhub.model.Atom.prototype.countBonds = function() {
  */
 jchemhub.model.Atom.prototype.hydrogenCount = function() {
 	var cov = jchemhub.resource.Covalence[this.symbol];
-	var totalBondOrder = 0;
-	goog.array.forEach(this.bonds.getValues(),function(element,index,array){
-		//totalBondOrder+=element.bondType;//TODO not good enough, need to handle aromatic bonds.
-		if (element instanceof jchemhub.model.SingleBond) {
-			totalBondOrder += 1;
-		} else if (element instanceof jchemhub.model.SingleBondUp) {
-			totalBondOrder += 1;
-		} else if (element instanceof jchemhub.model.SingleBondDown) {
-			totalBondOrder += 1;
-		} else if (element instanceof jchemhub.model.SingleBondUpOrDown) {
-			totalBondOrder += 1;
-		} else if (element instanceof jchemhub.model.DoubleBond) {
-			totalBondOrder += 2;
-		} else if (element instanceof jchemhub.model.TripleBond) {
-			totalBondOrder += 3;
-		} else if (element instanceof jchemhub.model.QuadrupleBond) {
-			totalBondOrder += 4;
-		}
-	});
+	var totalBondOrder = goog.array.reduce(this.bonds.getValues(), function(r, v) {
+		return r + v.constructor.ORDER;
+		}, 0);
 	var hydrogenCount = 0;
 	if (cov) {
 		hydrogenCount = cov - totalBondOrder + this.charge;
