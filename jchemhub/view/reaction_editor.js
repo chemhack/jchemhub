@@ -151,9 +151,8 @@ jchemhub.view.ReactionEditor.prototype.layout = function(to_rect) {
  * @return {goog.math.Rect}
  */
 jchemhub.view.ReactionEditor.prototype.getRect = function() {
-	var child = this.getChildren()[0];
-	return child.getRect();
-	
+	return new goog.math.Rect(0, 0, this._graphics.getSize().width,
+			this._graphics.getSize().height);
 };
 
 /**

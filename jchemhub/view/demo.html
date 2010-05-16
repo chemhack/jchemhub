@@ -71,13 +71,15 @@ buttons.push(jchemhub.view.ToolbarFactory.makeButton(
 	controller = new jchemhub.controller.Controller(goog.dom.getElement('reactionEditorContainer'));
 	var controller = new jchemhub.controller.Controller(goog.dom.getElement('reactionEditorContainer'));
 	controller._view.registerPlugin(new jchemhub.view.plugins.ClearEditor()); 
+
+	var controller = new jchemhub.controller.Controller(goog.dom.getElement('reactionEditorContainer'));
+	controller._view.registerPlugin(new jchemhub.view.plugins.ClearEditor()); 
 	
 
    var toolbarController = new jchemhub.view.ToolbarController(controller._view, toolbar);
 	controller.setModel(model);
 	controller.clear();
 	controller.setModel(model);
-
 
 };
 
