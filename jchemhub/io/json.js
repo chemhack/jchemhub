@@ -14,6 +14,7 @@ goog.require('jchemhub.model.SingleBondDown');
 goog.require('jchemhub.model.SingleBondUpOrDown');
 goog.require('jchemhub.model.DoubleBond');
 goog.require('jchemhub.model.TripleBond');
+goog.require('jchemhub.model.AromaticBond');
 goog.require('jchemhub.model.QuadrupleBond');
 goog.require('jchemhub.model.Bond');
 goog.require('jchemhub.model.Atom');
