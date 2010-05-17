@@ -45,21 +45,20 @@ goog.inherits(jchemhub.view.ReactionDrawing, jchemhub.view.Drawing);
  */
 jchemhub.view.ReactionDrawing.prototype.layoutChildren = function(to_rect) {
 	var size = this.getSize();
+	var children = this.getChildren();
+	var nchildren = children.length;
 	var h_offset = 0;
-	goog.array.forEach(this.getChildren(), function(child) {
+	goog.array.forEach(children, function(child) {
 		var child_size = child.getSize();
-		var w = to_rect.width * child_size.width / size.width; // child gets
-			// proportionate
-			// fraction of
-			// reaction
-			var h = to_rect.height;
-			var x = to_rect.left + h_offset;
-			// TTD fix this margin hack
-			var y = to_rect.top - this.getConfig().get('margin') * 5 + h / 2
-					- (h * child_size.width / size.width) / 2;
-			var child_rect = new goog.math.Rect(x, y, w, h);
-			child.layout(child_rect);
-			h_offset += w;
+		// child gets proportionate fraction of reaction
+		var w = (to_rect.width - this.getConfig().get('margin')*(nchildren-1)) * child_size.width / size.width;
+		var h = to_rect.height * child_size.height / size.height;
+		var x = to_rect.left + h_offset;
+		// TTD fix this margin hack
+		var y = (size.height-child_size.height)/size.height*0.5*to_rect.height + this.getConfig().get('margin');
+		var child_rect = new goog.math.Rect(x, y, w, h);
+		child.layout(child_rect);
+		h_offset += w + + this.getConfig().get('margin');
 		}, this);
 }
 

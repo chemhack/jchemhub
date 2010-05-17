@@ -22,7 +22,7 @@ jchemhub.view.AtomDrawing.prototype.render = function() {
 	var config = this.getConfig();
 	var atom_config = config.get(this.atom.symbol) ? config.get(this.atom.symbol) : config.get("atom");
 	var scale = this.getTransform().getScaleX();
-	console.log(scale);
+	//console.log(scale);
 	var font = new goog.graphics.Font(scale/1.8, atom_config.fontName);
 	var stroke = new goog.graphics.Stroke(atom_config.stroke.width, atom_config.stroke.color);
 	var fill = new goog.graphics.SolidFill(atom_config.fill.color);
@@ -37,9 +37,9 @@ jchemhub.view.AtomDrawing.prototype.render = function() {
 		group.atomLabelBackground = graphics.drawEllipse(point.x, point.y, h*0.7, h*0.7,
 			new goog.graphics.Stroke(1, config.get("background").color),
 			new goog.graphics.SolidFill(config.get("background").color), group );
-		
+			
+		graphics.drawText(symbol.text, point.x - w / 2, point.y - h / 2, w, h, symbol.justification, null, font, stroke, fill, group);
         if (symbol.justification == 'left') {
-	        graphics.drawText(symbol.text, point.x - w / 2, point.y - h / 2, w, h, symbol.justification, null, font, stroke, fill, group);
         	if(symbol.subscript || symbol.superscript){
 				var subSize = config.get("subscriptSize");
 				if(symbol.subscript){
@@ -53,18 +53,13 @@ jchemhub.view.AtomDrawing.prototype.render = function() {
 			if(symbol.subscript || symbol.superscript){
 				var subSize = config.get("subscriptSize");
 				if(symbol.subscript){
-					graphics.drawText(symbol.text, point.x, point.y - h / 2, w, h, symbol.justification, null, font, stroke, fill, group);
-					graphics.drawText('H', point.x - w*2.4, point.y - h / 2 , w, h, 'center', null, font, stroke, fill, group);
- 					graphics.drawText(symbol.subscript, point.x - w*1.2, point.y , subSize, subSize, 'center', null, font, stroke, fill, group);
+					graphics.drawText('H', point.x - w*3, point.y - h / 2 , w, h, 'center', null, font, stroke, fill, group);
+ 					graphics.drawText(symbol.subscript, point.x - w*1.8, point.y , subSize, subSize, 'center', null, font, stroke, fill, group);
 				}
 				if(symbol.superscript){
 					graphics.drawText(symbol.superscript, point.x + w, point.y-h*0.8 , subSize, subSize, 'center', null, font, stroke, fill, group);
 				}
-			} else {
-					graphics.drawText(symbol.text, point.x - w / 1.8, point.y - h / 2, w, h, symbol.justification, null, font, stroke, fill, group);
 			}
-		} else {
-			graphics.drawText(symbol.text, point.x - w / 2, point.y - h / 2, w, h, symbol.justification, null, font, stroke, fill, group);
 		}
 	}
 
@@ -124,7 +119,6 @@ jchemhub.view.AtomDrawing.prototype.compoundSymbol = function() {
 		var hydrogen_count = this.atom.hydrogenCount();
 		if  (hydrogen_count == 0) {
 			retval.text = this.atom.symbol;
-			justification = 'center';
 		// could have H on left, depending on bond slope
 		} else {
 			bond_direction = this.bondDirection();
