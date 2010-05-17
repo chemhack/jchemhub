@@ -43,7 +43,7 @@ jchemhub.view.AtomDrawing.prototype.render = function() {
         	if(symbol.subscript || symbol.superscript){
 				var subSize = config.get("subscriptSize");
 				if(symbol.subscript){
- 					graphics.drawText(symbol.subscript,   point.x + w, point.y , subSize, subSize, 'center', null, font, stroke, fill, group);
+ 					graphics.drawText(symbol.subscript,   point.x + w*0.9, point.y , subSize, subSize, 'center', null, font, stroke, fill, group);
 				}
 				if(symbol.superscript){
 					graphics.drawText(symbol.superscript, point.x + w, point.y-h*0.8 , subSize, subSize, 'center', null, font, stroke, fill, group);
@@ -53,7 +53,8 @@ jchemhub.view.AtomDrawing.prototype.render = function() {
 			if(symbol.subscript || symbol.superscript){
 				var subSize = config.get("subscriptSize");
 				if(symbol.subscript){
- 					graphics.drawText(symbol.subscript,   point.x - w*0.2, point.y , subSize, subSize, 'center', null, font, stroke, fill, group);
+					graphics.drawText('H', point.x - w*3, point.y - h / 2 , w, h, 'center', null, font, stroke, fill, group);
+ 					graphics.drawText(symbol.subscript, point.x - w*1.8, point.y , subSize, subSize, 'center', null, font, stroke, fill, group);
 				}
 				if(symbol.superscript){
 					graphics.drawText(symbol.superscript, point.x + w, point.y-h*0.8 , subSize, subSize, 'center', null, font, stroke, fill, group);
@@ -112,8 +113,8 @@ jchemhub.view.AtomDrawing.prototype.transformDrawing = function(trans) {
  * @return String
  */
 jchemhub.view.AtomDrawing.prototype.compoundSymbol = function() {
-	var retval = {text: this.atom.symbol, justification: 'center', superscript: '', subscript: ''};
-	if (this.atom.countBonds() == 1) {
+	var retval = {text: "", justification: 'center', superscript: '', subscript: ''};
+	if (this.atom.symbol != "C" || this.atom.countBonds() == 1 ) {
 	// terminal atom may need compound atom name
 		var hydrogen_count = this.atom.hydrogenCount();
 		if  (hydrogen_count == 0) {
@@ -124,8 +125,7 @@ jchemhub.view.AtomDrawing.prototype.compoundSymbol = function() {
 			var justification = 'center';
 			if (bond_direction == "SW" || bond_direction == "W" || bond_direction == "NW") {
 				justification = 'right';
-				retval.text = 'H';
-				if (hydrogen_count > 1) retval.text += ' ';
+				if (hydrogen_count == 1) retval.text = 'H';
 				retval.text += this.atom.symbol;	
 			} else {
 				justification = 'left';
@@ -146,20 +146,20 @@ jchemhub.view.AtomDrawing.prototype.compoundSymbol = function() {
 		}
 
 	} else {
-		if (this.atom.symbol == "C") retval.text = "";
+		retval.text = "";
 	}
 	retval.justification = justification;
 	return retval;
 };
 
-jchemhub.view.AtomDrawing.prototype.bondDirection = function() {
-// returns the bond compass direction
-//     N
-//  NW   NE
-// W       E
-//  SW   SE
-//     S
-	var bond =  this.atom.bonds.getValues()[0];
+/**
+ * return an angle between 0 and 360 at which the i-th bond to this atom is drawn
+ * 
+ * @param{integer} i-th bond to this atom
+ * @return number
+ */
+jchemhub.view.AtomDrawing.prototype.bondOrientation = function(i) {
+	var bond =  this.atom.bonds.getValues()[i];
 	var target = bond.target.coord;
 	var source = bond.source.coord;
 	//console.log("bond" + String(this.atom == bond.target));
@@ -171,7 +171,30 @@ jchemhub.view.AtomDrawing.prototype.bondDirection = function() {
 	}
 	var angle = Math.atan2(dy, dx) * 180/Math.PI;
 	if (angle < 0) angle = 360 + angle;  // now angle is 0 - 360
-	//console.log(angle);
+	return angle;
+};
+
+/**
+ * returns the compass direction toward which to draw H atoms
+ *     N
+ *  NW   NE
+ * W       E
+ *  SW   SE
+ *     S
+ * @param{i} 
+ * @return{String} compass direction
+ */
+jchemhub.view.AtomDrawing.prototype.bondDirection = function() {
+	var nbonds = this.atom.bonds.getCount();
+	var angle  = this.bondOrientation(0); // suffices for terminal atoms
+	if (nbonds > 1) {
+		// find most open direction to show H atom
+		for (var i=1; i<nbonds; ++i) {
+			angle += this.bondOrientation(i);
+		}
+		angle = (angle/nbonds) % 360;
+	}
+	
 	if (angle > 350 || angle <= 10) {
 		return "E";
 	} else if (angle > 10 && angle <= 80) {
@@ -189,4 +212,5 @@ jchemhub.view.AtomDrawing.prototype.bondDirection = function() {
 	} else {
 		return "NE";
 	}
+
 };
