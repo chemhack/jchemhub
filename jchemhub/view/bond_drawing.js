@@ -47,16 +47,16 @@ jchemhub.view.BondDrawing.prototype.getBoundingBox = function() {
 					this.bond.target.coord.y + r) ]);
 };
 
-jchemhub.view.BondDrawing.prototype.transformDrawing = function(trans) {
-	var trans_coords = this.transformCoords(this.getTransform(),this.getCoords());
-	// var new_coords = this.transformCoords(trans, trans_coords);
-	var new_coords = trans_coords;
-	var new_base_coords = this.transformCoords(this.getTransform()
-			.createInverse(), new_coords);
-	this.bond.source.coord = new_base_coords[0];
-	this.bond.target.coord = new_base_coords[1];
-	jchemhub.view.BondDrawing.superClass_.transformDrawing(trans);
-}
+//jchemhub.view.BondDrawing.prototype.transformDrawing = function(trans) {
+//	var trans_coords = this.transformCoords(this.getTransform(),this.getCoords());
+//	// var new_coords = this.transformCoords(trans, trans_coords);
+//	var new_coords = trans_coords;
+//	var new_base_coords = this.transformCoords(this.getTransform()
+//			.createInverse(), new_coords);
+//	this.bond.source.coord = new_base_coords[0];
+//	this.bond.target.coord = new_base_coords[1];
+//	jchemhub.view.BondDrawing.superClass_.transformDrawing(trans);
+//}
 
 /**
  *

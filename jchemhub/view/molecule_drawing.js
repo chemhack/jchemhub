@@ -46,6 +46,7 @@ jchemhub.view.MoleculeDrawing.prototype.layoutChildren = function() {
  * render this drawing and all its children
  */
 jchemhub.view.MoleculeDrawing.prototype.render = function() {
+	console.log(this.molecule);
 	this.renderChildren();
 };
 
@@ -83,10 +84,10 @@ jchemhub.view.MoleculeDrawing.prototype.drag = function(e) {
 
 	});
 	d.addEventListener(goog.fx.Dragger.EventType.END, function(e) {
-		var base_trans = d.molecule.getTransform();
+		//var base_trans = d.molecule.getTransform();
 		var trans = new goog.graphics.AffineTransform.getTranslateInstance(
 				e.clientX - d._startX, e.clientY - d._startY);
-
+		console.log(['trans', trans]);
 		d.molecule.transformDrawing(trans);
 		d.molecule.clear();
 		d.molecule.render();

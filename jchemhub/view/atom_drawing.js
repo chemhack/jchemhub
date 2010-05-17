@@ -100,10 +100,12 @@ jchemhub.view.AtomDrawing.prototype.updateTransformedCoords = function() {
  */
 jchemhub.view.AtomDrawing.prototype.transformDrawing = function(trans) {
 		var trans_coords = this.transformCoords(this.getTransform(), [this.atom.coord]);
-		var new_coords = trans_coords;
+		var new_coords = this.transformCoords(trans, trans_coords);
 		var new_base_coords = this.transformCoords(this.getTransform().createInverse(), new_coords);
+		console.log([this.atom.coord, new_base_coords[0]]);
 		this.atom.coord = new_base_coords[0];
-		jchemhub.view.BondDrawing.superClass_.transformDrawing(trans);
+		
+		jchemhub.view.AtomDrawing.superClass_.transformDrawing(trans);
 };
 
 /**

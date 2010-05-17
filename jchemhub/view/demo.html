@@ -23,8 +23,7 @@ function initPage(){
 	var model = jchemhub.io.json.readReaction(reactionDrawing);
 
 	var controller = new jchemhub.controller.Controller(goog.dom.getElement('reactionEditorContainer'));
-	controller.setModel(model);
-	controller.clear();
+
 	controller.setModel(model);
 	console.log(jchemhub.io.json.reactionToJson(controller.getModel()));
 };
