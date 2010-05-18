@@ -3,17 +3,18 @@ goog.provide("jchemhub.view.PlusDrawing");
 /**
  * An plus-sign graphical element in the reaction editor.
  * 
+ * @param {goog.math.Coordinate} center_coord The coordinates of the center of the plus
  * 
  * @constructor
  * @extends {jchemhub.view.Drawing}
  */
-jchemhub.view.PlusDrawing = function() {
+jchemhub.view.PlusDrawing = function(center_coord) {
 	jchemhub.view.Drawing.call(this);
-	this._h0 = new goog.math.Coordinate(0,0);
 	var width = .25;
-	this._h1 = new goog.math.Coordinate(width,0);
-	this._v0 = new goog.math.Coordinate(width/2, width/2);
-	this._v1 = new goog.math.Coordinate(width/2, -width/2);
+	this._h0 = new goog.math.Coordinate(center_coord.x - width/2,center_coord.y);
+	this._h1 = new goog.math.Coordinate(this._h0.x + width, this._h0.y);
+	this._v0 = new goog.math.Coordinate(center_coord.x, center_coord.y + width/2);
+	this._v1 = new goog.math.Coordinate(this._v0.x, this._v0.y - width);
 
 };
 goog.inherits(jchemhub.view.PlusDrawing, jchemhub.view.Drawing);

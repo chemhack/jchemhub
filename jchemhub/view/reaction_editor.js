@@ -31,6 +31,7 @@ jchemhub.view.ReactionEditor = function(element, opt_config) {
 goog.inherits(jchemhub.view.ReactionEditor, jchemhub.view.Drawing);
 
 jchemhub.view.ReactionEditor.prototype.clear = function() {
+	jchemhub.view.ReactionEditor.superClass_.clear.call(this);
 	this._graphics.clear();
 	var fill = new goog.graphics.SolidFill(
 			this.getConfig().get("background").color);
@@ -55,8 +56,8 @@ jchemhub.view.ReactionEditor.prototype.setModel = function(model) {
 
 jchemhub.view.ReactionEditor.prototype.layoutAndRender = function() {
 	var margin = this.getConfig().get("margin");
-	this.layout(new goog.math.Rect(margin, margin, this.getSize().width
-			- margin * 2, this.getSize().height - margin * 2));
+	this.layout(new goog.math.Rect(margin, margin, this.getGraphics().width
+			- margin * 2, this.getGraphics().height - margin * 2));
 	this.render();
 }
 
@@ -80,10 +81,12 @@ jchemhub.view.ReactionEditor.prototype.layout = function(to_rect) {
 };
 
 /*
- * @override @return {goog.math.Rect}
+ * @override 
+ * @return {goog.math.Rect}
  */
 jchemhub.view.ReactionEditor.prototype.getRect = function() {
-	var model = this.getModel();
+	var child = this.getChildren()[0];
+	return child.getRect();
 	
 };
 
@@ -95,6 +98,7 @@ jchemhub.view.ReactionEditor.prototype.getRect = function() {
 jchemhub.view.ReactionEditor.prototype.getTransform = function() {
 	return this._transform;
 }
+
 
 /**
  * render this drawing and all its children

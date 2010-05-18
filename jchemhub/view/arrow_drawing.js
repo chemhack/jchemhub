@@ -3,18 +3,18 @@ goog.provide("jchemhub.view.ArrowDrawing");
 /**
  * An arrow graphical element in the reaction editor.
  * 
- * 
+ * @param {goog.math.Coordinate} center_coord The coordinates of the center of the arrow
  * @constructor
  * @extends {jchemhub.view.Drawing}
  */
-jchemhub.view.ArrowDrawing = function() {
+jchemhub.view.ArrowDrawing = function(center_coord) {
 	jchemhub.view.Drawing.call(this);
-	this._nock = new goog.math.Coordinate(0, 0);
 	var width = 1;
 	var height = .25;
-	this._tip = new goog.math.Coordinate(width, 0);
-	this._head1 = new goog.math.Coordinate(width - height, height / 2);
-	this._head2 = new goog.math.Coordinate(width - height, -height / 2);
+	this._nock = new goog.math.Coordinate(center_coord.x - width/2, center_coord.y);
+	this._tip = new goog.math.Coordinate(this._nock.x + width, this._nock.y);
+	this._head1 = new goog.math.Coordinate(this._tip.x - height, this._nock.y + height/2);
+	this._head2 = new goog.math.Coordinate(this._head1.x, this._head1.y - height);
 
 };
 goog.inherits(jchemhub.view.ArrowDrawing, jchemhub.view.Drawing);

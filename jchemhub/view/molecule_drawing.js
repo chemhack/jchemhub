@@ -95,3 +95,29 @@ jchemhub.view.MoleculeDrawing.prototype.drag = function(e) {
 	});
 	d.startDrag(e);
 };
+
+jchemhub.view.MoleculeDrawing.prototype.getRect = function(){
+	return jchemhub.view.MoleculeDrawing.boundingRect([this.molecule]);
+}
+
+
+/**
+ * finds bounding box of an array of molecules
+ * 
+ * @param molecules
+ * @return goog.math.Box
+ */
+
+jchemhub.view.MoleculeDrawing.boundingBox = function(molecules) {
+	var atoms = goog.array.flatten(goog.array.map(molecules, function(mol) {
+		return mol.atoms;
+	}));
+	var coords = goog.array.map(atoms, function(a) {
+		return a.coord;
+	})
+	return goog.math.Box.boundingBox.apply(null, coords);
+}
+
+jchemhub.view.MoleculeDrawing.boundingRect = function(molecules){
+	return goog.math.Rect.createFromBox(this.boundingBox(molecules));
+}
