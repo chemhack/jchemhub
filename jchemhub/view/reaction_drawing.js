@@ -62,19 +62,19 @@ jchemhub.view.ReactionDrawing.prototype.layoutChildren = function(to_rect) {
 		}, this);
 }
 
-/**
- * @override
- * 
- * @return {goog.math.Box}
- */
-jchemhub.view.ReactionDrawing.prototype.getBoundingBox = function() {
-	var box = new goog.math.Box(0, 0, 0, 0);
-	goog.array.forEach(this.getChildren(), function(child) {
-		box.right += child.getSize().width;
-		box.bottom = Math.max(box.bottom, child.getSize().height);
-	}, this);
-	return box;
-};
+///**
+// * @override
+// * 
+// * @return {goog.math.Box}
+// */
+//jchemhub.view.ReactionDrawing.prototype.getBoundingBox = function() {
+//	var box = new goog.math.Box(0, 0, 0, 0);
+//	goog.array.forEach(this.getChildren(), function(child) {
+//		box.right += child.getSize().width;
+//		box.bottom = Math.max(box.bottom, child.getSize().height);
+//	}, this);
+//	return box;
+//};
 
 /**
  * render this drawing and all its children
