@@ -252,14 +252,6 @@ jchemhub.view.Drawing.prototype.setTransform = function(transform) {
 	}, this);
 };
 
-/**
- * back-calculate coords from transform
- */
-jchemhub.view.Drawing.prototype.transformDrawing = function(trans) {
-	goog.array.forEach(this.getChildren(), function(child) {
-		child.transformDrawing(trans);
-	}, this);
-}
 
 jchemhub.view.Drawing.prototype.clear = function() {
 	this.getGroup().clear();

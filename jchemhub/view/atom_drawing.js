@@ -105,7 +105,6 @@ jchemhub.view.AtomDrawing.prototype.transformDrawing = function(trans) {
 			.createInverse(), new_coords);
 	this.atom.coord = new_base_coords[0];
 
-	jchemhub.view.BondDrawing.superClass_.transformDrawing(trans);
 }
 
 /**

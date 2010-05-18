@@ -11,7 +11,8 @@ goog.require("goog.math.Box");
 /**
  * A molecule graphical element in the reaction editor.
  * 
- * @param {jchemhub.model.Molecule} molecule. The molecule to render.
+ * @param {jchemhub.model.Molecule}
+ *            molecule. The molecule to render.
  * 
  * @constructor
  * @extends {jchemhub.view.Drawing}
@@ -46,7 +47,6 @@ jchemhub.view.MoleculeDrawing.prototype.layoutChildren = function() {
  * render this drawing and all its children
  */
 jchemhub.view.MoleculeDrawing.prototype.render = function() {
-	console.log(this.molecule);
 	this.renderChildren();
 };
 
@@ -118,4 +118,12 @@ jchemhub.view.MoleculeDrawing.boundingBox = function(molecules) {
 
 jchemhub.view.MoleculeDrawing.boundingRect = function(molecules){
 	return goog.math.Rect.createFromBox(this.boundingBox(molecules));
+}
+
+jchemhub.view.MoleculeDrawing.prototype.transformDrawing=function(trans){
+	goog.array.forEach(this.getChildren(), function(child){
+		if(child instanceof jchemhub.view.AtomDrawing){
+			child.transformDrawing(trans);
+		}
+	});
 }
