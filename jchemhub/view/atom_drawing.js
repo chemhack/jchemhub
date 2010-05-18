@@ -99,14 +99,14 @@ jchemhub.view.AtomDrawing.prototype.updateTransformedCoords = function() {
  * @return
  */
 jchemhub.view.AtomDrawing.prototype.transformDrawing = function(trans) {
-		var trans_coords = this.transformCoords(this.getTransform(), [this.atom.coord]);
-		var new_coords = this.transformCoords(trans, trans_coords);
-		var new_base_coords = this.transformCoords(this.getTransform().createInverse(), new_coords);
-		console.log([this.atom.coord, new_base_coords[0]]);
-		this.atom.coord = new_base_coords[0];
-		
-		jchemhub.view.AtomDrawing.superClass_.transformDrawing(trans);
-};
+	var trans_coords = this.transformCoords(this.getTransform(),this.getCoords());
+	var new_coords = trans_coords;
+	var new_base_coords = this.transformCoords(this.getTransform()
+			.createInverse(), new_coords);
+	this.atom.coord = new_base_coords[0];
+
+	jchemhub.view.BondDrawing.superClass_.transformDrawing(trans);
+}
 
 /**
  * return a compound symbol (e.g. NH, CH3), the plain symbol, or ""
