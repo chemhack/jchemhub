@@ -99,11 +99,12 @@ jchemhub.view.AtomDrawing.prototype.updateTransformedCoords = function() {
  * @return
  */
 jchemhub.view.AtomDrawing.prototype.transformDrawing = function(trans) {
-	var trans_coords = this.transformCoords(this.getTransform(),this.getCoords());
-	var new_coords = trans_coords;
-	var new_base_coords = this.transformCoords(this.getTransform()
-			.createInverse(), new_coords);
-	this.atom.coord = new_base_coords[0];
+	var old_atom_coords = this.getCoords();
+	var old_drawing_coords = this.transformCoords(this.getTransform(), old_atom_coords);
+	var new_drawing_coords = this.transformCoords(trans, old_drawing_coords);
+	var new_atom_coords = this.transformCoords(this.getTransform()
+			.createInverse(), new_drawing_coords);
+	this.atom.coord = new_atom_coords[0];
 
 }
 

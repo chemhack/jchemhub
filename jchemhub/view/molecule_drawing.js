@@ -73,9 +73,9 @@ jchemhub.view.MoleculeDrawing.prototype.drag = function(e) {
 	d.addEventListener(goog.fx.Dragger.EventType.DRAG, function(e) {
 
 		goog.array.forEach(d.molecule.getChildren(), function(child) {
-			var trans = child.getGroup().getTransform();
-			var newX = e.clientX - d._prevX + trans.getTranslateX();
-			var newY = e.clientY - d._prevY + trans.getTranslateY();
+			var g_trans = child.getGroup().getTransform();
+			var newX = e.clientX - d._prevX + g_trans.getTranslateX();
+			var newY = e.clientY - d._prevY + g_trans.getTranslateY();
 			child.getGroup().setTransformation(newX, newY, 0, 0, 0);
 		});
 
@@ -86,9 +86,8 @@ jchemhub.view.MoleculeDrawing.prototype.drag = function(e) {
 	d.addEventListener(goog.fx.Dragger.EventType.END, function(e) {
 		var trans = new goog.graphics.AffineTransform.getTranslateInstance(
 				e.clientX - d._startX, e.clientY - d._startY);
+
 		d.molecule.transformDrawing(trans);
-		d.molecule.clear();
-		d.molecule.render();
 		d.dispose();
 	});
 	d.startDrag(e);

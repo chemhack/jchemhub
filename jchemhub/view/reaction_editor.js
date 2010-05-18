@@ -33,6 +33,7 @@ goog.inherits(jchemhub.view.ReactionEditor, jchemhub.view.Drawing);
 jchemhub.view.ReactionEditor.prototype.clear = function() {
 	jchemhub.view.ReactionEditor.superClass_.clear.call(this);
 	this._graphics.clear();
+	this.model = null;
 	var fill = new goog.graphics.SolidFill(
 			this.getConfig().get("background").color);
 
@@ -42,6 +43,7 @@ jchemhub.view.ReactionEditor.prototype.clear = function() {
 
 jchemhub.view.ReactionEditor.prototype.setModel = function(model) {
 	this.clear();
+	this.model = model;
 	if (model instanceof jchemhub.model.Reaction) {
 		this.add(new jchemhub.view.ReactionDrawing(model));
 	}
@@ -113,9 +115,7 @@ jchemhub.view.ReactionEditor.prototype.render = function() {
  * @return{jchemhub.model.Reaction | jchemhub.model.Molecule}
  */
 jchemhub.view.ReactionEditor.prototype.getModel = function() {
-	var children = this.getChildren();
-
-	return this.getChildren()[0]
+	return this.model;
 }
 
 /**

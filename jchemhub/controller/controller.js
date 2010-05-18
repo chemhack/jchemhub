@@ -22,7 +22,7 @@ jchemhub.controller.Controller = function(element, opt_editor_config) {
 };
 
 jchemhub.controller.Controller.prototype.getModel = function(){
-	return this._model;
+	return this._view.getModel();
 };
 
 jchemhub.controller.Controller.prototype.clear = function(){
@@ -31,7 +31,7 @@ jchemhub.controller.Controller.prototype.clear = function(){
 };
 
 jchemhub.controller.Controller.prototype.setModel = function(model){
-	this._model = model;
+
 	this._view.setModel(model);
 	this._view.layoutAndRender();
 };

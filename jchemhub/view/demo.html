@@ -13,26 +13,45 @@
 
 <script>
 	goog.require('jchemhub.controller.Controller');
-	goog.require('jchemhub.io.mdl');
 	goog.require('goog.events.EventType');
 	goog.require('goog.dom');
 </script>
-<script><!--
+<script>
     
+	var controller;
+	
 function initPage(){
 	var model = jchemhub.io.json.readReaction(reactionDrawing);
-
-	var controller = new jchemhub.controller.Controller(goog.dom.getElement('reactionEditorContainer'));
+	controller = new jchemhub.controller.Controller(goog.dom.getElement('reactionEditorContainer'));
 
 	controller.setModel(model);
-	console.log(jchemhub.io.json.reactionToJson(controller.getModel()));
+	
 };
+
+function clearEditor(){
+	controller._view.clear();
+}
+function setReaction(){
+	controller.setModel(jchemhub.io.json.readReaction(reactionDrawing));
+}
+function getJson(){
+	console.log(jchemhub.io.json.reactionToJson(controller.getModel()));
+
+}
+function render(){
+	controller._view.render();
+}
 
 goog.events.listen(window, goog.events.EventType.LOAD, initPage);
 --></script>
 </head>
 
 <body>
+
+  <input type="button" value="clear" onclick="clearEditor();" />
+  <input type="button" value="reset" onclick="setReaction();" />
+  <input type="button" value="json to console" onclick="getJson();" />
+  <input type="button" value="re-render" onclick="render();" />
 <div id="reactionEditorContainer" style="width: 1200px; height: 400px"></div>
 
 </body>
