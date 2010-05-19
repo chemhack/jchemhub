@@ -45,9 +45,11 @@ jchemhub.view.ReactionEditor = function(element, opt_config) {
 		this._config.addAll(opt_config); // merge optional config into
 		// defaults
 	}
+	
+	this.zoom_factor=1;
 
-	this._graphics = goog.graphics.createGraphics(element.clientWidth,
-			element.clientHeight);
+	this._graphics = goog.graphics.createGraphics(element.offsetWidth,
+			element.offsetTop);
 
 	this._graphics.render(this.originalElement);
 
@@ -73,6 +75,12 @@ jchemhub.view.ReactionEditor = function(element, opt_config) {
 
 	this.handleEditorLoad();
 
+	this.loadState_ = jchemhub.view.ReactionEditor.LoadState_.EDITABLE;
+
+	this.editableDomHelper = goog.dom.getDomHelper(element);
+	this.isModified_ = false;
+	this.isEverModified_ = false;
+
 };
 goog.inherits(jchemhub.view.ReactionEditor, jchemhub.view.Drawing);
 
@@ -96,13 +104,11 @@ jchemhub.view.ReactionEditor.getActiveEditorId = function() {
 jchemhub.view.ReactionEditor.prototype.clear = function() {
 	jchemhub.view.ReactionEditor.superClass_.clear.call(this);
 	this._graphics.clear();
-	this.model = null;
 	var fill = new goog.graphics.SolidFill(
 			this.getConfig().get("background").color);
 
-	this._graphics.drawRect(0, 0, this.getGraphics().width, this.getGraphics().height,
-			null, fill);
-
+	this._graphics.drawRect(0, 0, this._graphics.getSize().width,
+			this._graphics.getSize().height, null, fill);
 }
 
 jchemhub.view.ReactionEditor.prototype.setModel = function(model) {
@@ -121,9 +127,10 @@ jchemhub.view.ReactionEditor.prototype.setModel = function(model) {
  */
 
 jchemhub.view.ReactionEditor.prototype.layoutAndRender = function() {
+
 	var margin = this.getConfig().get("margin");
-	this.layout(new goog.math.Rect(margin, margin, this.getGraphics().width
-			- margin * 2, this.getGraphics().height - margin * 2));
+	this.layout(new goog.math.Rect(margin, margin, this.zoom_factor * this.getSize().width
+			- margin * 2, this.zoom_factor * this.getSize().height - margin * 2));
 	this.render();
 }
 
@@ -645,7 +652,7 @@ jchemhub.view.ReactionEditor.LoadState_ = {
  * @protected
  */
 jchemhub.view.ReactionEditor.prototype.logger = goog.debug.Logger
-		.getLogger('goog.editor.Field');
+		.getLogger('jchemhub.view.ReactionEditor');
 
 /**
  * Event types that can be stopped/started.
@@ -711,7 +718,7 @@ jchemhub.view.ReactionEditor.EventType = {
  */
 jchemhub.view.ReactionEditor.prototype.disposeInternal = function() {
 	if (this.isLoading() || this.isLoaded()) {
-		this.logger.warning('Disposing a editor that is in use.');
+		this.logger.warning('Disposing an editor that is in use.');
 	}
 
 	if (this.getOriginalElement()) {

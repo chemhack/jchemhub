@@ -40,6 +40,5 @@ jchemhub.view.plugins.ClearEditor.prototype.isSupportedCommand = function(
  */
 jchemhub.view.plugins.ClearEditor.prototype.execCommandInternal = function(
     command) {
-	console.log('clear');
 	this.editorObject.clear();
 };
