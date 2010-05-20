@@ -2073,11 +2073,6 @@ a.setTransform = function(b) {
     c.setTransform(b)
   }, this)
 };
-a.transformDrawing = function(b) {
-  goog.array.forEach(this.getChildren(), function(c) {
-    c.transformDrawing(b)
-  }, this)
-};
 a.clear = function() {
   this.getGroup().clear();
   goog.array.forEach(this.getChildren(), function(b) {
@@ -6179,10 +6174,13 @@ a = jchemhub.view.ReactionEditor.prototype;
 a.clear = function() {
   jchemhub.view.ReactionEditor.superClass_.clear.call(this);
   this._graphics.clear();
-  this._graphics.drawRect(0, 0, this._element.clientWidth, this._element.clientHeight, null, new goog.graphics.SolidFill(this.getConfig().get("background").color))
+  this.model = null;
+  var b = new goog.graphics.SolidFill(this.getConfig().get("background").color);
+  this._graphics.drawRect(0, 0, this.getGraphics().width, this.getGraphics().height, null, b)
 };
 a.setModel = function(b) {
   this.clear();
+  this.model = b;
   b instanceof jchemhub.model.Reaction && this.add(new jchemhub.view.ReactionDrawing(b));
   b instanceof jchemhub.model.Molecule && this.add(new jchemhub.view.MoleculeDrawing(b))
 };
@@ -6205,8 +6203,7 @@ a.render = function() {
   this.renderChildren()
 };
 a.getModel = function() {
-  this.getChildren();
-  return this.getChildren()[0]
+  return this.model
 };
 jchemhub.view.ReactionEditor.defaultConfig = {arrow:{stroke:{width:2, color:"black"}}, atom:{diameter:0.05, stroke:{width:1, color:"#FF9999"}, fill:{color:"#FF9999"}, fontName:"Arial"}, N:{stroke:{width:1, color:"blue"}, fill:{color:"blue"}}, O:{stroke:{width:1, color:"red"}, fill:{color:"red"}}, S:{stroke:{width:1, color:"yellow"}, fill:{color:"yellow"}}, P:{stroke:{width:1, color:"orange"}, fill:{color:"orange"}}, Cl:{stroke:{width:1, color:"green"}, fill:{color:"green"}}, F:{stroke:{width:1, color:"green"}, 
 fill:{color:"green"}}, Br:{stroke:{width:1, color:"dark red"}, fill:{color:"dark red"}}, I:{stroke:{width:1, color:"purple"}, fill:{color:"purple"}}, C:{stroke:{width:1, color:"black"}, fill:{color:"black"}}, H:{stroke:{width:1, color:"black"}, fill:{color:"white"}}, background:{color:"#F0FFF0"}, margin:20, subscriptSize:5, bond:{stroke:{width:2, color:"black"}, fill:{color:"black"}}, highlight:{radius:0.1, color:"blue"}, plus:{stroke:{width:2, color:"black"}}};jchemhub.view.AtomDrawing = function(b) {
@@ -6254,9 +6251,10 @@ a.updateTransformedCoords = function() {
   this._trans_coord = this.transformCoords(this.getTransform(), [this.getCoordinates()])[0]
 };
 a.transformDrawing = function(b) {
-  var c = this.transformCoords(this.getTransform(), this.getCoords());
-  this.atom.coord = this.transformCoords(this.getTransform().createInverse(), c)[0];
-  jchemhub.view.BondDrawing.superClass_.transformDrawing(b)
+  var c = this.getCoords();
+  c = this.transformCoords(this.getTransform(), c);
+  b = this.transformCoords(b, c);
+  this.atom.coord = this.transformCoords(this.getTransform().createInverse(), b)[0]
 };
 a.compoundSymbol = function() {
   var b = {text:"", justification:"center", superscript:"", subscript:""};
@@ -6578,7 +6576,6 @@ a.layoutChildren = function() {
   }, this)
 };
 a.render = function() {
-  console.log(this.molecule);
   this.renderChildren()
 };
 a.toggleHighlight = function() {
@@ -6606,8 +6603,6 @@ a.drag = function(b) {
   d.addEventListener(goog.fx.Dragger.EventType.END, function(e) {
     e = new goog.graphics.AffineTransform.getTranslateInstance(e.clientX - d._startX, e.clientY - d._startY);
     d.molecule.transformDrawing(e);
-    d.molecule.clear();
-    d.molecule.render();
     d.dispose()
   });
   d.startDrag(b)
@@ -6622,10 +6617,15 @@ jchemhub.view.MoleculeDrawing.boundingBox = function(b) {
   b = goog.array.map(b, function(c) {
     return c.coord
   });
-  return goog.math.Box.boundingBox.apply(null, b)
+  return b.length > 0 ? goog.math.Box.boundingBox.apply(null, b) : new goog.math.Box(0, 0, 0, 0)
 };
 jchemhub.view.MoleculeDrawing.boundingRect = function(b) {
   return goog.math.Rect.createFromBox(this.boundingBox(b))
+};
+jchemhub.view.MoleculeDrawing.prototype.transformDrawing = function(b) {
+  goog.array.forEach(this.getChildren(), function(c) {
+    c instanceof jchemhub.view.AtomDrawing && c.transformDrawing(b)
+  })
 };jchemhub.view.ReactionDrawing = function(b) {
   jchemhub.view.Drawing.call(this);
   this.reaction = b;
@@ -8666,14 +8666,13 @@ jchemhub.controller.Controller = function(b, c) {
   this._view = new jchemhub.view.ReactionEditor(b, c)
 };
 jchemhub.controller.Controller.prototype.getModel = function() {
-  return this._model
+  return this._view.getModel()
 };
 jchemhub.controller.Controller.prototype.clear = function() {
   this._model = null;
   this._view.clear()
 };
 jchemhub.controller.Controller.prototype.setModel = function(b) {
-  this._model = b;
   this._view.setModel(b);
   this._view.layoutAndRender()
 };
