@@ -112,7 +112,11 @@ jchemhub.view.MoleculeDrawing.boundingBox = function(molecules) {
 	var coords = goog.array.map(atoms, function(a) {
 		return a.coord;
 	})
-	return goog.math.Box.boundingBox.apply(null, coords);
+	if(coords.length>0){
+		return goog.math.Box.boundingBox.apply(null, coords);	
+	} else{
+		return new goog.math.Box(0,0,0,0);
+	}
 }
 
 jchemhub.view.MoleculeDrawing.boundingRect = function(molecules){
