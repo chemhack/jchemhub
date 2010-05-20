@@ -457,7 +457,7 @@ jchemhub.view.ReactionEditor.prototype.queryCommandValueInternal_ = function(
  *         are no activeOnUneditable plugins for the command.
  */
 jchemhub.view.ReactionEditor.prototype.queryCommandValue = function(commands) {
-	var isEditable = this.isLoaded() && this.isSelectionEditable();
+	var isEditable = this.isLoaded();
 	if (goog.isString(commands)) {
 		return this.queryCommandValueInternal_(commands, isEditable);
 	} else {

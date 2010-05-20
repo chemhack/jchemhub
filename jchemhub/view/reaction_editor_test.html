@@ -186,6 +186,7 @@ function testPluginKeyUp() {
   var mockPlugin = new goog.testing.LooseMock(plugin);
   mockPlugin.getTrogClassId().$returns('mockPlugin');
   mockPlugin.registerEditorObject(editor);
+  mockPlugin.enable(editor);
   mockPlugin.isEnabled(editor).$anyTimes().$returns(true);
   mockPlugin.handleKeyUp(e);
   mockPlugin.$replay();
@@ -208,6 +209,7 @@ function testPluginKeyDown() {
   var mockPlugin = new goog.testing.LooseMock(plugin);
   mockPlugin.getTrogClassId().$returns('mockPlugin');
   mockPlugin.registerEditorObject(editor);
+  mockPlugin.enable(editor);
   mockPlugin.isEnabled(editor).$anyTimes().$returns(true);
   mockPlugin.handleKeyDown(e).$returns(true);
   mockPlugin.$replay();
@@ -230,6 +232,7 @@ function testPluginKeyPress() {
   var mockPlugin = new goog.testing.LooseMock(plugin);
   mockPlugin.getTrogClassId().$returns('mockPlugin');
   mockPlugin.registerEditorObject(editor);
+  mockPlugin.enable(editor);
   mockPlugin.isEnabled(editor).$anyTimes().$returns(true);
   mockPlugin.handleKeyPress(e).$returns(true);
   mockPlugin.$replay();
@@ -291,6 +294,7 @@ function testNotHandledKeyEvent() {
   var mockPlugin1 = new goog.testing.LooseMock(plugin);
   mockPlugin1.getTrogClassId().$returns('mockPlugin1');
   mockPlugin1.registerEditorObject(editor);
+  mockPlugin1.enable(editor);
   mockPlugin1.isEnabled(editor).$anyTimes().$returns(true);
 
     mockPlugin1.handleKeyPress(e).$returns(false);
@@ -301,6 +305,7 @@ function testNotHandledKeyEvent() {
   var mockPlugin2 = new goog.testing.LooseMock(plugin);
   mockPlugin2.getTrogClassId().$returns('mockPlugin2');
   mockPlugin2.registerEditorObject(editor);
+  mockPlugin2.enable(editor);
   mockPlugin2.isEnabled(editor).$anyTimes().$returns(true);
 
     mockPlugin2.handleKeyPress(e).$returns(true);
@@ -332,6 +337,7 @@ function testKeyboardShortcutCalled() {
   var mockPlugin = new goog.testing.LooseMock(plugin);
   mockPlugin.getTrogClassId().$returns('mockPlugin');
   mockPlugin.registerEditorObject(editor);
+  mockPlugin.enable(editor);
   mockPlugin.isEnabled(editor).$anyTimes().$returns(true);
 
     mockPlugin.handleKeyPress(e).$returns(false);
@@ -360,6 +366,7 @@ function testKeyboardShortcutNotCalled() {
   var mockPlugin = new goog.testing.LooseMock(plugin);
   mockPlugin.getTrogClassId().$returns('mockPlugin');
   mockPlugin.registerEditorObject(editor);
+  mockPlugin.enable(editor);
   mockPlugin.isEnabled(editor).$anyTimes().$returns(true);
 
     mockPlugin.handleKeyPress(e).$returns(true);
@@ -388,16 +395,15 @@ function testKeyHandlingAlt() {
   var mockPlugin = new goog.testing.LooseMock(plugin);
   mockPlugin.getTrogClassId().$returns('mockPlugin');
   mockPlugin.registerEditorObject(editor);
+  mockPlugin.enable(editor);
   mockPlugin.isEnabled(editor).$anyTimes().$returns(true);
 
-    mockPlugin.handleKeyPress(e).$returns(false);
+  mockPlugin.handleKeyPress(e).$returns(false);
   
   mockPlugin.$replay();
 
   editor.registerPlugin(mockPlugin);
-
-
-    editor.handleKeyPress_(e);
+  editor.handleKeyPress_(e);
   
 
   mockPlugin.$verify();
@@ -451,6 +457,7 @@ function testSupportedExecCommand() {
   var mockPlugin1 = new goog.testing.LooseMock(plugin);
   mockPlugin1.getTrogClassId().$returns('mockPlugin1');
   mockPlugin1.registerEditorObject(editor);
+  mockPlugin1.enable(editor);
   mockPlugin1.isEnabled(editor).$anyTimes().$returns(true);
   mockPlugin1.isSupportedCommand('+indent').$returns(true);
   mockPlugin1.execCommandInternal('+indent').$returns(true);
@@ -461,6 +468,7 @@ function testSupportedExecCommand() {
   var mockPlugin2 = new goog.testing.LooseMock(plugin);
   mockPlugin2.getTrogClassId().$returns('mockPlugin2');
   mockPlugin2.registerEditorObject(editor);
+  mockPlugin2.enable(editor);
   mockPlugin2.isEnabled(editor).$anyTimes().$returns(true);
   mockPlugin2.$replay();
 
@@ -484,6 +492,7 @@ function testNotSupportedExecCommand() {
   var mockPlugin1 = new goog.testing.LooseMock(plugin);
   mockPlugin1.getTrogClassId().$returns('mockPlugin1');
   mockPlugin1.registerEditorObject(editor);
+  mockPlugin1.enable(editor);
   mockPlugin1.isEnabled(editor).$anyTimes().$returns(true);
   mockPlugin1.isSupportedCommand('+indent').$returns(false);
   mockPlugin1.$replay();
@@ -491,6 +500,7 @@ function testNotSupportedExecCommand() {
   var mockPlugin2 = new goog.testing.LooseMock(plugin);
   mockPlugin2.getTrogClassId().$returns('mockPlugin2');
   mockPlugin2.registerEditorObject(editor);
+  mockPlugin2.enable(editor);
   mockPlugin2.isEnabled(editor).$anyTimes().$returns(true);
   mockPlugin2.isSupportedCommand('+indent').$returns(true);
   mockPlugin2.execCommandInternal('+indent').$returns(true);
@@ -518,15 +528,17 @@ function testSupportedQueryCommand() {
   var mockPlugin1 = new goog.testing.LooseMock(plugin);
   mockPlugin1.getTrogClassId().$returns('mockPlugin1');
   mockPlugin1.registerEditorObject(editor);
+  mockPlugin1.enable(editor);
   mockPlugin1.isEnabled(editor).$anyTimes().$returns(true);
   mockPlugin1.isSupportedCommand('+indent').$returns(true);
   mockPlugin1.queryCommandValue('+indent').$returns(true);
-  mockPlugin1.activeOnUneditableEditors().$returns(true);
+
   mockPlugin1.$replay();
 
   var mockPlugin2 = new goog.testing.LooseMock(plugin);
   mockPlugin2.getTrogClassId().$returns('mockPlugin2');
   mockPlugin2.registerEditorObject(editor);
+  mockPlugin2.enable(editor);
   mockPlugin2.isEnabled(editor).$anyTimes().$returns(true);
   mockPlugin2.$replay();
 
@@ -551,6 +563,7 @@ function testNotSupportedQueryCommand() {
   var mockPlugin1 = new goog.testing.LooseMock(plugin);
   mockPlugin1.getTrogClassId().$returns('mockPlugin1');
   mockPlugin1.registerEditorObject(editor);
+  mockPlugin1.enable(editor);
   mockPlugin1.isEnabled(editor).$anyTimes().$returns(true);
   mockPlugin1.isSupportedCommand('+indent').$returns(false);
   mockPlugin1.$replay();
@@ -558,6 +571,7 @@ function testNotSupportedQueryCommand() {
   var mockPlugin2 = new goog.testing.LooseMock(plugin);
   mockPlugin2.getTrogClassId().$returns('mockPlugin2');
   mockPlugin2.registerEditorObject(editor);
+  mockPlugin2.enable(editor);
   mockPlugin2.isEnabled(editor).$anyTimes().$returns(true);
   mockPlugin2.isSupportedCommand('+indent').$returns(true);
   mockPlugin2.queryCommandValue('+indent').$returns(true);
@@ -585,6 +599,7 @@ function testHandledSelectionChange() {
   var mockPlugin1 = new goog.testing.LooseMock(plugin);
   mockPlugin1.getTrogClassId().$returns('mockPlugin1');
   mockPlugin1.registerEditorObject(editor);
+  mockPlugin1.enable(editor);
   mockPlugin1.isEnabled(editor).$anyTimes().$returns(true);
   mockPlugin1.handleSelectionChange(e).$returns(true);
   mockPlugin1.$replay();
@@ -592,6 +607,7 @@ function testHandledSelectionChange() {
   var mockPlugin2 = new goog.testing.LooseMock(plugin);
   mockPlugin2.getTrogClassId().$returns('mockPlugin2');
   mockPlugin2.registerEditorObject(editor);
+  mockPlugin2.enable(editor);
   mockPlugin2.isEnabled(editor).$anyTimes().$returns(true);
   mockPlugin2.$replay();
 
@@ -616,6 +632,7 @@ function testNotHandledSelectionChange() {
   var mockPlugin1 = new goog.testing.LooseMock(plugin);
   mockPlugin1.getTrogClassId().$returns('mockPlugin1');
   mockPlugin1.registerEditorObject(editor);
+  mockPlugin1.enable(editor);
   mockPlugin1.isEnabled(editor).$anyTimes().$returns(true);
   mockPlugin1.handleSelectionChange(e).$returns(false);
   mockPlugin1.$replay();
@@ -623,6 +640,7 @@ function testNotHandledSelectionChange() {
   var mockPlugin2 = new goog.testing.LooseMock(plugin);
   mockPlugin2.getTrogClassId().$returns('mockPlugin2');
   mockPlugin2.registerEditorObject(editor);
+  mockPlugin2.enable(editor);
   mockPlugin2.isEnabled(editor).$anyTimes().$returns(true);
   mockPlugin2.handleSelectionChange(e).$returns(true);
   mockPlugin2.$replay();
