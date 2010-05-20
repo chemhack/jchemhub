@@ -37,7 +37,7 @@ jchemhub.view.ReactionEditor.prototype.clear = function() {
 	var fill = new goog.graphics.SolidFill(
 			this.getConfig().get("background").color);
 
-	this._graphics.drawRect(0, 0, this._element.clientWidth, this._element.clientHeight,
+	this._graphics.drawRect(0, 0, this.getGraphics().width, this.getGraphics().height,
 			null, fill);
 }
 
