@@ -14,7 +14,6 @@ function initPage(){
 	var controller = new jchemhub.controller.Controller(goog.dom.getElement('reactionEditorContainer'));
 
 	controller.setModel(model);
-	console.log(jchemhub.io.json.reactionToJson(controller.getModel()));
 };
 
 goog.events.listen(window, goog.events.EventType.LOAD, initPage);
