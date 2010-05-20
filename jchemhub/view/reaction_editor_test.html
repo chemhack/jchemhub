@@ -253,6 +253,7 @@ function testHandledKeyEvent() {
   var mockPlugin1 = new goog.testing.LooseMock(plugin);
   mockPlugin1.getTrogClassId().$returns('mockPlugin1');
   mockPlugin1.registerEditorObject(editor);
+  mockPlugin1.enable(editor);
   mockPlugin1.isEnabled(editor).$anyTimes().$returns(true);
 
   mockPlugin1.handleKeyDown(e).$returns(true);
@@ -263,6 +264,7 @@ function testHandledKeyEvent() {
   var mockPlugin2 = new goog.testing.LooseMock(plugin);
   mockPlugin2.getTrogClassId().$returns('mockPlugin2');
   mockPlugin2.registerEditorObject(editor);
+  mockPlugin2.enable(editor);
   mockPlugin2.isEnabled(editor).$anyTimes().$returns(true);
   mockPlugin2.$replay();
 

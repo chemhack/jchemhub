@@ -48,8 +48,8 @@ jchemhub.view.ReactionEditor = function(element, opt_config) {
 	
 	this.zoom_factor=1;
 
-	this._graphics = goog.graphics.createGraphics(element.offsetWidth,
-			element.offsetTop);
+	this._graphics = goog.graphics.createGraphics(element.clientWidth,
+			element.clientHeight);
 
 	this._graphics.render(this.originalElement);
 
