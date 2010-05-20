@@ -156,7 +156,7 @@ jchemhub.view.BondDrawing.prototype.drag = function(e) {
 
 	});
 	d.addEventListener(goog.fx.Dragger.EventType.END, function(e) {
-		console.log('finish');
+
 
 		d.dispose();
 	});

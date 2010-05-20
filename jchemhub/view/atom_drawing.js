@@ -22,7 +22,7 @@ jchemhub.view.AtomDrawing.prototype.render = function() {
 	var config = this.getConfig();
 	var atom_config = config.get(this.atom.symbol) ? config.get(this.atom.symbol) : config.get("atom");
 	var scale = this.getTransform().getScaleX();
-	//console.log(scale);
+
 	var font = new goog.graphics.Font(scale/1.8, atom_config.fontName);
 	var stroke = new goog.graphics.Stroke(atom_config.stroke.width, atom_config.stroke.color);
 	var fill = new goog.graphics.SolidFill(atom_config.fill.color);
@@ -164,7 +164,7 @@ jchemhub.view.AtomDrawing.prototype.bondOrientation = function(i) {
 	var bond =  this.atom.bonds.getValues()[i];
 	var target = bond.target.coord;
 	var source = bond.source.coord;
-	//console.log("bond" + String(this.atom == bond.target));
+	
 	var dy = target.y - source.y;
 	var dx = target.x - source.x;
 	if (this.atom == bond.source) {
