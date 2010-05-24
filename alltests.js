@@ -13,5 +13,10 @@
 // limitations under the License.
 
 var _allTests = [ "jchemhub/smiles/smiles_parser_test.html",
-		"jchemhub/math/line_test.html", "/jchemhub/io/json_test.html",
-		"jchemhub/io/mdl_test.html", "jchemhub/model/model_test.html", "jchemhub/ring/ring_finder_test.html" ];
+		"jchemhub/math/line_test.html", 
+		"/jchemhub/io/json_test.html",
+		"jchemhub/io/mdl_test.html", 
+		"jchemhub/model/model_test.html", 
+		"jchemhub/ring/ring_finder_test.html",
+		"jchemhub/view/plugin_test.html",  
+		"jchemhub/view/reaction_editor_test.html"];
