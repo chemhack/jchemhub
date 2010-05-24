@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>jchemhub.view.ReactionRenderer</title>
+<!-- 
+ <script src="../../jchemhub_compiled.js"></script>
+ -->
+<script src="../../third-party/closure/closure/goog/base.js"></script>
+<script src="../deps.js"></script>
+
+<script>
+
+	goog.require('jchemhub.view.PlusRenderer');
+	goog.require('goog.events.EventType');
+	goog.require('goog.dom');
+	goog.require('goog.graphics');
+	goog.require('jchemhub.graphics.AffineTransform');
+</script>
+<script><!--
+    
+function initPage(){
+	var element = goog.dom.getElement('container')
+	var graphics = goog.graphics.createGraphics(element.clientWidth,
+			element.clientHeight);
+	graphics.render(element);
+	var pr = new jchemhub.view.PlusRenderer(graphics);
+	var trans = new jchemhub.graphics.AffineTransform(30,0,0,30,0,0);
+	pr.render(new goog.math.Coordinate(2,2), trans);
+};
+
+goog.events.listen(window, goog.events.EventType.LOAD, initPage);
+--></script>
+</head>
+
+<body>
+<div id="container" style="width: 400px; height: 400px"></div>
+
+</body>
+</html>
