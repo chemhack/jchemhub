@@ -86,6 +86,19 @@ jchemhub.view.ReactionEditor = function(element, opt_config) {
 goog.inherits(jchemhub.view.ReactionEditor, jchemhub.view.Drawing);
 
 /**
+ * List of mutation events in Gecko browsers.
+ * @type {Array.<string>}
+ * @protected
+ */
+jchemhub.view.ReactionEditor.MUTATION_EVENTS_GECKO = [
+  'DOMNodeInserted',
+  'DOMNodeRemoved',
+  'DOMNodeRemovedFromDocument',
+  'DOMNodeInsertedIntoDocument',
+  'DOMCharacterDataModified'
+];
+
+/**
  * Sets the active editor id.
  * 
  * @param {?string}
@@ -143,25 +156,6 @@ jchemhub.view.ReactionEditor.prototype.layoutAndRender = function() {
 			* this.getSize().height - margin * 2));
 	this.render();
 }
-
-/**
- * set up transform to layout drawing and all children to fit rectangle
- * 
- * @param rect
- *            {goog.math.Rect}
- */
-jchemhub.view.ReactionEditor.prototype.layout = function(to_rect) {
-
-	var from_rect = this.getRect();
-	// preserve aspect ratio
-	var to_size = from_rect.getSize().scaleToFit(to_rect.getSize());
-	var scale = to_size.width / from_rect.width
-	var dx = to_rect.left - (from_rect.left * scale);
-	var dy = to_rect.top - (from_rect.top * scale);
-	this.setTransform(new goog.graphics.AffineTransform(scale, 0, 0, scale, dx,
-			dy));
-
-};
 
 /*
  * @override 

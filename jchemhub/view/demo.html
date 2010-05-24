@@ -51,14 +51,14 @@
 	goog.require('goog.debug.Console');
 
 </script>
-<script>
+<script><!--
     
 	var controller;
 	
 function initPage(){
 
-	var c = new goog.debug.Console(); 
-	c.setCapturing(true); 
+//	var c = new goog.debug.Console(); 
+//	c.setCapturing(true); 
 
 	var buttons = []; 
 	buttons.push(jchemhub.view.ToolbarFactory.makeButton( 
@@ -70,12 +70,7 @@ function initPage(){
 
  
 	var toolbar = jchemhub.view.DefaultToolbar.makeToolbar(buttons, goog.dom.getElement('reactionEditorToolbar')); 
-	var model = jchemhub.io.json.readReaction(reactionDrawing);
-	controller = new jchemhub.controller.Controller(goog.dom.getElement('reactionEditorContainer'));
-	var controller = new jchemhub.controller.Controller(goog.dom.getElement('reactionEditorContainer'));
-	controller._view.registerPlugin(new jchemhub.view.plugins.ClearEditor()); 
-
-
+	var model = jchemhub.io.json.readReaction(reactionDrawing); 
 	var controller = new jchemhub.controller.Controller(goog.dom.getElement('reactionEditorContainer'));
 	controller._view.registerPlugin(new jchemhub.view.plugins.ClearEditor());
 	controller._view.registerPlugin(new jchemhub.view.plugins.Zoom());
@@ -88,22 +83,9 @@ function initPage(){
 
 };
 
-function clearEditor(){
-	controller._view.clear();
-}
-function setReaction(){
-	controller.setModel(jchemhub.io.json.readReaction(reactionDrawing));
-}
-function getJson(){
-	alert(jchemhub.io.json.reactionToJson(controller.getModel()));
-
-}
-function render(){
-	controller._view.render();
-}
 
 goog.events.listen(window, goog.events.EventType.LOAD, initPage);
-</script>
+--></script>
 </head>
 
 <body>
