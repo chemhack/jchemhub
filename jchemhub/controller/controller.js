@@ -26,7 +26,7 @@ jchemhub.controller.Controller.prototype.getModel = function(){
 };
 
 jchemhub.controller.Controller.prototype.clear = function(){
-	this._model = null;
+
 	this._view.clear();
 };
 
