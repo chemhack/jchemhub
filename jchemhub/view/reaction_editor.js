@@ -19,6 +19,8 @@ goog.require('jchemhub.view.Plugin');
 jchemhub.view.ReactionEditor = function(element, opt_config) {
 	jchemhub.view.Drawing.call(this);
 	this.originalElement = element;
+	this.id = element.id;
+	this.editableDomHelper = goog.dom.getDomHelper(element);
 	/**
 	 * Map of class id to registered plugin.
 	 * 
@@ -45,8 +47,8 @@ jchemhub.view.ReactionEditor = function(element, opt_config) {
 		this._config.addAll(opt_config); // merge optional config into
 		// defaults
 	}
-	
-	this.zoom_factor=1;
+
+	this.zoom_factor = 1;
 
 	this._graphics = goog.graphics.createGraphics(element.clientWidth,
 			element.clientHeight);
@@ -54,15 +56,15 @@ jchemhub.view.ReactionEditor = function(element, opt_config) {
 	this._graphics.render(this.originalElement);
 
 	// The editor will not listen to change events until it has finished loading
-	this.stoppedEvents_ = {};
-	this.stopEvent(jchemhub.view.ReactionEditor.EventType.CHANGE);
-	this.stopEvent(jchemhub.view.ReactionEditor.EventType.DELAYEDCHANGE);
+	// this.stoppedEvents_ = {};
+	// this.stopEvent(jchemhub.view.ReactionEditor.EventType.CHANGE);
+	// this.stopEvent(jchemhub.view.ReactionEditor.EventType.DELAYEDCHANGE);
 	this.isModified_ = false;
 	this.isEverModified_ = false;
-
-	this.delayedChangeTimer_ = new goog.async.Delay(
-			this.dispatchDelayedChange_,
-			jchemhub.view.ReactionEditor.DELAYED_CHANGE_FREQUENCY, this);
+	//
+	// this.delayedChangeTimer_ = new goog.async.Delay(
+	// this.dispatchDelayedChange_,
+	// jchemhub.view.ReactionEditor.DELAYED_CHANGE_FREQUENCY, this);
 
 	/**
 	 * @type {goog.events.EventHandler}
@@ -77,7 +79,6 @@ jchemhub.view.ReactionEditor = function(element, opt_config) {
 
 	this.loadState_ = jchemhub.view.ReactionEditor.LoadState_.EDITABLE;
 
-	this.editableDomHelper = goog.dom.getDomHelper(element);
 	this.isModified_ = false;
 	this.isEverModified_ = false;
 
@@ -95,6 +96,13 @@ jchemhub.view.ReactionEditor.setActiveEditorId = function(editorId) {
 };
 
 /**
+ * @return {goog.dom.DomHelper?} The dom helper for the editable node.
+ */
+jchemhub.view.ReactionEditor.prototype.getEditableDomHelper = function() {
+	return this.editableDomHelper;
+};
+
+/**
  * @return {?string} The id of the active editor.
  */
 jchemhub.view.ReactionEditor.getActiveEditorId = function() {
@@ -104,6 +112,7 @@ jchemhub.view.ReactionEditor.getActiveEditorId = function() {
 jchemhub.view.ReactionEditor.prototype.clear = function() {
 	jchemhub.view.ReactionEditor.superClass_.clear.call(this);
 	this._graphics.clear();
+	this.model = null;
 	var fill = new goog.graphics.SolidFill(
 			this.getConfig().get("background").color);
 
@@ -129,8 +138,9 @@ jchemhub.view.ReactionEditor.prototype.setModel = function(model) {
 jchemhub.view.ReactionEditor.prototype.layoutAndRender = function() {
 
 	var margin = this.getConfig().get("margin");
-	this.layout(new goog.math.Rect(margin, margin, this.zoom_factor * this.getSize().width
-			- margin * 2, this.zoom_factor * this.getSize().height - margin * 2));
+	this.layout(new goog.math.Rect(margin, margin, this.zoom_factor
+			* this.getSize().width - margin * 2, this.zoom_factor
+			* this.getSize().height - margin * 2));
 	this.render();
 }
 
@@ -185,93 +195,34 @@ jchemhub.view.ReactionEditor.prototype.render = function() {
  * @return{jchemhub.model.Reaction | jchemhub.model.Molecule}
  */
 jchemhub.view.ReactionEditor.prototype.getModel = function() {
-	var children = this.getChildren();
-
-	return this.getChildren()[0]
+	return this.model;
 };
 
 /**
  * This dispatches the beforechange event on the editable reaction editor
  */
 jchemhub.view.ReactionEditor.prototype.dispatchBeforeChange = function() {
-	if (this
-			.isEventStopped(jchemhub.view.ReactionEditor.EventType.BEFORECHANGE)) {
-		return;
-	}
+	this.logger.info('dispatchBeforeChange');
+	// if (this
+	// .isEventStopped(jchemhub.view.ReactionEditor.EventType.BEFORECHANGE)) {
+	// return;
+	// }
 
 	this.dispatchEvent(jchemhub.view.ReactionEditor.EventType.BEFORECHANGE);
 };
+//
+// /**
+// * Checks if the event of the given type has stopped being dispatched
+// *
+// * @param {goog.editor.Field.EventType}
+// * eventType type of event to check.
+// * @return {boolean} true if the event has been stopped with stopEvent().
+// * @protected
+// */
+// jchemhub.view.ReactionEditor.prototype.isEventStopped = function(eventType) {
+// return !!this.stoppedEvents_[eventType];
+// };
 
-/**
- * Checks if the event of the given type has stopped being dispatched
- * 
- * @param {goog.editor.Field.EventType}
- *            eventType type of event to check.
- * @return {boolean} true if the event has been stopped with stopEvent().
- * @protected
- */
-jchemhub.view.ReactionEditor.prototype.isEventStopped = function(eventType) {
-	return !!this.stoppedEvents_[eventType];
-};
-
-/**
- * Returns true if the keypress generates a change in the contents. due to a
- * special key listed in jchemhub.view.ReactionEditor.KEYS_CAUSING_CHANGES_
- * 
- * @param {goog.events.BrowserEvent}
- *            e The event.
- * @return {boolean} Whether the keypress generated a change in the contents.
- * @private
- */
-jchemhub.view.ReactionEditor.isSpecialGeneratingKey_ = function(e) {
-	var testCtrlKeys = (e.ctrlKey || e.metaKey)
-			&& e.keyCode in jchemhub.view.ReactionEditor.CTRL_KEYS_CAUSING_CHANGES_;
-	var testRegularKeys = !(e.ctrlKey || e.metaKey)
-			&& e.keyCode in jchemhub.view.ReactionEditor.KEYS_CAUSING_CHANGES_;
-
-	return testCtrlKeys || testRegularKeys;
-};
-
-/**
- * Map of keyCodes (not charCodes) that when used in conjunction with the Ctrl
- * key cause changes in the field contents. These are the keys that are not
- * handled by basic formatting plugins.
- * 
- * @type {Object}
- * @private
- */
-jchemhub.view.ReactionEditor.CTRL_KEYS_CAUSING_CHANGES_ = {
-	86 : true, // V
-	88 : true
-// X
-};
-
-/**
- * Map of keyCodes (not charCodes) that cause changes in the field contents.
- * 
- * @type {Object}
- * @private
- */
-jchemhub.view.ReactionEditor.KEYS_CAUSING_CHANGES_ = {
-	46 : true, // DEL
-	8 : true
-// BACKSPACE
-};
-
-if (!goog.userAgent.IE) {
-	// Only IE doesn't change the field by default upon tab.
-	// TODO: This really isn't right now that we have tab plugins.
-	jchemhub.view.ReactionEditor.KEYS_CAUSING_CHANGES_[9] = true; // TAB
-}
-
-if (goog.userAgent.IE) {
-	// In IE input from IME (Input Method Editor) does not generate keypress
-	// event so we have to rely on the keydown event. This way we have
-	// false positives while the user is using keyboard to select the
-	// character to input, but it is still better than the false negatives
-	// that ignores user's final input at all.
-	jchemhub.view.ReactionEditor.KEYS_CAUSING_CHANGES_[229] = true; // from IME;
-}
 
 /**
  * Calls all the plugins of the given operation, in sequence, with the given
@@ -357,9 +308,9 @@ jchemhub.view.ReactionEditor.prototype.handleKeyboardShortcut_ = function(e) {
  * are not stopped.
  */
 jchemhub.view.ReactionEditor.prototype.handleChange = function() {
-	if (this.isEventStopped(jchemhub.view.ReactionEditor.EventType.CHANGE)) {
-		return;
-	}
+	// if (this.isEventStopped(jchemhub.view.ReactionEditor.EventType.CHANGE)) {
+	// return;
+	// }
 
 	// Clear the changeTimerGecko_ if it's active, since any manual call to
 	// handle change is equiavlent to changeTimerGecko_.fire().
@@ -370,12 +321,12 @@ jchemhub.view.ReactionEditor.prototype.handleChange = function() {
 	this.isModified_ = true;
 	this.isEverModified_ = true;
 
-	if (this
-			.isEventStopped(jchemhub.view.ReactionEditor.EventType.DELAYEDCHANGE)) {
-		return;
-	}
+	// if (this
+	// .isEventStopped(jchemhub.view.ReactionEditor.EventType.DELAYEDCHANGE)) {
+	// return;
+	// }
 
-	this.delayedChangeTimer_.start();
+	// this.delayedChangeTimer_.start();
 };
 
 /**
@@ -386,6 +337,7 @@ jchemhub.view.ReactionEditor.prototype.handleChange = function() {
  * @private
  */
 jchemhub.view.ReactionEditor.prototype.handleKeyDown_ = function(e) {
+
 	this.handleKeyboardShortcut_(e);
 };
 
@@ -421,6 +373,16 @@ jchemhub.view.ReactionEditor.prototype.handleKeyUp_ = function(e) {
 	this.selectionChangeTimer_.start();
 
 };
+
+jchemhub.view.ReactionEditor.prototype.handleMouseDown_ = function(e) {
+	this.logger.info('handleMouseDown_');
+	this.invokeShortCircuitingOp_(jchemhub.view.Plugin.Op.MOUSEDOWN, e);
+
+}
+
+jchemhub.view.ReactionEditor.prototype.handleMouseUp_ = function(e) {
+	this.invokeShortCircuitingOp_(jchemhub.view.Plugin.Op.MOUSEUP, e);
+}
 
 /**
  * Gets the value of this command.
@@ -470,22 +432,22 @@ jchemhub.view.ReactionEditor.prototype.queryCommandValue = function(commands) {
 	}
 };
 
-/**
- * Dispatch a delayed change event.
- * 
- * @private
- */
-jchemhub.view.ReactionEditor.prototype.dispatchDelayedChange_ = function() {
-	if (this
-			.isEventStopped(jchemhub.view.ReactionEditor.EventType.DELAYEDCHANGE)) {
-		return;
-	}
-	// Clear the delayedChangeTimer_ if it's active, since any manual call to
-	// dispatchDelayedChange_ is equivalent to delayedChangeTimer_.fire().
-	this.delayedChangeTimer_.stop();
-	this.isModified_ = false;
-	this.dispatchEvent(jchemhub.view.ReactionEditor.EventType.DELAYEDCHANGE);
-};
+// /**
+// * Dispatch a delayed change event.
+// *
+// * @private
+// */
+// jchemhub.view.ReactionEditor.prototype.dispatchDelayedChange_ = function() {
+// if (this
+// .isEventStopped(jchemhub.view.ReactionEditor.EventType.DELAYEDCHANGE)) {
+// return;
+// }
+// // Clear the delayedChangeTimer_ if it's active, since any manual call to
+// // dispatchDelayedChange_ is equivalent to delayedChangeTimer_.fire().
+// this.delayedChangeTimer_.stop();
+// this.isModified_ = false;
+// this.dispatchEvent(jchemhub.view.ReactionEditor.EventType.DELAYEDCHANGE);
+// };
 
 /**
  * Dispatches the appropriate set of change events. This only fires synchronous
@@ -498,7 +460,8 @@ jchemhub.view.ReactionEditor.prototype.dispatchDelayedChange_ = function() {
  *            should be fired syncronously.
  */
 jchemhub.view.ReactionEditor.prototype.dispatchChange = function(opt_noDelay) {
-	this.startChangeEvents(true, opt_noDelay)
+	this.handleChange();
+	// this.startChangeEvents(true, opt_noDelay)
 };
 
 /**
@@ -510,10 +473,11 @@ jchemhub.view.ReactionEditor.prototype.dispatchChange = function(opt_noDelay) {
  */
 jchemhub.view.ReactionEditor.prototype.dispatchSelectionChangeEvent = function(
 		opt_e) {
-	if (this
-			.isEventStopped(jchemhub.view.ReactionEditor.EventType.SELECTIONCHANGE)) {
-		return;
-	}
+	// if (this
+	// .isEventStopped(jchemhub.view.ReactionEditor.EventType.SELECTIONCHANGE))
+	// {
+	// return;
+	// }
 
 	this.dispatchCommandValueChange();
 	this.dispatchEvent( {
@@ -579,8 +543,10 @@ jchemhub.view.ReactionEditor.prototype.execCommand = function(command, var_args)
  */
 jchemhub.view.ReactionEditor.prototype.registerPlugin = function(plugin) {
 	var classId = plugin.getTrogClassId();
+
 	if (this.plugins_[classId]) {
-		this.logger.severe('Cannot register the same class of plugin twice.');
+		this.logger
+				.severe('Cannot register the same class of plugin twice [' + classId + ']');
 	}
 	this.plugins_[classId] = plugin;
 
@@ -804,28 +770,29 @@ jchemhub.view.ReactionEditor.prototype.getOriginalElement = function() {
 	return this.originalElement;
 };
 
-/**
- * Stops the event of the given type from being dispatched.
- * 
- * @param {jchemhub.view.ReactionEditor.EventType}
- *            eventType type of event to stop.
- */
-jchemhub.view.ReactionEditor.prototype.stopEvent = function(eventType) {
-	this.stoppedEvents_[eventType] = 1;
-};
+// /**
+// * Stops the event of the given type from being dispatched.
+// *
+// * @param {jchemhub.view.ReactionEditor.EventType}
+// * eventType type of event to stop.
+// */
+// jchemhub.view.ReactionEditor.prototype.stopEvent = function(eventType) {
+// this.stoppedEvents_[eventType] = 1;
+// };
 
-/**
- * Re-starts the event of the given type being dispatched, if it had previously
- * been stopped with stopEvent().
- * 
- * @param {jchemhub.view.ReactionEditor.EventType}
- *            eventType type of event to start.
- */
-jchemhub.view.ReactionEditor.prototype.startEvent = function(eventType) {
-	// Toggling this bit on/off instead of deleting it/re-adding it
-	// saves array allocations.
-	this.stoppedEvents_[eventType] = 0;
-};
+// /**
+// * Re-starts the event of the given type being dispatched, if it had
+// previously
+// * been stopped with stopEvent().
+// *
+// * @param {jchemhub.view.ReactionEditor.EventType}
+// * eventType type of event to start.
+// */
+// jchemhub.view.ReactionEditor.prototype.startEvent = function(eventType) {
+// // Toggling this bit on/off instead of deleting it/re-adding it
+// // saves array allocations.
+// this.stoppedEvents_[eventType] = 0;
+// };
 
 /**
  * Stops all listeners and timers.
@@ -837,10 +804,10 @@ jchemhub.view.ReactionEditor.prototype.clearListeners_ = function() {
 		this.eventRegister.removeAll();
 	}
 
-	if (this.changeTimerGecko_) {
-		this.changeTimerGecko_.stop();
-	}
-	this.delayedChangeTimer_.stop();
+	// if (this.changeTimerGecko_) {
+	// this.changeTimerGecko_.stop();
+	// }
+	// this.delayedChangeTimer_.stop();
 };
 
 /**
@@ -875,18 +842,18 @@ jchemhub.view.ReactionEditor.prototype.handleEditorLoad = function() {
 	}
 };
 
-/**
- * Don't wait for the timer and just fire the delayed change event if it's
- * pending.
- */
-jchemhub.view.ReactionEditor.prototype.clearDelayedChange = function() {
-	// The changeTimerGecko_ will queue up a delayed change so to fully clear
-	// delayed change we must also clear this timer.
-	if (this.changeTimerGecko_) {
-		this.changeTimerGecko_.fireIfActive();
-	}
-	this.delayedChangeTimer_.fireIfActive();
-};
+// /**
+// * Don't wait for the timer and just fire the delayed change event if it's
+// * pending.
+// */
+// jchemhub.view.ReactionEditor.prototype.clearDelayedChange = function() {
+// // The changeTimerGecko_ will queue up a delayed change so to fully clear
+// // delayed change we must also clear this timer.
+// if (this.changeTimerGecko_) {
+// this.changeTimerGecko_.fireIfActive();
+// }
+// this.delayedChangeTimer_.fireIfActive();
+// };
 
 /**
  * Signal that the editor is loaded and ready to use. Change events now are in
@@ -896,7 +863,7 @@ jchemhub.view.ReactionEditor.prototype.clearDelayedChange = function() {
  */
 jchemhub.view.ReactionEditor.prototype.dispatchLoadEvent_ = function() {
 	this.installStyles();
-	this.startChangeEvents();
+	// this.startChangeEvents();
 	this.logger.info('Dispatching load ' + this.id);
 	this.dispatchEvent(jchemhub.view.ReactionEditor.EventType.LOAD);
 };
@@ -935,14 +902,6 @@ jchemhub.view.ReactionEditor.prototype.addListener = function(type, listener,
  */
 jchemhub.view.ReactionEditor.prototype.setupChangeListeners_ = function() {
 
-	if (goog.editor.BrowserFeature.SUPPORTS_FOCUSIN) {
-		this.addListener(goog.events.EventType.FOCUS, this.dispatchFocus_);
-		this.addListener(goog.events.EventType.FOCUSIN,
-				this.dispatchBeforeFocus_);
-	} else {
-		this.addListener(goog.events.EventType.FOCUS,
-				this.dispatchFocusAndBeforeFocus_);
-	}
 	this.addListener(goog.events.EventType.BLUR, this.dispatchBlur,
 			goog.editor.BrowserFeature.USE_MUTATION_EVENTS);
 
@@ -1009,6 +968,30 @@ jchemhub.view.ReactionEditor.prototype.setupChangeListeners_ = function() {
 };
 
 /**
+ * Mutation events tell us when something has changed for mozilla.
+ * 
+ * @protected
+ */
+jchemhub.view.ReactionEditor.prototype.setupMutationEventHandlersGecko = function() {
+	if (goog.editor.BrowserFeature.HAS_DOM_SUBTREE_MODIFIED_EVENT) {
+		this.eventRegister.listen(this.getElement(), 'DOMSubtreeModified',
+				this.handleMutationEventGecko_);
+	} else {
+		var doc = this.getEditableDomHelper().getDocument();
+		this.eventRegister.listen(doc,
+				jchemhub.view.ReactionEditor.MUTATION_EVENTS_GECKO,
+				this.handleMutationEventGecko_, true);
+
+		// DOMAttrModified fires for a lot of events we want to ignore. This
+		// goes
+		// through a different handler so that we can ignore many of these.
+		this.eventRegister.listen(doc, 'DOMAttrModified',
+				goog.bind(this.handleDomAttrChange, this,
+						this.handleMutationEventGecko_), true);
+	}
+};
+
+/**
  * Installs styles if needed. Only writes styles when they can't be written
  * inline directly into the field.
  * 
@@ -1019,38 +1002,38 @@ jchemhub.view.ReactionEditor.prototype.installStyles = function() {
 		goog.style.installStyles(this.cssStyles, this.getElement());
 	}
 };
-
-/**
- * Start change events again and fire once if desired.
- * 
- * @param {boolean=}
- *            opt_fireChange Whether to fire the change event immediately.
- * @param {boolean=}
- *            opt_fireDelayedChange Whether to fire the delayed change event
- *            immediately.
- */
-jchemhub.view.ReactionEditor.prototype.startChangeEvents = function(
-		opt_fireChange, opt_fireDelayedChange) {
-
-	if (!opt_fireChange && this.changeTimerGecko_) {
-		// In the case where change events were stopped and we're not firing
-		// them on start, the user was trying to suppress all change or delayed
-		// change events. Clear the change timer now while the events are still
-		// stopped so that its firing doesn't fire a stopped change event, or
-		// queue up a delayed change event that we were trying to stop.
-		this.changeTimerGecko_.fireIfActive();
-	}
-
-	this.startEvent(jchemhub.view.ReactionEditor.EventType.CHANGE);
-	this.startEvent(jchemhub.view.ReactionEditor.EventType.DELAYEDCHANGE);
-	if (opt_fireChange) {
-		this.handleChange();
-	}
-
-	if (opt_fireDelayedChange) {
-		this.dispatchDelayedChange_();
-	}
-};
+//
+// /**
+// * Start change events again and fire once if desired.
+// *
+// * @param {boolean=}
+// * opt_fireChange Whether to fire the change event immediately.
+// * @param {boolean=}
+// * opt_fireDelayedChange Whether to fire the delayed change event
+// * immediately.
+// */
+// jchemhub.view.ReactionEditor.prototype.startChangeEvents = function(
+// opt_fireChange, opt_fireDelayedChange) {
+//
+// if (!opt_fireChange && this.changeTimerGecko_) {
+// // In the case where change events were stopped and we're not firing
+// // them on start, the user was trying to suppress all change or delayed
+// // change events. Clear the change timer now while the events are still
+// // stopped so that its firing doesn't fire a stopped change event, or
+// // queue up a delayed change event that we were trying to stop.
+// this.changeTimerGecko_.fireIfActive();
+// }
+//
+// this.startEvent(jchemhub.view.ReactionEditor.EventType.CHANGE);
+// this.startEvent(jchemhub.view.ReactionEditor.EventType.DELAYEDCHANGE);
+// if (opt_fireChange) {
+// this.handleChange();
+// }
+//
+// if (opt_fireDelayedChange) {
+// this.dispatchDelayedChange_();
+// }
+// };
 
 /**
  * Frequency to check for selection changes.

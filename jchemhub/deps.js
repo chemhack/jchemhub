@@ -58,6 +58,7 @@ goog.addDependency("../../../../jchemhub/view/toolbarcontroller.js", ['jchemhub.
 goog.addDependency("../../../../jchemhub/view/toolbarfactory.js", ['jchemhub.view.ToolbarFactory'], ['goog.array', 'goog.dom', 'goog.string', 'goog.string.Unicode', 'goog.style', 'goog.ui.Component.State', 'goog.ui.Container.Orientation', 'goog.ui.ControlContent', 'goog.ui.Option', 'goog.ui.Toolbar', 'goog.ui.ToolbarButton', 'goog.ui.ToolbarColorMenuButton', 'goog.ui.ToolbarMenuButton', 'goog.ui.ToolbarRenderer', 'goog.ui.ToolbarSelect', 'goog.userAgent']);
 goog.addDependency("../../../../jchemhub/view/triple_bond_drawing.js", ['jchemhub.view.TripleBondDrawing'], []);
 goog.addDependency("../../../../jchemhub/view/plugins/clear_editor.js", ['jchemhub.view.plugins.ClearEditor'], ['jchemhub.view.Plugin', 'goog.functions']);
+goog.addDependency("../../../../jchemhub/view/plugins/undoredo.js", ['jchemhub.view.plugins.UndoRedo'], ['goog.debug.Logger']);
 goog.addDependency("../../../../jchemhub/view/plugins/zoom.js", ['jchemhub.view.plugins.Zoom'], ['goog.debug.Logger']);
 goog.addDependency("base.js", [], []);
 goog.addDependency("deps.js", [], []);

@@ -153,7 +153,9 @@ jchemhub.view.Plugin.Op = {
 	SELECTION : 4,
 	SHORTCUT : 5,
 	EXEC_COMMAND : 6,
-	QUERY_COMMAND : 7
+	QUERY_COMMAND : 7,
+	MOUSEDOWN: 8,
+	MOUSEUP: 9
 };
 
 /**
@@ -174,7 +176,9 @@ jchemhub.view.Plugin.OPCODE = goog.object.transpose(goog.reflect.object(
 			handleSelectionChange : jchemhub.view.Plugin.Op.SELECTION,
 			handleKeyboardShortcut : jchemhub.view.Plugin.Op.SHORTCUT,
 			execCommand : jchemhub.view.Plugin.Op.EXEC_COMMAND,
-			queryCommandValue : jchemhub.view.Plugin.Op.QUERY_COMMAND
+			queryCommandValue : jchemhub.view.Plugin.Op.QUERY_COMMAND,
+			handleMouseDown : jchemhub.view.Plugin.Op.MOUSEDOWN,
+			handleMouseUp : jchemhub.view.Plugin.Op.MOUSEUP
 		}));
 
 /**

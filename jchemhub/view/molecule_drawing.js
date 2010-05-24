@@ -29,7 +29,7 @@ jchemhub.view.MoleculeDrawing = function(molecule) {
 	}, this);
 
 	// this.addEventListener(goog.events.EventType.CLICK, this.toggleHighlight);
-	this.addEventListener(goog.events.EventType.MOUSEDOWN, this.drag);
+//	this.addEventListener(goog.events.EventType.MOUSEDOWN, this.drag);
 
 };
 goog.inherits(jchemhub.view.MoleculeDrawing, jchemhub.view.Drawing);

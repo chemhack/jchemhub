@@ -208,9 +208,9 @@ jchemhub.view.Drawing.prototype.getGroup = function() {
 		this._group = group;
 		this._group.drawing = this;
 		this._group.setParentEventTarget(this);
-		this.handler.listen(group, [ goog.events.EventType.MOUSEOVER, group,
-				goog.events.EventType.MOUSEOUT, goog.events.EventType.CLICK,
-				goog.events.EventType.MOUSEDOWN ], this._bubble);
+//		this.handler.listen(group, [ goog.events.EventType.MOUSEOVER, group,
+//				goog.events.EventType.MOUSEOUT, goog.events.EventType.CLICK,
+//				goog.events.EventType.MOUSEDOWN ], this._bubble);
 	}
 	return this._group;
 };

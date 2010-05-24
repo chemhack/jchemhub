@@ -35,10 +35,7 @@
 <link rel="stylesheet"
 	href="../../third-party/closure/closure/goog/css/colorpalette.css" />
 
-<link rel="stylesheet"
-	href="../../third-party/closure/closure/goog/css/editor/dialog.css" />
-<link rel="stylesheet"
-	href="../../third-party/closure/closure/goog/css/editor/linkdialog.css" />
+
 <link rel="stylesheet"
 	href="../../third-party/closure/closure/goog/css/editortoolbar.css" />
 
@@ -50,6 +47,9 @@
 	goog.require('jchemhub.view.ToolbarController');
 	goog.require('jchemhub.view.plugins.ClearEditor');
 	goog.require('jchemhub.view.plugins.Zoom');
+	goog.require('jchemhub.view.plugins.UndoRedo');
+	goog.require('goog.debug.Console');
+
 </script>
 <script>
     
@@ -57,15 +57,16 @@
 	
 function initPage(){
 
-var buttons = [
-  jchemhub.view.Command.UNDO, 
-  jchemhub.view.Command.REDO
-]; 
+	var c = new goog.debug.Console(); 
+	c.setCapturing(true); 
 
+	var buttons = []; 
 	buttons.push(jchemhub.view.ToolbarFactory.makeButton( 
     	jchemhub.view.plugins.ClearEditor.COMMAND, 'Clear Editor', 'Clear')); 
     buttons.push(jchemhub.view.ToolbarFactory.makeButton(jchemhub.view.plugins.Zoom.COMMAND.ZOOM_IN, 'zoom in', '+'));
     buttons.push(jchemhub.view.ToolbarFactory.makeButton(jchemhub.view.plugins.Zoom.COMMAND.ZOOM_OUT, 'zoom out', '-'));
+    buttons.push(jchemhub.view.ToolbarFactory.makeButton(jchemhub.view.plugins.UndoRedo.COMMAND.UNDO, 'undo', 'undo'));
+    buttons.push(jchemhub.view.ToolbarFactory.makeButton(jchemhub.view.plugins.UndoRedo.COMMAND.REDO, 'redo', 'redo'));
 
  
 	var toolbar = jchemhub.view.DefaultToolbar.makeToolbar(buttons, goog.dom.getElement('reactionEditorToolbar')); 
@@ -74,14 +75,16 @@ var buttons = [
 	var controller = new jchemhub.controller.Controller(goog.dom.getElement('reactionEditorContainer'));
 	controller._view.registerPlugin(new jchemhub.view.plugins.ClearEditor()); 
 
+
 	var controller = new jchemhub.controller.Controller(goog.dom.getElement('reactionEditorContainer'));
 	controller._view.registerPlugin(new jchemhub.view.plugins.ClearEditor());
 	controller._view.registerPlugin(new jchemhub.view.plugins.Zoom());
+	controller._view.registerPlugin(new jchemhub.view.plugins.UndoRedo());
 	
 
    var toolbarController = new jchemhub.view.ToolbarController(controller._view, toolbar);
 	controller.setModel(model);
-
+	
 
 };
 
