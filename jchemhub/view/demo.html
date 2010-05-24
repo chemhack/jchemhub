@@ -11,21 +11,74 @@
 
 <script src="../io/json_test_rxn.js"></script>
 
+  <link rel="stylesheet" href="../../third-party/closure/closure/goog/demos/css/demo.css">
+
+  <link rel="stylesheet" href="../../third-party/closure/closure/goog/css/button.css" />
+  <link rel="stylesheet" href="../../third-party/closure/closure/goog/css/dialog.css" />
+  <link rel="stylesheet" href="../../third-party/closure/closure/goog/css/linkbutton.css" />
+  <link rel="stylesheet" href="../../third-party/closure/closure/goog/css/menus.css" />
+  <link rel="stylesheet" href="../../third-party/closure/closure/goog/css/tab.css" />
+  <link rel="stylesheet" href="../../third-party/closure/closure/goog/css/tabbar.css" />
+  <link rel="stylesheet" href="../../third-party/closure/closure/goog/css/toolbar.css" />
+  <link rel="stylesheet" href="../../third-party/closure/closure/goog/css/colormenubutton.css" />
+  <link rel="stylesheet" href="../../third-party/closure/closure/goog/css/palette.css" />
+  <link rel="stylesheet" href="../../third-party/closure/closure/goog/css/colorpalette.css" />
+
+  <link rel="stylesheet" href="../../third-party/closure/closure/goog/css/editor/dialog.css" />
+  <link rel="stylesheet" href="../../third-party/closure/closure/goog/css/editor/linkdialog.css" />
+  <link rel="stylesheet" href="../../third-party/closure/closure/goog/css/editortoolbar.css" />
+
 <script>
 	goog.require('jchemhub.controller.Controller');
 	goog.require('goog.events.EventType');
 	goog.require('goog.dom');
+	goog.require('jchemhub.view.DefaultToolbar');
+	goog.require('jchemhub.view.ToolbarController');
+	goog.require('jchemhub.view.plugins.ClearEditor');
 </script>
 <script>
     
 	var controller;
 	
 function initPage(){
+
+var buttons = [
+  jchemhub.view.Command.ITALIC, 
+  jchemhub.view.Command.UNDERLINE, 
+  jchemhub.view.Command.FONT_COLOR, 
+  jchemhub.view.Command.BACKGROUND_COLOR, 
+  jchemhub.view.Command.FONT_FACE, 
+  jchemhub.view.Command.LINK, 
+  jchemhub.view.Command.UNDO, 
+  jchemhub.view.Command.REDO, 
+  jchemhub.view.Command.UNORDERED_LIST, 
+  jchemhub.view.Command.ORDERED_LIST, 
+  jchemhub.view.Command.INDENT, 
+  jchemhub.view.Command.OUTDENT, 
+  jchemhub.view.Command.JUSTIFY_LEFT, 
+  jchemhub.view.Command.JUSTIFY_CENTER, 
+  jchemhub.view.Command.JUSTIFY_RIGHT, 
+  jchemhub.view.Command.STRIKE_THROUGH, 
+  jchemhub.view.Command.REMOVE_FORMAT 
+]; 
+
+buttons.push(jchemhub.view.ToolbarFactory.makeButton( 
+    jchemhub.view.plugins.ClearEditor.COMMAND, 'Clear Editor', 'Clear')); 
+
+ 
+	var toolbar = jchemhub.view.DefaultToolbar.makeToolbar(buttons, goog.dom.getElement('reactionEditorToolbar')); 
 	var model = jchemhub.io.json.readReaction(reactionDrawing);
 	controller = new jchemhub.controller.Controller(goog.dom.getElement('reactionEditorContainer'));
-
-	controller.setModel(model);
+	var controller = new jchemhub.controller.Controller(goog.dom.getElement('reactionEditorContainer'));
+	controller._view.registerPlugin(new jchemhub.view.plugins.ClearEditor()); 
 	
+
+   var toolbarController = new jchemhub.view.ToolbarController(controller._view, toolbar);
+	controller.setModel(model);
+	controller.clear();
+	controller.setModel(model);
+
+
 };
 
 function clearEditor(){
@@ -43,17 +96,22 @@ function render(){
 }
 
 goog.events.listen(window, goog.events.EventType.LOAD, initPage);
---></script>
+</script>
 </head>
 
 <body>
 
+<<<<<<< HEAD:jchemhub/view/demo.html
   <input type="button" value="clear" onclick="clearEditor();" />
   <input type="button" value="reset" onclick="setReaction();" />
   <input type="button" value="json to console" onclick="getJson();" />
   <input type="button" value="re-render" onclick="render();" />
 <div id="reactionEditorContainer" style="height:400px;width:800px"></div>
 
+=======
+<div id="reactionEditorToolbar"  style='width:800px'></div>
+<div id="reactionEditorContainer" style="width: 800px; height: 400px"></div>
+>>>>>>> f933361... implement toolbar:jchemhub/view/demo.html
 
 </body>
 </html>

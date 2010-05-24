@@ -1,0 +1,175 @@
+<html>
+<head>
+<title>Editor Unit Tests - jchemhub.view.Plugin</title>
+<script src="../../third-party/closure/closure/goog/base.js"></script>
+<script src="../deps.js"></script>
+
+<script>
+  goog.require('jchemhub.view.ReactionEditor');
+  goog.require('jchemhub.view.Plugin');
+  goog.require('goog.functions');
+  goog.require('goog.userAgent');
+  goog.require('goog.testing.StrictMock');
+  goog.require('goog.testing.jsunit');
+</script>
+</head>
+<body>
+
+<script>
+
+var plugin;
+var editorObject;
+
+
+function setUp() {
+  plugin = new jchemhub.view.Plugin();
+  editorObject = {};
+}
+
+
+function tearDown() {
+  plugin.dispose();
+}
+
+
+function testRegistereditorObject() {
+  plugin.registerEditorObject(editorObject);
+  assertEquals('Register field object must be stored in protected field.',
+      editorObject, plugin.editorObject);
+
+  assertFalse('Newly registered plugin must not be enabled.',
+      plugin.isEnabled(editorObject));
+}
+
+
+function testUnregistereditorObject() {
+  plugin.registerEditorObject(editorObject);
+  plugin.enable(editorObject);
+  plugin.unregisterEditorObject(editorObject);
+
+  assertNull('editorObject property must be undefined after ' +
+      'unregistering a field object.', plugin.editorObject);
+  assertFalse('Unregistered field object must not be enabled',
+      plugin.isEnabled(editorObject));
+}
+
+
+function testEnable() {
+  plugin.registerEditorObject(editorObject);
+  plugin.enable(editorObject);
+
+  assertTrue('Enabled field object must be enabled according to isEnabled().',
+      plugin.isEnabled(editorObject));
+}
+
+
+function testDisable() {
+  plugin.registerEditorObject(editorObject);
+  plugin.enable(editorObject);
+  plugin.disable(editorObject);
+
+  assertFalse('Disabled field object must be disabled according to ' +
+      'isEnabled().', plugin.isEnabled(editorObject));
+}
+
+
+function testIsEnabled() {
+  // Other base cases covered while testing enable() and disable().
+  
+  assertFalse('Unregistered field object must be disabled according ' +
+              'to isEnabled().', plugin.isEnabled(editorObject));
+}
+
+
+function testIsSupportedCommand() {
+  assertFalse('Base plugin class must not support any commands.',
+      plugin.isSupportedCommand('+indent'))
+}
+
+function testExecCommand() {
+  var mockField = new goog.testing.StrictMock(jchemhub.view.ReactionEditor);
+  plugin.registerEditorObject(mockField);
+
+  if (goog.userAgent.GECKO) {
+    mockField.stopChangeEvents(true, true);
+  }
+  mockField.dispatchBeforeChange();
+  // NOTE: dispatch change turns back on (delayed) change events.
+  mockField.dispatchChange();
+  mockField.dispatchSelectionChangeEvent();
+  mockField.$replay();
+
+  var passedCommand, passedArg;
+  plugin.execCommandInternal = function(command, arg){
+    passedCommand = command;
+    passedArg = arg;
+  };
+  plugin.execCommand('+indent', true);
+
+  // Verify that execCommand dispatched the expected events.
+  mockField.$verify();
+  mockField.$reset();
+  // Verify that execCommandInternal was called with the correct arguments.
+  assertEquals('+indent', passedCommand);
+  assertTrue(passedArg);
+
+  plugin.isSilentCommand = goog.functions.constant(true);
+  mockField.$replay();
+  plugin.execCommand('+outdent', false);
+  // Verify that execCommand on a silent plugin dispatched no events.
+  mockField.$verify();
+  // Verify that execCommandInternal was called with the correct arguments.
+  assertEquals('+outdent', passedCommand);
+  assertFalse(passedArg);
+}
+
+/**
+ * Regression test for http://b/issue?id=1471355 .
+ */
+function testExecCommandException() {
+  var mockField = new goog.testing.StrictMock(jchemhub.view.ReactionEditor);
+  plugin.registerEditorObject(mockField);
+  plugin.execCommandInternal = function() {
+    throw 1;
+  };
+
+  if (goog.userAgent.GECKO) {
+    mockField.stopChangeEvents(true, true);
+  }
+  mockField.dispatchBeforeChange();
+  // NOTE: dispatch change turns back on (delayed) change events.
+  mockField.dispatchChange();
+  mockField.dispatchSelectionChangeEvent();
+  mockField.$replay();
+
+  assertThrows('Exception should not be swallowed', function() {
+    plugin.execCommand();
+  });
+
+  // Verifies that cleanup is done despite the exception.
+  mockField.$verify();
+}
+
+function testDisposed() {
+  plugin.registerEditorObject(editorObject);
+  plugin.dispose();
+  assert(plugin.getDisposed());
+  assertNull('Disposed plugin must not have a field object.',
+      plugin.editorObject);
+  assertFalse('Disposed plugin must not have an enabled field object.',
+      plugin.isEnabled(editorObject));
+}
+
+function testIsAndSetAutoDispose() {
+  assertTrue('Plugin must start auto-disposable', plugin.isAutoDispose());
+
+  plugin.setAutoDispose(false);
+  assertFalse(plugin.isAutoDispose());
+
+  plugin.setAutoDispose(true);
+  assertTrue(plugin.isAutoDispose());
+}
+
+</script>
+</body>
+</html>
