@@ -10,7 +10,7 @@ goog.require('jchemhub.model.Atom');
  *            target, Atom at other end of bond.
  * @constructor
  */
-jchemhub.model.Bond = function(source, target) {
+jchemhub.model.Bond = function(source, target, opt_molecule) {
 	/**
 	 * source Atom
 	 * 
@@ -24,6 +24,8 @@ jchemhub.model.Bond = function(source, target) {
 	 */
 	this.target = target;
 	
-	//this.aromatic=false;
+	if(opt_molecule){
+		this.molecule = molecule;
+	}
 };
 

@@ -22,29 +22,35 @@ jchemhub.view.ReactionRenderer = function(graphics, opt_config) {
 	this.plusRenderer = new jchemhub.view.PlusRenderer(graphics, this.config);
 }
 goog.inherits(jchemhub.view.ReactionRenderer, jchemhub.view.Renderer);
-
+/**
+ * 
+ * @param reaction
+ * @return
+ */
 jchemhub.view.ReactionRenderer.prototype.render = function(reaction) {
 	var previousReactant;
+	var transform = this.getTransform(reaction);
+	var group = this.graphics.createGroup();
 	goog.array.forEach(reaction.reactants, function(reactant) {
 		if (previousReactant) {
 			var center = jchemhub.view.ReactionRenderer.center( [ previousReactant, reactant ]);
-			this.plusRenderer.render(center, this.transform);
+			this.plusRenderer.render(center, transform, group);
 		}
 		previousReactant = reactant;
-		this.moleculeRenderer.render(reactant);
+		this.moleculeRenderer.render(reactant, transform, group);
 	},this);
 	
 	var reaction_center = jchemhub.view.ReactionRenderer.center(goog.array.concat(reaction.reactants, reaction.products));
-	this.arrowRenderer.render(reaction_center, this.transform);
+	this.arrowRenderer.render(reaction_center, transform, group);
 
 	var previousProduct = null;
 	goog.array.forEach(reaction.products, function(product) {
 		if (previousProduct) {
 			var center = jchemhub.view.ReactionRenderer.center( [ previousProduct, product ]);
-			this.plusRenderer.render(center, this.transform);
+			this.plusRenderer.render(center, transform, group);
 		}
 		previousProduct=product;
-		this.moleculeRenderer.render(product);
+		this.moleculeRenderer.render(product, transform, group);
 	}, this);
 
 }
@@ -77,17 +83,37 @@ jchemhub.view.ReactionRenderer.boundingBox = function(molecules) {
 	return goog.math.Box.boundingBox.apply(null, coords);
 }
 
+/**
+ * Logging object.
+ * 
+ * @type {goog.debug.Logger}
+ * @protected
+ */
+jchemhub.view.ReactionRenderer.prototype.logger = goog.debug.Logger
+		.getLogger('jchemhub.view.ReactionRenderer');
+
+/**
+ * 
+ * @param molecules
+ * @return
+ */
 jchemhub.view.ReactionRenderer.boundingRect = function(molecules){
 	return goog.math.Rect.createFromBox(this.boundingBox(molecules));
 }
-
-jchemhub.view.ReactionRenderer.prototype.setupTransform=function(reaction){
+/**
+ * 
+ * @param reaction
+ * @return
+ */
+jchemhub.view.ReactionRenderer.prototype.getTransform=function(reaction){
 	var molecules = goog.array.concat(reaction.reactants, reaction.products);
 	var fromRect = jchemhub.view.ReactionRenderer.boundingRect(molecules);
-	var transform = new jchemhub.graphics.AffineTransform().setToTranslation(-fromRect.left, -fromRect.top);
 	var toSize = fromRect.getSize().scaleToFit(this.graphics.getSize());
 	var scale = toSize.width / fromRect.getSize().width;
-	this.transform = transform.concatenate(new jchemhub.graphics.AffineTransform().setToScale(scale, scale));	
-}
+	
+	var transform = new jchemhub.graphics.AffineTransform(scale,0,0,-scale,-fromRect.left*scale,-fromRect.top*scale );	
+	this.logger.info('transform: ' + transform);
+	return transform;
+};
 
 	

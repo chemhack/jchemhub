@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>jchemhub.view.MoleculeRenderer</title>
+<!-- 
+ <script src="../../jchemhub_compiled.js"></script>
+ -->
+<script src="../../third-party/closure/closure/goog/base.js"></script>
+<script src="../deps.js"></script>
+
+<script>
+	goog.require('jchemhub.view.MoleculeRenderer');
+	goog.require('jchemhub.view.SingleBondRenderer');
+	goog.require('jchemhub.view.SingleUpBondRenderer');
+	goog.require('jchemhub.view.SingleDownBondRenderer');
+	goog.require('jchemhub.view.SingleUpOrDownBondRenderer');
+	goog.require('jchemhub.view.DoubleBondRenderer');
+	goog.require('jchemhub.view.TripleBondRenderer');
+	goog.require('jchemhub.view.QuadrupleBondRenderer');
+	goog.require('jchemhub.model.Atom');
+	goog.require('jchemhub.model.Molecule');
+	goog.require('jchemhub.model.SingleBond');
+	goog.require('jchemhub.model.SingleBondUp');
+	goog.require('jchemhub.model.SingleBondDown');
+	goog.require('jchemhub.model.SingleBondUpOrDown');	
+	goog.require('jchemhub.model.DoubleBond');
+	goog.require('jchemhub.model.TripleBond');
+	goog.require('jchemhub.model.QuadrupleBond');
+	goog.require('goog.events.EventType');
+	goog.require('goog.dom');
+	goog.require('goog.graphics');
+	goog.require('jchemhub.graphics.AffineTransform');
+	goog.require('goog.debug.Console');
+</script>
+<script>
+    
+function initPage(){
+
+	var c = new goog.debug.Console(); 
+	c.setCapturing(true); 
+	var element = goog.dom.getElement('container')
+	var graphics = goog.graphics.createGraphics(element.clientWidth,
+			element.clientHeight);
+	var group = graphics.createGroup();
+	graphics.render(element);
+	var r = new jchemhub.view.MoleculeRenderer(graphics);
+	
+	var mol1 = new jchemhub.model.Molecule();
+	var trans = new jchemhub.graphics.AffineTransform(20,0,0,-20,0,0);
+	var c1 = new jchemhub.model.Atom("C", 2, -2);
+	var o1 = new jchemhub.model.Atom("O", 3, -3);
+	mol1.addAtom(c1);
+	mol1.addAtom(o1);
+	var b = new jchemhub.model.SingleBond(c1, o1);
+	mol1.addBond(b);
+	r.render(mol1, trans, group);
+	
+	var mol2 = new jchemhub.model.Molecule();
+	var c2 = new jchemhub.model.Atom("C", 5, -2);
+	var o2 = new jchemhub.model.Atom("O", 7, -2);
+	mol2.addAtom(c2);
+	mol2.addAtom(o2);
+	var b2 = new jchemhub.model.DoubleBond(c2, o2)
+	mol2.addBond(b2);
+
+	r.render(mol2, trans, group);
+	
+	var mol3 = new jchemhub.model.Molecule();
+	var c3 = new jchemhub.model.Atom("C", 8, -2);
+	var c4 = new jchemhub.model.Atom("C", 10, -2);
+	mol3.addAtom(c3);
+	mol3.addAtom(c4);
+	var b3 = new jchemhub.model.TripleBond(c3, c4);
+	mol3.addBond(b3);
+
+
+	
+	var n = new jchemhub.model.Atom("N", 2, -4);
+	var s = new jchemhub.model.Atom("S", 2, -6);
+	mol3.addAtom(n);
+	mol3.addAtom(s);
+	var b4 = new jchemhub.model.QuadrupleBond(n,s);
+	mol3.addBond(b4);
+	
+	r.render(mol3, trans, group);
+	
+	var mol4 = new jchemhub.model.Molecule();
+	var p = new jchemhub.model.Atom("P", 4, -4);
+	var cl = new jchemhub.model.Atom("Cl", 4, -6); 
+	mol4.addAtom(p);
+	mol4.addAtom(cl);
+	var b5 = new jchemhub.model.SingleBondUp(p,cl);
+	mol4.addBond(b5);
+
+	var f = new jchemhub.model.Atom("F", 6, -4);
+	var br = new jchemhub.model.Atom("Br", 6, -6);
+	mol4.addAtom(f);
+	mol4.addAtom(br);
+	var b6 = new jchemhub.model.SingleBondDown(f,br);
+	mol4.addBond(b6);
+	r.render(mol4, trans, group);
+	
+	var mol5 = new jchemhub.model.Molecule();
+	var i = new jchemhub.model.Atom("I", 8, -4);
+	var h = new jchemhub.model.Atom("H", 8, -6);
+	mol5.addAtom(i);
+	mol5.addAtom(h);
+	var b7 = new jchemhub.model.SingleBondUpOrDown(i,h);
+	mol5.addBond(b7);
+	r.render(mol5, trans, group);
+
+	
+	
+
+};
+
+goog.events.listen(window, goog.events.EventType.LOAD, initPage);
+</script>
+</head>
+
+<body>
+<div id="container" style="width: 400px; height: 400px"></div>
+
+</body>
+</html>

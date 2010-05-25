@@ -43,6 +43,7 @@ jchemhub.model.Molecule.prototype.addBond = function(bond) {
 	this.bonds.push(bond);
 	bond.source.bonds.add(bond);
 	bond.target.bonds.add(bond);
+	bond.molecule = this;
 };
 
 /**
@@ -151,6 +152,7 @@ jchemhub.model.Molecule.prototype.removeBond = function(bondOrId) {
 	bond.source.bonds.remove(bond);
 	bond.target.bonds.remove(bond);
 	goog.array.remove(this.bonds, bond);
+	bond.molecule = null;
 };
 
 /**

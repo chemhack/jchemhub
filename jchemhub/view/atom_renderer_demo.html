@@ -26,8 +26,10 @@
     
 function initPage(){
 
-	var c = new goog.debug.Console(); 
-	c.setCapturing(true); 
+// note:  uncomment the next two lines to turn on console logging
+//	var c = new goog.debug.Console(); 
+//	c.setCapturing(true); 
+
 	var element = goog.dom.getElement('container')
 	var graphics = goog.graphics.createGraphics(element.clientWidth,
 			element.clientHeight);

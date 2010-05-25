@@ -18,10 +18,13 @@
 	goog.require('goog.events.EventType');
 	goog.require('goog.dom');
 	goog.require('goog.graphics');
+	goog.require('goog.debug.Console');
 </script>
 <script><!--
     
 function initPage(){
+	var c = new goog.debug.Console(); 
+	c.setCapturing(true); 
 	var reaction = jchemhub.io.json.readReaction(reactionDrawing);
 	var element = goog.dom.getElement('reactionContainer')
 	var graphics = goog.graphics.createGraphics(element.clientWidth,
@@ -29,7 +32,7 @@ function initPage(){
 	graphics.render(element);
 
 	var rr = new jchemhub.view.ReactionRenderer(graphics);
-	rr.setupTransform(reaction);
+
 	rr.render(reaction);
 };
 
@@ -38,7 +41,7 @@ goog.events.listen(window, goog.events.EventType.LOAD, initPage);
 </head>
 
 <body>
-<div id="reactionContainer" style="width: 1000px; height: 300px"></div>
+<div id="reactionContainer" style="width: 1000px; height: 400px"></div>
 
 </body>
 </html>
