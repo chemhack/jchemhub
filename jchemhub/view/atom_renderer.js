@@ -45,7 +45,7 @@ jchemhub.view.AtomRenderer.prototype.render = function(atom, transform, group) {
 				symbol.justification, null, font, stroke, fill, group);
 		if (symbol.justification == 'left') {
 			if (symbol.subscript || symbol.superscript) {
-				var subSize = config.get("subscriptSize");
+				var subSize = this.config.get("subscriptSize");
 				if (symbol.subscript) {
 					graphics.drawText(symbol.subscript, point.x + w * 0.9,
 							point.y, subSize, subSize, 'center', null, font,
@@ -253,7 +253,7 @@ jchemhub.view.AtomRenderer.defaultConfig = {
 	},
 	Br : {
 
-		color : 'dark red'
+		color : 'DarkRed'
 
 	},
 	I : {
