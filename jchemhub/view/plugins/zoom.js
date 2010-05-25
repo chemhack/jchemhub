@@ -43,13 +43,14 @@ jchemhub.view.plugins.Zoom.prototype.isSupportedCommand = function(command) {
 /** @inheritDoc */
 jchemhub.view.plugins.Zoom.prototype.execCommand = function(command,
     var_args) {
+	var current = this.editorObject.getScaleFactor();
   if (command == jchemhub.view.plugins.Zoom.COMMAND.ZOOM_IN) {
-	  this.editorObject.zoom_factor*=1.1;  
+	  this.editorObject.setScaleFactor(current*1.1);  
   } else if (command == jchemhub.view.plugins.Zoom.COMMAND.ZOOM_OUT) {
-	  this.editorObject.zoom_factor*=0.9;
+	  this.editorObject.setScaleFactor(current*0.9);
   }
-  this.logger.info("zoom: " + this.editorObject.zoom_factor);
-  this.editorObject.render();
+
+  this.editorObject.setModel(this.editorObject.getModel());
 };
 
 

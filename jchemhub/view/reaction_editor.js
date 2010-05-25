@@ -49,8 +49,6 @@ jchemhub.view.ReactionEditor = function(element, opt_config) {
 		// defaults
 	}
 
-	this.zoom_factor = 1;
-
 	this.graphics = goog.graphics.createGraphics(element.clientWidth,
 			element.clientHeight);
 
@@ -131,6 +129,14 @@ jchemhub.view.ReactionEditor.prototype.clear = function() {
 
 	this.graphics.drawRect(0, 0, this.graphics.getSize().width, this.graphics
 			.getSize().height, null, fill);
+}
+
+jchemhub.view.ReactionEditor.prototype.getScaleFactor = function(){
+	return this.reactionRenderer.scale_factor;
+}
+
+jchemhub.view.ReactionEditor.prototype.setScaleFactor = function(scale){
+	this.reactionRenderer.scale_factor = scale;
 }
 
 jchemhub.view.ReactionEditor.prototype.setModel = function(model) {

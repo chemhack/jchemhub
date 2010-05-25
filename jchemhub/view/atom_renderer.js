@@ -21,7 +21,6 @@ jchemhub.view.AtomRenderer.prototype.render = function(atom, transform, group) {
 	var atom_config = this.config.get("atom");
 	var color = this.config.get(atom.symbol) ? this.config.get(atom.symbol).color
 			: atom_config.color;
-	this.logger.info('color: ' + color);
 			
 	var scale = transform.getScaleX();
 

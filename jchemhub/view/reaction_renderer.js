@@ -16,6 +16,7 @@ goog.require("jchemhub.graphics.AffineTransform");
  */
 jchemhub.view.ReactionRenderer = function(graphics, opt_config) {
 	jchemhub.view.Renderer.call(this, graphics, opt_config);
+	this.scale_factor = 1;
 	this.moleculeRenderer = new jchemhub.view.MoleculeRenderer(graphics,
 			this.config);
 	this.arrowRenderer = new jchemhub.view.ArrowRenderer(graphics, this.config);
@@ -109,7 +110,7 @@ jchemhub.view.ReactionRenderer.prototype.getTransform=function(reaction){
 	var molecules = goog.array.concat(reaction.reactants, reaction.products);
 	var fromRect = jchemhub.view.ReactionRenderer.boundingRect(molecules);
 	var toSize = fromRect.getSize().scaleToFit(this.graphics.getSize());
-	var scale = toSize.width / fromRect.getSize().width;
+	var scale = this.scale_factor * toSize.width / fromRect.getSize().width;
 	
 	var transform = new jchemhub.graphics.AffineTransform(scale,0,0,-scale,-fromRect.left*scale,-fromRect.top*scale );	
 	this.logger.info('transform: ' + transform);
