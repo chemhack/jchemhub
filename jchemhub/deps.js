@@ -38,7 +38,7 @@ goog.addDependency("../../../../jchemhub/util/bond_util.js", ['jchemhub.util.Bon
 goog.addDependency("../../../../jchemhub/view/arrow_drawing.js", ['jchemhub.view.ArrowDrawing'], []);
 goog.addDependency("../../../../jchemhub/view/arrow_renderer.js", ['jchemhub.view.ArrowRenderer'], ['jchemhub.view.Renderer']);
 goog.addDependency("../../../../jchemhub/view/atom_drawing.js", ['jchemhub.view.AtomDrawing'], ['goog.math.Coordinate']);
-goog.addDependency("../../../../jchemhub/view/atom_renderer.js", ['jchemhub.view.AtomRenderer'], []);
+goog.addDependency("../../../../jchemhub/view/atom_renderer.js", ['jchemhub.view.AtomRenderer'], ['jchemhub.view.Renderer', 'goog.debug.Logger']);
 goog.addDependency("../../../../jchemhub/view/bond_drawing.js", ['jchemhub.view.BondDrawing'], ['jchemhub.view.Drawing', 'jchemhub.math.Line', 'goog.events', 'goog.fx.Dragger']);
 goog.addDependency("../../../../jchemhub/view/bond_renderer.js", ['jchemhub.view.BondRenderer'], []);
 goog.addDependency("../../../../jchemhub/view/command.js", ['jchemhub.view.Command'], []);

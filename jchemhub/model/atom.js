@@ -1,5 +1,4 @@
 //Licence and copyright
-
 goog.provide('jchemhub.model.Atom');
 goog.provide('jchemhub.model.Atom.Hybridizations');
 goog.require("jchemhub.resource.Covalence");
