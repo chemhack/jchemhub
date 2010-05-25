@@ -35,7 +35,7 @@ function initPage(){
 			element.clientHeight);
 	var group = graphics.createGroup();
 	graphics.render(element);
-	var r = new jchemhub.view.AtomRenderer(graphics);
+	var r = new jchemhub.view.AtomRenderer(null, graphics);
 	
 	var trans = new jchemhub.graphics.AffineTransform(20,0,0,-20,0,0);
 	var mol1 = new jchemhub.model.Molecule();

@@ -54,9 +54,8 @@ jchemhub.view.ReactionEditor = function(element, opt_config) {
 
 	this.graphics.render(this.originalElement);
 
-	this.group = this.graphics.createGroup();
-	this.reactionRenderer = new jchemhub.view.ReactionRenderer(this.graphics);
-	this.moleculeRenderer = new jchemhub.view.MoleculeRenderer(this.graphics);
+	this.reactionRenderer = new jchemhub.view.ReactionRenderer(this, this.graphics);
+	this.moleculeRenderer = new jchemhub.view.MoleculeRenderer(this, this.graphics);
 
 	// The editor will not listen to change events until it has finished loading
 	// this.stoppedEvents_ = {};

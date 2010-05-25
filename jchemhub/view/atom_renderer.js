@@ -10,8 +10,8 @@ goog.require('goog.debug.Logger');
  *            {goog.graphics.AbstractGraphics} graphics to draw on.
  * @extends {jchemhub.view.Renderer}
  */
-jchemhub.view.AtomRenderer = function(graphics, opt_config) {
-	jchemhub.view.Renderer.call(this, graphics, opt_config,
+jchemhub.view.AtomRenderer = function(parentEventTarget, graphics, opt_config) {
+	jchemhub.view.Renderer.call(this, parentEventTarget, graphics, opt_config,
 			jchemhub.view.AtomRenderer.defaultConfig);
 }
 goog.inherits(jchemhub.view.AtomRenderer, jchemhub.view.Renderer);

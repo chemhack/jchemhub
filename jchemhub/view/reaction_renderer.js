@@ -10,17 +10,18 @@ goog.require("jchemhub.graphics.AffineTransform");
  * Class to render a reaction object to a graphics object
  * 
  * @constructor
+ * @param parentEventTarget {goog.events.EventTarget}
  * @param graphics
  *            {goog.graphics.AbstractGraphics} graphics to draw on.
  * @extends {jchemhub.view.Renderer}
  */
-jchemhub.view.ReactionRenderer = function(graphics, opt_config) {
-	jchemhub.view.Renderer.call(this, graphics, opt_config);
+jchemhub.view.ReactionRenderer = function(parentEventTarget, graphics, opt_config) {
+	jchemhub.view.Renderer.call(this, parentEventTarget, graphics, opt_config);
 	this.scale_factor = 1;
-	this.moleculeRenderer = new jchemhub.view.MoleculeRenderer(graphics,
+	this.moleculeRenderer = new jchemhub.view.MoleculeRenderer(parentEventTarget, graphics,
 			this.config);
-	this.arrowRenderer = new jchemhub.view.ArrowRenderer(graphics, this.config);
-	this.plusRenderer = new jchemhub.view.PlusRenderer(graphics, this.config);
+	this.arrowRenderer = new jchemhub.view.ArrowRenderer(parentEventTarget, graphics, this.config);
+	this.plusRenderer = new jchemhub.view.PlusRenderer(parentEventTarget, graphics, this.config);
 }
 goog.inherits(jchemhub.view.ReactionRenderer, jchemhub.view.Renderer);
 /**
@@ -113,7 +114,7 @@ jchemhub.view.ReactionRenderer.prototype.getTransform=function(reaction){
 	var scale = this.scale_factor * toSize.width / fromRect.getSize().width;
 	
 	var transform = new jchemhub.graphics.AffineTransform(scale,0,0,-scale,-fromRect.left*scale,-fromRect.top*scale );	
-	this.logger.info('transform: ' + transform);
+
 	return transform;
 };
 

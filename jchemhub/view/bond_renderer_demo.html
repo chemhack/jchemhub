@@ -43,7 +43,7 @@ function initPage(){
 			element.clientHeight);
 	var group = graphics.createGroup();
 	graphics.render(element);
-	var sbr = new jchemhub.view.SingleBondRenderer(graphics);
+	var sbr = new jchemhub.view.SingleBondRenderer(null, graphics);
 	
 	var trans = new jchemhub.graphics.AffineTransform(20,0,0,-20,0,0);
 	var c1 = new jchemhub.model.Atom("C", 2, -2);
@@ -57,7 +57,7 @@ function initPage(){
 	var b2 = new jchemhub.model.DoubleBond(c2, o2)
 	mol2.addBond(b2);
 	trans = new jchemhub.graphics.AffineTransform(30,0,0,-30,0,0);
-	var dbr = new jchemhub.view.DoubleBondRenderer(graphics);
+	var dbr = new jchemhub.view.DoubleBondRenderer(null, graphics);
 	dbr.render(b2, trans, group);
 	
 	var mol3 = new jchemhub.model.Molecule();
@@ -66,14 +66,14 @@ function initPage(){
 	var b3 = new jchemhub.model.TripleBond(c3, c4);
 	mol3.addBond(b3);
 	trans = new jchemhub.graphics.AffineTransform(40,0,0,-40,0,0);
-	var tbr = new jchemhub.view.TripleBondRenderer(graphics);
+	var tbr = new jchemhub.view.TripleBondRenderer(null, graphics);
 	tbr.render(b3, trans, group);
 	
 	var n = new jchemhub.model.Atom("N", 2, -4);
 	var s = new jchemhub.model.Atom("S", 2, -5);
 	var b4 = new jchemhub.model.QuadrupleBond(n,s);
 	trans = new jchemhub.graphics.AffineTransform(30,0,0,-30,0,0);
-	var qbr = new jchemhub.view.QuadrupleBondRenderer(graphics);
+	var qbr = new jchemhub.view.QuadrupleBondRenderer(null, graphics);
 	qbr.render(b4, trans, group);
 	
 	var mol4 = new jchemhub.model.Molecule();
@@ -81,7 +81,7 @@ function initPage(){
 	var cl = new jchemhub.model.Atom("Cl", 4, -5); 
 	var b5 = new jchemhub.model.SingleBondUp(p,cl);
 	mol4.addBond(b5);
-	var sbur = new jchemhub.view.SingleUpBondRenderer(graphics);
+	var sbur = new jchemhub.view.SingleUpBondRenderer(null, graphics);
 	sbur.render(b5, trans, group);
 
 
@@ -89,13 +89,13 @@ function initPage(){
 	var br = new jchemhub.model.Atom("Br", 6, -5);
 	var b6 = new jchemhub.model.SingleBondDown(f,br);
 	mol4.addBond(b6);
-	var sbdr = new jchemhub.view.SingleDownBondRenderer(graphics);
+	var sbdr = new jchemhub.view.SingleDownBondRenderer(null, graphics);
 	sbdr.render(b6, trans, group);
 	
 	var i = new jchemhub.model.Atom("I", 8, -4);
 	var h = new jchemhub.model.Atom("H", 8, -5);
 	var b7 = new jchemhub.model.SingleBondUpOrDown(i,h);
-	var sbudr = new jchemhub.view.SingleUpOrDownBondRenderer(graphics);
+	var sbudr = new jchemhub.view.SingleUpOrDownBondRenderer(null, graphics);
 	sbudr.render(b7, trans, group);
 	
 	

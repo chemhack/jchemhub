@@ -10,10 +10,11 @@ goog.require('jchemhub.view.AtomRenderer');
  *            {goog.graphics.AbstractGraphics} graphics to draw on.
  * @extends {jchemhub.view.Renderer}
  */
-jchemhub.view.MoleculeRenderer = function(graphics, opt_config) {
-	jchemhub.view.Renderer.call(this, graphics, opt_config, jchemhub.view.MoleculeRenderer.defaultConfig);
-	this.bondRendererFactory = new jchemhub.view.BondRenderer.Factory(graphics);
-	this.atomRenderer = new jchemhub.view.AtomRenderer(graphics);
+jchemhub.view.MoleculeRenderer = function(parentEventTarget, graphics, opt_config) {
+	jchemhub.view.Renderer.call(this, parentEventTarget, graphics, opt_config, jchemhub.view.MoleculeRenderer.defaultConfig);
+
+	this.bondRendererFactory = new jchemhub.view.BondRenderer.Factory(parentEventTarget, graphics);
+	this.atomRenderer = new jchemhub.view.AtomRenderer(parentEventTarget, graphics);
 }
 goog.inherits(jchemhub.view.MoleculeRenderer, jchemhub.view.Renderer);
 

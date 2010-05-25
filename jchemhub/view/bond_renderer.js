@@ -18,8 +18,8 @@ goog.require('jchemhub.math.Line');
  *            {goog.graphics.AbstractGraphics} graphics to draw on.
  * @extends {jchemhub.view.Renderer}
  */
-jchemhub.view.BondRenderer = function(graphics, opt_config) {
-	jchemhub.view.Renderer.call(this, graphics, opt_config,
+jchemhub.view.BondRenderer = function(parentEventTarget, graphics, opt_config) {
+	jchemhub.view.Renderer.call(this, parentEventTarget, graphics, opt_config,
 			jchemhub.view.BondRenderer.defaultConfig);
 
 }
@@ -112,7 +112,8 @@ jchemhub.view.BondRenderer.defaultConfig = {
  * @param opt_config
  * @return
  */
-jchemhub.view.BondRenderer.Factory = function(graphics, opt_config) {
+jchemhub.view.BondRenderer.Factory = function(parentEventTarget, graphics, opt_config) {
+	this.parentEventTarget = parentEventTarget;
 	this.graphics = graphics;
 	this.config = new goog.structs.Map();
 	if (opt_config) {
@@ -123,49 +124,49 @@ jchemhub.view.BondRenderer.Factory = function(graphics, opt_config) {
 jchemhub.view.BondRenderer.Factory.prototype.get = function(bond) {
 	if (bond instanceof jchemhub.model.SingleBondUp) {
 		if (!this.singleUpBondRenderer) {
-			this.singleUpBondRenderer = new jchemhub.view.SingleUpBondRenderer(
+			this.singleUpBondRenderer = new jchemhub.view.SingleUpBondRenderer(this.parentEventTarget, 
 					this.graphics, this.config);
 		}
 		return this.singleUpBondRenderer;
 	}
 	if (bond instanceof jchemhub.model.SingleBondDown) {
 		if (!this.singleDownBondRenderer) {
-			this.singleDownBondRenderer = new jchemhub.view.SingleDownBondRenderer(
+			this.singleDownBondRenderer = new jchemhub.view.SingleDownBondRenderer(this.parentEventTarget, 
 					this.graphics, this.config);
 		}
 		return this.singleDownBondRenderer;
 	}
 	if (bond instanceof jchemhub.model.SingleBondUpOrDown) {
 		if (!this.singleUpOrDownBondRenderer) {
-			this.singleUpOrDownBondRenderer = new jchemhub.view.SingleUpOrDownBondRenderer(
+			this.singleUpOrDownBondRenderer = new jchemhub.view.SingleUpOrDownBondRenderer(this.parentEventTarget, 
 					this.graphics, this.config);
 		}
 		return this.singleUpOrDownBondRenderer;
 	}
 	if (bond instanceof jchemhub.model.SingleBond) {
 		if (!this.singleBondRenderer) {
-			this.singleBondRenderer = new jchemhub.view.SingleBondRenderer(
+			this.singleBondRenderer = new jchemhub.view.SingleBondRenderer(this.parentEventTarget, 
 					this.graphics, this.config);
 		}
 		return this.singleBondRenderer;
 	}
 	if (bond instanceof jchemhub.model.DoubleBond) {
 		if (!this.doubleBondRenderer) {
-			this.doubleBondRenderer = new jchemhub.view.DoubleBondRenderer(
+			this.doubleBondRenderer = new jchemhub.view.DoubleBondRenderer(this.parentEventTarget, 
 					this.graphics, this.config);
 		}
 		return this.doubleBondRenderer;
 	}
 	if (bond instanceof jchemhub.model.TripleBond) {
 		if (!this.tripleBondRenderer) {
-			this.tripleBondRenderer = new jchemhub.view.TripleBondRenderer(
+			this.tripleBondRenderer = new jchemhub.view.TripleBondRenderer(this.parentEventTarget, 
 					this.graphics, this.config);
 		}
 		return this.tripleBondRenderer;
 	}
 	if (bond instanceof jchemhub.model.QuadrupleBond) {
 		if (!this.quadrupleBondRenderer) {
-			this.quadrupleBondRenderer = new jchemhub.view.QuadrupleBondRenderer(
+			this.quadrupleBondRenderer = new jchemhub.view.QuadrupleBondRenderer(this.parentEventTarget, 
 					this.graphics, this.config);
 		}
 		return this.quadrupleBondRenderer;

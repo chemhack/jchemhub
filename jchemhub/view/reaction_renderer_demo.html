@@ -31,7 +31,7 @@ function initPage(){
 			element.clientHeight);
 	graphics.render(element);
 
-	var rr = new jchemhub.view.ReactionRenderer(graphics);
+	var rr = new jchemhub.view.ReactionRenderer(null, graphics);
 
 	rr.render(reaction);
 };

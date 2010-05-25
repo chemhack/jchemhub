@@ -10,7 +10,8 @@ goog.require("goog.structs.Map");
  *            {goog.graphics.AbstractGraphics} graphics to draw on.
  * @extends {jchemhub.view.Renderer}
  */
-jchemhub.view.Renderer = function(graphics, opt_config, defaultConfig) {
+jchemhub.view.Renderer = function(parentEventTarget, graphics, opt_config, defaultConfig) {
+	this.parentEventTarget = parentEventTarget;
 	this.graphics = graphics;
 
 	this.config = new goog.structs.Map(defaultConfig);
