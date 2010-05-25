@@ -1,6 +1,7 @@
 goog.provide("jchemhub.view.ReactionEditor");
 goog.provide("jchemhub.view.ReactionEditor.EventType");
-goog.require("jchemhub.view.Drawing");
+goog.require("jchemhub.view.ReactionRenderer");
+goog.require("jchemhub.view.MoleculeRenderer");
 goog.require("goog.graphics");
 goog.require('goog.events');
 goog.require('goog.fx.Dragger');
@@ -14,10 +15,10 @@ goog.require('jchemhub.view.Plugin');
  * 
  * 
  * @constructor
- * @extends {jchemhub.view.Drawing}
+ * @extends {goog.events.EventTarget}
  */
 jchemhub.view.ReactionEditor = function(element, opt_config) {
-	jchemhub.view.Drawing.call(this);
+	goog.events.EventTarget.call(this);
 	this.originalElement = element;
 	this.id = element.id;
 	this.editableDomHelper = goog.dom.getDomHelper(element);
@@ -41,19 +42,23 @@ jchemhub.view.ReactionEditor = function(element, opt_config) {
 	for ( var op in jchemhub.view.Plugin.OPCODE) {
 		this.indexedPlugins_[op] = [];
 	}
-	this._config = new goog.structs.Map(
+	this.config = new goog.structs.Map(
 			jchemhub.view.ReactionEditor.defaultConfig);
 	if (opt_config) {
-		this._config.addAll(opt_config); // merge optional config into
+		this.config.addAll(opt_config); // merge optional config into
 		// defaults
 	}
 
 	this.zoom_factor = 1;
 
-	this._graphics = goog.graphics.createGraphics(element.clientWidth,
+	this.graphics = goog.graphics.createGraphics(element.clientWidth,
 			element.clientHeight);
 
-	this._graphics.render(this.originalElement);
+	this.graphics.render(this.originalElement);
+
+	this.group = this.graphics.createGroup();
+	this.reactionRenderer = new jchemhub.view.ReactionRenderer(this.graphics);
+	this.moleculeRenderer = new jchemhub.view.MoleculeRenderer(this.graphics);
 
 	// The editor will not listen to change events until it has finished loading
 	// this.stoppedEvents_ = {};
@@ -83,20 +88,17 @@ jchemhub.view.ReactionEditor = function(element, opt_config) {
 	this.isEverModified_ = false;
 
 };
-goog.inherits(jchemhub.view.ReactionEditor, jchemhub.view.Drawing);
+goog.inherits(jchemhub.view.ReactionEditor, goog.events.EventTarget);
 
 /**
  * List of mutation events in Gecko browsers.
+ * 
  * @type {Array.<string>}
  * @protected
  */
-jchemhub.view.ReactionEditor.MUTATION_EVENTS_GECKO = [
-  'DOMNodeInserted',
-  'DOMNodeRemoved',
-  'DOMNodeRemovedFromDocument',
-  'DOMNodeInsertedIntoDocument',
-  'DOMCharacterDataModified'
-];
+jchemhub.view.ReactionEditor.MUTATION_EVENTS_GECKO = [ 'DOMNodeInserted',
+		'DOMNodeRemoved', 'DOMNodeRemovedFromDocument',
+		'DOMNodeInsertedIntoDocument', 'DOMCharacterDataModified' ];
 
 /**
  * Sets the active editor id.
@@ -123,68 +125,31 @@ jchemhub.view.ReactionEditor.getActiveEditorId = function() {
 };
 
 jchemhub.view.ReactionEditor.prototype.clear = function() {
-	jchemhub.view.ReactionEditor.superClass_.clear.call(this);
-	this._graphics.clear();
+	this.graphics.clear();
 	this.model = null;
-	var fill = new goog.graphics.SolidFill(
-			this.getConfig().get("background").color);
+	var fill = new goog.graphics.SolidFill(this.config.get("background").color);
 
-	this._graphics.drawRect(0, 0, this._graphics.getSize().width,
-			this._graphics.getSize().height, null, fill);
+	this.graphics.drawRect(0, 0, this.graphics.getSize().width, this.graphics
+			.getSize().height, null, fill);
 }
 
 jchemhub.view.ReactionEditor.prototype.setModel = function(model) {
 	this.clear();
 	this.model = model;
-	if (model instanceof jchemhub.model.Reaction) {
-		this.add(new jchemhub.view.ReactionDrawing(model));
-	}
-	if (model instanceof jchemhub.model.Molecule) {
-		this.add(new jchemhub.view.MoleculeDrawing(model));
-	}
-}
-
-/**
- * layout and render
- */
-
-jchemhub.view.ReactionEditor.prototype.layoutAndRender = function() {
-
-	var margin = this.getConfig().get("margin");
-	this.layout(new goog.math.Rect(margin, margin, this.zoom_factor
-			* this.getSize().width - margin * 2, this.zoom_factor
-			* this.getSize().height - margin * 2));
 	this.render();
 }
 
-/*
- * @override 
- * @return {goog.math.Rect}
- */
-jchemhub.view.ReactionEditor.prototype.getRect = function() {
-	return new goog.math.Rect(0, 0, this._graphics.getSize().width,
-			this._graphics.getSize().height);
-};
-
-/**
- * get transform
- * 
- * @return{goog.graphics.AffineTransform}
- */
-jchemhub.view.ReactionEditor.prototype.getTransform = function() {
-	return this._transform;
-}
-
-
-/**
- * render this drawing and all its children
- */
 jchemhub.view.ReactionEditor.prototype.render = function() {
-	this.renderChildren();
+	if (this.model instanceof jchemhub.model.Reaction) {
+		this.reactionRenderer.render(this.model);
+	}
+	if (this.model instanceof jchemhub.model.Molecule) {
+		this.moleculeRenderer.render(this.model);
+	}
 }
 
 /**
- * gets model from contained reaction drawing
+ * gets model
  * 
  * @return{jchemhub.model.Reaction | jchemhub.model.Molecule}
  */
@@ -216,7 +181,6 @@ jchemhub.view.ReactionEditor.prototype.dispatchBeforeChange = function() {
 // jchemhub.view.ReactionEditor.prototype.isEventStopped = function(eventType) {
 // return !!this.stoppedEvents_[eventType];
 // };
-
 
 /**
  * Calls all the plugins of the given operation, in sequence, with the given
@@ -1041,135 +1005,8 @@ jchemhub.view.ReactionEditor.SELECTION_CHANGE_FREQUENCY_ = 250;
  * A default configuration for the reaction editor.
  */
 jchemhub.view.ReactionEditor.defaultConfig = {
-	arrow : {
-		stroke : {
-			width : 2,
-			color : "black"
-		}
-	},
-	atom : {
-		diameter : .05,
-		stroke : {
-			width : 1,
-			color : '#FF9999'
-		},
-		fill : {
-			color : '#FF9999'
-		},
-		fontName : "Arial"
-	},
-	N : {
-		stroke : {
-			width : 1,
-			color : 'blue'
-		},
-		fill : {
-			color : 'blue'
-		}
-	},
-	O : {
-		stroke : {
-			width : 1,
-			color : 'red'
-		},
-		fill : {
-			color : 'red'
-		}
-	},
-	S : {
-		stroke : {
-			width : 1,
-			color : 'yellow'
-		},
-		fill : {
-			color : 'yellow'
-		}
-	},
-	P : {
-		stroke : {
-			width : 1,
-			color : 'orange'
-		},
-		fill : {
-			color : 'orange'
-		}
-	},
-	Cl : {
-		stroke : {
-			width : 1,
-			color : 'green'
-		},
-		fill : {
-			color : 'green'
-		}
-	},
-	F : {
-		stroke : {
-			width : 1,
-			color : 'green'
-		},
-		fill : {
-			color : 'green'
-		}
-	},
-	Br : {
-		stroke : {
-			width : 1,
-			color : 'dark red'
-		},
-		fill : {
-			color : 'dark red'
-		}
-	},
-	I : {
-		stroke : {
-			width : 1,
-			color : 'purple'
-		},
-		fill : {
-			color : 'purple'
-		}
-	},
-	C : {
-		stroke : {
-			width : 1,
-			color : 'black'
-		},
-		fill : {
-			color : 'black'
-		}
-	},
-	H : {
-		stroke : {
-			width : 1,
-			color : 'black'
-		},
-		fill : {
-			color : 'white'
-		}
-	},
 	background : {
 		color : '#F0FFF0'
 	},
-	margin : 20,
-	subscriptSize : 5,
-	bond : {
-		stroke : {
-			width : 2,
-			color : 'black'
-		},
-		fill : {
-			color : 'black'
-		}
-	},
-	highlight : {
-		radius : .1,
-		color : 'blue'
-	},
-	plus : {
-		stroke : {
-			width : 2,
-			color : "black"
-		}
-	}
+	margin : 20
 };

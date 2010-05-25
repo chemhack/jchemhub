@@ -26,14 +26,11 @@ jchemhub.controller.Controller.prototype.getModel = function(){
 };
 
 jchemhub.controller.Controller.prototype.clear = function(){
-
 	this._view.clear();
 };
 
 jchemhub.controller.Controller.prototype.setModel = function(model){
-
 	this._view.setModel(model);
-	this._view.layoutAndRender();
 };
 
 jchemhub.controller.Controller.buildReactionDrawing = function(rxn) {

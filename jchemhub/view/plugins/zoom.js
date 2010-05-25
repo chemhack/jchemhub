@@ -48,10 +48,8 @@ jchemhub.view.plugins.Zoom.prototype.execCommand = function(command,
   } else if (command == jchemhub.view.plugins.Zoom.COMMAND.ZOOM_OUT) {
 	  this.editorObject.zoom_factor*=0.9;
   }
-  
-  this.editorObject.setModel(this.editorObject.model); //hacky
-  this.editorObject.layoutAndRender();
-
+  this.logger.info("zoom: " + this.editorObject.zoom_factor);
+  this.editorObject.render();
 };
 
 

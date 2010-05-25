@@ -57,8 +57,8 @@
 	
 function initPage(){
 
-//	var c = new goog.debug.Console(); 
-//	c.setCapturing(true); 
+	var c = new goog.debug.Console(); 
+	c.setCapturing(true); 
 
 	var buttons = []; 
 	buttons.push(jchemhub.view.ToolbarFactory.makeButton( 
@@ -68,17 +68,15 @@ function initPage(){
     buttons.push(jchemhub.view.ToolbarFactory.makeButton(jchemhub.view.plugins.UndoRedo.COMMAND.UNDO, 'undo', 'undo'));
     buttons.push(jchemhub.view.ToolbarFactory.makeButton(jchemhub.view.plugins.UndoRedo.COMMAND.REDO, 'redo', 'redo'));
 
- 
 	var toolbar = jchemhub.view.DefaultToolbar.makeToolbar(buttons, goog.dom.getElement('reactionEditorToolbar')); 
 	var model = jchemhub.io.json.readReaction(reactionDrawing); 
-	var controller = new jchemhub.controller.Controller(goog.dom.getElement('reactionEditorContainer'));
-	controller._view.registerPlugin(new jchemhub.view.plugins.ClearEditor());
-	controller._view.registerPlugin(new jchemhub.view.plugins.Zoom());
-	controller._view.registerPlugin(new jchemhub.view.plugins.UndoRedo());
+	var editor = new jchemhub.view.ReactionEditor(goog.dom.getElement('reactionEditorContainer'));
+	editor.registerPlugin(new jchemhub.view.plugins.ClearEditor());
+	editor.registerPlugin(new jchemhub.view.plugins.Zoom());
+	editor.registerPlugin(new jchemhub.view.plugins.UndoRedo());
 	
-
-   var toolbarController = new jchemhub.view.ToolbarController(controller._view, toolbar);
-	controller.setModel(model);
+    var toolbarController = new jchemhub.view.ToolbarController(editor, toolbar);
+	editor.setModel(model);
 	
 
 };
