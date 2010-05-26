@@ -12,7 +12,6 @@ jchemhub.controller.AtomController = function(parentController) {
 goog.inherits(jchemhub.controller.AtomController, goog.events.EventTarget); 
 
 jchemhub.controller.AtomController.prototype.handleMouseOver = function(atom, e){
-	console.log(atom.symbol);
 	this.dispatchEvent(jchemhub.controller.AtomController.EventType.MOUSEOVER);
 };
 

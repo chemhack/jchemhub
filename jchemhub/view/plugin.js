@@ -159,7 +159,9 @@ jchemhub.view.Plugin.Op = {
 	MOUSEOVER: 10, 
 	MOUSEOUT: 11,
 	ATOM_MOUSEOVER : 12,
-	ATOM_MOUSEOUT : 13
+	ATOM_MOUSEOUT : 13,
+	BOND_MOUSEOVER : 14,
+	BOND_MOUSEOUT : 15
 };
 
 /**
@@ -186,7 +188,9 @@ jchemhub.view.Plugin.OPCODE = goog.object.transpose(goog.reflect.object(
 			handleMouseOver : jchemhub.view.Plugin.Op.MOUSEOVER,
 			handleMouseOut : jchemhub.view.Plugin.Op.MOUSEOUT,
 			handleAtomMouseOver : jchemhub.view.Plugin.Op.ATOM_MOUSEOVER,
-			handleAtomMouseOut : jchemhub.view.Plugin.Op.ATOM_MOUSEOUT
+			handleAtomMouseOut : jchemhub.view.Plugin.Op.ATOM_MOUSEOUT,
+			handleBondMouseOver : jchemhub.view.Plugin.Op.BOND_MOUSEOVER,
+			handleBondMouseOut : jchemhub.view.Plugin.Op.BOND_MOUSEOUT
 		}));
 
 /**

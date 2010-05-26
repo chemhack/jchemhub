@@ -31,9 +31,11 @@ goog.inherits(jchemhub.view.BondRenderer, jchemhub.view.Renderer);
  * @param transform
  * @return
  */
-jchemhub.view.BondRenderer.prototype.render = function(bond, transform, group) {
+jchemhub.view.BondRenderer.prototype.render = function(bond, transform) {
+	this.transform = transform;
 
-	var fill = new goog.graphics.SolidFill('red', 0.001); // 'transparent' fill
+	var fill = new goog.graphics.SolidFill('red', 0.001); // 'transparent'
+	// fill
 	var stroke = null;
 	var radius = this.config.get("highlight").radius * 3;
 	var theta = jchemhub.view.BondRenderer.getTheta(bond);
@@ -64,8 +66,55 @@ jchemhub.view.BondRenderer.prototype.render = function(bond, transform, group) {
 	bondBoxPath.lineTo(boxCoords[1].x, boxCoords[1].y);
 	bondBoxPath.close();
 
+	var group = this.graphics.createGroup();
 	this.graphics.drawPath(bondBoxPath, stroke, fill, group);
-	// group.getElement()._parentGroup = this.getGroup();
+	group.addEventListener(goog.events.EventType.MOUSEOVER, goog.bind(
+			this.controller.handleMouseOver, this.controller, bond));
+	group.addEventListener(goog.events.EventType.MOUSEOUT, goog.bind(
+			this.controller.handleMouseOut, this.controller, bond));
+
+};
+
+/**
+ * Logging object.
+ * 
+ * @type {goog.debug.Logger}
+ * @protected
+ */
+jchemhub.view.BondRenderer.prototype.logger = goog.debug.Logger
+		.getLogger('jchemhub.view.BondRenderer');
+
+jchemhub.view.BondRenderer.prototype.highlightOn = function(bond, opt_group) {
+
+	var strokeWidth = this.config.get("bond").stroke.width;
+	var stroke = new goog.graphics.Stroke(strokeWidth, this.config
+			.get("highlight").color);
+	var fill = null
+	var radius = this.config.get("highlight").radius
+			* this.transform.getScaleX();
+	var theta = jchemhub.view.BondRenderer.getTheta(bond);
+	this.logger.info("theta: " + theta);
+	var angle = theta + Math.PI / 2;
+
+	var arcExtent;
+	if (theta <= 0) {
+		arcExtent = (bond.source.coord.y <= bond.target.coord.y) ? -180 : 180;
+	} else {
+		arcExtent = (bond.source.coord.y > bond.target.coord.y) ? 180 : -180;
+	}
+	var coords = this.transform.transformCoords( [ bond.source.coord,
+			bond.target.coord ]);
+	console.log(bond);
+	console.log(coords);
+	var path = new goog.graphics.Path();
+	path.arc(coords[0].x, coords[0].y, radius, radius, angle, -arcExtent);
+	path.arc(coords[1].x, coords[1].y, radius, radius, angle, +arcExtent);
+
+	if (!opt_group) {
+		opt_group = this.graphics.createGroup();
+	}
+	this.graphics.drawPath(path, stroke, fill, opt_group);
+	return opt_group;
 }
 
 /**
@@ -76,7 +125,6 @@ jchemhub.view.BondRenderer.getTheta = function(bond) {
 	return new jchemhub.math.Line(bond.source.coord, bond.target.coord)
 			.getTheta();
 }
-
 
 /**
  * A default configuration for renderer
@@ -92,7 +140,7 @@ jchemhub.view.BondRenderer.defaultConfig = {
 		}
 	},
 	highlight : {
-		radius : .1,
+		radius : .2,
 		color : 'blue'
 	}
 };
@@ -104,8 +152,8 @@ jchemhub.view.BondRenderer.defaultConfig = {
  * @param opt_config
  * @return
  */
-jchemhub.view.BondRenderer.Factory = function(parentEventTarget, graphics, opt_config) {
-	this.parentEventTarget = parentEventTarget;
+jchemhub.view.BondRenderer.Factory = function(controller, graphics, opt_config) {
+	this.controller = controller;
 	this.graphics = graphics;
 	this.config = new goog.structs.Map();
 	if (opt_config) {
@@ -116,50 +164,50 @@ jchemhub.view.BondRenderer.Factory = function(parentEventTarget, graphics, opt_c
 jchemhub.view.BondRenderer.Factory.prototype.get = function(bond) {
 	if (bond instanceof jchemhub.model.SingleBondUp) {
 		if (!this.singleUpBondRenderer) {
-			this.singleUpBondRenderer = new jchemhub.view.SingleUpBondRenderer(this.parentEventTarget, 
-					this.graphics, this.config);
+			this.singleUpBondRenderer = new jchemhub.view.SingleUpBondRenderer(
+					this.controller, this.graphics, this.config);
 		}
 		return this.singleUpBondRenderer;
 	}
 	if (bond instanceof jchemhub.model.SingleBondDown) {
 		if (!this.singleDownBondRenderer) {
-			this.singleDownBondRenderer = new jchemhub.view.SingleDownBondRenderer(this.parentEventTarget, 
-					this.graphics, this.config);
+			this.singleDownBondRenderer = new jchemhub.view.SingleDownBondRenderer(
+					this.controller, this.graphics, this.config);
 		}
 		return this.singleDownBondRenderer;
 	}
 	if (bond instanceof jchemhub.model.SingleBondUpOrDown) {
 		if (!this.singleUpOrDownBondRenderer) {
-			this.singleUpOrDownBondRenderer = new jchemhub.view.SingleUpOrDownBondRenderer(this.parentEventTarget, 
-					this.graphics, this.config);
+			this.singleUpOrDownBondRenderer = new jchemhub.view.SingleUpOrDownBondRenderer(
+					this.controller, this.graphics, this.config);
 		}
 		return this.singleUpOrDownBondRenderer;
 	}
 	if (bond instanceof jchemhub.model.SingleBond) {
 		if (!this.singleBondRenderer) {
-			this.singleBondRenderer = new jchemhub.view.SingleBondRenderer(this.parentEventTarget, 
-					this.graphics, this.config);
+			this.singleBondRenderer = new jchemhub.view.SingleBondRenderer(
+					this.controller, this.graphics, this.config);
 		}
 		return this.singleBondRenderer;
 	}
 	if (bond instanceof jchemhub.model.DoubleBond) {
 		if (!this.doubleBondRenderer) {
-			this.doubleBondRenderer = new jchemhub.view.DoubleBondRenderer(this.parentEventTarget, 
-					this.graphics, this.config);
+			this.doubleBondRenderer = new jchemhub.view.DoubleBondRenderer(
+					this.controller, this.graphics, this.config);
 		}
 		return this.doubleBondRenderer;
 	}
 	if (bond instanceof jchemhub.model.TripleBond) {
 		if (!this.tripleBondRenderer) {
-			this.tripleBondRenderer = new jchemhub.view.TripleBondRenderer(this.parentEventTarget, 
-					this.graphics, this.config);
+			this.tripleBondRenderer = new jchemhub.view.TripleBondRenderer(
+					this.controller, this.graphics, this.config);
 		}
 		return this.tripleBondRenderer;
 	}
 	if (bond instanceof jchemhub.model.QuadrupleBond) {
 		if (!this.quadrupleBondRenderer) {
-			this.quadrupleBondRenderer = new jchemhub.view.QuadrupleBondRenderer(this.parentEventTarget, 
-					this.graphics, this.config);
+			this.quadrupleBondRenderer = new jchemhub.view.QuadrupleBondRenderer(
+					this.controller, this.graphics, this.config);
 		}
 		return this.quadrupleBondRenderer;
 	}

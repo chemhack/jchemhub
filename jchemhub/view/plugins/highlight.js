@@ -41,10 +41,27 @@ jchemhub.view.plugins.Highlight.prototype.logger = goog.debug.Logger
 		.getLogger('jchemhub.view.plugins.Highlight');
 
 
-jchemhub.view.plugins.ClearEditor.prototype.handleAtomMouseOver = function(e) {
-	this.logger.info('atommouseover');
-	this.logger.info(e.target);
+jchemhub.view.plugins.Highlight.prototype.handleAtomMouseOver = function(e) {
+
 };
-jchemhub.view.plugins.ClearEditor.prototype.handlAtomeMouseOut = function(e) {
-	this.logger.info('atommouseout');
+jchemhub.view.plugins.Highlight.prototype.handleAtomMouseOut = function(e) {
+	
 };
+
+jchemhub.view.plugins.Highlight.prototype.handleBondMouseOver = function(e) {
+	if (!e.currentTarget.bondHighlightGroup) {
+		e.currentTarget.bondHighlightGroup = this.highlightOn(e.bond);
+	} else {
+		e.currentTarget.bondHighlightGroup = this.highlightOn(e.bond, e.currentTarget.bondHighlightGroup);
+	}
+};
+jchemhub.view.plugins.Highlight.prototype.handleBondMouseOut = function(e) {
+
+	if (e.currentTarget.bondHighlightGroup) {
+		e.currentTarget.bondHighlightGroup.clear();
+	}
+};
+
+jchemhub.view.plugins.Highlight.prototype.highlightOn = function(bond, opt_group){
+	return this.editorObject.reactionRenderer.moleculeRenderer.bondRendererFactory.get(bond).highlightOn(bond, opt_group);
+}

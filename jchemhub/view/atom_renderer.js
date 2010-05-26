@@ -24,6 +24,7 @@ goog.inherits(jchemhub.view.AtomRenderer, jchemhub.view.Renderer);
  * @return
  */
 jchemhub.view.AtomRenderer.prototype.render = function(atom, transform) {
+	this.transform = transform;
 
 	var atom_config = this.config.get("atom");
 	var color = this.config.get(atom.symbol) ? this.config.get(atom.symbol).color
@@ -83,9 +84,9 @@ jchemhub.view.AtomRenderer.prototype.render = function(atom, transform) {
 		}
 	}
 	group.addEventListener(goog.events.EventType.MOUSEOVER, 
-		   goog.bind(this.controller.handleMouseOver, group, atom)); 
+		   goog.bind(this.controller.handleMouseOver, this.controller, atom)); 
 	group.addEventListener(goog.events.EventType.MOUSEOUT, 
-			   goog.bind(this.controller.handleMouseOut, group, atom)); 
+			   goog.bind(this.controller.handleMouseOut, this.controller, atom)); 
 
 	return group;
 

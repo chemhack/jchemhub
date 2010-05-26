@@ -2,7 +2,7 @@
 goog.addDependency("../../../../jchemhub/deps.js", [], []);
 goog.addDependency("../../../../jchemhub/config/render_params.js", ['jchemhub.config.RenderParams'], ['goog.graphics', 'goog.graphics.SolidFill', 'goog.graphics.Stroke', 'goog.graphics.Font']);
 goog.addDependency("../../../../jchemhub/controller/atom_controller.js", ['jchemhub.controller.AtomController'], ['goog.events.EventTarget']);
-goog.addDependency("../../../../jchemhub/controller/bond_controller.js", ['jchemhub.controller.BondController'], ['goog.events.EventTarget']);
+goog.addDependency("../../../../jchemhub/controller/bond_controller.js", ['jchemhub.controller.BondController', 'jchemhub.controller.BondController.BondEvent'], ['goog.events.EventTarget']);
 goog.addDependency("../../../../jchemhub/controller/molecule_controller.js", ['jchemhub.controller.MoleculeController'], ['goog.events.EventTarget']);
 goog.addDependency("../../../../jchemhub/controller/reaction_controller.js", ['jchemhub.controller.ReactionController'], ['goog.events.EventTarget']);
 goog.addDependency("../../../../jchemhub/io/io_test_molsample.js", [], []);
@@ -50,14 +50,14 @@ goog.addDependency("../../../../jchemhub/view/double_bond_drawing.js", ['jchemhu
 goog.addDependency("../../../../jchemhub/view/double_bond_renderer.js", ['jchemhub.view.DoubleBondRenderer'], ['jchemhub.view.BondRenderer']);
 goog.addDependency("../../../../jchemhub/view/drawing.js", ['jchemhub.view.Drawing'], ['goog.Disposable', 'goog.events.EventTarget']);
 goog.addDependency("../../../../jchemhub/view/molecule_drawing.js", ['jchemhub.view.MoleculeDrawing'], ['jchemhub.view.AtomDrawing', 'jchemhub.view.SingleBondDownDrawing', 'jchemhub.view.SingleBondDrawing', 'jchemhub.view.SingleBondUpDrawing', 'jchemhub.view.SingleBondEitherDrawing', 'jchemhub.view.DoubleBondDrawing', 'jchemhub.view.TripleBondDrawing', 'goog.math.Box']);
-goog.addDependency("../../../../jchemhub/view/molecule_renderer.js", ['jchemhub.view.MoleculeRenderer'], ['jchemhub.view.BondRenderer', 'jchemhub.view.BondRenderer.Factory', 'jchemhub.view.AtomRenderer', 'jchemhub.controller.AtomController']);
+goog.addDependency("../../../../jchemhub/view/molecule_renderer.js", ['jchemhub.view.MoleculeRenderer'], ['jchemhub.controller.BondController', 'jchemhub.view.BondRenderer', 'jchemhub.view.BondRenderer.Factory', 'jchemhub.view.AtomRenderer', 'jchemhub.controller.AtomController']);
 goog.addDependency("../../../../jchemhub/view/plugin.js", ['jchemhub.view.Plugin'], ['goog.events.EventTarget', 'goog.functions', 'goog.debug.Logger', 'goog.object', 'goog.reflect']);
 goog.addDependency("../../../../jchemhub/view/plus_drawing.js", ['jchemhub.view.PlusDrawing'], []);
 goog.addDependency("../../../../jchemhub/view/plus_renderer.js", ['jchemhub.view.PlusRenderer'], ['jchemhub.view.Renderer']);
 goog.addDependency("../../../../jchemhub/view/quadruple_bond_renderer.js", ['jchemhub.view.QuadrupleBondRenderer'], ['jchemhub.view.BondRenderer']);
 goog.addDependency("../../../../jchemhub/view/reaction_drawing.js", ['jchemhub.view.ReactionDrawing'], ['jchemhub.view.Drawing', 'jchemhub.view.MoleculeDrawing', 'goog.graphics.AffineTransform']);
 goog.addDependency("../../../../jchemhub/view/reaction_editor.js", ['jchemhub.view.ReactionEditor', 'jchemhub.view.ReactionEditor.EventType'], ['jchemhub.controller.ReactionController', 'jchemhub.view.ReactionRenderer', 'jchemhub.view.MoleculeRenderer', 'goog.graphics', 'goog.events', 'goog.fx.Dragger', 'goog.fx.Dragger.EventType', 'goog.editor.BrowserFeature', 'goog.async.Delay', 'jchemhub.view.Plugin']);
-goog.addDependency("../../../../jchemhub/view/reaction_renderer.js", ['jchemhub.view.ReactionRenderer'], ['jchemhub.view.Renderer', 'jchemhub.view.MoleculeRenderer', 'jchemhub.view.ArrowRenderer', 'jchemhub.view.PlusRenderer', 'goog.math.Coordinate', 'jchemhub.graphics.AffineTransform']);
+goog.addDependency("../../../../jchemhub/view/reaction_renderer.js", ['jchemhub.view.ReactionRenderer'], ['jchemhub.view.Renderer', 'jchemhub.controller.MoleculeController', 'jchemhub.view.MoleculeRenderer', 'jchemhub.view.ArrowRenderer', 'jchemhub.view.PlusRenderer', 'goog.math.Coordinate', 'jchemhub.graphics.AffineTransform']);
 goog.addDependency("../../../../jchemhub/view/renderer.js", ['jchemhub.view.Renderer'], ['goog.structs.Map']);
 goog.addDependency("../../../../jchemhub/view/single_bond_down_drawing.js", ['jchemhub.view.SingleBondDownDrawing'], ['jchemhub.view.BondDrawing']);
 goog.addDependency("../../../../jchemhub/view/single_bond_drawing.js", ['jchemhub.view.SingleBondDrawing'], []);

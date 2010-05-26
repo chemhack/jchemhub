@@ -350,12 +350,18 @@ jchemhub.view.ReactionEditor.prototype.handleMouseUp_ = function(e) {
 }
 
 jchemhub.view.ReactionEditor.prototype.handleAtomMouseOver_ = function(e){
-	console.log('handleAtomMouseOver');
 	this.invokeShortCircuitingOp_(jchemhub.view.Plugin.Op.ATOM_MOUSEOVER, e);
 }
 
 jchemhub.view.ReactionEditor.prototype.handleAtomMouseOut_ = function(e){
 	this.invokeShortCircuitingOp_(jchemhub.view.Plugin.Op.ATOM_MOUSEOUT, e);
+}
+jchemhub.view.ReactionEditor.prototype.handleBondMouseOver_ = function(e){
+	this.invokeShortCircuitingOp_(jchemhub.view.Plugin.Op.BOND_MOUSEOVER, e);
+}
+
+jchemhub.view.ReactionEditor.prototype.handleBondMouseOut_ = function(e){
+	this.invokeShortCircuitingOp_(jchemhub.view.Plugin.Op.BOND_MOUSEOUT, e);
 }
 
 /**
@@ -939,8 +945,11 @@ jchemhub.view.ReactionEditor.prototype.setupChangeListeners_ = function() {
 
 	this.addListener(goog.events.EventType.MOUSEDOWN, this.handleMouseDown_);
 	this.addListener(goog.events.EventType.MOUSEUP, this.handleMouseUp_);
-	this.addListener(jchemhub.controller.AtomController.EventType.MOUSEOVER, this.handleAtomMouseOver_);
-	this.addListener(jchemhub.controller.AtomController.EventType.MOUSEOUT, this.handleAtomMouseOut_);
+
+	this.addEventListener(jchemhub.controller.AtomController.EventType.MOUSEOUT, this.handleAtomMouseOut_);
+	this.addEventListener(jchemhub.controller.AtomController.EventType.MOUSEOVER, this.handleAtomMouseOver_);
+	this.addEventListener(jchemhub.controller.BondController.EventType.MOUSEOUT, this.handleBondMouseOut_);
+	this.addEventListener(jchemhub.controller.BondController.EventType.MOUSEOVER, this.handleBondMouseOver_);
 
 };
 

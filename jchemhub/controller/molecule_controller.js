@@ -8,6 +8,7 @@ goog.require('goog.events.EventTarget');
 jchemhub.controller.MoleculeController = function(parentController) { 
   goog.events.EventTarget.call(this);
   this.setParentEventTarget(parentController);
+
 }; 
 goog.inherits(jchemhub.controller.MoleculeController, goog.events.EventTarget); 
 

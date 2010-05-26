@@ -16,13 +16,14 @@ goog.require('jchemhub.controller.AtomController');
 jchemhub.view.MoleculeRenderer = function(controller, graphics, opt_config) {
 	jchemhub.view.Renderer.call(this, controller, graphics, opt_config, jchemhub.view.MoleculeRenderer.defaultConfig);
 	this.bondController = new jchemhub.controller.BondController(controller);
-	this.bondRendererFactory = new jchemhub.view.BondRenderer.Factory(this.bondConroller, graphics);
+	this.bondRendererFactory = new jchemhub.view.BondRenderer.Factory(this.bondController, graphics);
 	this.atomController = new jchemhub.controller.AtomController(controller);
 	this.atomRenderer = new jchemhub.view.AtomRenderer(this.atomController, graphics);
 }
 goog.inherits(jchemhub.view.MoleculeRenderer, jchemhub.view.Renderer);
 
 jchemhub.view.MoleculeRenderer.prototype.render = function(molecule, trans, group) {
+	this.transform = trans;
 	goog.array.forEach(molecule.bonds, function(bond) {
 		this.bondRendererFactory.get(bond).render(bond, trans, group);
 	}, this);
