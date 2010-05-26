@@ -16,7 +16,36 @@ jchemhub.view.plugins.SelectorRectangle = function() {
 };
 goog.inherits(jchemhub.view.plugins.SelectorRectangle, jchemhub.view.Plugin);
 
+/**
+ * Commands supported 
+ * @enum {string}
+ */
+jchemhub.view.plugins.SelectorRectangle.COMMAND = {
+		MOUSEDOWN: 'mousedown',
+		MOUSEUP: 'mouseup'
+};
 
+/**
+ * Inverse map of execCommand strings to
+ * {@link jchemhub.view.plugins.SelectorRectangle.COMMAND} constants. Used to
+ * determine whether a string corresponds to a command this plugin handles
+ * @type {Object}
+ * @private
+ */
+jchemhub.view.plugins.SelectorRectangle.SUPPORTED_COMMANDS_ =
+    goog.object.transpose(jchemhub.view.plugins.SelectorRectangle.COMMAND);
+
+
+/**
+ * Whether the string corresponds to a command this plugin handles.
+ * @param {string} command Command string to check.
+ * @return {boolean} Whether the string corresponds to a command
+ *     this plugin handles.
+ */
+goog.editor.plugins.TableEditor.prototype.isSupportedCommand =
+    function(command) {
+  return command in jchemhub.view.plugins.SelectorRectangle.SUPPORTED_COMMANDS_;
+};
 
 /** @inheritDoc */
 jchemhub.view.plugins.SelectorRectangle.prototype.getTrogClassId =
@@ -32,8 +61,8 @@ jchemhub.view.plugins.SelectorRectangle.prototype.logger = goog.debug.Logger
 		.getLogger('jchemhub.view.plugins.SelectorRectangle');
 
 
-jchemhub.view.plugins.SelectorRectangle.prototype.handleBondMouseDown = function(e) {
-	this.logger.info('handleBondMouseDown');
+jchemhub.view.plugins.SelectorRectangle.prototype.handleMouseDown = function(e) {
+	this.logger.info('handleMouseDown');
 };
 
 
