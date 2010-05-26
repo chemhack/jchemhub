@@ -1,4 +1,5 @@
 goog.provide('jchemhub.view.AtomRenderer');
+
 goog.require('jchemhub.view.Renderer');
 goog.require('goog.debug.Logger');
 
@@ -10,23 +11,28 @@ goog.require('goog.debug.Logger');
  *            {goog.graphics.AbstractGraphics} graphics to draw on.
  * @extends {jchemhub.view.Renderer}
  */
-jchemhub.view.AtomRenderer = function(parentEventTarget, graphics, opt_config) {
-	jchemhub.view.Renderer.call(this, parentEventTarget, graphics, opt_config,
+jchemhub.view.AtomRenderer = function(controller, graphics, opt_config) {
+	jchemhub.view.Renderer.call(this, controller, graphics, opt_config,
 			jchemhub.view.AtomRenderer.defaultConfig);
 }
 goog.inherits(jchemhub.view.AtomRenderer, jchemhub.view.Renderer);
-
-jchemhub.view.AtomRenderer.prototype.render = function(atom, transform, group) {
+/**
+ * 
+ * @param atom
+ * @param transform
+ * @param group
+ * @return
+ */
+jchemhub.view.AtomRenderer.prototype.render = function(atom, transform) {
 
 	var atom_config = this.config.get("atom");
 	var color = this.config.get(atom.symbol) ? this.config.get(atom.symbol).color
 			: atom_config.color;
-			
+
 	var scale = transform.getScaleX();
 
 	var font = new goog.graphics.Font(scale / 1.8, atom_config.fontName);
-	var stroke = new goog.graphics.Stroke(atom_config.stroke.width,
-			color);
+	var stroke = new goog.graphics.Stroke(atom_config.stroke.width, color);
 	var fill = new goog.graphics.SolidFill(color);
 
 	var point = transform.transformCoords( [ atom.coord ])[0];
@@ -34,6 +40,8 @@ jchemhub.view.AtomRenderer.prototype.render = function(atom, transform, group) {
 	var graphics = this.graphics;
 	var w = symbol.text.length * 0.55 * font.size;
 	var h = font.size;
+	var group = graphics.createGroup();
+	
 	if (symbol.text) {
 		group.atomLabelBackground = graphics.drawEllipse(point.x, point.y,
 				h * 0.7, h * 0.7, new goog.graphics.Stroke(1, this.config
@@ -74,6 +82,12 @@ jchemhub.view.AtomRenderer.prototype.render = function(atom, transform, group) {
 			}
 		}
 	}
+	group.addEventListener(goog.events.EventType.MOUSEOVER, 
+		   goog.bind(this.controller.handleMouseOver, group, atom)); 
+	group.addEventListener(goog.events.EventType.MOUSEOUT, 
+			   goog.bind(this.controller.handleMouseOut, group, atom)); 
+
+	return group;
 
 };
 

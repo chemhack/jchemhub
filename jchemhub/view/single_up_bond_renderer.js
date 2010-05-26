@@ -9,8 +9,8 @@ goog.require('jchemhub.view.BondRenderer');
  *            {goog.graphics.AbstractGraphics} graphics to draw on.
  * @extends {jchemhub.view.BondRenderer}
  */
-jchemhub.view.SingleUpBondRenderer = function(parentEventTarget, graphics, opt_config) {
-	jchemhub.view.BondRenderer.call(this, parentEventTarget, graphics, opt_config,
+jchemhub.view.SingleUpBondRenderer = function(controller, graphics, opt_config) {
+	jchemhub.view.BondRenderer.call(this, controller, graphics, opt_config,
 			jchemhub.view.SingleUpBondRenderer.defaultConfig);
 
 }

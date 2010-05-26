@@ -1,4 +1,5 @@
 goog.provide('jchemhub.view.BondRenderer');
+goog.provide('jchemhub.view.BondRenderer.Factory');
 goog.require('jchemhub.view.SingleBondRenderer');
 goog.require('jchemhub.view.DoubleBondRenderer');
 goog.require('jchemhub.view.TripleBondRenderer');
@@ -18,10 +19,9 @@ goog.require('jchemhub.math.Line');
  *            {goog.graphics.AbstractGraphics} graphics to draw on.
  * @extends {jchemhub.view.Renderer}
  */
-jchemhub.view.BondRenderer = function(parentEventTarget, graphics, opt_config) {
-	jchemhub.view.Renderer.call(this, parentEventTarget, graphics, opt_config,
+jchemhub.view.BondRenderer = function(controller, graphics, opt_config) {
+	jchemhub.view.Renderer.call(this, controller, graphics, opt_config,
 			jchemhub.view.BondRenderer.defaultConfig);
-
 }
 goog.inherits(jchemhub.view.BondRenderer, jchemhub.view.Renderer);
 /**
@@ -77,14 +77,6 @@ jchemhub.view.BondRenderer.getTheta = function(bond) {
 			.getTheta();
 }
 
-/**
- * Logging object.
- * 
- * @type {goog.debug.Logger}
- * @protected
- */
-jchemhub.view.BondRenderer.prototype.logger = goog.debug.Logger
-		.getLogger('jchemhub.view.BondRenderer');
 
 /**
  * A default configuration for renderer

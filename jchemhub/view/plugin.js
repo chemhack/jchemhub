@@ -155,7 +155,11 @@ jchemhub.view.Plugin.Op = {
 	EXEC_COMMAND : 6,
 	QUERY_COMMAND : 7,
 	MOUSEDOWN: 8,
-	MOUSEUP: 9
+	MOUSEUP: 9,
+	MOUSEOVER: 10, 
+	MOUSEOUT: 11,
+	ATOM_MOUSEOVER : 12,
+	ATOM_MOUSEOUT : 13
 };
 
 /**
@@ -178,7 +182,11 @@ jchemhub.view.Plugin.OPCODE = goog.object.transpose(goog.reflect.object(
 			execCommand : jchemhub.view.Plugin.Op.EXEC_COMMAND,
 			queryCommandValue : jchemhub.view.Plugin.Op.QUERY_COMMAND,
 			handleMouseDown : jchemhub.view.Plugin.Op.MOUSEDOWN,
-			handleMouseUp : jchemhub.view.Plugin.Op.MOUSEUP
+			handleMouseUp : jchemhub.view.Plugin.Op.MOUSEUP,
+			handleMouseOver : jchemhub.view.Plugin.Op.MOUSEOVER,
+			handleMouseOut : jchemhub.view.Plugin.Op.MOUSEOUT,
+			handleAtomMouseOver : jchemhub.view.Plugin.Op.ATOM_MOUSEOVER,
+			handleAtomMouseOut : jchemhub.view.Plugin.Op.ATOM_MOUSEOUT
 		}));
 
 /**

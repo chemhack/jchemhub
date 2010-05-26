@@ -31,12 +31,20 @@ jchemhub.view.plugins.Highlight.prototype.isSupportedCommand = function(
   return command == jchemhub.view.plugins.Highlight.COMMAND;
 };
 
-
 /**
+ * Logging object.
  * 
- * @param {string} command Command to execute.
- * @return {Object|undefined} The result of the command.
+ * @type {goog.debug.Logger}
+ * @protected
  */
-jchemhub.view.plugins.ClearEditor.prototype.execCommandInternal = function(
-    command) {
+jchemhub.view.plugins.Highlight.prototype.logger = goog.debug.Logger
+		.getLogger('jchemhub.view.plugins.Highlight');
+
+
+jchemhub.view.plugins.ClearEditor.prototype.handleAtomMouseOver = function(e) {
+	this.logger.info('atommouseover');
+	this.logger.info(e.target);
+};
+jchemhub.view.plugins.ClearEditor.prototype.handlAtomeMouseOut = function(e) {
+	this.logger.info('atommouseout');
 };

@@ -10,8 +10,8 @@ goog.require('jchemhub.view.Renderer');
  *            {goog.graphics.AbstractGraphics} graphics to draw on.
  * @extends {jchemhub.view.Renderer}
  */
-jchemhub.view.ArrowRenderer = function(parentEventTarget, graphics, opt_config) {
-	jchemhub.view.Renderer.call(this, parentEventTarget, graphics, opt_config,
+jchemhub.view.ArrowRenderer = function(controller, graphics, opt_config) {
+	jchemhub.view.Renderer.call(this, controller, graphics, opt_config,
 			jchemhub.view.ArrowRenderer.defaultConfig);
 }
 goog.inherits(jchemhub.view.ArrowRenderer, jchemhub.view.Renderer);

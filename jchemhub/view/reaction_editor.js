@@ -1,5 +1,6 @@
 goog.provide("jchemhub.view.ReactionEditor");
 goog.provide("jchemhub.view.ReactionEditor.EventType");
+goog.require("jchemhub.controller.ReactionController");
 goog.require("jchemhub.view.ReactionRenderer");
 goog.require("jchemhub.view.MoleculeRenderer");
 goog.require("goog.graphics");
@@ -54,7 +55,8 @@ jchemhub.view.ReactionEditor = function(element, opt_config) {
 
 	this.graphics.render(this.originalElement);
 
-	this.reactionRenderer = new jchemhub.view.ReactionRenderer(this, this.graphics);
+	this.reactionController = new jchemhub.controller.ReactionController(this);
+	this.reactionRenderer = new jchemhub.view.ReactionRenderer(this.reactionController, this.graphics);
 	this.moleculeRenderer = new jchemhub.view.MoleculeRenderer(this, this.graphics);
 
 	// The editor will not listen to change events until it has finished loading
@@ -345,6 +347,15 @@ jchemhub.view.ReactionEditor.prototype.handleMouseDown_ = function(e) {
 
 jchemhub.view.ReactionEditor.prototype.handleMouseUp_ = function(e) {
 	this.invokeShortCircuitingOp_(jchemhub.view.Plugin.Op.MOUSEUP, e);
+}
+
+jchemhub.view.ReactionEditor.prototype.handleAtomMouseOver_ = function(e){
+	console.log('handleAtomMouseOver');
+	this.invokeShortCircuitingOp_(jchemhub.view.Plugin.Op.ATOM_MOUSEOVER, e);
+}
+
+jchemhub.view.ReactionEditor.prototype.handleAtomMouseOut_ = function(e){
+	this.invokeShortCircuitingOp_(jchemhub.view.Plugin.Op.ATOM_MOUSEOUT, e);
 }
 
 /**
@@ -928,6 +939,9 @@ jchemhub.view.ReactionEditor.prototype.setupChangeListeners_ = function() {
 
 	this.addListener(goog.events.EventType.MOUSEDOWN, this.handleMouseDown_);
 	this.addListener(goog.events.EventType.MOUSEUP, this.handleMouseUp_);
+	this.addListener(jchemhub.controller.AtomController.EventType.MOUSEOVER, this.handleAtomMouseOver_);
+	this.addListener(jchemhub.controller.AtomController.EventType.MOUSEOUT, this.handleAtomMouseOut_);
+
 };
 
 /**

@@ -1,5 +1,6 @@
 goog.provide('jchemhub.view.ReactionRenderer');
 goog.require('jchemhub.view.Renderer');
+goog.require('jchemhub.controller.MoleculeController');
 goog.require('jchemhub.view.MoleculeRenderer');
 goog.require('jchemhub.view.ArrowRenderer');
 goog.require('jchemhub.view.PlusRenderer');
@@ -15,13 +16,14 @@ goog.require("jchemhub.graphics.AffineTransform");
  *            {goog.graphics.AbstractGraphics} graphics to draw on.
  * @extends {jchemhub.view.Renderer}
  */
-jchemhub.view.ReactionRenderer = function(parentEventTarget, graphics, opt_config) {
-	jchemhub.view.Renderer.call(this, parentEventTarget, graphics, opt_config);
+jchemhub.view.ReactionRenderer = function(controller, graphics, opt_config) {
+	jchemhub.view.Renderer.call(this, controller, graphics, opt_config);
 	this.scale_factor = 1;
-	this.moleculeRenderer = new jchemhub.view.MoleculeRenderer(parentEventTarget, graphics,
+	this.moleculeController = new jchemhub.controller.MoleculeController(controller);
+	this.moleculeRenderer = new jchemhub.view.MoleculeRenderer(this.moleculeController, graphics,
 			this.config);
-	this.arrowRenderer = new jchemhub.view.ArrowRenderer(parentEventTarget, graphics, this.config);
-	this.plusRenderer = new jchemhub.view.PlusRenderer(parentEventTarget, graphics, this.config);
+	this.arrowRenderer = new jchemhub.view.ArrowRenderer(controller, graphics, this.config);
+	this.plusRenderer = new jchemhub.view.PlusRenderer(controller, graphics, this.config);
 }
 goog.inherits(jchemhub.view.ReactionRenderer, jchemhub.view.Renderer);
 /**

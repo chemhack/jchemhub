@@ -12,8 +12,8 @@ goog.require('jchemhub.view.BondRenderer');
 jchemhub.view.SingleBondRenderer = function(parentEventTarget, graphics, opt_config) {
 	jchemhub.view.BondRenderer.call(this, parentEventTarget, graphics, opt_config,
 			jchemhub.view.SingleBondRenderer.defaultConfig);
+};
 
-}
 goog.inherits(jchemhub.view.SingleBondRenderer, jchemhub.view.BondRenderer);
 
 jchemhub.view.SingleBondRenderer.prototype.render = function(bond, transform,

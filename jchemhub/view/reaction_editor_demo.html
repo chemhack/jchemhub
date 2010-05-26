@@ -40,14 +40,16 @@
 	href="../../third-party/closure/closure/goog/css/editortoolbar.css" />
 
 <script>
-	goog.require('jchemhub.controller.Controller');
+
 	goog.require('goog.events.EventType');
 	goog.require('goog.dom');
+	goog.require('jchemhub.io.json');
 	goog.require('jchemhub.view.DefaultToolbar');
 	goog.require('jchemhub.view.ToolbarController');
 	goog.require('jchemhub.view.plugins.ClearEditor');
 	goog.require('jchemhub.view.plugins.Zoom');
 	goog.require('jchemhub.view.plugins.UndoRedo');
+	goog.require('jchemhub.view.plugins.Highlight');
 	goog.require('goog.debug.Console');
 
 </script>
@@ -57,8 +59,8 @@
 	
 function initPage(){
 	// uncomment next two lines to debug to console
-	//var c = new goog.debug.Console(); 
-	//c.setCapturing(true); 
+	var c = new goog.debug.Console(); 
+	c.setCapturing(true); 
 
 	var buttons = []; 
 	buttons.push(jchemhub.view.ToolbarFactory.makeButton( 
@@ -74,6 +76,7 @@ function initPage(){
 	editor.registerPlugin(new jchemhub.view.plugins.ClearEditor());
 	editor.registerPlugin(new jchemhub.view.plugins.Zoom());
 	editor.registerPlugin(new jchemhub.view.plugins.UndoRedo());
+	//editor.registerPlugin(new jchemhub.view.plugins.Highlight());
 	
     var toolbarController = new jchemhub.view.ToolbarController(editor, toolbar);
 	editor.setModel(model);
