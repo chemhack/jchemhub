@@ -50,7 +50,6 @@
 	goog.require('jchemhub.view.plugins.Zoom');
 	goog.require('jchemhub.view.plugins.UndoRedo');
 	goog.require('jchemhub.view.plugins.Highlight');
-	goog.require('jchemhub.view.plugins.DragMolecule');
 	goog.require('goog.debug.Console');
 
 </script>
@@ -79,11 +78,8 @@ function initPage(){
 	editor.registerPlugin(new jchemhub.view.plugins.UndoRedo());
 	editor.registerPlugin(new jchemhub.view.plugins.Highlight());
 	
-	
     var toolbarController = new jchemhub.view.ToolbarController(editor, toolbar);
 	editor.setModel(model);
-	
-
 };
 
 

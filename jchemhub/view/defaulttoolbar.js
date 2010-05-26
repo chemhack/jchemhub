@@ -3,7 +3,6 @@ goog.provide('jchemhub.view.DefaultToolbar');
 goog.require('goog.dom');
 goog.require('goog.dom.TagName');
 goog.require('goog.dom.classes');
-goog.require('jchemhub.view.Command');
 goog.require('goog.string.StringBuffer');
 goog.require('goog.style');
 goog.require('goog.ui.ControlContent');
@@ -350,13 +349,7 @@ jchemhub.view.DefaultToolbar.makeBuiltInToolbarButton = function(command,
  * 
  * @type {!Array.<string>}
  */
-jchemhub.view.DefaultToolbar.DEFAULT_BUTTONS = [ jchemhub.view.Command.IMAGE,
-		jchemhub.view.Command.LINK, jchemhub.view.Command.BOLD,
-		jchemhub.view.Command.ITALIC, jchemhub.view.Command.UNORDERED_LIST,
-		jchemhub.view.Command.FONT_COLOR, jchemhub.view.Command.FONT_FACE,
-		jchemhub.view.Command.FONT_SIZE, jchemhub.view.Command.JUSTIFY_LEFT,
-		jchemhub.view.Command.JUSTIFY_CENTER,
-		jchemhub.view.Command.JUSTIFY_RIGHT, jchemhub.view.Command.EDIT_HTML ];
+jchemhub.view.DefaultToolbar.DEFAULT_BUTTONS = [  ];
 
 /**
  * A set of built-in buttons to display in the default editor toolbar when the
@@ -364,15 +357,7 @@ jchemhub.view.DefaultToolbar.DEFAULT_BUTTONS = [ jchemhub.view.Command.IMAGE,
  * 
  * @type {!Array.<string>}
  */
-jchemhub.view.DefaultToolbar.DEFAULT_BUTTONS_RTL = [
-		jchemhub.view.Command.IMAGE, jchemhub.view.Command.LINK,
-		jchemhub.view.Command.BOLD, jchemhub.view.Command.ITALIC,
-		jchemhub.view.Command.UNORDERED_LIST, jchemhub.view.Command.FONT_COLOR,
-		jchemhub.view.Command.FONT_FACE, jchemhub.view.Command.FONT_SIZE,
-		jchemhub.view.Command.JUSTIFY_RIGHT,
-		jchemhub.view.Command.JUSTIFY_CENTER,
-		jchemhub.view.Command.JUSTIFY_LEFT, jchemhub.view.Command.DIR_RTL,
-		jchemhub.view.Command.DIR_LTR, jchemhub.view.Command.EDIT_HTML ];
+jchemhub.view.DefaultToolbar.DEFAULT_BUTTONS_RTL = [];
 
 /**
  * Creates a toolbar button with the given ID, tooltip, and caption. Applies any
@@ -849,207 +834,7 @@ jchemhub.view.DefaultToolbar.ButtonDescriptor = goog.typedef;
  * @type {Array.<!jchemhub.view.ReactionEditor.ButtonDescriptor>}.
  * @private
  */
-jchemhub.view.DefaultToolbar.BUTTONS_ = [
-		{
-			command : jchemhub.view.Command.UNDO,
-			tooltip : jchemhub.view.DefaultToolbar.MSG_UNDO_TITLE,
-			classes : goog.getCssName('tr-icon') + ' '
-					+ goog.getCssName('tr-undo'),
-			factory : jchemhub.view.DefaultToolbar.undoRedoButtonFactory_,
-			queryable : true
-		},
-		{
-			command : jchemhub.view.Command.REDO,
-			tooltip : jchemhub.view.DefaultToolbar.MSG_REDO_TITLE,
-			classes : goog.getCssName('tr-icon') + ' '
-					+ goog.getCssName('tr-redo'),
-			factory : jchemhub.view.DefaultToolbar.undoRedoButtonFactory_,
-			queryable : true
-		},
-		{
-			command : jchemhub.view.Command.FONT_FACE,
-			tooltip : jchemhub.view.DefaultToolbar.MSG_FONT_FACE_TITLE,
-			classes : goog.getCssName('tr-fontName'),
-			factory : jchemhub.view.DefaultToolbar.fontFaceFactory_,
-			queryable : true
-		},
-		{
-			command : jchemhub.view.Command.FONT_SIZE,
-			tooltip : jchemhub.view.DefaultToolbar.MSG_FONT_SIZE_TITLE,
-			classes : goog.getCssName('tr-fontSize'),
-			factory : jchemhub.view.DefaultToolbar.fontSizeFactory_,
-			queryable : true
-		},
-		{
-			command : jchemhub.view.Command.BOLD,
-			tooltip : jchemhub.view.DefaultToolbar.MSG_BOLD_TITLE,
-			classes : goog.getCssName('tr-icon') + ' '
-					+ goog.getCssName('tr-bold'),
-			queryable : true
-		},
-		{
-			command : jchemhub.view.Command.ITALIC,
-			tooltip : jchemhub.view.DefaultToolbar.MSG_ITALIC_TITLE,
-			classes : goog.getCssName('tr-icon') + ' '
-					+ goog.getCssName('tr-italic'),
-			queryable : true
-		},
-		{
-			command : jchemhub.view.Command.UNDERLINE,
-			tooltip : jchemhub.view.DefaultToolbar.MSG_UNDERLINE_TITLE,
-			classes : goog.getCssName('tr-icon') + ' '
-					+ goog.getCssName('tr-underline'),
-			queryable : true
-		},
-		{
-			command : jchemhub.view.Command.FONT_COLOR,
-			tooltip : jchemhub.view.DefaultToolbar.MSG_FONT_COLOR_TITLE,
-			classes : goog.getCssName('tr-icon') + ' '
-					+ goog.getCssName('tr-foreColor'),
-			factory : jchemhub.view.DefaultToolbar.fontColorFactory_,
-			queryable : true
-		},
-		{
-			command : jchemhub.view.Command.BACKGROUND_COLOR,
-			tooltip : jchemhub.view.DefaultToolbar.MSG_BACKGROUND_COLOR_TITLE,
-			classes : goog.getCssName('tr-icon') + ' '
-					+ goog.getCssName('tr-backColor'),
-			factory : jchemhub.view.DefaultToolbar.backgroundColorFactory_,
-			queryable : true
-		},
-		{
-			command : jchemhub.view.Command.LINK,
-			tooltip : jchemhub.view.DefaultToolbar.MSG_LINK_TITLE,
-			caption : jchemhub.view.DefaultToolbar.MSG_LINK_CAPTION,
-			classes : goog.getCssName('tr-link'),
-			queryable : true
-		},
-		{
-			command : jchemhub.view.Command.ORDERED_LIST,
-			tooltip : jchemhub.view.DefaultToolbar.MSG_ORDERED_LIST_TITLE,
-			classes : goog.getCssName('tr-icon') + ' '
-					+ goog.getCssName('tr-insertOrderedList'),
-			queryable : true
-		},
-		{
-			command : jchemhub.view.Command.UNORDERED_LIST,
-			tooltip : jchemhub.view.DefaultToolbar.MSG_UNORDERED_LIST_TITLE,
-			classes : goog.getCssName('tr-icon') + ' '
-					+ goog.getCssName('tr-insertUnorderedList'),
-			queryable : true
-		},
-		{
-			command : jchemhub.view.Command.OUTDENT,
-			tooltip : jchemhub.view.DefaultToolbar.MSG_OUTDENT_TITLE,
-			classes : goog.getCssName('tr-icon') + ' '
-					+ goog.getCssName('tr-outdent'),
-			factory : jchemhub.view.ToolbarFactory.makeButton
-		},
-		{
-			command : jchemhub.view.Command.INDENT,
-			tooltip : jchemhub.view.DefaultToolbar.MSG_INDENT_TITLE,
-			classes : goog.getCssName('tr-icon') + ' '
-					+ goog.getCssName('tr-indent'),
-			factory : jchemhub.view.ToolbarFactory.makeButton
-		},
-		{
-			command : jchemhub.view.Command.JUSTIFY_LEFT,
-			tooltip : jchemhub.view.DefaultToolbar.MSG_ALIGN_LEFT_TITLE,
-			classes : goog.getCssName('tr-icon') + ' '
-					+ goog.getCssName('tr-justifyLeft'),
-			queryable : true
-		},
-		{
-			command : jchemhub.view.Command.JUSTIFY_CENTER,
-			tooltip : jchemhub.view.DefaultToolbar.MSG_ALIGN_CENTER_TITLE,
-			classes : goog.getCssName('tr-icon') + ' '
-					+ goog.getCssName('tr-justifyCenter'),
-			queryable : true
-		},
-		{
-			command : jchemhub.view.Command.JUSTIFY_RIGHT,
-			tooltip : jchemhub.view.DefaultToolbar.MSG_ALIGN_RIGHT_TITLE,
-			classes : goog.getCssName('tr-icon') + ' '
-					+ goog.getCssName('tr-justifyRight'),
-			queryable : true
-		},
-		{
-			command : jchemhub.view.Command.JUSTIFY_FULL,
-			tooltip : jchemhub.view.DefaultToolbar.MSG_JUSTIFY_TITLE,
-			classes : goog.getCssName('tr-icon') + ' '
-					+ goog.getCssName('tr-justifyFull'),
-			queryable : true
-		},
-		{
-			command : jchemhub.view.Command.REMOVE_FORMAT,
-			tooltip : jchemhub.view.DefaultToolbar.MSG_REMOVE_FORMAT_TITLE,
-			classes : goog.getCssName('tr-icon') + ' '
-					+ goog.getCssName('tr-removeFormat'),
-			factory : jchemhub.view.ToolbarFactory.makeButton
-		},
-		{
-			command : jchemhub.view.Command.IMAGE,
-			tooltip : jchemhub.view.DefaultToolbar.MSG_IMAGE_TITLE,
-			classes : goog.getCssName('tr-icon') + ' '
-					+ goog.getCssName('tr-image'),
-			factory : jchemhub.view.ToolbarFactory.makeButton
-		},
-		{
-			command : jchemhub.view.Command.STRIKE_THROUGH,
-			tooltip : jchemhub.view.DefaultToolbar.MSG_STRIKE_THROUGH_TITLE,
-			classes : goog.getCssName('tr-icon') + ' '
-					+ goog.getCssName('tr-strikeThrough'),
-			queryable : true
-		},
-		{
-			command : jchemhub.view.Command.SUBSCRIPT,
-			tooltip : jchemhub.view.DefaultToolbar.MSG_SUBSCRIPT,
-			classes : goog.getCssName('tr-icon') + ' '
-					+ goog.getCssName('tr-subscript'),
-			queryable : true
-		},
-		{
-			command : jchemhub.view.Command.SUPERSCRIPT,
-			tooltip : jchemhub.view.DefaultToolbar.MSG_SUPERSCRIPT,
-			classes : goog.getCssName('tr-icon') + ' '
-					+ goog.getCssName('tr-superscript'),
-			queryable : true
-		},
-		{
-			command : jchemhub.view.Command.DIR_LTR,
-			tooltip : jchemhub.view.DefaultToolbar.MSG_DIR_LTR_TITLE,
-			classes : goog.getCssName('tr-icon') + ' '
-					+ goog.getCssName('tr-ltr'),
-			queryable : true
-		},
-		{
-			command : jchemhub.view.Command.DIR_RTL,
-			tooltip : jchemhub.view.DefaultToolbar.MSG_DIR_RTL_TITLE,
-			classes : goog.getCssName('tr-icon') + ' '
-					+ goog.getCssName('tr-rtl'),
-			factory : jchemhub.view.DefaultToolbar.rtlButtonFactory_,
-			queryable : true
-		},
-		{
-			command : jchemhub.view.Command.BLOCKQUOTE,
-			tooltip : jchemhub.view.DefaultToolbar.MSG_BLOCKQUOTE_TITLE,
-			classes : goog.getCssName('tr-icon') + ' '
-					+ goog.getCssName('tr-BLOCKQUOTE'),
-			queryable : true
-		}, {
-			command : jchemhub.view.Command.FORMAT_BLOCK,
-			tooltip : jchemhub.view.DefaultToolbar.MSG_FORMAT_BLOCK_TITLE,
-			caption : jchemhub.view.DefaultToolbar.MSG_FORMAT_BLOCK_CAPTION,
-			classes : goog.getCssName('tr-formatBlock'),
-			factory : jchemhub.view.DefaultToolbar.formatBlockFactory_,
-			queryable : true
-		}, {
-			command : jchemhub.view.Command.EDIT_HTML,
-			tooltip : jchemhub.view.DefaultToolbar.MSG_EDIT_HTML_TITLE,
-			caption : jchemhub.view.DefaultToolbar.MSG_EDIT_HTML_CAPTION,
-			classes : goog.getCssName('tr-editHtml'),
-			factory : jchemhub.view.ToolbarFactory.makeButton
-		} ];
+jchemhub.view.DefaultToolbar.BUTTONS_ = [ ];
 
 (function() {
 	// Create the jchemhub.view.DefaultToolbar.buttons_ map from
