@@ -8,7 +8,6 @@ goog.require('jchemhub.view.SingleUpBondRenderer');
 goog.require('jchemhub.view.SingleDownBondRenderer');
 goog.require('jchemhub.view.SingleUpOrDownBondRenderer');
 goog.require('jchemhub.view.Renderer');
-goog.require('goog.debug.Logger');
 goog.require('jchemhub.math.Line');
 
 /**
@@ -72,17 +71,10 @@ jchemhub.view.BondRenderer.prototype.render = function(bond, transform) {
 			this.controller.handleMouseOver, this.controller, bond));
 	group.addEventListener(goog.events.EventType.MOUSEOUT, goog.bind(
 			this.controller.handleMouseOut, this.controller, bond));
+	group.addEventListener(goog.events.EventType.MOUSEDOWN, goog.bind(
+			this.controller.handleMouseDown, this.controller, bond));
 
 };
-
-/**
- * Logging object.
- * 
- * @type {goog.debug.Logger}
- * @protected
- */
-jchemhub.view.BondRenderer.prototype.logger = goog.debug.Logger
-		.getLogger('jchemhub.view.BondRenderer');
 
 jchemhub.view.BondRenderer.prototype.highlightOn = function(bond, opt_group) {
 
@@ -92,9 +84,9 @@ jchemhub.view.BondRenderer.prototype.highlightOn = function(bond, opt_group) {
 	var fill = null
 	var radius = this.config.get("highlight").radius
 			* this.transform.getScaleX();
-	var theta = jchemhub.view.BondRenderer.getTheta(bond);
-	this.logger.info("theta: " + theta);
-	var angle = theta + Math.PI / 2;
+	var theta = jchemhub.view.BondRenderer.getTheta(bond) * 180 / Math.PI;
+
+	var angle = theta + 90;
 
 	var arcExtent;
 	if (theta <= 0) {
@@ -102,10 +94,10 @@ jchemhub.view.BondRenderer.prototype.highlightOn = function(bond, opt_group) {
 	} else {
 		arcExtent = (bond.source.coord.y > bond.target.coord.y) ? 180 : -180;
 	}
+
 	var coords = this.transform.transformCoords( [ bond.source.coord,
 			bond.target.coord ]);
-	console.log(bond);
-	console.log(coords);
+
 	var path = new goog.graphics.Path();
 	path.arc(coords[0].x, coords[0].y, radius, radius, angle, -arcExtent);
 	path.arc(coords[1].x, coords[1].y, radius, radius, angle, +arcExtent);

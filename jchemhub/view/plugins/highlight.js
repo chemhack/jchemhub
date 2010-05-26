@@ -2,6 +2,7 @@
 goog.provide('jchemhub.view.plugins.Highlight');
 goog.require('jchemhub.view.Plugin');
 goog.require('goog.functions');
+goog.require('goog.debug.Logger');
 
 
 /**
@@ -16,20 +17,9 @@ jchemhub.view.plugins.Highlight = function() {
 goog.inherits(jchemhub.view.plugins.Highlight, jchemhub.view.Plugin);
 
 
-/** The clear command. */
-jchemhub.view.plugins.Highlight.COMMAND = 'highlight';
-
-
 /** @inheritDoc */
 jchemhub.view.plugins.Highlight.prototype.getTrogClassId =
-    goog.functions.constant(jchemhub.view.plugins.Highlight.COMMAND);
-
-
-/** @inheritDoc */
-jchemhub.view.plugins.Highlight.prototype.isSupportedCommand = function(
-    command) {
-  return command == jchemhub.view.plugins.Highlight.COMMAND;
-};
+    goog.functions.constant('jchemhub.view.plugins.Highlight');
 
 /**
  * Logging object.

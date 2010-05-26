@@ -340,7 +340,7 @@ jchemhub.view.ReactionEditor.prototype.handleKeyUp_ = function(e) {
 };
 
 jchemhub.view.ReactionEditor.prototype.handleMouseDown_ = function(e) {
-	this.logger.info('handleMouseDown_');
+
 	this.invokeShortCircuitingOp_(jchemhub.view.Plugin.Op.MOUSEDOWN, e);
 
 }
@@ -362,6 +362,11 @@ jchemhub.view.ReactionEditor.prototype.handleBondMouseOver_ = function(e){
 
 jchemhub.view.ReactionEditor.prototype.handleBondMouseOut_ = function(e){
 	this.invokeShortCircuitingOp_(jchemhub.view.Plugin.Op.BOND_MOUSEOUT, e);
+}
+
+jchemhub.view.ReactionEditor.prototype.handleBondMouseDown_ = function(e){
+
+	this.invokeShortCircuitingOp_(jchemhub.view.Plugin.Op.BOND_MOUSEDOWN, e);
 }
 
 /**
@@ -950,6 +955,7 @@ jchemhub.view.ReactionEditor.prototype.setupChangeListeners_ = function() {
 	this.addEventListener(jchemhub.controller.AtomController.EventType.MOUSEOVER, this.handleAtomMouseOver_);
 	this.addEventListener(jchemhub.controller.BondController.EventType.MOUSEOUT, this.handleBondMouseOut_);
 	this.addEventListener(jchemhub.controller.BondController.EventType.MOUSEOVER, this.handleBondMouseOver_);
+	this.addEventListener(jchemhub.controller.BondController.EventType.MOUSEDOWN, this.handleBondMouseDown_);
 
 };
 
