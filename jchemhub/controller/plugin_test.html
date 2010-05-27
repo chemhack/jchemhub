@@ -1,12 +1,12 @@
 <html>
 <head>
-<title>Editor Unit Tests - jchemhub.view.Plugin</title>
+<title>Editor Unit Tests - jchemhub.controller.Plugin</title>
 <script src="../../third-party/closure/closure/goog/base.js"></script>
 <script src="../deps.js"></script>
 
 <script>
-  goog.require('jchemhub.view.ReactionEditor');
-  goog.require('jchemhub.view.Plugin');
+  goog.require('jchemhub.controller.ReactionEditor');
+  goog.require('jchemhub.controller.Plugin');
   goog.require('goog.functions');
   goog.require('goog.userAgent');
   goog.require('goog.testing.StrictMock');
@@ -22,7 +22,7 @@ var editorObject;
 
 
 function setUp() {
-  plugin = new jchemhub.view.Plugin();
+  plugin = new jchemhub.controller.Plugin();
   editorObject = {};
 }
 
@@ -87,7 +87,7 @@ function testIsSupportedCommand() {
 }
 
 function testExecCommand() {
-  var mockField = new goog.testing.StrictMock(jchemhub.view.ReactionEditor);
+  var mockField = new goog.testing.StrictMock(jchemhub.controller.ReactionEditor);
   plugin.registerEditorObject(mockField);
 
   if (goog.userAgent.GECKO) {
@@ -127,7 +127,7 @@ function testExecCommand() {
  * Regression test for http://b/issue?id=1471355 .
  */
 function testExecCommandException() {
-  var mockField = new goog.testing.StrictMock(jchemhub.view.ReactionEditor);
+  var mockField = new goog.testing.StrictMock(jchemhub.controller.ReactionEditor);
   plugin.registerEditorObject(mockField);
   plugin.execCommandInternal = function() {
     throw 1;
