@@ -42,7 +42,7 @@ jchemhub.view.plugins.SelectorRectangle.SUPPORTED_COMMANDS_ =
  * @return {boolean} Whether the string corresponds to a command
  *     this plugin handles.
  */
-goog.editor.plugins.TableEditor.prototype.isSupportedCommand =
+jchemhub.view.plugins.SelectorRectangle.prototype.isSupportedCommand =
     function(command) {
   return command in jchemhub.view.plugins.SelectorRectangle.SUPPORTED_COMMANDS_;
 };
