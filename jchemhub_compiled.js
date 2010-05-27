@@ -421,11 +421,11 @@ goog.array.forEachRight = function(b, c, d) {
 goog.array.filter = goog.array.ARRAY_PROTOTYPE_.filter ? function(b, c, d) {
   return goog.array.ARRAY_PROTOTYPE_.filter.call(b, c, d)
 } : function(b, c, d) {
-  for(var e = b.length, f = [], g = 0, h = goog.isString(b) ? b.split("") : b, j = 0;j < e;j++) {
-    if(j in h) {
-      var k = h[j];
-      if(c.call(d, k, j, b)) {
-        f[g++] = k
+  for(var e = b.length, f = [], g = 0, h = goog.isString(b) ? b.split("") : b, i = 0;i < e;i++) {
+    if(i in h) {
+      var j = h[i];
+      if(c.call(d, j, i, b)) {
+        f[g++] = j
       }
     }
   }return f
@@ -799,15 +799,15 @@ goog.string.numerateCompare = function(b, c) {
   }if(!c) {
     return 1
   }for(var d = b.toLowerCase().match(goog.string.numerateCompareRegExp_), e = c.toLowerCase().match(goog.string.numerateCompareRegExp_), f = Math.min(d.length, e.length), g = 0;g < f;g++) {
-    var h = d[g], j = e[g];
-    if(h != j) {
+    var h = d[g], i = e[g];
+    if(h != i) {
       b = parseInt(h, 10);
       if(!isNaN(b)) {
-        c = parseInt(j, 10);
+        c = parseInt(i, 10);
         if(!isNaN(c) && b - c) {
           return b - c
         }
-      }return h < j ? -1 : 1
+      }return h < i ? -1 : 1
     }
   }if(d.length != e.length) {
     return d.length - e.length
@@ -995,14 +995,14 @@ goog.string.compareVersions = function(b, c) {
   b = goog.string.trim(String(b)).split(".");
   c = goog.string.trim(String(c)).split(".");
   for(var e = Math.max(b.length, c.length), f = 0;d == 0 && f < e;f++) {
-    var g = b[f] || "", h = c[f] || "", j = new RegExp("(\\d*)(\\D*)", "g"), k = new RegExp("(\\d*)(\\D*)", "g");
+    var g = b[f] || "", h = c[f] || "", i = new RegExp("(\\d*)(\\D*)", "g"), j = new RegExp("(\\d*)(\\D*)", "g");
     do {
-      var l = j.exec(g) || ["", "", ""], m = k.exec(h) || ["", "", ""];
-      if(l[0].length == 0 && m[0].length == 0) {
+      var k = i.exec(g) || ["", "", ""], l = j.exec(h) || ["", "", ""];
+      if(k[0].length == 0 && l[0].length == 0) {
         break
-      }d = l[1].length == 0 ? 0 : parseInt(l[1], 10);
-      var n = m[1].length == 0 ? 0 : parseInt(m[1], 10);
-      d = goog.string.compareElements_(d, n) || goog.string.compareElements_(l[2].length == 0, m[2].length == 0) || goog.string.compareElements_(l[2], m[2])
+      }d = k[1].length == 0 ? 0 : parseInt(k[1], 10);
+      var m = l[1].length == 0 ? 0 : parseInt(l[1], 10);
+      d = goog.string.compareElements_(d, m) || goog.string.compareElements_(k[2].length == 0, l[2].length == 0) || goog.string.compareElements_(k[2], l[2])
     }while(d == 0)
   }return d
 };
@@ -1322,10 +1322,10 @@ goog.userAgent.jscript.isVersion = function(b) {
     return[]
   }
   function d() {
-    var o = function(p) {
-      return h.call(o.src, o.key, p)
+    var n = function(o) {
+      return h.call(n.src, n.key, o)
     };
-    return o
+    return n
   }
   function e() {
     return new goog.events.Listener
@@ -1334,50 +1334,50 @@ goog.userAgent.jscript.isVersion = function(b) {
     return new goog.events.BrowserEvent
   }
   var g = goog.userAgent.jscript.HAS_JSCRIPT && !goog.userAgent.jscript.isVersion("5.7"), h;
-  goog.events.pools.setProxyCallbackFunction = function(o) {
-    h = o
+  goog.events.pools.setProxyCallbackFunction = function(n) {
+    h = n
   };
   if(g) {
     goog.events.pools.getObject = function() {
-      return j.getObject()
+      return i.getObject()
     };
-    goog.events.pools.releaseObject = function(o) {
-      j.releaseObject(o)
+    goog.events.pools.releaseObject = function(n) {
+      i.releaseObject(n)
     };
     goog.events.pools.getArray = function() {
-      return k.getObject()
+      return j.getObject()
     };
-    goog.events.pools.releaseArray = function(o) {
-      k.releaseObject(o)
+    goog.events.pools.releaseArray = function(n) {
+      j.releaseObject(n)
     };
     goog.events.pools.getProxy = function() {
-      return l.getObject()
+      return k.getObject()
     };
     goog.events.pools.releaseProxy = function() {
-      l.releaseObject(d())
+      k.releaseObject(d())
     };
     goog.events.pools.getListener = function() {
-      return m.getObject()
+      return l.getObject()
     };
-    goog.events.pools.releaseListener = function(o) {
-      m.releaseObject(o)
+    goog.events.pools.releaseListener = function(n) {
+      l.releaseObject(n)
     };
     goog.events.pools.getEvent = function() {
-      return n.getObject()
+      return m.getObject()
     };
-    goog.events.pools.releaseEvent = function(o) {
-      n.releaseObject(o)
+    goog.events.pools.releaseEvent = function(n) {
+      m.releaseObject(n)
     };
+    var i = new goog.structs.SimplePool(0, 600);
+    i.setCreateObjectFn(b);
     var j = new goog.structs.SimplePool(0, 600);
-    j.setCreateObjectFn(b);
+    j.setCreateObjectFn(c);
     var k = new goog.structs.SimplePool(0, 600);
-    k.setCreateObjectFn(c);
+    k.setCreateObjectFn(d);
     var l = new goog.structs.SimplePool(0, 600);
-    l.setCreateObjectFn(d);
+    l.setCreateObjectFn(e);
     var m = new goog.structs.SimplePool(0, 600);
-    m.setCreateObjectFn(e);
-    var n = new goog.structs.SimplePool(0, 600);
-    n.setCreateObjectFn(f)
+    m.setCreateObjectFn(f)
   }else {
     goog.events.pools.getObject = b;
     goog.events.pools.releaseObject = goog.nullFunction;
@@ -1571,20 +1571,20 @@ goog.events.listen = function(b, c, d, e, f) {
         h[e] = goog.events.pools.getObject();
         h.count_++
       }h = h[e];
-      var j = goog.getUid(b), k;
+      var i = goog.getUid(b), j;
       h.remaining_++;
-      if(h[j]) {
-        k = h[j];
-        for(g = 0;g < k.length;g++) {
-          h = k[g];
+      if(h[i]) {
+        j = h[i];
+        for(g = 0;g < j.length;g++) {
+          h = j[g];
           if(h.listener == d && h.handler == f) {
             if(h.removed) {
               break
-            }return k[g].key
+            }return j[g].key
           }
         }
       }else {
-        k = h[j] = goog.events.pools.getArray();
+        j = h[i] = goog.events.pools.getArray();
         h.count_++
       }g = goog.events.pools.getProxy();
       g.src = b;
@@ -1592,10 +1592,10 @@ goog.events.listen = function(b, c, d, e, f) {
       h.init(d, g, b, c, e, f);
       d = h.key;
       g.key = d;
-      k.push(h);
+      j.push(h);
       goog.events.listeners_[d] = h;
-      goog.events.sources_[j] || (goog.events.sources_[j] = goog.events.pools.getArray());
-      goog.events.sources_[j].push(h);
+      goog.events.sources_[i] || (goog.events.sources_[i] = goog.events.pools.getArray());
+      goog.events.sources_[i].push(h);
       if(b.addEventListener) {
         if(b == goog.global || !b.customEvent_) {
           b.addEventListener(c, g, e)
@@ -1699,11 +1699,11 @@ goog.events.removeAll = function(b, c, d) {
   var e = 0, f = b == null, g = c == null, h = d == null;
   d = !!d;
   if(f) {
-    goog.object.forEach(goog.events.sources_, function(k) {
-      for(var l = k.length - 1;l >= 0;l--) {
-        var m = k[l];
-        if((g || c == m.type) && (h || d == m.capture)) {
-          goog.events.unlistenByKey(m.key);
+    goog.object.forEach(goog.events.sources_, function(j) {
+      for(var k = j.length - 1;k >= 0;k--) {
+        var l = j[k];
+        if((g || c == l.type) && (h || d == l.capture)) {
+          goog.events.unlistenByKey(l.key);
           e++
         }
       }
@@ -1713,9 +1713,9 @@ goog.events.removeAll = function(b, c, d) {
     if(goog.events.sources_[b]) {
       b = goog.events.sources_[b];
       for(f = b.length - 1;f >= 0;f--) {
-        var j = b[f];
-        if((g || c == j.type) && (h || d == j.capture)) {
-          goog.events.unlistenByKey(j.key);
+        var i = b[f];
+        if((g || c == i.type) && (h || d == i.capture)) {
+          goog.events.unlistenByKey(i.key);
           e++
         }
       }
@@ -1796,10 +1796,10 @@ goog.events.fireListeners_ = function(b, c, d, e, f) {
     }else {
       b.locked_ = 1
     }try {
-      for(var h = b.length, j = 0;j < h;j++) {
-        var k = b[j];
-        if(k && !k.removed) {
-          g &= goog.events.fireListener(k, f) !== false
+      for(var h = b.length, i = 0;i < h;i++) {
+        var j = b[i];
+        if(j && !j.removed) {
+          g &= goog.events.fireListener(j, f) !== false
         }
       }
     }finally {
@@ -1840,17 +1840,17 @@ goog.events.dispatchEvent = function(b, c) {
       e.push(h)
     }h = g[true];
     h.remaining_ = h.count_;
-    for(var j = e.length - 1;!c.propagationStopped_ && j >= 0 && h.remaining_;j--) {
-      c.currentTarget = e[j];
-      d &= goog.events.fireListeners_(h, e[j], c.type, true, c) && c.returnValue_ != false
+    for(var i = e.length - 1;!c.propagationStopped_ && i >= 0 && h.remaining_;i--) {
+      c.currentTarget = e[i];
+      d &= goog.events.fireListeners_(h, e[i], c.type, true, c) && c.returnValue_ != false
     }
   }if(false in g) {
     h = g[false];
     h.remaining_ = h.count_;
     if(f) {
-      for(j = 0;!c.propagationStopped_ && j < e.length && h.remaining_;j++) {
-        c.currentTarget = e[j];
-        d &= goog.events.fireListeners_(h, e[j], c.type, false, c) && c.returnValue_ != false
+      for(i = 0;!c.propagationStopped_ && i < e.length && h.remaining_;i++) {
+        c.currentTarget = e[i];
+        d &= goog.events.fireListeners_(h, e[i], c.type, false, c) && c.returnValue_ != false
       }
     }else {
       for(b = b;!c.propagationStopped_ && b && h.remaining_;b = b.getParentEventTarget()) {
@@ -1881,35 +1881,35 @@ goog.events.handleBrowserEvent_ = function(b, c) {
       if(goog.events.isMarkedIeEvent_(f)) {
         return true
       }goog.events.markIeEvent_(f)
-    }var j = goog.events.pools.getEvent();
-    j.init(f, this);
+    }var i = goog.events.pools.getEvent();
+    i.init(f, this);
     f = true;
     try {
       if(c) {
-        for(var k = goog.events.pools.getArray(), l = j.currentTarget;l;l = l.parentNode) {
-          k.push(l)
+        for(var j = goog.events.pools.getArray(), k = i.currentTarget;k;k = k.parentNode) {
+          j.push(k)
         }g = e[true];
         g.remaining_ = g.count_;
-        for(var m = k.length - 1;!j.propagationStopped_ && m >= 0 && g.remaining_;m--) {
-          j.currentTarget = k[m];
-          f &= goog.events.fireListeners_(g, k[m], d, true, j)
+        for(var l = j.length - 1;!i.propagationStopped_ && l >= 0 && g.remaining_;l--) {
+          i.currentTarget = j[l];
+          f &= goog.events.fireListeners_(g, j[l], d, true, i)
         }if(h) {
           g = e[false];
           g.remaining_ = g.count_;
-          for(m = 0;!j.propagationStopped_ && m < k.length && g.remaining_;m++) {
-            j.currentTarget = k[m];
-            f &= goog.events.fireListeners_(g, k[m], d, false, j)
+          for(l = 0;!i.propagationStopped_ && l < j.length && g.remaining_;l++) {
+            i.currentTarget = j[l];
+            f &= goog.events.fireListeners_(g, j[l], d, false, i)
           }
         }
       }else {
-        f = goog.events.fireListener(b, j)
+        f = goog.events.fireListener(b, i)
       }
     }finally {
-      if(k) {
-        k.length = 0;
-        goog.events.pools.releaseArray(k)
-      }j.dispose();
-      goog.events.pools.releaseEvent(j)
+      if(j) {
+        j.length = 0;
+        goog.events.pools.releaseArray(j)
+      }i.dispose();
+      goog.events.pools.releaseEvent(i)
     }return f
   }g = new goog.events.BrowserEvent(c, this);
   try {
@@ -1965,151 +1965,2117 @@ a.disposeInternal = function() {
   goog.events.removeAll(this);
   this.parentEventTarget_ = null
 };var jchemhub = {};
-jchemhub.view = {};
-jchemhub.view.Drawing = function() {
+jchemhub.controller = {};
+jchemhub.controller.ReactionController = function(b) {
   goog.events.EventTarget.call(this);
-  this._parent = null;
-  this._children = [];
-  this._transform = this._config = this._group = null;
-  this._elements = [];
-  this.handler = new goog.events.EventHandler(this)
-};
-goog.inherits(jchemhub.view.Drawing, goog.events.EventTarget);
-a = jchemhub.view.Drawing.prototype;
-a.renderChildren = function() {
-  goog.array.forEach(this.getChildren(), function(b) {
-    b.render()
-  }, this)
-};
-a.layout = function(b) {
-  var c = this.getRect(), d = c.getSize().scaleToFit(b.getSize()).width / c.width;
-  this.setTransform(new goog.graphics.AffineTransform(d, 0, 0, d, b.left - c.left * d, b.top - c.top * d));
-  this.layoutChildren(b)
-};
-a.getCoords = function() {
-  var b = [];
-  goog.array.forEach(this.getChildren(), function(c) {
-    b.push.apply(b, c.getCoords())
-  });
-  return b
-};
-a.getBoundingBox = function() {
-  return goog.math.Box.boundingBox.apply(null, this.getCoords())
-};
-a.getRect = function() {
-  var b = this.getBoundingBox();
-  return goog.math.Rect.createFromBox(b)
-};
-a.getSize = function() {
-  return this.getRect().getSize()
-};
-a.getTotalChildrenWidth = function() {
-  return goog.array.reduce(this.getChildren(), function(b, c) {
-    return b + c.getSize().width
-  }, 0)
-};
-a.getMaxChildrenHeight = function() {
-  return goog.array.reduce(this.getChildren(), function(b, c) {
-    return Math.max(b, c.getSize().height)
-  }, 0)
-};
-a.layoutChildren = function(b) {
-  goog.array.forEach(this.getChildren(), function(c) {
-    c.layout(b)
-  })
-};
-a.getChildren = function() {
-  return this._children
-};
-a.add = function(b) {
-  b.setParent(this);
-  this._children.push(b)
-};
-a.removeChild = function(b) {
-  if(b.getParent() != this) {
-    throw Error("Can only remove children");
-  }goog.array.remove(this._children, b);
-  b.setParent(null);
-  return b
-};
-a.getGraphics = function() {
-  if(!this._graphics) {
-    this._graphics = this.getParent().getGraphics()
-  }return this._graphics
-};
-a.getParent = function() {
-  return this._parent
-};
-a.setParent = function(b) {
-  if(this == b) {
-    throw Error(jchemhub.view.Drawing.PARENT_UNABLE_TO_BE_SET);
-  }this._parent && this._parent != b && this._parent.removeChild(this);
-  this._parent = b;
   this.setParentEventTarget(b)
 };
-a.getGroup = function() {
-  if(!this._group) {
-    var b = this.getGraphics().createGroup();
-    this._group = b;
-    this._group.drawing = this;
-    this._group.setParentEventTarget(this);
-    this.handler.listen(b, [goog.events.EventType.MOUSEOVER, b, goog.events.EventType.MOUSEOUT, goog.events.EventType.CLICK, goog.events.EventType.MOUSEDOWN], this._bubble)
-  }return this._group
+goog.inherits(jchemhub.controller.ReactionController, goog.events.EventTarget);
+jchemhub.controller.ReactionController.prototype.handleMouseOver = function(b) {
+  console.log(b.symbol);
+  this.dispatchEvent(jchemhub.controller.ReactionController.EventType.MOUSEOVER)
 };
-a._bubble = function(b) {
-  this.dispatchEvent(b)
+jchemhub.controller.ReactionController.prototype.handleMouseOut = function() {
+  this.dispatchEvent(jchemhub.controller.ReactionController.EventType.MOUSEOUT)
 };
-a.getConfig = function() {
-  if(!this._config) {
-    this._config = this.getParent().getConfig()
-  }return this._config
+jchemhub.controller.ReactionController.EventType = {MOUSEOVER:"reaction_mouseover", MOUSEOUT:"reaction_mouseout"};goog.iter = {};
+goog.iter.Iterable = goog.typedef;
+goog.iter.StopIteration = "StopIteration" in goog.global ? goog.global.StopIteration : Error("StopIteration");
+goog.iter.Iterator = function() {
 };
-a.getTransform = function() {
-  return this._transform
+goog.iter.Iterator.prototype.next = function() {
+  throw goog.iter.StopIteration;
 };
-a.setTransform = function(b) {
-  this._transform = b;
-  goog.array.forEach(this.getChildren(), function(c) {
-    c.setTransform(b)
-  }, this)
+goog.iter.Iterator.prototype.__iterator__ = function() {
+  return this
 };
-a.clear = function() {
-  this.getGroup().clear();
-  goog.array.forEach(this.getChildren(), function(b) {
-    b.clear()
-  }, this)
+goog.iter.toIterator = function(b) {
+  if(b instanceof goog.iter.Iterator) {
+    return b
+  }if(typeof b.__iterator__ == "function") {
+    return b.__iterator__(false)
+  }if(goog.isArrayLike(b)) {
+    var c = 0, d = new goog.iter.Iterator;
+    d.next = function() {
+      for(;;) {
+        if(c >= b.length) {
+          throw goog.iter.StopIteration;
+        }if(c in b) {
+          return b[c++]
+        }else {
+          c++
+        }
+      }
+    };
+    return d
+  }throw Error("Not implemented");
 };
-a.transformCoords = function(b, c) {
-  c = goog.array.map(c, function(e) {
-    return[e.x, e.y]
+goog.iter.forEach = function(b, c, d) {
+  if(goog.isArrayLike(b)) {
+    try {
+      goog.array.forEach(b, c, d)
+    }catch(e) {
+      if(e !== goog.iter.StopIteration) {
+        throw e;
+      }
+    }
+  }else {
+    b = goog.iter.toIterator(b);
+    try {
+      for(;;) {
+        c.call(d, b.next(), undefined, b)
+      }
+    }catch(f) {
+      if(f !== goog.iter.StopIteration) {
+        throw f;
+      }
+    }
+  }
+};
+goog.iter.filter = function(b, c, d) {
+  b = goog.iter.toIterator(b);
+  var e = new goog.iter.Iterator;
+  e.next = function() {
+    for(;;) {
+      var f = b.next();
+      if(c.call(d, f, undefined, b)) {
+        return f
+      }
+    }
+  };
+  return e
+};
+goog.iter.range = function(b, c, d) {
+  var e = 0, f = b, g = d || 1;
+  if(arguments.length > 1) {
+    e = b;
+    f = c
+  }if(g == 0) {
+    throw Error("Range step argument must not be zero");
+  }var h = new goog.iter.Iterator;
+  h.next = function() {
+    if(g > 0 && e >= f || g < 0 && e <= f) {
+      throw goog.iter.StopIteration;
+    }var i = e;
+    e += g;
+    return i
+  };
+  return h
+};
+goog.iter.join = function(b, c) {
+  return goog.iter.toArray(b).join(c)
+};
+goog.iter.map = function(b, c, d) {
+  b = goog.iter.toIterator(b);
+  var e = new goog.iter.Iterator;
+  e.next = function() {
+    for(;;) {
+      var f = b.next();
+      return c.call(d, f, undefined, b)
+    }
+  };
+  return e
+};
+goog.iter.reduce = function(b, c, d, e) {
+  var f = d;
+  goog.iter.forEach(b, function(g) {
+    f = c.call(e, f, g)
   });
-  var d = goog.array.flatten(c);
-  c = [];
-  b.transform(d, 0, c, 0, d.length / 2);
-  b = [];
-  for(d = 0;d < c.length;d += 2) {
-    b.push(new goog.math.Coordinate(c[d], c[d + 1]))
+  return f
+};
+goog.iter.some = function(b, c, d) {
+  b = goog.iter.toIterator(b);
+  try {
+    for(;;) {
+      if(c.call(d, b.next(), undefined, b)) {
+        return true
+      }
+    }
+  }catch(e) {
+    if(e !== goog.iter.StopIteration) {
+      throw e;
+    }
+  }return false
+};
+goog.iter.every = function(b, c, d) {
+  b = goog.iter.toIterator(b);
+  try {
+    for(;;) {
+      if(!c.call(d, b.next(), undefined, b)) {
+        return false
+      }
+    }
+  }catch(e) {
+    if(e !== goog.iter.StopIteration) {
+      throw e;
+    }
+  }return true
+};
+goog.iter.chain = function() {
+  var b = arguments, c = b.length, d = 0, e = new goog.iter.Iterator;
+  e.next = function() {
+    try {
+      if(d >= c) {
+        throw goog.iter.StopIteration;
+      }return goog.iter.toIterator(b[d]).next()
+    }catch(f) {
+      if(f !== goog.iter.StopIteration || d >= c) {
+        throw f;
+      }else {
+        d++;
+        return this.next()
+      }
+    }
+  };
+  return e
+};
+goog.iter.dropWhile = function(b, c, d) {
+  b = goog.iter.toIterator(b);
+  var e = new goog.iter.Iterator, f = true;
+  e.next = function() {
+    for(;;) {
+      var g = b.next();
+      if(!(f && c.call(d, g, undefined, b))) {
+        f = false;
+        return g
+      }
+    }
+  };
+  return e
+};
+goog.iter.takeWhile = function(b, c, d) {
+  b = goog.iter.toIterator(b);
+  var e = new goog.iter.Iterator, f = true;
+  e.next = function() {
+    for(;;) {
+      if(f) {
+        var g = b.next();
+        if(c.call(d, g, undefined, b)) {
+          return g
+        }else {
+          f = false
+        }
+      }else {
+        throw goog.iter.StopIteration;
+      }
+    }
+  };
+  return e
+};
+goog.iter.toArray = function(b) {
+  if(goog.isArrayLike(b)) {
+    return goog.array.toArray(b)
+  }b = goog.iter.toIterator(b);
+  var c = [];
+  goog.iter.forEach(b, function(d) {
+    c.push(d)
+  });
+  return c
+};
+goog.iter.equals = function(b, c) {
+  b = goog.iter.toIterator(b);
+  c = goog.iter.toIterator(c);
+  var d, e;
+  try {
+    for(;;) {
+      d = e = false;
+      var f = b.next();
+      d = true;
+      var g = c.next();
+      e = true;
+      if(f != g) {
+        return false
+      }
+    }
+  }catch(h) {
+    if(h !== goog.iter.StopIteration) {
+      throw h;
+    }else {
+      if(d && !e) {
+        return false
+      }if(!e) {
+        try {
+          c.next();
+          return false
+        }catch(i) {
+          if(i !== goog.iter.StopIteration) {
+            throw i;
+          }return true
+        }
+      }
+    }
+  }return false
+};
+goog.iter.nextOrValue = function(b, c) {
+  try {
+    return goog.iter.toIterator(b).next()
+  }catch(d) {
+    if(d != goog.iter.StopIteration) {
+      throw d;
+    }return c
+  }
+};goog.structs.getCount = function(b) {
+  if(typeof b.getCount == "function") {
+    return b.getCount()
+  }if(goog.isArrayLike(b) || goog.isString(b)) {
+    return b.length
+  }return goog.object.getCount(b)
+};
+goog.structs.getValues = function(b) {
+  if(typeof b.getValues == "function") {
+    return b.getValues()
+  }if(goog.isString(b)) {
+    return b.split("")
+  }if(goog.isArrayLike(b)) {
+    for(var c = [], d = b.length, e = 0;e < d;e++) {
+      c.push(b[e])
+    }return c
+  }return goog.object.getValues(b)
+};
+goog.structs.getKeys = function(b) {
+  if(typeof b.getKeys == "function") {
+    return b.getKeys()
+  }if(typeof b.getValues != "function") {
+    if(goog.isArrayLike(b) || goog.isString(b)) {
+      var c = [];
+      b = b.length;
+      for(var d = 0;d < b;d++) {
+        c.push(d)
+      }return c
+    }return goog.object.getKeys(b)
+  }
+};
+goog.structs.contains = function(b, c) {
+  if(typeof b.contains == "function") {
+    return b.contains(c)
+  }if(typeof b.containsValue == "function") {
+    return b.containsValue(c)
+  }if(goog.isArrayLike(b) || goog.isString(b)) {
+    return goog.array.contains(b, c)
+  }return goog.object.containsValue(b, c)
+};
+goog.structs.isEmpty = function(b) {
+  if(typeof b.isEmpty == "function") {
+    return b.isEmpty()
+  }if(goog.isArrayLike(b) || goog.isString(b)) {
+    return goog.array.isEmpty(b)
+  }return goog.object.isEmpty(b)
+};
+goog.structs.clear = function(b) {
+  if(typeof b.clear == "function") {
+    b.clear()
+  }else {
+    goog.isArrayLike(b) ? goog.array.clear(b) : goog.object.clear(b)
+  }
+};
+goog.structs.forEach = function(b, c, d) {
+  if(typeof b.forEach == "function") {
+    b.forEach(c, d)
+  }else {
+    if(goog.isArrayLike(b) || goog.isString(b)) {
+      goog.array.forEach(b, c, d)
+    }else {
+      for(var e = goog.structs.getKeys(b), f = goog.structs.getValues(b), g = f.length, h = 0;h < g;h++) {
+        c.call(d, f[h], e && e[h], b)
+      }
+    }
+  }
+};
+goog.structs.filter = function(b, c, d) {
+  if(typeof b.filter == "function") {
+    return b.filter(c, d)
+  }if(goog.isArrayLike(b) || goog.isString(b)) {
+    return goog.array.filter(b, c, d)
+  }var e, f = goog.structs.getKeys(b), g = goog.structs.getValues(b), h = g.length;
+  if(f) {
+    e = {};
+    for(var i = 0;i < h;i++) {
+      if(c.call(d, g[i], f[i], b)) {
+        e[f[i]] = g[i]
+      }
+    }
+  }else {
+    e = [];
+    for(i = 0;i < h;i++) {
+      c.call(d, g[i], undefined, b) && e.push(g[i])
+    }
+  }return e
+};
+goog.structs.map = function(b, c, d) {
+  if(typeof b.map == "function") {
+    return b.map(c, d)
+  }if(goog.isArrayLike(b) || goog.isString(b)) {
+    return goog.array.map(b, c, d)
+  }var e, f = goog.structs.getKeys(b), g = goog.structs.getValues(b), h = g.length;
+  if(f) {
+    e = {};
+    for(var i = 0;i < h;i++) {
+      e[f[i]] = c.call(d, g[i], f[i], b)
+    }
+  }else {
+    e = [];
+    for(i = 0;i < h;i++) {
+      e[i] = c.call(d, g[i], undefined, b)
+    }
+  }return e
+};
+goog.structs.some = function(b, c, d) {
+  if(typeof b.some == "function") {
+    return b.some(c, d)
+  }if(goog.isArrayLike(b) || goog.isString(b)) {
+    return goog.array.some(b, c, d)
+  }for(var e = goog.structs.getKeys(b), f = goog.structs.getValues(b), g = f.length, h = 0;h < g;h++) {
+    if(c.call(d, f[h], e && e[h], b)) {
+      return true
+    }
+  }return false
+};
+goog.structs.every = function(b, c, d) {
+  if(typeof b.every == "function") {
+    return b.every(c, d)
+  }if(goog.isArrayLike(b) || goog.isString(b)) {
+    return goog.array.every(b, c, d)
+  }for(var e = goog.structs.getKeys(b), f = goog.structs.getValues(b), g = f.length, h = 0;h < g;h++) {
+    if(!c.call(d, f[h], e && e[h], b)) {
+      return false
+    }
+  }return true
+};goog.structs.Map = function(b) {
+  this.map_ = {};
+  this.keys_ = [];
+  var c = arguments.length;
+  if(c > 1) {
+    if(c % 2) {
+      throw Error("Uneven number of arguments");
+    }for(var d = 0;d < c;d += 2) {
+      this.set(arguments[d], arguments[d + 1])
+    }
+  }else {
+    b && this.addAll(b)
+  }
+};
+a = goog.structs.Map.prototype;
+a.count_ = 0;
+a.version_ = 0;
+a.getCount = function() {
+  return this.count_
+};
+a.getValues = function() {
+  this.cleanupKeysArray_();
+  for(var b = [], c = 0;c < this.keys_.length;c++) {
+    b.push(this.map_[this.keys_[c]])
   }return b
 };
-a.toggleHighlight = function() {
-  var b = this.getConfig(), c = b.get("bond").stroke.width * 3;
-  b = b.get("highlight").color;
-  var d = new goog.graphics.Stroke(c, b);
-  goog.array.forEach(this._elements, function(e) {
-    if(e.isHighlight) {
-      e.isHighlight = false;
-      e.setStroke(e.oldStroke)
-    }else {
-      e.isHighlight = true;
-      e.oldStroke = e.getStroke();
-      e.setStroke(d)
+a.getKeys = function() {
+  this.cleanupKeysArray_();
+  return this.keys_.concat()
+};
+a.containsKey = function(b) {
+  return goog.structs.Map.hasKey_(this.map_, b)
+};
+a.containsValue = function(b) {
+  for(var c = 0;c < this.keys_.length;c++) {
+    var d = this.keys_[c];
+    if(goog.structs.Map.hasKey_(this.map_, d) && this.map_[d] == b) {
+      return true
     }
+  }return false
+};
+a.equals = function(b, c) {
+  if(this === b) {
+    return true
+  }if(this.count_ != b.getCount()) {
+    return false
+  }c = c || goog.structs.Map.defaultEquals;
+  this.cleanupKeysArray_();
+  for(var d, e = 0;d = this.keys_[e];e++) {
+    if(!c(this.get(d), b.get(d))) {
+      return false
+    }
+  }return true
+};
+goog.structs.Map.defaultEquals = function(b, c) {
+  return b === c
+};
+a = goog.structs.Map.prototype;
+a.isEmpty = function() {
+  return this.count_ == 0
+};
+a.clear = function() {
+  this.map_ = {};
+  this.version_ = this.count_ = this.keys_.length = 0
+};
+a.remove = function(b) {
+  if(goog.structs.Map.hasKey_(this.map_, b)) {
+    delete this.map_[b];
+    this.count_--;
+    this.version_++;
+    this.keys_.length > 2 * this.count_ && this.cleanupKeysArray_();
+    return true
+  }return false
+};
+a.cleanupKeysArray_ = function() {
+  if(this.count_ != this.keys_.length) {
+    for(var b = 0, c = 0;b < this.keys_.length;) {
+      var d = this.keys_[b];
+      if(goog.structs.Map.hasKey_(this.map_, d)) {
+        this.keys_[c++] = d
+      }b++
+    }this.keys_.length = c
+  }if(this.count_ != this.keys_.length) {
+    var e = {};
+    for(c = b = 0;b < this.keys_.length;) {
+      d = this.keys_[b];
+      if(!goog.structs.Map.hasKey_(e, d)) {
+        this.keys_[c++] = d;
+        e[d] = 1
+      }b++
+    }this.keys_.length = c
+  }
+};
+a.get = function(b, c) {
+  if(goog.structs.Map.hasKey_(this.map_, b)) {
+    return this.map_[b]
+  }return c
+};
+a.set = function(b, c) {
+  if(!goog.structs.Map.hasKey_(this.map_, b)) {
+    this.count_++;
+    this.keys_.push(b);
+    this.version_++
+  }this.map_[b] = c
+};
+a.addAll = function(b) {
+  var c;
+  if(b instanceof goog.structs.Map) {
+    c = b.getKeys();
+    b = b.getValues()
+  }else {
+    c = goog.object.getKeys(b);
+    b = goog.object.getValues(b)
+  }for(var d = 0;d < c.length;d++) {
+    this.set(c[d], b[d])
+  }
+};
+a.clone = function() {
+  return new goog.structs.Map(this)
+};
+a.transpose = function() {
+  for(var b = new goog.structs.Map, c = 0;c < this.keys_.length;c++) {
+    var d = this.keys_[c];
+    b.set(this.map_[d], d)
+  }return b
+};
+a.getKeyIterator = function() {
+  return this.__iterator__(true)
+};
+a.getValueIterator = function() {
+  return this.__iterator__(false)
+};
+a.__iterator__ = function(b) {
+  this.cleanupKeysArray_();
+  var c = 0, d = this.keys_, e = this.map_, f = this.version_, g = this, h = new goog.iter.Iterator;
+  h.next = function() {
+    for(;;) {
+      if(f != g.version_) {
+        throw Error("The map has changed since the iterator was created");
+      }if(c >= d.length) {
+        throw goog.iter.StopIteration;
+      }var i = d[c++];
+      return b ? i : e[i]
+    }
+  };
+  return h
+};
+goog.structs.Map.hasKey_ = function(b, c) {
+  return Object.prototype.hasOwnProperty.call(b, c)
+};jchemhub.view = {};
+jchemhub.view.Renderer = function(b, c, d, e) {
+  this.controller = b;
+  this.graphics = c;
+  this.config = new goog.structs.Map(e);
+  d && this.config.addAll(d)
+};jchemhub.controller.MoleculeController = function(b) {
+  goog.events.EventTarget.call(this);
+  this.setParentEventTarget(b)
+};
+goog.inherits(jchemhub.controller.MoleculeController, goog.events.EventTarget);
+jchemhub.controller.MoleculeController.prototype.handleMouseOver = function(b) {
+  console.log(b.symbol);
+  this.dispatchEvent(jchemhub.controller.MoleculeController.EventType.MOUSEOVER)
+};
+jchemhub.controller.MoleculeController.prototype.handleMouseOut = function() {
+  this.dispatchEvent(jchemhub.controller.MoleculeController.EventType.MOUSEOUT)
+};
+jchemhub.controller.MoleculeController.EventType = {MOUSEOVER:"molecule_mouseover", MOUSEOUT:"molecule_mouseout"};jchemhub.controller.BondController = function(b) {
+  goog.events.EventTarget.call(this);
+  this.setParentEventTarget(b)
+};
+goog.inherits(jchemhub.controller.BondController, goog.events.EventTarget);
+jchemhub.controller.BondController.prototype.handleMouseOver = function(b) {
+  this.dispatchEvent(new jchemhub.controller.BondController.BondEvent(this, b, jchemhub.controller.BondController.EventType.MOUSEOVER))
+};
+jchemhub.controller.BondController.prototype.handleMouseOut = function() {
+  this.dispatchEvent(jchemhub.controller.BondController.EventType.MOUSEOUT)
+};
+jchemhub.controller.BondController.prototype.handleMouseDown = function(b) {
+  this.dispatchEvent(new jchemhub.controller.BondController.BondEvent(this, b, jchemhub.controller.BondController.EventType.MOUSEDOWN))
+};
+jchemhub.controller.BondController.EventType = {MOUSEOVER:"bond_mouseover", MOUSEOUT:"bond_mouseout", MOUSEDOWN:"bond_mousedown"};
+jchemhub.controller.BondController.BondEvent = function(b, c, d) {
+  goog.events.Event.call(this, d, b);
+  this.bond = c
+};
+goog.inherits(jchemhub.controller.BondController.BondEvent, goog.events.Event);goog.math = {};
+goog.math.Coordinate = function(b, c) {
+  this.x = goog.isDef(b) ? b : 0;
+  this.y = goog.isDef(c) ? c : 0
+};
+goog.math.Coordinate.prototype.clone = function() {
+  return new goog.math.Coordinate(this.x, this.y)
+};
+if(goog.DEBUG) {
+  goog.math.Coordinate.prototype.toString = function() {
+    return"(" + this.x + ", " + this.y + ")"
+  }
+}goog.math.Coordinate.equals = function(b, c) {
+  if(b == c) {
+    return true
+  }if(!b || !c) {
+    return false
+  }return b.x == c.x && b.y == c.y
+};
+goog.math.Coordinate.distance = function(b, c) {
+  var d = b.x - c.x;
+  b = b.y - c.y;
+  return Math.sqrt(d * d + b * b)
+};
+goog.math.Coordinate.squaredDistance = function(b, c) {
+  var d = b.x - c.x;
+  b = b.y - c.y;
+  return d * d + b * b
+};
+goog.math.Coordinate.difference = function(b, c) {
+  return new goog.math.Coordinate(b.x - c.x, b.y - c.y)
+};
+goog.math.Coordinate.sum = function(b, c) {
+  return new goog.math.Coordinate(b.x + c.x, b.y + c.y)
+};goog.math.Box = function(b, c, d, e) {
+  this.top = b;
+  this.right = c;
+  this.bottom = d;
+  this.left = e
+};
+goog.math.Box.boundingBox = function() {
+  for(var b = new goog.math.Box(arguments[0].y, arguments[0].x, arguments[0].y, arguments[0].x), c = 1;c < arguments.length;c++) {
+    var d = arguments[c];
+    b.top = Math.min(b.top, d.y);
+    b.right = Math.max(b.right, d.x);
+    b.bottom = Math.max(b.bottom, d.y);
+    b.left = Math.min(b.left, d.x)
+  }return b
+};
+goog.math.Box.prototype.clone = function() {
+  return new goog.math.Box(this.top, this.right, this.bottom, this.left)
+};
+if(goog.DEBUG) {
+  goog.math.Box.prototype.toString = function() {
+    return"(" + this.top + "t, " + this.right + "r, " + this.bottom + "b, " + this.left + "l)"
+  }
+}goog.math.Box.prototype.contains = function(b) {
+  return goog.math.Box.contains(this, b)
+};
+goog.math.Box.prototype.expand = function(b, c, d, e) {
+  if(goog.isObject(b)) {
+    this.top -= b.top;
+    this.right += b.right;
+    this.bottom += b.bottom;
+    this.left -= b.left
+  }else {
+    this.top -= b;
+    this.right += c;
+    this.bottom += d;
+    this.left -= e
+  }return this
+};
+goog.math.Box.prototype.expandToInclude = function(b) {
+  this.left = Math.min(this.left, b.left);
+  this.top = Math.min(this.top, b.top);
+  this.right = Math.max(this.right, b.right);
+  this.bottom = Math.max(this.bottom, b.bottom)
+};
+goog.math.Box.equals = function(b, c) {
+  if(b == c) {
+    return true
+  }if(!b || !c) {
+    return false
+  }return b.top == c.top && b.right == c.right && b.bottom == c.bottom && b.left == c.left
+};
+goog.math.Box.contains = function(b, c) {
+  if(!b || !c) {
+    return false
+  }if(c instanceof goog.math.Box) {
+    return c.left >= b.left && c.right <= b.right && c.top >= b.top && c.bottom <= b.bottom
+  }return c.x >= b.left && c.x <= b.right && c.y >= b.top && c.y <= b.bottom
+};
+goog.math.Box.distance = function(b, c) {
+  if(c.x >= b.left && c.x <= b.right) {
+    if(c.y >= b.top && c.y <= b.bottom) {
+      return 0
+    }return c.y < b.top ? b.top - c.y : c.y - b.bottom
+  }if(c.y >= b.top && c.y <= b.bottom) {
+    return c.x < b.left ? b.left - c.x : c.x - b.right
+  }return goog.math.Coordinate.distance(c, new goog.math.Coordinate(c.x < b.left ? b.left : b.right, c.y < b.top ? b.top : b.bottom))
+};
+goog.math.Box.intersects = function(b, c) {
+  return b.left <= c.right && c.left <= b.right && b.top <= c.bottom && c.top <= b.bottom
+};goog.math.Range = function(b, c) {
+  b = Number(b);
+  c = Number(c);
+  this.start = b < c ? b : c;
+  this.end = b < c ? c : b
+};
+goog.math.Range.prototype.clone = function() {
+  return new goog.math.Range(this.start, this.end)
+};
+if(goog.DEBUG) {
+  goog.math.Range.prototype.toString = function() {
+    return"[" + this.start + ", " + this.end + "]"
+  }
+}goog.math.Range.equals = function(b, c) {
+  if(b == c) {
+    return true
+  }if(!b || !c) {
+    return false
+  }return b.start == c.start && b.end == c.end
+};
+goog.math.Range.intersection = function(b, c) {
+  var d = Math.max(b.start, c.start);
+  b = Math.min(b.end, c.end);
+  return d <= b ? new goog.math.Range(d, b) : null
+};
+goog.math.Range.hasIntersection = function(b, c) {
+  return Math.max(b.start, c.start) <= Math.min(b.end, c.end)
+};
+goog.math.Range.boundingRange = function(b, c) {
+  return new goog.math.Range(Math.min(b.start, c.start), Math.max(b.end, c.end))
+};
+goog.math.Range.contains = function(b, c) {
+  return b.start <= c.start && b.end >= c.end
+};
+goog.math.Range.containsPoint = function(b, c) {
+  return b.start <= c && b.end >= c
+};goog.math.Size = function(b, c) {
+  this.width = b;
+  this.height = c
+};
+goog.math.Size.equals = function(b, c) {
+  if(b == c) {
+    return true
+  }if(!b || !c) {
+    return false
+  }return b.width == c.width && b.height == c.height
+};
+goog.math.Size.prototype.clone = function() {
+  return new goog.math.Size(this.width, this.height)
+};
+if(goog.DEBUG) {
+  goog.math.Size.prototype.toString = function() {
+    return"(" + this.width + " x " + this.height + ")"
+  }
+}a = goog.math.Size.prototype;
+a.getLongest = function() {
+  return Math.max(this.width, this.height)
+};
+a.getShortest = function() {
+  return Math.min(this.width, this.height)
+};
+a.area = function() {
+  return this.width * this.height
+};
+a.aspectRatio = function() {
+  return this.width / this.height
+};
+a.isEmpty = function() {
+  return!this.area()
+};
+a.ceil = function() {
+  this.width = Math.ceil(this.width);
+  this.height = Math.ceil(this.height);
+  return this
+};
+a.fitsInside = function(b) {
+  return this.width <= b.width && this.height <= b.height
+};
+a.floor = function() {
+  this.width = Math.floor(this.width);
+  this.height = Math.floor(this.height);
+  return this
+};
+a.round = function() {
+  this.width = Math.round(this.width);
+  this.height = Math.round(this.height);
+  return this
+};
+a.scale = function(b) {
+  this.width *= b;
+  this.height *= b;
+  return this
+};
+a.scaleToFit = function(b) {
+  return this.scale(this.aspectRatio() > b.aspectRatio() ? b.width / this.width : b.height / this.height)
+};goog.math.Rect = function(b, c, d, e) {
+  this.left = b;
+  this.top = c;
+  this.width = d;
+  this.height = e
+};
+goog.math.Rect.prototype.clone = function() {
+  return new goog.math.Rect(this.left, this.top, this.width, this.height)
+};
+goog.math.Rect.prototype.toBox = function() {
+  return new goog.math.Box(this.top, this.left + this.width, this.top + this.height, this.left)
+};
+goog.math.Rect.createFromBox = function(b) {
+  return new goog.math.Rect(b.left, b.top, b.right - b.left, b.bottom - b.top)
+};
+if(goog.DEBUG) {
+  goog.math.Rect.prototype.toString = function() {
+    return"(" + this.left + ", " + this.top + " - " + this.width + "w x " + this.height + "h)"
+  }
+}goog.math.Rect.equals = function(b, c) {
+  if(b == c) {
+    return true
+  }if(!b || !c) {
+    return false
+  }return b.left == c.left && b.width == c.width && b.top == c.top && b.height == c.height
+};
+goog.math.Rect.prototype.intersection = function(b) {
+  var c = Math.max(this.left, b.left), d = Math.min(this.left + this.width, b.left + b.width);
+  if(c <= d) {
+    var e = Math.max(this.top, b.top);
+    b = Math.min(this.top + this.height, b.top + b.height);
+    if(e <= b) {
+      this.left = c;
+      this.top = e;
+      this.width = d - c;
+      this.height = b - e;
+      return true
+    }
+  }return false
+};
+goog.math.Rect.intersection = function(b, c) {
+  var d = Math.max(b.left, c.left), e = Math.min(b.left + b.width, c.left + c.width);
+  if(d <= e) {
+    var f = Math.max(b.top, c.top);
+    b = Math.min(b.top + b.height, c.top + c.height);
+    if(f <= b) {
+      return new goog.math.Rect(d, f, e - d, b - f)
+    }
+  }return null
+};
+goog.math.Rect.intersects = function(b, c) {
+  return b.left <= c.left + c.width && c.left <= b.left + b.width && b.top <= c.top + c.height && c.top <= b.top + b.height
+};
+goog.math.Rect.prototype.intersects = function(b) {
+  return goog.math.Rect.intersects(this, b)
+};
+goog.math.Rect.difference = function(b, c) {
+  var d = goog.math.Rect.intersection(b, c);
+  if(!d || !d.height || !d.width) {
+    return[b.clone()]
+  }d = [];
+  var e = b.top, f = b.height, g = b.left + b.width, h = b.top + b.height, i = c.left + c.width, j = c.top + c.height;
+  if(c.top > b.top) {
+    d.push(new goog.math.Rect(b.left, b.top, b.width, c.top - b.top));
+    e = c.top;
+    f -= c.top - b.top
+  }if(j < h) {
+    d.push(new goog.math.Rect(b.left, j, b.width, h - j));
+    f = j - e
+  }c.left > b.left && d.push(new goog.math.Rect(b.left, e, c.left - b.left, f));
+  i < g && d.push(new goog.math.Rect(i, e, g - i, f));
+  return d
+};
+goog.math.Rect.prototype.difference = function(b) {
+  return goog.math.Rect.difference(this, b)
+};
+goog.math.Rect.prototype.boundingRect = function(b) {
+  var c = Math.max(this.left + this.width, b.left + b.width), d = Math.max(this.top + this.height, b.top + b.height);
+  this.left = Math.min(this.left, b.left);
+  this.top = Math.min(this.top, b.top);
+  this.width = c - this.left;
+  this.height = d - this.top
+};
+goog.math.Rect.boundingRect = function(b, c) {
+  if(!b || !c) {
+    return null
+  }b = b.clone();
+  b.boundingRect(c);
+  return b
+};
+goog.math.Rect.prototype.contains = function(b) {
+  return b instanceof goog.math.Rect ? this.left <= b.left && this.left + this.width >= b.left + b.width && this.top <= b.top && this.top + this.height >= b.top + b.height : b.x >= this.left && b.x <= this.left + this.width && b.y >= this.top && b.y <= this.top + this.height
+};
+goog.math.Rect.prototype.getSize = function() {
+  return new goog.math.Size(this.width, this.height)
+};goog.math.randomInt = function(b) {
+  return Math.floor(Math.random() * b)
+};
+goog.math.uniformRandom = function(b, c) {
+  return b + Math.random() * (c - b)
+};
+goog.math.clamp = function(b, c, d) {
+  return Math.min(Math.max(b, c), d)
+};
+goog.math.modulo = function(b, c) {
+  b = b % c;
+  return b * c < 0 ? b + c : b
+};
+goog.math.lerp = function(b, c, d) {
+  return b + d * (c - b)
+};
+goog.math.nearlyEquals = function(b, c, d) {
+  return Math.abs(b - c) <= (d || 1.0E-6)
+};
+goog.math.standardAngle = function(b) {
+  return goog.math.modulo(b, 360)
+};
+goog.math.toRadians = function(b) {
+  return b * Math.PI / 180
+};
+goog.math.toDegrees = function(b) {
+  return b * 180 / Math.PI
+};
+goog.math.angleDx = function(b, c) {
+  return c * Math.cos(goog.math.toRadians(b))
+};
+goog.math.angleDy = function(b, c) {
+  return c * Math.sin(goog.math.toRadians(b))
+};
+goog.math.angle = function(b, c, d, e) {
+  return goog.math.standardAngle(goog.math.toDegrees(Math.atan2(e - c, d - b)))
+};
+goog.math.angleDifference = function(b, c) {
+  b = goog.math.standardAngle(c) - goog.math.standardAngle(b);
+  if(b > 180) {
+    b -= 360
+  }else {
+    if(b <= -180) {
+      b = 360 + b
+    }
+  }return b
+};
+goog.math.sign = function(b) {
+  return b == 0 ? 0 : b < 0 ? -1 : 1
+};
+goog.math.longestCommonSubsequence = function(b, c, d, e) {
+  d = d || function(l, m) {
+    return l == m
+  };
+  e = e || function(l) {
+    return b[l]
+  };
+  for(var f = b.length, g = c.length, h = [], i = 0;i < f + 1;i++) {
+    h[i] = [];
+    h[i][0] = 0
+  }for(var j = 0;j < g + 1;j++) {
+    h[0][j] = 0
+  }for(i = 1;i <= f;i++) {
+    for(j = 1;j <= f;j++) {
+      h[i][j] = d(b[i - 1], c[j - 1]) ? h[i - 1][j - 1] + 1 : Math.max(h[i - 1][j], h[i][j - 1])
+    }
+  }var k = [];
+  i = f;
+  for(j = g;i > 0 && j > 0;) {
+    if(d(b[i - 1], c[j - 1])) {
+      k.unshift(e(i - 1, j - 1));
+      i--;
+      j--
+    }else {
+      if(h[i - 1][j] > h[i][j - 1]) {
+        i--
+      }else {
+        j--
+      }
+    }
+  }return k
+};
+goog.math.sum = function() {
+  return goog.array.reduce(arguments, function(b, c) {
+    return b + c
+  }, 0)
+};
+goog.math.average = function() {
+  return goog.math.sum.apply(null, arguments) / arguments.length
+};
+goog.math.standardDeviation = function() {
+  var b = arguments.length;
+  if(b < 2) {
+    return 0
+  }var c = goog.math.average.apply(null, arguments);
+  b = goog.math.sum.apply(null, goog.array.map(arguments, function(d) {
+    return Math.pow(d - c, 2)
+  })) / (b - 1);
+  return Math.sqrt(b)
+};
+goog.math.isInt = function(b) {
+  return isFinite(b) && b % 1 == 0
+};
+goog.math.isFiniteNumber = function(b) {
+  return isFinite(b) && !isNaN(b)
+};goog.math.Line = function(b, c, d, e) {
+  this.x0 = b;
+  this.y0 = c;
+  this.x1 = d;
+  this.y1 = e
+};
+a = goog.math.Line.prototype;
+a.clone = function() {
+  return new goog.math.Line(this.x0, this.y0, this.x1, this.y1)
+};
+a.equals = function(b) {
+  return this.x0 == b.x0 && this.y0 == b.y0 && this.x1 == b.x1 && this.y1 == b.y1
+};
+a.getSegmentLengthSquared = function() {
+  var b = this.x1 - this.x0, c = this.y1 - this.y0;
+  return b * b + c * c
+};
+a.getSegmentLength = function() {
+  return Math.sqrt(this.getSegmentLengthSquared())
+};
+a.getClosestLinearInterpolation_ = function(b, c) {
+  if(b instanceof goog.math.Coordinate) {
+    c = b.y;
+    b = b.x
+  }else {
+    c = c
+  }var d = this.x0, e = this.y0;
+  return((b - d) * (this.x1 - d) + (c - e) * (this.y1 - e)) / this.getSegmentLengthSquared()
+};
+a.getInterpolatedPoint = function(b) {
+  return new goog.math.Coordinate(goog.math.lerp(this.x0, this.x1, b), goog.math.lerp(this.y0, this.y1, b))
+};
+a.getClosestPoint = function(b, c) {
+  return this.getInterpolatedPoint(this.getClosestLinearInterpolation_(b, c))
+};
+a.getClosestSegmentPoint = function(b, c) {
+  return this.getInterpolatedPoint(goog.math.clamp(this.getClosestLinearInterpolation_(b, c), 0, 1))
+};jchemhub.math = {};
+jchemhub.math.Line = function(b, c) {
+  goog.math.Line.call(this, b.x, b.y, c.x, c.y)
+};
+goog.inherits(jchemhub.math.Line, goog.math.Line);
+jchemhub.math.Line.prototype.getTheta = function() {
+  return Math.atan2(this.y1 - this.y0, this.x1 - this.x0)
+};
+jchemhub.math.Line.prototype.getStart = function() {
+  return new goog.math.Coordinate(this.x0, this.y0)
+};
+jchemhub.math.Line.prototype.getEnd = function() {
+  return new goog.math.Coordinate(this.x1, this.y1)
+};jchemhub.view.BondRenderer = function(b, c, d) {
+  jchemhub.view.Renderer.call(this, b, c, d, jchemhub.view.BondRenderer.defaultConfig)
+};
+goog.inherits(jchemhub.view.BondRenderer, jchemhub.view.Renderer);
+jchemhub.view.BondRenderer.prototype.render = function(b, c) {
+  this.transform = c;
+  var d = new goog.graphics.SolidFill("red", 0.0010), e = this.config.get("highlight").radius, f = jchemhub.view.BondRenderer.getTheta(b), g = f + Math.PI / 2;
+  f = f - Math.PI / 2;
+  g = new jchemhub.graphics.AffineTransform(1, 0, 0, 1, Math.cos(g) * e, Math.sin(g) * e);
+  e = new jchemhub.graphics.AffineTransform(1, 0, 0, 1, Math.cos(f) * e, Math.sin(f) * e);
+  g = g.transformCoords([b.source.coord, b.target.coord]);
+  e = e.transformCoords([b.source.coord, b.target.coord]);
+  c = c.transformCoords([g[0], g[1], e[0], e[1]]);
+  bondBoxPath = new goog.graphics.Path;
+  bondBoxPath.moveTo(c[0].x, c[0].y);
+  bondBoxPath.lineTo(c[2].x, c[2].y);
+  bondBoxPath.lineTo(c[3].x, c[3].y);
+  bondBoxPath.lineTo(c[1].x, c[1].y);
+  bondBoxPath.close();
+  c = this.graphics.createGroup();
+  this.graphics.drawPath(bondBoxPath, null, d, c);
+  c.addEventListener(goog.events.EventType.MOUSEOVER, goog.bind(this.controller.handleMouseOver, this.controller, b));
+  c.addEventListener(goog.events.EventType.MOUSEOUT, goog.bind(this.controller.handleMouseOut, this.controller, b));
+  c.addEventListener(goog.events.EventType.MOUSEDOWN, goog.bind(this.controller.handleMouseDown, this.controller, b))
+};
+jchemhub.view.BondRenderer.prototype.highlightOn = function(b, c) {
+  var d = this.config.get("bond").stroke.width * 2;
+  d = new goog.graphics.Stroke(d, this.config.get("highlight").color);
+  var e = this.config.get("highlight").radius * this.transform.getScaleX(), f = -jchemhub.view.BondRenderer.getTheta(b) * 180 / Math.PI;
+  console.log("theta: " + f);
+  var g = f + 90;
+  console.log("angle: " + g);
+  f = f <= 0 ? b.source.coord.y <= b.target.coord.y ? 180 : -180 : b.source.coord.y > b.target.coord.y ? 180 : -180;
+  b = this.transform.transformCoords([b.source.coord, b.target.coord]);
+  var h = new goog.graphics.Path;
+  h.arc(b[0].x, b[0].y, e, e, g, f);
+  h.arc(b[1].x, b[1].y, e, e, g, -f);
+  c || (c = this.graphics.createGroup());
+  this.graphics.drawPath(h, d, null, c);
+  return c
+};
+jchemhub.view.BondRenderer.getTheta = function(b) {
+  return(new jchemhub.math.Line(b.source.coord, b.target.coord)).getTheta()
+};
+jchemhub.view.BondRenderer.defaultConfig = {bond:{stroke:{width:2, color:"black"}, fill:{color:"black"}}, highlight:{radius:0.3, color:"blue"}};jchemhub.view.SingleBondRenderer = function(b, c, d) {
+  jchemhub.view.BondRenderer.call(this, b, c, d, jchemhub.view.SingleBondRenderer.defaultConfig)
+};
+goog.inherits(jchemhub.view.SingleBondRenderer, jchemhub.view.BondRenderer);
+jchemhub.view.SingleBondRenderer.prototype.render = function(b, c, d) {
+  jchemhub.view.SingleBondRenderer.superClass_.render.call(this, b, c, d);
+  var e = new goog.graphics.Path, f = new goog.graphics.Stroke(this.config.get("bond").stroke.width, this.config.get("bond").stroke.color);
+  b = c.transformCoords([b.source.coord, b.target.coord]);
+  e.moveTo(b[0].x, b[0].y);
+  e.lineTo(b[1].x, b[1].y);
+  this.graphics.drawPath(e, f, null, d)
+};jchemhub.view.DoubleBondRenderer = function(b, c, d) {
+  jchemhub.view.BondRenderer.call(this, b, c, d, jchemhub.view.DoubleBondRenderer.defaultConfig)
+};
+goog.inherits(jchemhub.view.DoubleBondRenderer, jchemhub.view.BondRenderer);
+jchemhub.view.DoubleBondRenderer.prototype.render = function(b, c, d) {
+  jchemhub.view.DoubleBondRenderer.superClass_.render.call(this, b, c, d);
+  var e = this.config.get("bond").stroke.width;
+  e = new goog.graphics.Stroke(e, this.config.get("bond").stroke.color);
+  var f = jchemhub.view.DoubleBondRenderer.getFirstRing(b);
+  if(f) {
+    var g = f.ringCenter;
+    f = goog.math.Coordinate.difference(g, b.source.coord);
+    f = goog.math.Coordinate.sum(new goog.math.Coordinate(f.x / 5, f.y / 5), b.source.coord);
+    g = goog.math.Coordinate.difference(g, b.target.coord);
+    g = goog.math.Coordinate.sum(new goog.math.Coordinate(g.x / 5, g.y / 5), b.target.coord);
+    c = c.transformCoords([b.source.coord, b.target.coord, f, g]);
+    b = new goog.graphics.Path
+  }else {
+    g = jchemhub.view.BondRenderer.getTheta(b);
+    f = g + Math.PI / 2;
+    g = g - Math.PI / 2;
+    var h = goog.math.Coordinate.distance(b.source.coord, b.target.coord) / 12;
+    f = new jchemhub.graphics.AffineTransform(1, 0, 0, 1, Math.cos(f) * h, Math.sin(f) * h);
+    g = new jchemhub.graphics.AffineTransform(1, 0, 0, 1, Math.cos(g) * h, Math.sin(g) * h);
+    f = f.transformCoords([b.source.coord, b.target.coord]);
+    b = g.transformCoords([b.source.coord, b.target.coord]);
+    c = c.transformCoords([f[0], f[1], b[0], b[1]]);
+    b = new goog.graphics.Path
+  }b.moveTo(c[0].x, c[0].y);
+  b.lineTo(c[1].x, c[1].y);
+  b.moveTo(c[2].x, c[2].y);
+  b.lineTo(c[3].x, c[3].y);
+  this.graphics.drawPath(b, e, null, d)
+};
+jchemhub.view.DoubleBondRenderer.getFirstRing = function(b) {
+  return goog.array.find(b.molecule.getRings(), function(c) {
+    return goog.array.contains(c.bonds, this)
+  }, b)
+};jchemhub.view.TripleBondRenderer = function(b, c, d) {
+  jchemhub.view.BondRenderer.call(this, b, c, d, jchemhub.view.TripleBondRenderer.defaultConfig)
+};
+goog.inherits(jchemhub.view.TripleBondRenderer, jchemhub.view.BondRenderer);
+jchemhub.view.TripleBondRenderer.prototype.render = function(b, c, d) {
+  jchemhub.view.TripleBondRenderer.superClass_.render.call(this, b, c, d);
+  var e = this.config.get("bond").stroke.width;
+  e = new goog.graphics.Stroke(e, this.config.get("bond").stroke.color);
+  var f = jchemhub.view.BondRenderer.getTheta(b), g = f + Math.PI / 2;
+  f = f - Math.PI / 2;
+  var h = goog.math.Coordinate.distance(b.source.coord, b.target.coord) / 6;
+  g = new jchemhub.graphics.AffineTransform(1, 0, 0, 1, Math.cos(g) * h, Math.sin(g) * h);
+  f = new jchemhub.graphics.AffineTransform(1, 0, 0, 1, Math.cos(f) * h, Math.sin(f) * h);
+  g = g.transformCoords([b.source.coord, b.target.coord]);
+  f = f.transformCoords([b.source.coord, b.target.coord]);
+  b = c.transformCoords([b.source.coord, b.target.coord, g[0], g[1], f[0], f[1]]);
+  c = new goog.graphics.Path;
+  c.moveTo(b[0].x, b[0].y);
+  c.lineTo(b[1].x, b[1].y);
+  c.moveTo(b[2].x, b[2].y);
+  c.lineTo(b[3].x, b[3].y);
+  c.moveTo(b[4].x, b[4].y);
+  c.lineTo(b[5].x, b[5].y);
+  this.graphics.drawPath(c, e, null, d)
+};jchemhub.view.QuadrupleBondRenderer = function(b, c, d) {
+  jchemhub.view.BondRenderer.call(this, b, c, d, jchemhub.view.QuadrupleBondRenderer.defaultConfig)
+};
+goog.inherits(jchemhub.view.QuadrupleBondRenderer, jchemhub.view.BondRenderer);
+jchemhub.view.QuadrupleBondRenderer.prototype.render = function(b, c, d) {
+  jchemhub.view.QuadrupleBondRenderer.superClass_.render.call(this, b, c, d);
+  var e = this.config.get("bond").stroke.width;
+  e = new goog.graphics.Stroke(e, this.config.get("bond").stroke.color);
+  var f = jchemhub.view.BondRenderer.getTheta(b), g = f + Math.PI / 2, h = f - Math.PI / 2, i = goog.math.Coordinate.distance(b.source.coord, b.target.coord) / 6, j = new jchemhub.graphics.AffineTransform(1, 0, 0, 1, Math.cos(g) * i / 3, Math.sin(g) * i / 3);
+  f = new jchemhub.graphics.AffineTransform(1, 0, 0, 1, Math.cos(h) * i / 3, Math.sin(h) * i / 3);
+  g = new jchemhub.graphics.AffineTransform(1, 0, 0, 1, Math.cos(g) * i, Math.sin(g) * i);
+  h = new jchemhub.graphics.AffineTransform(1, 0, 0, 1, Math.cos(h) * i, Math.sin(h) * i);
+  j = j.transformCoords([b.source.coord, b.target.coord]);
+  f = f.transformCoords([b.source.coord, b.target.coord]);
+  g = g.transformCoords([b.source.coord, b.target.coord]);
+  b = h.transformCoords([b.source.coord, b.target.coord]);
+  c = c.transformCoords([j[0], j[1], f[0], f[1], g[0], g[1], b[0], b[1]]);
+  b = new goog.graphics.Path;
+  b.moveTo(c[0].x, c[0].y);
+  b.lineTo(c[1].x, c[1].y);
+  b.moveTo(c[2].x, c[2].y);
+  b.lineTo(c[3].x, c[3].y);
+  b.moveTo(c[4].x, c[4].y);
+  b.lineTo(c[5].x, c[5].y);
+  b.moveTo(c[6].x, c[6].y);
+  b.lineTo(c[7].x, c[7].y);
+  this.graphics.drawPath(b, e, null, d)
+};jchemhub.view.SingleUpBondRenderer = function(b, c, d) {
+  jchemhub.view.BondRenderer.call(this, b, c, d, jchemhub.view.SingleUpBondRenderer.defaultConfig)
+};
+goog.inherits(jchemhub.view.SingleUpBondRenderer, jchemhub.view.BondRenderer);
+jchemhub.view.SingleUpBondRenderer.prototype.render = function(b, c, d) {
+  jchemhub.view.SingleUpBondRenderer.superClass_.render.call(this, b, c, d);
+  var e = new goog.graphics.Path, f = this.config.get("bond").stroke.width / 10, g = new goog.graphics.Stroke(f, this.config.get("bond").stroke.color), h = new goog.graphics.SolidFill(this.config.get("bond").fill.color), i = jchemhub.view.BondRenderer.getTheta(b), j = i + Math.PI / 2;
+  i = i - Math.PI / 2;
+  j = (new jchemhub.graphics.AffineTransform(1, 0, 0, 1, Math.cos(j) * f, Math.sin(j) * f)).transformCoords([b.target.coord])[0];
+  f = (new jchemhub.graphics.AffineTransform(1, 0, 0, 1, Math.cos(i) * f, Math.sin(i) * f)).transformCoords([b.target.coord])[0];
+  b = c.transformCoords([b.source.coord, j, f]);
+  e.moveTo(b[0].x, b[0].y);
+  e.lineTo(b[1].x, b[1].y);
+  e.lineTo(b[2].x, b[2].y);
+  this.graphics.drawPath(e, g, h, d)
+};jchemhub.view.SingleDownBondRenderer = function(b, c, d) {
+  jchemhub.view.BondRenderer.call(this, b, c, d, jchemhub.view.SingleDownBondRenderer.defaultConfig)
+};
+goog.inherits(jchemhub.view.SingleDownBondRenderer, jchemhub.view.BondRenderer);
+jchemhub.view.SingleDownBondRenderer.prototype.render = function(b, c, d) {
+  jchemhub.view.SingleDownBondRenderer.superClass_.render.call(this, b, c, d);
+  var e = new goog.graphics.Path, f = this.config.get("bond").stroke.width / 10, g = jchemhub.view.BondRenderer.getTheta(b), h = g + Math.PI / 2;
+  g = g - Math.PI / 2;
+  h = new jchemhub.graphics.AffineTransform(1, 0, 0, 1, Math.cos(h) * f, Math.sin(h) * f);
+  f = new jchemhub.graphics.AffineTransform(1, 0, 0, 1, Math.cos(g) * f, Math.sin(g) * f);
+  h = h.transformCoords([b.source.coord, b.target.coord]);
+  b = f.transformCoords([b.source.coord, b.target.coord]);
+  c = c.transformCoords([h[0], h[1], b[0], b[1]]);
+  b = new goog.graphics.Stroke(this.config.get("bond").stroke.width, this.config.get("bond").stroke.color);
+  for(f = 1;f < 6;f++) {
+    e.moveTo(c[0].x + (c[1].x - c[0].x) * f / 6, c[0].y + (c[1].y - c[0].y) * f / 6);
+    e.lineTo(c[2].x + (c[3].x - c[2].x) * f / 6, c[2].y + (c[3].y - c[2].y) * f / 6)
+  }this.graphics.drawPath(e, b, null, d)
+};jchemhub.view.SingleUpOrDownBondRenderer = function(b, c, d) {
+  jchemhub.view.BondRenderer.call(this, b, c, d, jchemhub.view.SingleUpOrDownBondRenderer.defaultConfig)
+};
+goog.inherits(jchemhub.view.SingleUpOrDownBondRenderer, jchemhub.view.BondRenderer);
+jchemhub.view.SingleUpOrDownBondRenderer.prototype.render = function(b, c, d) {
+  jchemhub.view.SingleUpOrDownBondRenderer.superClass_.render.call(this, b, c, d);
+  var e = new goog.graphics.Path, f = this.config.get("bond").stroke.width / 10, g = jchemhub.view.BondRenderer.getTheta(b), h = g + Math.PI / 2;
+  g = g - Math.PI / 2;
+  h = new jchemhub.graphics.AffineTransform(1, 0, 0, 1, Math.cos(h) * f, Math.sin(h) * f);
+  f = new jchemhub.graphics.AffineTransform(1, 0, 0, 1, Math.cos(g) * f, Math.sin(g) * f);
+  h = h.transformCoords([b.source.coord, b.target.coord]);
+  b = f.transformCoords([b.source.coord, b.target.coord]);
+  c = c.transformCoords([h[0], h[1], b[0], b[1]]);
+  b = new goog.graphics.Stroke(this.config.get("bond").stroke.width, this.config.get("bond").stroke.color);
+  e.moveTo(c[0].x, c[0].y);
+  for(f = 1;f < 10;f++) {
+    f % 2 ? e.lineTo(c[0].x + (c[1].x - c[0].x) * f / 10, c[0].y + (c[1].y - c[0].y) * f / 10) : e.lineTo(c[2].x + (c[3].x - c[2].x) * f / 10, c[2].y + (c[3].y - c[2].y) * f / 10)
+  }this.graphics.drawPath(e, b, null, d)
+};jchemhub.view.BondRendererFactory = function(b, c, d) {
+  this.controller = b;
+  this.graphics = c;
+  this.config = new goog.structs.Map;
+  d && this.config.addAll(d)
+};
+jchemhub.view.BondRendererFactory.prototype.get = function(b) {
+  if(b instanceof jchemhub.model.SingleBondUp) {
+    if(!this.singleUpBondRenderer) {
+      this.singleUpBondRenderer = new jchemhub.view.SingleUpBondRenderer(this.controller, this.graphics, this.config)
+    }return this.singleUpBondRenderer
+  }if(b instanceof jchemhub.model.SingleBondDown) {
+    if(!this.singleDownBondRenderer) {
+      this.singleDownBondRenderer = new jchemhub.view.SingleDownBondRenderer(this.controller, this.graphics, this.config)
+    }return this.singleDownBondRenderer
+  }if(b instanceof jchemhub.model.SingleBondUpOrDown) {
+    if(!this.singleUpOrDownBondRenderer) {
+      this.singleUpOrDownBondRenderer = new jchemhub.view.SingleUpOrDownBondRenderer(this.controller, this.graphics, this.config)
+    }return this.singleUpOrDownBondRenderer
+  }if(b instanceof jchemhub.model.SingleBond) {
+    if(!this.singleBondRenderer) {
+      this.singleBondRenderer = new jchemhub.view.SingleBondRenderer(this.controller, this.graphics, this.config)
+    }return this.singleBondRenderer
+  }if(b instanceof jchemhub.model.DoubleBond) {
+    if(!this.doubleBondRenderer) {
+      this.doubleBondRenderer = new jchemhub.view.DoubleBondRenderer(this.controller, this.graphics, this.config)
+    }return this.doubleBondRenderer
+  }if(b instanceof jchemhub.model.TripleBond) {
+    if(!this.tripleBondRenderer) {
+      this.tripleBondRenderer = new jchemhub.view.TripleBondRenderer(this.controller, this.graphics, this.config)
+    }return this.tripleBondRenderer
+  }if(b instanceof jchemhub.model.QuadrupleBond) {
+    if(!this.quadrupleBondRenderer) {
+      this.quadrupleBondRenderer = new jchemhub.view.QuadrupleBondRenderer(this.controller, this.graphics, this.config)
+    }return this.quadrupleBondRenderer
+  }
+};goog.structs.Set = function(b) {
+  this.map_ = new goog.structs.Map;
+  b && this.addAll(b)
+};
+goog.structs.Set.getKey_ = function(b) {
+  var c = typeof b;
+  return c == "object" && b || c == "function" ? "o" + goog.getUid(b) : c.substr(0, 1) + b
+};
+a = goog.structs.Set.prototype;
+a.getCount = function() {
+  return this.map_.getCount()
+};
+a.add = function(b) {
+  this.map_.set(goog.structs.Set.getKey_(b), b)
+};
+a.addAll = function(b) {
+  b = goog.structs.getValues(b);
+  for(var c = b.length, d = 0;d < c;d++) {
+    this.add(b[d])
+  }
+};
+a.removeAll = function(b) {
+  b = goog.structs.getValues(b);
+  for(var c = b.length, d = 0;d < c;d++) {
+    this.remove(b[d])
+  }
+};
+a.remove = function(b) {
+  return this.map_.remove(goog.structs.Set.getKey_(b))
+};
+a.clear = function() {
+  this.map_.clear()
+};
+a.isEmpty = function() {
+  return this.map_.isEmpty()
+};
+a.contains = function(b) {
+  return this.map_.containsKey(goog.structs.Set.getKey_(b))
+};
+a.containsAll = function(b) {
+  return goog.structs.every(b, this.contains, this)
+};
+a.intersection = function(b) {
+  var c = new goog.structs.Set;
+  b = goog.structs.getValues(b);
+  for(var d = 0;d < b.length;d++) {
+    var e = b[d];
+    this.contains(e) && c.add(e)
+  }return c
+};
+a.getValues = function() {
+  return this.map_.getValues()
+};
+a.clone = function() {
+  return new goog.structs.Set(this)
+};
+a.equals = function(b) {
+  return this.getCount() == goog.structs.getCount(b) && this.isSubsetOf(b)
+};
+a.isSubsetOf = function(b) {
+  var c = goog.structs.getCount(b);
+  if(this.getCount() > c) {
+    return false
+  }if(!(b instanceof goog.structs.Set) && c > 5) {
+    b = new goog.structs.Set(b)
+  }return goog.structs.every(this, function(d) {
+    return goog.structs.contains(b, d)
+  })
+};
+a.__iterator__ = function() {
+  return this.map_.__iterator__(false)
+};goog.debug.catchErrors = function(b, c, d) {
+  d = d || goog.global;
+  var e = d.onerror;
+  d.onerror = function(f, g, h) {
+    e && e(f, g, h);
+    g = String(g).split(/[\/\\]/).pop();
+    b({message:f, fileName:g, line:h});
+    return Boolean(c)
+  }
+};
+goog.debug.expose = function(b, c) {
+  if(typeof b == "undefined") {
+    return"undefined"
+  }if(b == null) {
+    return"NULL"
+  }var d = [];
+  for(var e in b) {
+    if(!(!c && goog.isFunction(b[e]))) {
+      var f = e + " = ";
+      try {
+        f += b[e]
+      }catch(g) {
+        f += "*** " + g + " ***"
+      }d.push(f)
+    }
+  }return d.join("\n")
+};
+goog.debug.deepExpose = function(b, c) {
+  var d = new goog.structs.Set, e = [], f = function(g, h) {
+    var i = h + "  ", j = function(m) {
+      return m.replace(/\n/g, "\n" + h)
+    };
+    try {
+      if(goog.isDef(g)) {
+        if(goog.isNull(g)) {
+          e.push("NULL")
+        }else {
+          if(goog.isString(g)) {
+            e.push('"' + j(g) + '"')
+          }else {
+            if(goog.isFunction(g)) {
+              e.push(j(String(g)))
+            }else {
+              if(goog.isObject(g)) {
+                if(d.contains(g)) {
+                  e.push("*** reference loop detected ***")
+                }else {
+                  d.add(g);
+                  e.push("{");
+                  for(var k in g) {
+                    if(!(!c && goog.isFunction(g[k]))) {
+                      e.push("\n");
+                      e.push(i);
+                      e.push(k + " = ");
+                      f(g[k], i)
+                    }
+                  }e.push("\n" + h + "}")
+                }
+              }else {
+                e.push(g)
+              }
+            }
+          }
+        }
+      }else {
+        e.push("undefined")
+      }
+    }catch(l) {
+      e.push("*** " + l + " ***")
+    }
+  };
+  f(b, "");
+  return e.join("")
+};
+goog.debug.exposeArray = function(b) {
+  for(var c = [], d = 0;d < b.length;d++) {
+    goog.isArray(b[d]) ? c.push(goog.debug.exposeArray(b[d])) : c.push(b[d])
+  }return"[ " + c.join(", ") + " ]"
+};
+goog.debug.exposeException = function(b, c) {
+  try {
+    var d = goog.debug.normalizeErrorObject(b);
+    return"Message: " + goog.string.htmlEscape(d.message) + '\nUrl: <a href="view-source:' + d.fileName + '" target="_new">' + d.fileName + "</a>\nLine: " + d.lineNumber + "\n\nBrowser stack:\n" + goog.string.htmlEscape(d.stack + "-> ") + "[end]\n\nJS stack traversal:\n" + goog.string.htmlEscape(goog.debug.getStacktrace(c) + "-> ")
+  }catch(e) {
+    return"Exception trying to expose exception! You win, we lose. " + e
+  }
+};
+goog.debug.normalizeErrorObject = function(b) {
+  var c = goog.getObjectByName("window.location.href");
+  return typeof b == "string" ? {message:b, name:"Unknown error", lineNumber:"Not available", fileName:c, stack:"Not available"} : !b.lineNumber || !b.fileName || !b.stack ? {message:b.message, name:b.name, lineNumber:b.lineNumber || b.line || "Not available", fileName:b.fileName || b.filename || b.sourceURL || c, stack:b.stack || "Not available"} : b
+};
+goog.debug.enhanceError = function(b, c) {
+  var d = typeof b == "string" ? Error(b) : b;
+  if(!d.stack) {
+    d.stack = goog.debug.getStacktrace(arguments.callee.caller)
+  }if(c) {
+    for(var e = 0;d["message" + e];) {
+      ++e
+    }d["message" + e] = String(c)
+  }return d
+};
+goog.debug.getStacktraceSimple = function(b) {
+  for(var c = [], d = arguments.callee.caller, e = 0;d && (!b || e < b);) {
+    c.push(goog.debug.getFunctionName(d));
+    c.push("()\n");
+    try {
+      d = d.caller
+    }catch(f) {
+      c.push("[exception trying to get caller]\n");
+      break
+    }e++;
+    if(e >= goog.debug.MAX_STACK_DEPTH) {
+      c.push("[...long stack...]");
+      break
+    }
+  }b && e >= b ? c.push("[...reached max depth limit...]") : c.push("[end]");
+  return c.join("")
+};
+goog.debug.MAX_STACK_DEPTH = 50;
+goog.debug.getStacktrace = function(b) {
+  return goog.debug.getStacktraceHelper_(b || arguments.callee.caller, [])
+};
+goog.debug.getStacktraceHelper_ = function(b, c) {
+  var d = [];
+  if(goog.array.contains(c, b)) {
+    d.push("[...circular reference...]")
+  }else {
+    if(b && c.length < goog.debug.MAX_STACK_DEPTH) {
+      d.push(goog.debug.getFunctionName(b) + "(");
+      for(var e = b.arguments, f = 0;f < e.length;f++) {
+        f > 0 && d.push(", ");
+        var g;
+        g = e[f];
+        switch(typeof g) {
+          case "object":
+            g = g ? "object" : "null";
+            break;
+          case "string":
+            g = g;
+            break;
+          case "number":
+            g = String(g);
+            break;
+          case "boolean":
+            g = g ? "true" : "false";
+            break;
+          case "function":
+            g = (g = goog.debug.getFunctionName(g)) ? g : "[fn]";
+            break;
+          case "undefined":
+          ;
+          default:
+            g = typeof g;
+            break
+        }
+        if(g.length > 40) {
+          g = g.substr(0, 40) + "..."
+        }d.push(g)
+      }c.push(b);
+      d.push(")\n");
+      try {
+        d.push(goog.debug.getStacktraceHelper_(b.caller, c))
+      }catch(h) {
+        d.push("[exception trying to get caller]\n")
+      }
+    }else {
+      b ? d.push("[...long stack...]") : d.push("[end]")
+    }
+  }return d.join("")
+};
+goog.debug.getFunctionName = function(b) {
+  b = String(b);
+  if(!goog.debug.fnNameCache_[b]) {
+    var c = /function ([^\(]+)/.exec(b);
+    goog.debug.fnNameCache_[b] = c ? c[1] : "[Anonymous]"
+  }return goog.debug.fnNameCache_[b]
+};
+goog.debug.makeWhitespaceVisible = function(b) {
+  return b.replace(/ /g, "[_]").replace(/\f/g, "[f]").replace(/\n/g, "[n]\n").replace(/\r/g, "[r]").replace(/\t/g, "[t]")
+};
+goog.debug.fnNameCache_ = {};goog.debug.LogRecord = function(b, c, d, e, f) {
+  this.sequenceNumber_ = typeof f == "number" ? f : goog.debug.LogRecord.nextSequenceNumber_++;
+  this.time_ = e || goog.now();
+  this.level_ = b;
+  this.msg_ = c;
+  this.loggerName_ = d
+};
+goog.debug.LogRecord.prototype.exception_ = null;
+goog.debug.LogRecord.prototype.exceptionText_ = null;
+goog.debug.LogRecord.nextSequenceNumber_ = 0;
+a = goog.debug.LogRecord.prototype;
+a.getLoggerName = function() {
+  return this.loggerName_
+};
+a.getException = function() {
+  return this.exception_
+};
+a.setException = function(b) {
+  this.exception_ = b
+};
+a.getExceptionText = function() {
+  return this.exceptionText_
+};
+a.setExceptionText = function(b) {
+  this.exceptionText_ = b
+};
+a.setLoggerName = function(b) {
+  this.loggerName_ = b
+};
+a.getLevel = function() {
+  return this.level_
+};
+a.setLevel = function(b) {
+  this.level_ = b
+};
+a.getMessage = function() {
+  return this.msg_
+};
+a.setMessage = function(b) {
+  this.msg_ = b
+};
+a.getMillis = function() {
+  return this.time_
+};
+a.setMillis = function(b) {
+  this.time_ = b
+};
+a.getSequenceNumber = function() {
+  return this.sequenceNumber_
+};goog.debug.Logger = function(b) {
+  this.name_ = b
+};
+goog.debug.Logger.prototype.parent_ = null;
+goog.debug.Logger.prototype.level_ = null;
+goog.debug.Logger.prototype.children_ = null;
+goog.debug.Logger.prototype.handlers_ = null;
+goog.debug.Logger.Level = function(b, c) {
+  this.name = b;
+  this.value = c
+};
+goog.debug.Logger.Level.prototype.toString = function() {
+  return this.name
+};
+goog.debug.Logger.Level.OFF = new goog.debug.Logger.Level("OFF", Infinity);
+goog.debug.Logger.Level.SHOUT = new goog.debug.Logger.Level("SHOUT", 1200);
+goog.debug.Logger.Level.SEVERE = new goog.debug.Logger.Level("SEVERE", 1E3);
+goog.debug.Logger.Level.WARNING = new goog.debug.Logger.Level("WARNING", 900);
+goog.debug.Logger.Level.INFO = new goog.debug.Logger.Level("INFO", 800);
+goog.debug.Logger.Level.CONFIG = new goog.debug.Logger.Level("CONFIG", 700);
+goog.debug.Logger.Level.FINE = new goog.debug.Logger.Level("FINE", 500);
+goog.debug.Logger.Level.FINER = new goog.debug.Logger.Level("FINER", 400);
+goog.debug.Logger.Level.FINEST = new goog.debug.Logger.Level("FINEST", 300);
+goog.debug.Logger.Level.ALL = new goog.debug.Logger.Level("ALL", 0);
+goog.debug.Logger.Level.PREDEFINED_LEVELS = [goog.debug.Logger.Level.OFF, goog.debug.Logger.Level.SHOUT, goog.debug.Logger.Level.SEVERE, goog.debug.Logger.Level.WARNING, goog.debug.Logger.Level.INFO, goog.debug.Logger.Level.CONFIG, goog.debug.Logger.Level.FINE, goog.debug.Logger.Level.FINER, goog.debug.Logger.Level.FINEST, goog.debug.Logger.Level.ALL];
+goog.debug.Logger.Level.predefinedLevelsCache_ = null;
+goog.debug.Logger.Level.createPredefinedLevelsCache_ = function() {
+  goog.debug.Logger.Level.predefinedLevelsCache_ = {};
+  for(var b = 0, c;c = goog.debug.Logger.Level.PREDEFINED_LEVELS[b];b++) {
+    goog.debug.Logger.Level.predefinedLevelsCache_[c.value] = c;
+    goog.debug.Logger.Level.predefinedLevelsCache_[c.name] = c
+  }
+};
+goog.debug.Logger.Level.getPredefinedLevel = function(b) {
+  goog.debug.Logger.Level.predefinedLevelsCache_ || goog.debug.Logger.Level.createPredefinedLevelsCache_();
+  return goog.debug.Logger.Level.predefinedLevelsCache_[b] || null
+};
+goog.debug.Logger.Level.getPredefinedLevelByValue = function(b) {
+  goog.debug.Logger.Level.predefinedLevelsCache_ || goog.debug.Logger.Level.createPredefinedLevelsCache_();
+  if(b in goog.debug.Logger.Level.predefinedLevelsCache_) {
+    return goog.debug.Logger.Level.predefinedLevelsCache_[b]
+  }for(var c = 0;c < goog.debug.Logger.Level.PREDEFINED_LEVELS.length;++c) {
+    var d = goog.debug.Logger.Level.PREDEFINED_LEVELS[c];
+    if(d.value <= b) {
+      return d
+    }
+  }return null
+};
+goog.debug.Logger.getLogger = function(b) {
+  return goog.debug.LogManager.getLogger(b)
+};
+a = goog.debug.Logger.prototype;
+a.getName = function() {
+  return this.name_
+};
+a.addHandler = function(b) {
+  if(!this.handlers_) {
+    this.handlers_ = []
+  }this.handlers_.push(b)
+};
+a.removeHandler = function(b) {
+  return!!this.handlers_ && goog.array.remove(this.handlers_, b)
+};
+a.getParent = function() {
+  return this.parent_
+};
+a.getChildren = function() {
+  if(!this.children_) {
+    this.children_ = {}
+  }return this.children_
+};
+a.setLevel = function(b) {
+  this.level_ = b
+};
+a.getLevel = function() {
+  return this.level_
+};
+a.getEffectiveLevel = function() {
+  if(this.level_) {
+    return this.level_
+  }if(this.parent_) {
+    return this.parent_.getEffectiveLevel()
+  }return null
+};
+a.isLoggable = function(b) {
+  if(this.level_) {
+    return b.value >= this.level_.value
+  }if(this.parent_) {
+    return this.parent_.isLoggable(b)
+  }return false
+};
+a.log = function(b, c, d) {
+  this.isLoggable(b) && this.doLogRecord_(this.getLogRecord(b, c, d))
+};
+a.getLogRecord = function(b, c, d) {
+  var e = new goog.debug.LogRecord(b, String(c), this.name_);
+  if(d) {
+    e.setException(d);
+    e.setExceptionText(goog.debug.exposeException(d, arguments.callee.caller))
+  }return e
+};
+a.shout = function(b, c) {
+  this.log(goog.debug.Logger.Level.SHOUT, b, c)
+};
+a.severe = function(b, c) {
+  this.log(goog.debug.Logger.Level.SEVERE, b, c)
+};
+a.warning = function(b, c) {
+  this.log(goog.debug.Logger.Level.WARNING, b, c)
+};
+a.info = function(b, c) {
+  this.log(goog.debug.Logger.Level.INFO, b, c)
+};
+a.config = function(b, c) {
+  this.log(goog.debug.Logger.Level.CONFIG, b, c)
+};
+a.fine = function(b, c) {
+  this.log(goog.debug.Logger.Level.FINE, b, c)
+};
+a.finer = function(b, c) {
+  this.log(goog.debug.Logger.Level.FINER, b, c)
+};
+a.finest = function(b, c) {
+  this.log(goog.debug.Logger.Level.FINEST, b, c)
+};
+a.logRecord = function(b) {
+  this.isLoggable(b.getLevel()) && this.doLogRecord_(b)
+};
+a.doLogRecord_ = function(b) {
+  for(var c = this;c;) {
+    c.callPublish_(b);
+    c = c.getParent()
+  }
+};
+a.callPublish_ = function(b) {
+  if(this.handlers_) {
+    for(var c = 0, d;d = this.handlers_[c];c++) {
+      d(b)
+    }
+  }
+};
+a.setParent_ = function(b) {
+  this.parent_ = b
+};
+a.addChild_ = function(b, c) {
+  this.getChildren()[b] = c
+};
+goog.debug.LogManager = {};
+goog.debug.LogManager.loggers_ = {};
+goog.debug.LogManager.rootLogger_ = null;
+goog.debug.LogManager.initialize = function() {
+  if(!goog.debug.LogManager.rootLogger_) {
+    goog.debug.LogManager.rootLogger_ = new goog.debug.Logger("");
+    goog.debug.LogManager.loggers_[""] = goog.debug.LogManager.rootLogger_;
+    goog.debug.LogManager.rootLogger_.setLevel(goog.debug.Logger.Level.CONFIG)
+  }
+};
+goog.debug.LogManager.getLoggers = function() {
+  return goog.debug.LogManager.loggers_
+};
+goog.debug.LogManager.getRoot = function() {
+  goog.debug.LogManager.initialize();
+  return goog.debug.LogManager.rootLogger_
+};
+goog.debug.LogManager.getLogger = function(b) {
+  goog.debug.LogManager.initialize();
+  return goog.debug.LogManager.loggers_[b] || goog.debug.LogManager.createLogger_(b)
+};
+goog.debug.LogManager.createFunctionForCatchErrors = function(b) {
+  return function(c) {
+    (b || goog.debug.LogManager.getRoot()).severe("Error: " + c.message + " (" + c.fileName + " @ Line: " + c.line + ")")
+  }
+};
+goog.debug.LogManager.createLogger_ = function(b) {
+  var c = new goog.debug.Logger(b), d = b.lastIndexOf("."), e = b.substr(0, d);
+  d = b.substr(d + 1);
+  e = goog.debug.LogManager.getLogger(e);
+  e.addChild_(d, c);
+  c.setParent_(e);
+  return goog.debug.LogManager.loggers_[b] = c
+};jchemhub.view.AtomRenderer = function(b, c, d) {
+  jchemhub.view.Renderer.call(this, b, c, d, jchemhub.view.AtomRenderer.defaultConfig)
+};
+goog.inherits(jchemhub.view.AtomRenderer, jchemhub.view.Renderer);
+jchemhub.view.AtomRenderer.prototype.render = function(b, c) {
+  this.transform = c;
+  var d = this.config.get("atom"), e = this.config.get(b.symbol) ? this.config.get(b.symbol).color : d.color, f = c.getScaleX();
+  f = new goog.graphics.Font(f / 1.8, d.fontName);
+  d = new goog.graphics.Stroke(d.stroke.width, e);
+  e = new goog.graphics.SolidFill(e);
+  c = c.transformCoords([b.coord])[0];
+  var g = this.compoundSymbol(b), h = this.graphics, i = g.text.length * 0.55 * f.size, j = f.size, k = h.createGroup();
+  if(g.text) {
+    k.atomLabelBackground = h.drawEllipse(c.x, c.y, j * 0.7, j * 0.7, new goog.graphics.Stroke(1, this.config.get("background").color), new goog.graphics.SolidFill(this.config.get("background").color), k);
+    h.drawText(g.text, c.x - i / 2, c.y - j / 2, i, j, g.justification, null, f, d, e, k);
+    if(g.justification == "left") {
+      if(g.subscript || g.superscript) {
+        var l = this.config.get("subscriptSize");
+        g.subscript && h.drawText(g.subscript, c.x + i * 0.9, c.y, l, l, "center", null, f, d, e, k);
+        g.superscript && h.drawText(g.superscript, c.x + i, c.y - j * 0.8, l, l, "center", null, f, d, e, k)
+      }
+    }else {
+      if(g.justification == "right") {
+        if(g.subscript || g.superscript) {
+          l = this.config.get("subscriptSize");
+          if(g.subscript) {
+            h.drawText("H", c.x - i * 3, c.y - j / 2, i, j, "center", null, f, d, e, k);
+            h.drawText(g.subscript, c.x - i * 1.8, c.y, l, l, "center", null, f, d, e, k)
+          }g.superscript && h.drawText(g.superscript, c.x + i, c.y - j * 0.8, l, l, "center", null, f, d, e, k)
+        }
+      }
+    }
+  }k.addEventListener(goog.events.EventType.MOUSEOVER, goog.bind(this.controller.handleMouseOver, this.controller, b));
+  k.addEventListener(goog.events.EventType.MOUSEOUT, goog.bind(this.controller.handleMouseOut, this.controller, b));
+  return k
+};
+jchemhub.view.AtomRenderer.prototype.compoundSymbol = function(b) {
+  var c = {text:"", justification:"center", superscript:"", subscript:""};
+  if(b.symbol != "C" || b.countBonds() == 1) {
+    var d = b.hydrogenCount();
+    if(d == 0) {
+      c.text = b.symbol
+    }else {
+      bond_direction = jchemhub.view.AtomRenderer.bondDirection(b);
+      var e = "center";
+      if(bond_direction == "SW" || bond_direction == "W" || bond_direction == "NW") {
+        e = "right";
+        if(d == 1) {
+          c.text = "H"
+        }c.text += b.symbol
+      }else {
+        e = "left";
+        c.text = b.symbol + "H"
+      }if(d > 1) {
+        c.subscript = String(d)
+      }
+    }if(b.charge) {
+      if(b.charge > 1) {
+        c.superscript += "+" + b.charge
+      }else {
+        if(b.charge < -1) {
+          c.superscript += b.charge
+        }else {
+          if(b.charge == -1) {
+            c.superscript = "-"
+          }else {
+            if(b.charge == 1) {
+              c.superscript = "+"
+            }
+          }
+        }
+      }
+    }
+  }else {
+    c.text = ""
+  }c.justification = e;
+  return c
+};
+jchemhub.view.AtomRenderer.bondOrientation = function(b, c) {
+  c = b.bonds.getValues()[c];
+  var d = c.target.coord, e = c.source.coord, f = d.y - e.y;
+  d = d.x - e.x;
+  if(b == c.source) {
+    d = -d;
+    f = -f
+  }b = Math.atan2(f, d) * 180 / Math.PI;
+  if(b < 0) {
+    b = 360 + b
+  }return b
+};
+jchemhub.view.AtomRenderer.bondDirection = function(b) {
+  var c = b.bonds.getCount(), d = jchemhub.view.AtomRenderer.bondOrientation(b, 0);
+  if(c > 1) {
+    for(var e = 1;e < c;++e) {
+      d += jchemhub.view.AtomRenderer.bondOrientation(b, e)
+    }d = d / c % 360
+  }return d > 350 || d <= 10 ? "E" : d > 10 && d <= 80 ? "SE" : d > 80 && d <= 100 ? "S" : d > 100 && d <= 170 ? "SW" : d > 170 && d <= 190 ? "W" : d > 190 && d <= 260 ? "NW" : d > 260 && d <= 280 ? "N" : "NE"
+};
+jchemhub.view.AtomRenderer.prototype.logger = goog.debug.Logger.getLogger("jchemhub.view.AtomRenderer");
+jchemhub.view.AtomRenderer.defaultConfig = {atom:{color:"#FF9999", diameter:0.05, stroke:{width:1}, fontName:"Arial"}, background:{color:"#F0FFF0"}, margin:20, subscriptSize:5, N:{color:"blue"}, O:{color:"red"}, S:{color:"yellow"}, P:{color:"orange"}, Cl:{color:"green"}, F:{color:"green"}, Br:{color:"DarkRed"}, I:{color:"purple"}, C:{color:"black"}, H:{color:"white"}};jchemhub.controller.AtomController = function(b) {
+  goog.events.EventTarget.call(this);
+  this.setParentEventTarget(b)
+};
+goog.inherits(jchemhub.controller.AtomController, goog.events.EventTarget);
+jchemhub.controller.AtomController.prototype.handleMouseOver = function() {
+  this.dispatchEvent(jchemhub.controller.AtomController.EventType.MOUSEOVER)
+};
+jchemhub.controller.AtomController.prototype.handleMouseOut = function() {
+  this.dispatchEvent(jchemhub.controller.AtomController.EventType.MOUSEOUT)
+};
+jchemhub.controller.AtomController.EventType = {MOUSEOVER:"atom_mouseover", MOUSEOUT:"atom_mouseout"};jchemhub.view.MoleculeRenderer = function(b, c, d) {
+  jchemhub.view.Renderer.call(this, b, c, d, jchemhub.view.MoleculeRenderer.defaultConfig);
+  this.bondController = new jchemhub.controller.BondController(b);
+  this.bondRendererFactory = new jchemhub.view.BondRendererFactory(this.bondController, c);
+  this.atomController = new jchemhub.controller.AtomController(b);
+  this.atomRenderer = new jchemhub.view.AtomRenderer(this.atomController, c)
+};
+goog.inherits(jchemhub.view.MoleculeRenderer, jchemhub.view.Renderer);
+jchemhub.view.MoleculeRenderer.prototype.render = function(b, c, d) {
+  this.transform = c;
+  goog.array.forEach(b.bonds, function(e) {
+    this.bondRendererFactory.get(e).render(e, c, d)
+  }, this);
+  goog.array.forEach(b.atoms, function(e) {
+    this.atomRenderer.render(e, c, this.atomController)
+  }, this)
+};jchemhub.view.ArrowRenderer = function(b, c, d) {
+  jchemhub.view.Renderer.call(this, b, c, d, jchemhub.view.ArrowRenderer.defaultConfig)
+};
+goog.inherits(jchemhub.view.ArrowRenderer, jchemhub.view.Renderer);
+jchemhub.view.ArrowRenderer.prototype.render = function(b, c) {
+  var d = this.config.get("arrow").width, e = this.config.get("arrow").height;
+  b = new goog.math.Coordinate(b.x - d / 2, b.y);
+  d = new goog.math.Coordinate(b.x + d, b.y);
+  var f = new goog.math.Coordinate(d.x - e, d.y + e / 2), g = new goog.math.Coordinate(d.x - e, d.y - e / 2);
+  e = new goog.graphics.Path;
+  var h = new goog.graphics.Stroke(this.config.get("arrow").stroke.width, this.config.get("arrow").stroke.color);
+  c = c.transformCoords([b, d, f, g]);
+  e.moveTo(c[0].x, c[0].y);
+  e.lineTo(c[1].x, c[1].y);
+  e.lineTo(c[2].x, c[2].y);
+  e.moveTo(c[1].x, c[1].y);
+  e.lineTo(c[3].x, c[3].y);
+  this.graphics.drawPath(e, h, null)
+};
+jchemhub.view.ArrowRenderer.defaultConfig = {arrow:{width:1, height:0.25, stroke:{width:2, color:"black"}}};jchemhub.view.PlusRenderer = function(b, c, d) {
+  jchemhub.view.Renderer.call(this, b, c, d, jchemhub.view.PlusRenderer.defaultConfig)
+};
+goog.inherits(jchemhub.view.PlusRenderer, jchemhub.view.Renderer);
+jchemhub.view.PlusRenderer.prototype.render = function(b, c) {
+  var d = this.config.get("plus").size;
+  h0 = new goog.math.Coordinate(b.x, b.y - d);
+  h1 = new goog.math.Coordinate(b.x, b.y + d);
+  v0 = new goog.math.Coordinate(b.x - d, b.y);
+  v1 = new goog.math.Coordinate(b.x + d, b.y);
+  b = new goog.graphics.Path;
+  d = new goog.graphics.Stroke(this.config.get("plus").stroke.width, this.config.get("plus").stroke.color);
+  c = c.transformCoords([h0, h1, v0, v1]);
+  b.moveTo(c[0].x, c[0].y);
+  b.lineTo(c[1].x, c[1].y);
+  b.moveTo(c[2].x, c[2].y);
+  b.lineTo(c[3].x, c[3].y);
+  this.graphics.drawPath(b, d, null)
+};
+jchemhub.view.PlusRenderer.defaultConfig = {plus:{size:0.125, stroke:{width:2, color:"black"}}};goog.graphics = {};
+goog.graphics.AffineTransform = function(b, c, d, e, f, g) {
+  if(arguments.length == 6) {
+    this.setTransform(b, c, d, e, f, g)
+  }else {
+    if(arguments.length != 0) {
+      throw Error("Insufficient matrix parameters");
+    }else {
+      this.m00_ = this.m11_ = 1;
+      this.m10_ = this.m01_ = this.m02_ = this.m12_ = 0
+    }
+  }
+};
+a = goog.graphics.AffineTransform.prototype;
+a.isIdentity = function() {
+  return this.m00_ == 1 && this.m10_ == 0 && this.m01_ == 0 && this.m11_ == 1 && this.m02_ == 0 && this.m12_ == 0
+};
+a.clone = function() {
+  return new goog.graphics.AffineTransform(this.m00_, this.m10_, this.m01_, this.m11_, this.m02_, this.m12_)
+};
+a.setTransform = function(b, c, d, e, f, g) {
+  if(!goog.isNumber(b) || !goog.isNumber(c) || !goog.isNumber(d) || !goog.isNumber(e) || !goog.isNumber(f) || !goog.isNumber(g)) {
+    throw Error("Invalid transform parameters");
+  }this.m00_ = b;
+  this.m10_ = c;
+  this.m01_ = d;
+  this.m11_ = e;
+  this.m02_ = f;
+  this.m12_ = g;
+  return this
+};
+a.copyFrom = function(b) {
+  this.m00_ = b.m00_;
+  this.m10_ = b.m10_;
+  this.m01_ = b.m01_;
+  this.m11_ = b.m11_;
+  this.m02_ = b.m02_;
+  this.m12_ = b.m12_;
+  return this
+};
+a.scale = function(b, c) {
+  this.m00_ *= b;
+  this.m10_ *= b;
+  this.m01_ *= c;
+  this.m11_ *= c;
+  return this
+};
+a.translate = function(b, c) {
+  this.m02_ += b * this.m00_ + c * this.m01_;
+  this.m12_ += b * this.m10_ + c * this.m11_;
+  return this
+};
+a.rotate = function(b, c, d) {
+  return this.concatenate(goog.graphics.AffineTransform.getRotateInstance(b, c, d))
+};
+a.shear = function(b, c) {
+  var d = this.m00_, e = this.m10_;
+  this.m00_ += c * this.m01_;
+  this.m10_ += c * this.m11_;
+  this.m01_ += b * d;
+  this.m11_ += b * e;
+  return this
+};
+a.toString = function() {
+  return"matrix(" + [this.m00_, this.m10_, this.m01_, this.m11_, this.m02_, this.m12_].join(",") + ")"
+};
+a.getScaleX = function() {
+  return this.m00_
+};
+a.getScaleY = function() {
+  return this.m11_
+};
+a.getTranslateX = function() {
+  return this.m02_
+};
+a.getTranslateY = function() {
+  return this.m12_
+};
+a.getShearX = function() {
+  return this.m01_
+};
+a.getShearY = function() {
+  return this.m10_
+};
+a.concatenate = function(b) {
+  var c = this.m00_, d = this.m01_;
+  this.m00_ = b.m00_ * c + b.m10_ * d;
+  this.m01_ = b.m01_ * c + b.m11_ * d;
+  this.m02_ += b.m02_ * c + b.m12_ * d;
+  c = this.m10_;
+  d = this.m11_;
+  this.m10_ = b.m00_ * c + b.m10_ * d;
+  this.m11_ = b.m01_ * c + b.m11_ * d;
+  this.m12_ += b.m02_ * c + b.m12_ * d;
+  return this
+};
+a.preConcatenate = function(b) {
+  var c = this.m00_, d = this.m10_;
+  this.m00_ = b.m00_ * c + b.m01_ * d;
+  this.m10_ = b.m10_ * c + b.m11_ * d;
+  c = this.m01_;
+  d = this.m11_;
+  this.m01_ = b.m00_ * c + b.m01_ * d;
+  this.m11_ = b.m10_ * c + b.m11_ * d;
+  c = this.m02_;
+  d = this.m12_;
+  this.m02_ = b.m00_ * c + b.m01_ * d + b.m02_;
+  this.m12_ = b.m10_ * c + b.m11_ * d + b.m12_;
+  return this
+};
+a.transform = function(b, c, d, e, f) {
+  var g = c;
+  e = e;
+  for(c = c + 2 * f;g < c;) {
+    f = b[g++];
+    var h = b[g++];
+    d[e++] = f * this.m00_ + h * this.m01_ + this.m02_;
+    d[e++] = f * this.m10_ + h * this.m11_ + this.m12_
+  }
+};
+a.getDeterminant = function() {
+  return this.m00_ * this.m11_ - this.m01_ * this.m10_
+};
+a.isInvertible = function() {
+  var b = this.getDeterminant();
+  return goog.math.isFiniteNumber(b) && goog.math.isFiniteNumber(this.m02_) && goog.math.isFiniteNumber(this.m12_) && b != 0
+};
+a.createInverse = function() {
+  var b = this.getDeterminant();
+  return new goog.graphics.AffineTransform(this.m11_ / b, -this.m10_ / b, -this.m01_ / b, this.m00_ / b, (this.m01_ * this.m12_ - this.m11_ * this.m02_) / b, (this.m10_ * this.m02_ - this.m00_ * this.m12_) / b)
+};
+goog.graphics.AffineTransform.getScaleInstance = function(b, c) {
+  return(new goog.graphics.AffineTransform).setToScale(b, c)
+};
+goog.graphics.AffineTransform.getTranslateInstance = function(b, c) {
+  return(new goog.graphics.AffineTransform).setToTranslation(b, c)
+};
+goog.graphics.AffineTransform.getShearInstance = function(b, c) {
+  return(new goog.graphics.AffineTransform).setToShear(b, c)
+};
+goog.graphics.AffineTransform.getRotateInstance = function(b, c, d) {
+  return(new goog.graphics.AffineTransform).setToRotation(b, c, d)
+};
+a = goog.graphics.AffineTransform.prototype;
+a.setToScale = function(b, c) {
+  return this.setTransform(b, 0, 0, c, 0, 0)
+};
+a.setToTranslation = function(b, c) {
+  return this.setTransform(1, 0, 0, 1, b, c)
+};
+a.setToShear = function(b, c) {
+  return this.setTransform(1, c, b, 1, 0, 0)
+};
+a.setToRotation = function(b, c, d) {
+  var e = Math.cos(b);
+  b = Math.sin(b);
+  return this.setTransform(e, b, -b, e, c - c * e + d * b, d - c * b - d * e)
+};
+a.equals = function(b) {
+  if(this == b) {
+    return true
+  }if(!b) {
+    return false
+  }return this.m00_ == b.m00_ && this.m01_ == b.m01_ && this.m02_ == b.m02_ && this.m10_ == b.m10_ && this.m11_ == b.m11_ && this.m12_ == b.m12_
+};jchemhub.graphics = {};
+jchemhub.graphics.AffineTransform = function(b, c, d, e, f, g) {
+  goog.graphics.AffineTransform.call(this);
+  arguments.length == 6 && this.setTransform(b, c, d, e, f, g)
+};
+goog.inherits(jchemhub.graphics.AffineTransform, goog.graphics.AffineTransform);
+jchemhub.graphics.AffineTransform.prototype.transformCoords = function(b) {
+  b = goog.array.map(b, function(e) {
+    return[e.x, e.y]
+  });
+  var c = goog.array.flatten(b);
+  b = [];
+  this.transform(c, 0, b, 0, c.length / 2);
+  c = [];
+  for(var d = 0;d < b.length;d += 2) {
+    c.push(new goog.math.Coordinate(b[d], b[d + 1]))
+  }return c
+};jchemhub.view.ReactionRenderer = function(b, c, d) {
+  jchemhub.view.Renderer.call(this, b, c, d);
+  this.scale_factor = 1;
+  this.moleculeController = new jchemhub.controller.MoleculeController(b);
+  this.moleculeRenderer = new jchemhub.view.MoleculeRenderer(this.moleculeController, c, this.config);
+  this.arrowRenderer = new jchemhub.view.ArrowRenderer(b, c, this.config);
+  this.plusRenderer = new jchemhub.view.PlusRenderer(b, c, this.config)
+};
+goog.inherits(jchemhub.view.ReactionRenderer, jchemhub.view.Renderer);
+jchemhub.view.ReactionRenderer.prototype.render = function(b) {
+  var c, d = this.getTransform(b), e = this.graphics.createGroup();
+  goog.array.forEach(b.reactants, function(g) {
+    c && this.plusRenderer.render(jchemhub.view.ReactionRenderer.center([c, g]), d, e);
+    c = g;
+    this.moleculeRenderer.render(g, d, e)
+  }, this);
+  this.arrowRenderer.render(jchemhub.view.ReactionRenderer.center(goog.array.concat(b.reactants, b.products)), d, e);
+  var f = null;
+  goog.array.forEach(b.products, function(g) {
+    f && this.plusRenderer.render(jchemhub.view.ReactionRenderer.center([f, g]), d, e);
+    f = g;
+    this.moleculeRenderer.render(g, d, e)
   }, this)
 };
-jchemhub.view.Drawing.Error = {PARENT_UNABLE_TO_BE_SET:"Unable to set parent component"};
-jchemhub.view.Drawing.prototype.disposeInternal = function() {
-  jchemhub.view.Drawing.superClass_.disposeInternal.call(this);
-  this.handler.dispose()
+jchemhub.view.ReactionRenderer.center = function(b) {
+  b = jchemhub.view.ReactionRenderer.boundingBox(b);
+  return new goog.math.Coordinate((b.left + b.right) / 2, (b.top + b.bottom) / 2)
+};
+jchemhub.view.ReactionRenderer.boundingBox = function(b) {
+  b = goog.array.flatten(goog.array.map(b, function(c) {
+    return c.atoms
+  }));
+  b = goog.array.map(b, function(c) {
+    return c.coord
+  });
+  return goog.math.Box.boundingBox.apply(null, b)
+};
+jchemhub.view.ReactionRenderer.prototype.logger = goog.debug.Logger.getLogger("jchemhub.view.ReactionRenderer");
+jchemhub.view.ReactionRenderer.boundingRect = function(b) {
+  return goog.math.Rect.createFromBox(this.boundingBox(b))
+};
+jchemhub.view.ReactionRenderer.prototype.getTransform = function(b) {
+  b = goog.array.concat(b.reactants, b.products);
+  b = jchemhub.view.ReactionRenderer.boundingRect(b);
+  var c = this.scale_factor * b.getSize().scaleToFit(this.graphics.getSize()).width / b.getSize().width;
+  return new jchemhub.graphics.AffineTransform(c, 0, 0, -c, -b.left * c, -b.top * c)
 };goog.dom = {};
 goog.dom.TagName = {A:"A", ABBR:"ABBR", ACRONYM:"ACRONYM", ADDRESS:"ADDRESS", APPLET:"APPLET", AREA:"AREA", B:"B", BASE:"BASE", BASEFONT:"BASEFONT", BDO:"BDO", BIG:"BIG", BLOCKQUOTE:"BLOCKQUOTE", BODY:"BODY", BR:"BR", BUTTON:"BUTTON", CAPTION:"CAPTION", CENTER:"CENTER", CITE:"CITE", CODE:"CODE", COL:"COL", COLGROUP:"COLGROUP", DD:"DD", DEL:"DEL", DFN:"DFN", DIR:"DIR", DIV:"DIV", DL:"DL", DT:"DT", EM:"EM", FIELDSET:"FIELDSET", FONT:"FONT", FORM:"FORM", FRAME:"FRAME", FRAMESET:"FRAMESET", H1:"H1", 
 H2:"H2", H3:"H3", H4:"H4", H5:"H5", H6:"H6", HEAD:"HEAD", HR:"HR", HTML:"HTML", I:"I", IFRAME:"IFRAME", IMG:"IMG", INPUT:"INPUT", INS:"INS", ISINDEX:"ISINDEX", KBD:"KBD", LABEL:"LABEL", LEGEND:"LEGEND", LI:"LI", LINK:"LINK", MAP:"MAP", MENU:"MENU", META:"META", NOFRAMES:"NOFRAMES", NOSCRIPT:"NOSCRIPT", OBJECT:"OBJECT", OL:"OL", OPTGROUP:"OPTGROUP", OPTION:"OPTION", P:"P", PARAM:"PARAM", PRE:"PRE", Q:"Q", S:"S", SAMP:"SAMP", SCRIPT:"SCRIPT", SELECT:"SELECT", SMALL:"SMALL", SPAN:"SPAN", STRIKE:"STRIKE", 
@@ -2181,99 +4147,6 @@ goog.dom.classes.toggle = function(b, c) {
   var d = !goog.dom.classes.has(b, c);
   goog.dom.classes.enable(b, c, d);
   return d
-};goog.math = {};
-goog.math.Coordinate = function(b, c) {
-  this.x = goog.isDef(b) ? b : 0;
-  this.y = goog.isDef(c) ? c : 0
-};
-goog.math.Coordinate.prototype.clone = function() {
-  return new goog.math.Coordinate(this.x, this.y)
-};
-if(goog.DEBUG) {
-  goog.math.Coordinate.prototype.toString = function() {
-    return"(" + this.x + ", " + this.y + ")"
-  }
-}goog.math.Coordinate.equals = function(b, c) {
-  if(b == c) {
-    return true
-  }if(!b || !c) {
-    return false
-  }return b.x == c.x && b.y == c.y
-};
-goog.math.Coordinate.distance = function(b, c) {
-  var d = b.x - c.x;
-  b = b.y - c.y;
-  return Math.sqrt(d * d + b * b)
-};
-goog.math.Coordinate.squaredDistance = function(b, c) {
-  var d = b.x - c.x;
-  b = b.y - c.y;
-  return d * d + b * b
-};
-goog.math.Coordinate.difference = function(b, c) {
-  return new goog.math.Coordinate(b.x - c.x, b.y - c.y)
-};
-goog.math.Coordinate.sum = function(b, c) {
-  return new goog.math.Coordinate(b.x + c.x, b.y + c.y)
-};goog.math.Size = function(b, c) {
-  this.width = b;
-  this.height = c
-};
-goog.math.Size.equals = function(b, c) {
-  if(b == c) {
-    return true
-  }if(!b || !c) {
-    return false
-  }return b.width == c.width && b.height == c.height
-};
-goog.math.Size.prototype.clone = function() {
-  return new goog.math.Size(this.width, this.height)
-};
-if(goog.DEBUG) {
-  goog.math.Size.prototype.toString = function() {
-    return"(" + this.width + " x " + this.height + ")"
-  }
-}a = goog.math.Size.prototype;
-a.getLongest = function() {
-  return Math.max(this.width, this.height)
-};
-a.getShortest = function() {
-  return Math.min(this.width, this.height)
-};
-a.area = function() {
-  return this.width * this.height
-};
-a.aspectRatio = function() {
-  return this.width / this.height
-};
-a.isEmpty = function() {
-  return!this.area()
-};
-a.ceil = function() {
-  this.width = Math.ceil(this.width);
-  this.height = Math.ceil(this.height);
-  return this
-};
-a.fitsInside = function(b) {
-  return this.width <= b.width && this.height <= b.height
-};
-a.floor = function() {
-  this.width = Math.floor(this.width);
-  this.height = Math.floor(this.height);
-  return this
-};
-a.round = function() {
-  this.width = Math.round(this.width);
-  this.height = Math.round(this.height);
-  return this
-};
-a.scale = function(b) {
-  this.width *= b;
-  this.height *= b;
-  return this
-};
-a.scaleToFit = function(b) {
-  return this.scale(this.aspectRatio() > b.aspectRatio() ? b.width / this.width : b.height / this.height)
 };goog.dom.ASSUME_QUIRKS_MODE = false;
 goog.dom.ASSUME_STANDARDS_MODE = false;
 goog.dom.COMPAT_MODE_KNOWN_ = goog.dom.ASSUME_QUIRKS_MODE || goog.dom.ASSUME_STANDARDS_MODE;
@@ -2933,313 +4806,7 @@ a.getTextContent = goog.dom.getTextContent;
 a.getNodeTextLength = goog.dom.getNodeTextLength;
 a.getNodeTextOffset = goog.dom.getNodeTextOffset;
 a.getAncestorByTagNameAndClass = goog.dom.getAncestorByTagNameAndClass;
-a.getAncestor = goog.dom.getAncestor;goog.math.Box = function(b, c, d, e) {
-  this.top = b;
-  this.right = c;
-  this.bottom = d;
-  this.left = e
-};
-goog.math.Box.boundingBox = function() {
-  for(var b = new goog.math.Box(arguments[0].y, arguments[0].x, arguments[0].y, arguments[0].x), c = 1;c < arguments.length;c++) {
-    var d = arguments[c];
-    b.top = Math.min(b.top, d.y);
-    b.right = Math.max(b.right, d.x);
-    b.bottom = Math.max(b.bottom, d.y);
-    b.left = Math.min(b.left, d.x)
-  }return b
-};
-goog.math.Box.prototype.clone = function() {
-  return new goog.math.Box(this.top, this.right, this.bottom, this.left)
-};
-if(goog.DEBUG) {
-  goog.math.Box.prototype.toString = function() {
-    return"(" + this.top + "t, " + this.right + "r, " + this.bottom + "b, " + this.left + "l)"
-  }
-}goog.math.Box.prototype.contains = function(b) {
-  return goog.math.Box.contains(this, b)
-};
-goog.math.Box.prototype.expand = function(b, c, d, e) {
-  if(goog.isObject(b)) {
-    this.top -= b.top;
-    this.right += b.right;
-    this.bottom += b.bottom;
-    this.left -= b.left
-  }else {
-    this.top -= b;
-    this.right += c;
-    this.bottom += d;
-    this.left -= e
-  }return this
-};
-goog.math.Box.prototype.expandToInclude = function(b) {
-  this.left = Math.min(this.left, b.left);
-  this.top = Math.min(this.top, b.top);
-  this.right = Math.max(this.right, b.right);
-  this.bottom = Math.max(this.bottom, b.bottom)
-};
-goog.math.Box.equals = function(b, c) {
-  if(b == c) {
-    return true
-  }if(!b || !c) {
-    return false
-  }return b.top == c.top && b.right == c.right && b.bottom == c.bottom && b.left == c.left
-};
-goog.math.Box.contains = function(b, c) {
-  if(!b || !c) {
-    return false
-  }if(c instanceof goog.math.Box) {
-    return c.left >= b.left && c.right <= b.right && c.top >= b.top && c.bottom <= b.bottom
-  }return c.x >= b.left && c.x <= b.right && c.y >= b.top && c.y <= b.bottom
-};
-goog.math.Box.distance = function(b, c) {
-  if(c.x >= b.left && c.x <= b.right) {
-    if(c.y >= b.top && c.y <= b.bottom) {
-      return 0
-    }return c.y < b.top ? b.top - c.y : c.y - b.bottom
-  }if(c.y >= b.top && c.y <= b.bottom) {
-    return c.x < b.left ? b.left - c.x : c.x - b.right
-  }return goog.math.Coordinate.distance(c, new goog.math.Coordinate(c.x < b.left ? b.left : b.right, c.y < b.top ? b.top : b.bottom))
-};
-goog.math.Box.intersects = function(b, c) {
-  return b.left <= c.right && c.left <= b.right && b.top <= c.bottom && c.top <= b.bottom
-};goog.math.Range = function(b, c) {
-  b = Number(b);
-  c = Number(c);
-  this.start = b < c ? b : c;
-  this.end = b < c ? c : b
-};
-goog.math.Range.prototype.clone = function() {
-  return new goog.math.Range(this.start, this.end)
-};
-if(goog.DEBUG) {
-  goog.math.Range.prototype.toString = function() {
-    return"[" + this.start + ", " + this.end + "]"
-  }
-}goog.math.Range.equals = function(b, c) {
-  if(b == c) {
-    return true
-  }if(!b || !c) {
-    return false
-  }return b.start == c.start && b.end == c.end
-};
-goog.math.Range.intersection = function(b, c) {
-  var d = Math.max(b.start, c.start);
-  b = Math.min(b.end, c.end);
-  return d <= b ? new goog.math.Range(d, b) : null
-};
-goog.math.Range.hasIntersection = function(b, c) {
-  return Math.max(b.start, c.start) <= Math.min(b.end, c.end)
-};
-goog.math.Range.boundingRange = function(b, c) {
-  return new goog.math.Range(Math.min(b.start, c.start), Math.max(b.end, c.end))
-};
-goog.math.Range.contains = function(b, c) {
-  return b.start <= c.start && b.end >= c.end
-};
-goog.math.Range.containsPoint = function(b, c) {
-  return b.start <= c && b.end >= c
-};goog.math.Rect = function(b, c, d, e) {
-  this.left = b;
-  this.top = c;
-  this.width = d;
-  this.height = e
-};
-goog.math.Rect.prototype.clone = function() {
-  return new goog.math.Rect(this.left, this.top, this.width, this.height)
-};
-goog.math.Rect.prototype.toBox = function() {
-  return new goog.math.Box(this.top, this.left + this.width, this.top + this.height, this.left)
-};
-goog.math.Rect.createFromBox = function(b) {
-  return new goog.math.Rect(b.left, b.top, b.right - b.left, b.bottom - b.top)
-};
-if(goog.DEBUG) {
-  goog.math.Rect.prototype.toString = function() {
-    return"(" + this.left + ", " + this.top + " - " + this.width + "w x " + this.height + "h)"
-  }
-}goog.math.Rect.equals = function(b, c) {
-  if(b == c) {
-    return true
-  }if(!b || !c) {
-    return false
-  }return b.left == c.left && b.width == c.width && b.top == c.top && b.height == c.height
-};
-goog.math.Rect.prototype.intersection = function(b) {
-  var c = Math.max(this.left, b.left), d = Math.min(this.left + this.width, b.left + b.width);
-  if(c <= d) {
-    var e = Math.max(this.top, b.top);
-    b = Math.min(this.top + this.height, b.top + b.height);
-    if(e <= b) {
-      this.left = c;
-      this.top = e;
-      this.width = d - c;
-      this.height = b - e;
-      return true
-    }
-  }return false
-};
-goog.math.Rect.intersection = function(b, c) {
-  var d = Math.max(b.left, c.left), e = Math.min(b.left + b.width, c.left + c.width);
-  if(d <= e) {
-    var f = Math.max(b.top, c.top);
-    b = Math.min(b.top + b.height, c.top + c.height);
-    if(f <= b) {
-      return new goog.math.Rect(d, f, e - d, b - f)
-    }
-  }return null
-};
-goog.math.Rect.intersects = function(b, c) {
-  return b.left <= c.left + c.width && c.left <= b.left + b.width && b.top <= c.top + c.height && c.top <= b.top + b.height
-};
-goog.math.Rect.prototype.intersects = function(b) {
-  return goog.math.Rect.intersects(this, b)
-};
-goog.math.Rect.difference = function(b, c) {
-  var d = goog.math.Rect.intersection(b, c);
-  if(!d || !d.height || !d.width) {
-    return[b.clone()]
-  }d = [];
-  var e = b.top, f = b.height, g = b.left + b.width, h = b.top + b.height, j = c.left + c.width, k = c.top + c.height;
-  if(c.top > b.top) {
-    d.push(new goog.math.Rect(b.left, b.top, b.width, c.top - b.top));
-    e = c.top;
-    f -= c.top - b.top
-  }if(k < h) {
-    d.push(new goog.math.Rect(b.left, k, b.width, h - k));
-    f = k - e
-  }c.left > b.left && d.push(new goog.math.Rect(b.left, e, c.left - b.left, f));
-  j < g && d.push(new goog.math.Rect(j, e, g - j, f));
-  return d
-};
-goog.math.Rect.prototype.difference = function(b) {
-  return goog.math.Rect.difference(this, b)
-};
-goog.math.Rect.prototype.boundingRect = function(b) {
-  var c = Math.max(this.left + this.width, b.left + b.width), d = Math.max(this.top + this.height, b.top + b.height);
-  this.left = Math.min(this.left, b.left);
-  this.top = Math.min(this.top, b.top);
-  this.width = c - this.left;
-  this.height = d - this.top
-};
-goog.math.Rect.boundingRect = function(b, c) {
-  if(!b || !c) {
-    return null
-  }b = b.clone();
-  b.boundingRect(c);
-  return b
-};
-goog.math.Rect.prototype.contains = function(b) {
-  return b instanceof goog.math.Rect ? this.left <= b.left && this.left + this.width >= b.left + b.width && this.top <= b.top && this.top + this.height >= b.top + b.height : b.x >= this.left && b.x <= this.left + this.width && b.y >= this.top && b.y <= this.top + this.height
-};
-goog.math.Rect.prototype.getSize = function() {
-  return new goog.math.Size(this.width, this.height)
-};goog.math.randomInt = function(b) {
-  return Math.floor(Math.random() * b)
-};
-goog.math.uniformRandom = function(b, c) {
-  return b + Math.random() * (c - b)
-};
-goog.math.clamp = function(b, c, d) {
-  return Math.min(Math.max(b, c), d)
-};
-goog.math.modulo = function(b, c) {
-  b = b % c;
-  return b * c < 0 ? b + c : b
-};
-goog.math.lerp = function(b, c, d) {
-  return b + d * (c - b)
-};
-goog.math.nearlyEquals = function(b, c, d) {
-  return Math.abs(b - c) <= (d || 1.0E-6)
-};
-goog.math.standardAngle = function(b) {
-  return goog.math.modulo(b, 360)
-};
-goog.math.toRadians = function(b) {
-  return b * Math.PI / 180
-};
-goog.math.toDegrees = function(b) {
-  return b * 180 / Math.PI
-};
-goog.math.angleDx = function(b, c) {
-  return c * Math.cos(goog.math.toRadians(b))
-};
-goog.math.angleDy = function(b, c) {
-  return c * Math.sin(goog.math.toRadians(b))
-};
-goog.math.angle = function(b, c, d, e) {
-  return goog.math.standardAngle(goog.math.toDegrees(Math.atan2(e - c, d - b)))
-};
-goog.math.angleDifference = function(b, c) {
-  b = goog.math.standardAngle(c) - goog.math.standardAngle(b);
-  if(b > 180) {
-    b -= 360
-  }else {
-    if(b <= -180) {
-      b = 360 + b
-    }
-  }return b
-};
-goog.math.sign = function(b) {
-  return b == 0 ? 0 : b < 0 ? -1 : 1
-};
-goog.math.longestCommonSubsequence = function(b, c, d, e) {
-  d = d || function(m, n) {
-    return m == n
-  };
-  e = e || function(m) {
-    return b[m]
-  };
-  for(var f = b.length, g = c.length, h = [], j = 0;j < f + 1;j++) {
-    h[j] = [];
-    h[j][0] = 0
-  }for(var k = 0;k < g + 1;k++) {
-    h[0][k] = 0
-  }for(j = 1;j <= f;j++) {
-    for(k = 1;k <= f;k++) {
-      h[j][k] = d(b[j - 1], c[k - 1]) ? h[j - 1][k - 1] + 1 : Math.max(h[j - 1][k], h[j][k - 1])
-    }
-  }var l = [];
-  j = f;
-  for(k = g;j > 0 && k > 0;) {
-    if(d(b[j - 1], c[k - 1])) {
-      l.unshift(e(j - 1, k - 1));
-      j--;
-      k--
-    }else {
-      if(h[j - 1][k] > h[j][k - 1]) {
-        j--
-      }else {
-        k--
-      }
-    }
-  }return l
-};
-goog.math.sum = function() {
-  return goog.array.reduce(arguments, function(b, c) {
-    return b + c
-  }, 0)
-};
-goog.math.average = function() {
-  return goog.math.sum.apply(null, arguments) / arguments.length
-};
-goog.math.standardDeviation = function() {
-  var b = arguments.length;
-  if(b < 2) {
-    return 0
-  }var c = goog.math.average.apply(null, arguments);
-  b = goog.math.sum.apply(null, goog.array.map(arguments, function(d) {
-    return Math.pow(d - c, 2)
-  })) / (b - 1);
-  return Math.sqrt(b)
-};
-goog.math.isInt = function(b) {
-  return isFinite(b) && b % 1 == 0
-};
-goog.math.isFiniteNumber = function(b) {
-  return isFinite(b) && !isNaN(b)
-};goog.graphics = {};
-goog.graphics.Path = function() {
+a.getAncestor = goog.dom.getAncestor;goog.graphics.Path = function() {
   this.segments_ = [];
   this.count_ = [];
   this.arguments_ = []
@@ -3355,12 +4922,12 @@ a.arcToAsCurves = function(b, c, d, e) {
   e = Math.ceil(Math.abs(h) / Math.PI * 2);
   h = h / e;
   d = goog.math.toRadians(d);
-  for(var j = 0;j < e;j++) {
-    var k = Math.cos(d), l = Math.sin(d), m = 4 / 3 * Math.sin(h / 2) / (1 + Math.cos(h / 2)), n = f + (k - m * l) * b, o = g + (l + m * k) * c;
+  for(var i = 0;i < e;i++) {
+    var j = Math.cos(d), k = Math.sin(d), l = 4 / 3 * Math.sin(h / 2) / (1 + Math.cos(h / 2)), m = f + (j - l * k) * b, n = g + (k + l * j) * c;
     d += h;
-    k = Math.cos(d);
-    l = Math.sin(d);
-    this.curveTo(n, o, f + (k + m * l) * b, g + (l - m * k) * c, f + k * b, g + l * c)
+    j = Math.cos(d);
+    k = Math.sin(d);
+    this.curveTo(m, n, f + (j + l * k) * b, g + (k - l * j) * c, f + j * b, g + k * c)
   }return this
 };
 a.forEachSegment = function(b) {
@@ -3508,9 +5075,9 @@ goog.style.getVisibleRectForElement = function(b) {
   var c = new goog.math.Box(0, Infinity, Infinity, 0), d = goog.dom.getDomHelper(b), e = d.getDocument().body, f = d.getDocumentScrollElement(), g;
   for(b = b;b = goog.style.getOffsetParent(b);) {
     if((!goog.userAgent.IE || b.clientWidth != 0) && (!goog.userAgent.WEBKIT || b.clientHeight != 0 || b != e) && (b.scrollWidth != b.clientWidth || b.scrollHeight != b.clientHeight) && goog.style.getStyle_(b, "overflow") != "visible") {
-      var h = goog.style.getPageOffset(b), j = goog.style.getClientLeftTop(b);
-      h.x += j.x;
-      h.y += j.y;
+      var h = goog.style.getPageOffset(b), i = goog.style.getClientLeftTop(b);
+      h.x += i.x;
+      h.y += i.y;
       c.top = Math.max(c.top, h.y);
       c.right = Math.min(c.right, h.x + b.clientWidth);
       c.bottom = Math.min(c.bottom, h.y + b.clientHeight);
@@ -4437,10 +6004,10 @@ a.removeElement = function(b) {
 a.drawCircle = function(b, c, d, e, f, g) {
   return this.drawEllipse(b, c, d, d, e, f, g)
 };
-a.drawText = function(b, c, d, e, f, g, h, j, k, l, m) {
-  var n = j.size / 2;
-  d = h == "bottom" ? d + f - n : h == "center" ? d + f / 2 : d + n;
-  return this.drawTextOnLine(b, c, d, c + e, d, g, j, k, l, m)
+a.drawText = function(b, c, d, e, f, g, h, i, j, k, l) {
+  var m = i.size / 2;
+  d = h == "bottom" ? d + f - m : h == "center" ? d + f / 2 : d + m;
+  return this.drawTextOnLine(b, c, d, c + e, d, g, i, j, k, l)
 };
 a.createPath = function() {
   return new goog.graphics.Path
@@ -4451,169 +6018,6 @@ a.isDomClonable = function() {
 a.suspend = function() {
 };
 a.resume = function() {
-};goog.graphics.AffineTransform = function(b, c, d, e, f, g) {
-  if(arguments.length == 6) {
-    this.setTransform(b, c, d, e, f, g)
-  }else {
-    if(arguments.length != 0) {
-      throw Error("Insufficient matrix parameters");
-    }else {
-      this.m00_ = this.m11_ = 1;
-      this.m10_ = this.m01_ = this.m02_ = this.m12_ = 0
-    }
-  }
-};
-a = goog.graphics.AffineTransform.prototype;
-a.isIdentity = function() {
-  return this.m00_ == 1 && this.m10_ == 0 && this.m01_ == 0 && this.m11_ == 1 && this.m02_ == 0 && this.m12_ == 0
-};
-a.clone = function() {
-  return new goog.graphics.AffineTransform(this.m00_, this.m10_, this.m01_, this.m11_, this.m02_, this.m12_)
-};
-a.setTransform = function(b, c, d, e, f, g) {
-  if(!goog.isNumber(b) || !goog.isNumber(c) || !goog.isNumber(d) || !goog.isNumber(e) || !goog.isNumber(f) || !goog.isNumber(g)) {
-    throw Error("Invalid transform parameters");
-  }this.m00_ = b;
-  this.m10_ = c;
-  this.m01_ = d;
-  this.m11_ = e;
-  this.m02_ = f;
-  this.m12_ = g;
-  return this
-};
-a.copyFrom = function(b) {
-  this.m00_ = b.m00_;
-  this.m10_ = b.m10_;
-  this.m01_ = b.m01_;
-  this.m11_ = b.m11_;
-  this.m02_ = b.m02_;
-  this.m12_ = b.m12_;
-  return this
-};
-a.scale = function(b, c) {
-  this.m00_ *= b;
-  this.m10_ *= b;
-  this.m01_ *= c;
-  this.m11_ *= c;
-  return this
-};
-a.translate = function(b, c) {
-  this.m02_ += b * this.m00_ + c * this.m01_;
-  this.m12_ += b * this.m10_ + c * this.m11_;
-  return this
-};
-a.rotate = function(b, c, d) {
-  return this.concatenate(goog.graphics.AffineTransform.getRotateInstance(b, c, d))
-};
-a.shear = function(b, c) {
-  var d = this.m00_, e = this.m10_;
-  this.m00_ += c * this.m01_;
-  this.m10_ += c * this.m11_;
-  this.m01_ += b * d;
-  this.m11_ += b * e;
-  return this
-};
-a.toString = function() {
-  return"matrix(" + [this.m00_, this.m10_, this.m01_, this.m11_, this.m02_, this.m12_].join(",") + ")"
-};
-a.getScaleX = function() {
-  return this.m00_
-};
-a.getScaleY = function() {
-  return this.m11_
-};
-a.getTranslateX = function() {
-  return this.m02_
-};
-a.getTranslateY = function() {
-  return this.m12_
-};
-a.getShearX = function() {
-  return this.m01_
-};
-a.getShearY = function() {
-  return this.m10_
-};
-a.concatenate = function(b) {
-  var c = this.m00_, d = this.m01_;
-  this.m00_ = b.m00_ * c + b.m10_ * d;
-  this.m01_ = b.m01_ * c + b.m11_ * d;
-  this.m02_ += b.m02_ * c + b.m12_ * d;
-  c = this.m10_;
-  d = this.m11_;
-  this.m10_ = b.m00_ * c + b.m10_ * d;
-  this.m11_ = b.m01_ * c + b.m11_ * d;
-  this.m12_ += b.m02_ * c + b.m12_ * d;
-  return this
-};
-a.preConcatenate = function(b) {
-  var c = this.m00_, d = this.m10_;
-  this.m00_ = b.m00_ * c + b.m01_ * d;
-  this.m10_ = b.m10_ * c + b.m11_ * d;
-  c = this.m01_;
-  d = this.m11_;
-  this.m01_ = b.m00_ * c + b.m01_ * d;
-  this.m11_ = b.m10_ * c + b.m11_ * d;
-  c = this.m02_;
-  d = this.m12_;
-  this.m02_ = b.m00_ * c + b.m01_ * d + b.m02_;
-  this.m12_ = b.m10_ * c + b.m11_ * d + b.m12_;
-  return this
-};
-a.transform = function(b, c, d, e, f) {
-  var g = c;
-  e = e;
-  for(c = c + 2 * f;g < c;) {
-    f = b[g++];
-    var h = b[g++];
-    d[e++] = f * this.m00_ + h * this.m01_ + this.m02_;
-    d[e++] = f * this.m10_ + h * this.m11_ + this.m12_
-  }
-};
-a.getDeterminant = function() {
-  return this.m00_ * this.m11_ - this.m01_ * this.m10_
-};
-a.isInvertible = function() {
-  var b = this.getDeterminant();
-  return goog.math.isFiniteNumber(b) && goog.math.isFiniteNumber(this.m02_) && goog.math.isFiniteNumber(this.m12_) && b != 0
-};
-a.createInverse = function() {
-  var b = this.getDeterminant();
-  return new goog.graphics.AffineTransform(this.m11_ / b, -this.m10_ / b, -this.m01_ / b, this.m00_ / b, (this.m01_ * this.m12_ - this.m11_ * this.m02_) / b, (this.m10_ * this.m02_ - this.m00_ * this.m12_) / b)
-};
-goog.graphics.AffineTransform.getScaleInstance = function(b, c) {
-  return(new goog.graphics.AffineTransform).setToScale(b, c)
-};
-goog.graphics.AffineTransform.getTranslateInstance = function(b, c) {
-  return(new goog.graphics.AffineTransform).setToTranslation(b, c)
-};
-goog.graphics.AffineTransform.getShearInstance = function(b, c) {
-  return(new goog.graphics.AffineTransform).setToShear(b, c)
-};
-goog.graphics.AffineTransform.getRotateInstance = function(b, c, d) {
-  return(new goog.graphics.AffineTransform).setToRotation(b, c, d)
-};
-a = goog.graphics.AffineTransform.prototype;
-a.setToScale = function(b, c) {
-  return this.setTransform(b, 0, 0, c, 0, 0)
-};
-a.setToTranslation = function(b, c) {
-  return this.setTransform(1, 0, 0, 1, b, c)
-};
-a.setToShear = function(b, c) {
-  return this.setTransform(1, c, b, 1, 0, 0)
-};
-a.setToRotation = function(b, c, d) {
-  var e = Math.cos(b);
-  b = Math.sin(b);
-  return this.setTransform(e, b, -b, e, c - c * e + d * b, d - c * b - d * e)
-};
-a.equals = function(b) {
-  if(this == b) {
-    return true
-  }if(!b) {
-    return false
-  }return this.m00_ == b.m00_ && this.m01_ == b.m01_ && this.m02_ == b.m02_ && this.m10_ == b.m10_ && this.m11_ == b.m11_ && this.m12_ == b.m12_
 };goog.graphics.Element = function(b, c) {
   goog.events.EventTarget.call(this);
   this.element_ = b;
@@ -4711,15 +6115,15 @@ goog.graphics.CanvasGroupElement.prototype.draw = function() {
     this.getGraphics().drawElement(this.children_[b])
   }
 };
-goog.graphics.CanvasEllipseElement = function(b, c, d, e, f, g, h, j) {
-  goog.graphics.EllipseElement.call(this, b, c, h, j);
+goog.graphics.CanvasEllipseElement = function(b, c, d, e, f, g, h, i) {
+  goog.graphics.EllipseElement.call(this, b, c, h, i);
   this.cx_ = d;
   this.cy_ = e;
   this.rx_ = f;
   this.ry_ = g;
   this.path_ = new goog.graphics.Path;
   this.setUpPath_();
-  this.pathElement_ = new goog.graphics.CanvasPathElement(null, c, this.path_, h, j)
+  this.pathElement_ = new goog.graphics.CanvasPathElement(null, c, this.path_, h, i)
 };
 goog.inherits(goog.graphics.CanvasEllipseElement, goog.graphics.EllipseElement);
 goog.graphics.CanvasEllipseElement.prototype.setUpPath_ = function() {
@@ -4742,8 +6146,8 @@ goog.graphics.CanvasEllipseElement.prototype.setRadius = function(b, c) {
 goog.graphics.CanvasEllipseElement.prototype.draw = function(b) {
   this.pathElement_.draw(b)
 };
-goog.graphics.CanvasRectElement = function(b, c, d, e, f, g, h, j) {
-  goog.graphics.RectElement.call(this, b, c, h, j);
+goog.graphics.CanvasRectElement = function(b, c, d, e, f, g, h, i) {
+  goog.graphics.RectElement.call(this, b, c, h, i);
   this.x_ = d;
   this.y_ = e;
   this.w_ = f;
@@ -4804,15 +6208,15 @@ goog.graphics.CanvasPathElement.prototype.draw = function(b) {
     }
   })
 };
-goog.graphics.CanvasTextElement = function(b, c, d, e, f, g, h, j, k, l) {
-  goog.graphics.TextElement.call(this, null, b, k, l);
+goog.graphics.CanvasTextElement = function(b, c, d, e, f, g, h, i, j, k) {
+  goog.graphics.TextElement.call(this, null, b, j, k);
   this.text_ = c;
   this.x1_ = d;
   this.y1_ = e;
   this.x2_ = f;
   this.y2_ = g;
   this.align_ = h || "left";
-  this.font_ = j;
+  this.font_ = i;
   this.element_ = goog.dom.createDom("DIV", {style:"display:table;position:absolute;padding:0;margin:0;border:0"});
   this.innerElement_ = goog.dom.createDom("DIV", {style:"display:table-cell;padding: 0;margin: 0;border: 0"});
   this.updateStyle_();
@@ -4837,26 +6241,26 @@ a.setStroke = function() {
 a.draw = function() {
 };
 a.updateStyle_ = function() {
-  var b = this.x1_, c = this.x2_, d = this.y1_, e = this.y2_, f = this.align_, g = this.font_, h = this.element_.style, j = this.getGraphics().getPixelScaleX(), k = this.getGraphics().getPixelScaleY();
+  var b = this.x1_, c = this.x2_, d = this.y1_, e = this.y2_, f = this.align_, g = this.font_, h = this.element_.style, i = this.getGraphics().getPixelScaleX(), j = this.getGraphics().getPixelScaleY();
   if(b == c) {
     h.lineHeight = "90%";
     this.innerElement_.style.verticalAlign = f == "center" ? "middle" : f == "left" ? d < e ? "top" : "bottom" : d < e ? "bottom" : "top";
     h.textAlign = "center";
-    c = g.size * j;
-    h.top = Math.round(Math.min(d, e) * k) + "px";
-    h.left = Math.round((b - c / 2) * j) + "px";
+    c = g.size * i;
+    h.top = Math.round(Math.min(d, e) * j) + "px";
+    h.left = Math.round((b - c / 2) * i) + "px";
     h.width = Math.round(c) + "px";
-    h.height = Math.abs(d - e) * k + "px";
-    h.fontSize = g.size * 0.6 * k + "pt"
+    h.height = Math.abs(d - e) * j + "px";
+    h.fontSize = g.size * 0.6 * j + "pt"
   }else {
     h.lineHeight = "100%";
     this.innerElement_.style.verticalAlign = "top";
     h.textAlign = f;
-    h.top = Math.round(((d + e) / 2 - g.size * 2 / 3) * k) + "px";
-    h.left = Math.round(b * j) + "px";
-    h.width = Math.round(Math.abs(c - b) * j) + "px";
+    h.top = Math.round(((d + e) / 2 - g.size * 2 / 3) * j) + "px";
+    h.left = Math.round(b * i) + "px";
+    h.width = Math.round(Math.abs(c - b) * i) + "px";
     h.height = "auto";
-    h.fontSize = g.size * k + "pt"
+    h.fontSize = g.size * j + "pt"
   }h.fontWeight = g.bold ? "bold" : "normal";
   h.fontStyle = g.italic ? "italic" : "normal";
   h.fontFamily = g.family;
@@ -5129,9 +6533,9 @@ a.drawImage = function(b, c, d, e, f, g) {
   this.append_(b, g);
   return b
 };
-a.drawTextOnLine = function(b, c, d, e, f, g, h, j, k, l) {
-  b = new goog.graphics.CanvasTextElement(this, b, c, d, e, f, g, h, j, k);
-  this.append_(b, l);
+a.drawTextOnLine = function(b, c, d, e, f, g, h, i, j, k) {
+  b = new goog.graphics.CanvasTextElement(this, b, c, d, e, f, g, h, i, j);
+  this.append_(b, k);
   return b
 };
 a.drawPath = function(b, c, d, e) {
@@ -5449,42 +6853,42 @@ a.drawImage = function(b, c, d, e, f, g) {
   this.append_(f, g);
   return f
 };
-a.drawTextOnLine = function(b, c, d, e, f, g, h, j, k, l) {
-  var m = Math.round(goog.math.angle(c, d, e, f));
+a.drawTextOnLine = function(b, c, d, e, f, g, h, i, j, k) {
+  var l = Math.round(goog.math.angle(c, d, e, f));
   e = e - c;
   f = f - d;
   f = Math.round(Math.sqrt(e * e + f * f));
-  var n = h.size;
-  e = {"font-family":h.family, "font-size":n};
-  var o = Math.round(n * 0.85);
-  n = Math.round(d - n / 2 + o);
-  o = c;
+  var m = h.size;
+  e = {"font-family":h.family, "font-size":m};
+  var n = Math.round(m * 0.85);
+  m = Math.round(d - m / 2 + n);
+  n = c;
   if(g == "center") {
-    o += Math.round(f / 2);
+    n += Math.round(f / 2);
     e["text-anchor"] = "middle"
   }else {
     if(g == "right") {
-      o += f;
+      n += f;
       e["text-anchor"] = "end"
     }
-  }e.x = o;
-  e.y = n;
+  }e.x = n;
+  e.y = m;
   if(h.bold) {
     e["font-weight"] = "bold"
   }if(h.italic) {
     e["font-style"] = "italic"
-  }if(m != 0) {
-    e.transform = "rotate(" + m + " " + c + " " + d + ")"
+  }if(l != 0) {
+    e.transform = "rotate(" + l + " " + c + " " + d + ")"
   }c = this.createSvgElement_("text", e);
   c.appendChild(this.dom_.getDocument().createTextNode(b));
-  if(j == null && goog.userAgent.GECKO && goog.userAgent.MAC) {
+  if(i == null && goog.userAgent.GECKO && goog.userAgent.MAC) {
     b = "black";
-    if(k instanceof goog.graphics.SolidFill) {
-      b = k.getColor()
-    }j = new goog.graphics.Stroke(1, b)
-  }k = new goog.graphics.SvgTextElement(c, this, j, k);
-  this.append_(k, l);
-  return k
+    if(j instanceof goog.graphics.SolidFill) {
+      b = j.getColor()
+    }i = new goog.graphics.Stroke(1, b)
+  }j = new goog.graphics.SvgTextElement(c, this, i, j);
+  this.append_(j, k);
+  return j
 };
 a.drawPath = function(b, c, d, e) {
   b = this.createSvgElement_("path", {d:goog.graphics.SvgGraphics.getSvgPath(b)});
@@ -5592,9 +6996,9 @@ goog.graphics.VmlGroupElement.prototype.setSize = function(b, c) {
     d.coordorigin = "0 0"
   }
 };
-goog.graphics.VmlEllipseElement = function(b, c, d, e, f, g, h, j) {
+goog.graphics.VmlEllipseElement = function(b, c, d, e, f, g, h, i) {
   this.id_ = b.id;
-  goog.graphics.EllipseElement.call(this, b, c, h, j);
+  goog.graphics.EllipseElement.call(this, b, c, h, i);
   this.cx = d;
   this.cy = e;
   this.rx = f;
@@ -5808,7 +7212,7 @@ goog.graphics.VmlGraphics.prototype.createFullSizeElement_ = function(b) {
 };
 try {
   eval("document.namespaces")
-}catch(ex$$4) {
+}catch(ex$$10) {
 }a = goog.graphics.VmlGraphics.prototype;
 a.createDom = function() {
   var b = this.dom_.getDocument();
@@ -5866,16 +7270,16 @@ a.clear = function() {
   this.canvasElement.clear()
 };
 a.drawEllipse = function(b, c, d, e, f, g, h) {
-  var j = this.createVmlElement("oval");
-  goog.graphics.VmlGraphics.setPositionAndSize(j, b - d, c - e, d * 2, e * 2);
-  b = new goog.graphics.VmlEllipseElement(j, this, b, c, d, e, f, g);
+  var i = this.createVmlElement("oval");
+  goog.graphics.VmlGraphics.setPositionAndSize(i, b - d, c - e, d * 2, e * 2);
+  b = new goog.graphics.VmlEllipseElement(i, this, b, c, d, e, f, g);
   this.append_(b, h);
   return b
 };
 a.drawRect = function(b, c, d, e, f, g, h) {
-  var j = this.createVmlElement("rect");
-  goog.graphics.VmlGraphics.setPositionAndSize(j, b, c, d, e);
-  b = new goog.graphics.VmlRectElement(j, this, f, g);
+  var i = this.createVmlElement("rect");
+  goog.graphics.VmlGraphics.setPositionAndSize(i, b, c, d, e);
+  b = new goog.graphics.VmlRectElement(i, this, f, g);
   this.append_(b, h);
   return b
 };
@@ -5887,11 +7291,11 @@ a.drawImage = function(b, c, d, e, f, g) {
   this.append_(b, g);
   return b
 };
-a.drawTextOnLine = function(b, c, d, e, f, g, h, j, k, l) {
-  var m = this.createFullSizeElement_("shape"), n = this.createVmlElement("path");
+a.drawTextOnLine = function(b, c, d, e, f, g, h, i, j, k) {
+  var l = this.createFullSizeElement_("shape"), m = this.createVmlElement("path");
   c = "M" + goog.graphics.VmlGraphics.toPosCoord(c) + "," + goog.graphics.VmlGraphics.toPosCoord(d) + "L" + goog.graphics.VmlGraphics.toPosCoord(e) + "," + goog.graphics.VmlGraphics.toPosCoord(f) + "E";
-  goog.graphics.VmlGraphics.setAttribute(n, "v", c);
-  goog.graphics.VmlGraphics.setAttribute(n, "textpathok", "true");
+  goog.graphics.VmlGraphics.setAttribute(m, "v", c);
+  goog.graphics.VmlGraphics.setAttribute(m, "textpathok", "true");
   c = this.createVmlElement("textpath");
   c.setAttribute("on", "true");
   d = c.style;
@@ -5904,10 +7308,10 @@ a.drawTextOnLine = function(b, c, d, e, f, g, h, j, k, l) {
   }if(h.italic) {
     d.fontStyle = "italic"
   }goog.graphics.VmlGraphics.setAttribute(c, "string", b);
-  m.appendChild(n);
-  m.appendChild(c);
-  b = new goog.graphics.VmlTextElement(m, this, j, k);
-  this.append_(b, l);
+  l.appendChild(m);
+  l.appendChild(c);
+  b = new goog.graphics.VmlTextElement(l, this, i, j);
+  this.append_(b, k);
   return b
 };
 a.drawPath = function(b, c, d, e) {
@@ -5940,9 +7344,9 @@ goog.graphics.VmlGraphics.getVmlPath = function(b) {
         var f = e[2] + e[3];
         d = goog.graphics.VmlGraphics.toSizeCoord(e[4] - goog.math.angleDx(f, e[0]));
         f = goog.graphics.VmlGraphics.toSizeCoord(e[5] - goog.math.angleDy(f, e[1]));
-        var g = goog.graphics.VmlGraphics.toSizeCoord(e[0]), h = goog.graphics.VmlGraphics.toSizeCoord(e[1]), j = Math.round(e[2] * -65536);
+        var g = goog.graphics.VmlGraphics.toSizeCoord(e[0]), h = goog.graphics.VmlGraphics.toSizeCoord(e[1]), i = Math.round(e[2] * -65536);
         e = Math.round(e[3] * -65536);
-        c.push("ae", d, f, g, h, j, e);
+        c.push("ae", d, f, g, h, i, e);
         break
     }
   });
@@ -6151,7 +7555,7 @@ a.defaultAction = function(b, c) {
   this.target.style.left = b + "px";
   this.target.style.top = c + "px"
 };
-goog.fx.DragEvent = function(b, c, d, e, f, g, h, j) {
+goog.fx.DragEvent = function(b, c, d, e, f, g, h, i) {
   goog.events.Event.call(this, b);
   this.clientX = d;
   this.clientY = e;
@@ -6159,2541 +7563,561 @@ goog.fx.DragEvent = function(b, c, d, e, f, g, h, j) {
   this.left = goog.isDef(g) ? g : c.deltaX;
   this.top = goog.isDef(h) ? h : c.deltaY;
   this.dragger = c;
-  this.dragCanceled = !!j
-};
-goog.inherits(goog.fx.DragEvent, goog.events.Event);jchemhub.view.ReactionEditor = function(b, c) {
-  jchemhub.view.Drawing.call(this);
-  this._element = b;
-  this._config = new goog.structs.Map(jchemhub.view.ReactionEditor.defaultConfig);
-  c && this._config.addAll(c);
-  this._graphics = goog.graphics.createGraphics(b.clientWidth, b.clientHeight);
-  this._graphics.render(this._element)
-};
-goog.inherits(jchemhub.view.ReactionEditor, jchemhub.view.Drawing);
-a = jchemhub.view.ReactionEditor.prototype;
-a.clear = function() {
-  jchemhub.view.ReactionEditor.superClass_.clear.call(this);
-  this._graphics.clear();
-  this.model = null;
-  var b = new goog.graphics.SolidFill(this.getConfig().get("background").color);
-  this._graphics.drawRect(0, 0, this.getGraphics().width, this.getGraphics().height, null, b)
-};
-a.setModel = function(b) {
-  this.clear();
-  this.model = b;
-  b instanceof jchemhub.model.Reaction && this.add(new jchemhub.view.ReactionDrawing(b));
-  b instanceof jchemhub.model.Molecule && this.add(new jchemhub.view.MoleculeDrawing(b))
-};
-a.layoutAndRender = function() {
-  var b = this.getConfig().get("margin");
-  this.layout(new goog.math.Rect(b, b, this.getGraphics().width - b * 2, this.getGraphics().height - b * 2));
-  this.render()
-};
-a.layout = function(b) {
-  var c = this.getRect(), d = c.getSize().scaleToFit(b.getSize()).width / c.width;
-  this.setTransform(new goog.graphics.AffineTransform(d, 0, 0, d, b.left - c.left * d, b.top - c.top * d))
-};
-a.getRect = function() {
-  return this.getChildren()[0].getRect()
-};
-a.getTransform = function() {
-  return this._transform
-};
-a.render = function() {
-  this.renderChildren()
-};
-a.getModel = function() {
-  return this.model
-};
-jchemhub.view.ReactionEditor.defaultConfig = {arrow:{stroke:{width:2, color:"black"}}, atom:{diameter:0.05, stroke:{width:1, color:"#FF9999"}, fill:{color:"#FF9999"}, fontName:"Arial"}, N:{stroke:{width:1, color:"blue"}, fill:{color:"blue"}}, O:{stroke:{width:1, color:"red"}, fill:{color:"red"}}, S:{stroke:{width:1, color:"yellow"}, fill:{color:"yellow"}}, P:{stroke:{width:1, color:"orange"}, fill:{color:"orange"}}, Cl:{stroke:{width:1, color:"green"}, fill:{color:"green"}}, F:{stroke:{width:1, color:"green"}, 
-fill:{color:"green"}}, Br:{stroke:{width:1, color:"dark red"}, fill:{color:"dark red"}}, I:{stroke:{width:1, color:"purple"}, fill:{color:"purple"}}, C:{stroke:{width:1, color:"black"}, fill:{color:"black"}}, H:{stroke:{width:1, color:"black"}, fill:{color:"white"}}, background:{color:"#F0FFF0"}, margin:20, subscriptSize:5, bond:{stroke:{width:2, color:"black"}, fill:{color:"black"}}, highlight:{radius:0.1, color:"blue"}, plus:{stroke:{width:2, color:"black"}}};jchemhub.view.AtomDrawing = function(b) {
-  jchemhub.view.Drawing.call(this);
-  this.atom = b
-};
-goog.inherits(jchemhub.view.AtomDrawing, jchemhub.view.Drawing);
-a = jchemhub.view.AtomDrawing.prototype;
-a.render = function() {
-  var b = this.getConfig(), c = b.get(this.atom.symbol) ? b.get(this.atom.symbol) : b.get("atom"), d = this.getTransform().getScaleX();
-  d = new goog.graphics.Font(d / 1.8, c.fontName);
-  var e = new goog.graphics.Stroke(c.stroke.width, c.stroke.color);
-  c = new goog.graphics.SolidFill(c.fill.color);
-  var f = this.transformCoords(this.getTransform(), [this.atom.coord])[0], g = this.compoundSymbol(), h = this.getGraphics(), j = this.getGroup(), k = g.text.length * 0.55 * d.size, l = d.size;
-  if(g.text) {
-    j.atomLabelBackground = h.drawEllipse(f.x, f.y, l * 0.7, l * 0.7, new goog.graphics.Stroke(1, b.get("background").color), new goog.graphics.SolidFill(b.get("background").color), j);
-    h.drawText(g.text, f.x - k / 2, f.y - l / 2, k, l, g.justification, null, d, e, c, j);
-    if(g.justification == "left") {
-      if(g.subscript || g.superscript) {
-        b = b.get("subscriptSize");
-        g.subscript && h.drawText(g.subscript, f.x + k * 0.9, f.y, b, b, "center", null, d, e, c, j);
-        g.superscript && h.drawText(g.superscript, f.x + k, f.y - l * 0.8, b, b, "center", null, d, e, c, j)
-      }
-    }else {
-      if(g.justification == "right") {
-        if(g.subscript || g.superscript) {
-          b = b.get("subscriptSize");
-          if(g.subscript) {
-            h.drawText("H", f.x - k * 3, f.y - l / 2, k, l, "center", null, d, e, c, j);
-            h.drawText(g.subscript, f.x - k * 1.8, f.y, b, b, "center", null, d, e, c, j)
-          }g.superscript && h.drawText(g.superscript, f.x + k, f.y - l * 0.8, b, b, "center", null, d, e, c, j)
-        }
-      }
-    }
-  }
-};
-a.getCoords = function() {
-  return[this.atom.coord]
-};
-a.getBoundingBox = function() {
-  var b = this.getConfig().get("atom").diameter / 2;
-  return goog.math.Box.boundingBox.apply(null, [new goog.math.Coordinate(this.atom.coord.x - b, this.atom.coord.y - b), new goog.math.Coordinate(this.atom.coord.x + b, this.atom.coord.y + b)])
-};
-a.updateTransformedCoords = function() {
-  this._trans_coord = this.transformCoords(this.getTransform(), [this.getCoordinates()])[0]
-};
-a.transformDrawing = function(b) {
-  var c = this.getCoords();
-  c = this.transformCoords(this.getTransform(), c);
-  b = this.transformCoords(b, c);
-  this.atom.coord = this.transformCoords(this.getTransform().createInverse(), b)[0]
-};
-a.compoundSymbol = function() {
-  var b = {text:"", justification:"center", superscript:"", subscript:""};
-  if(this.atom.symbol != "C" || this.atom.countBonds() == 1) {
-    var c = this.atom.hydrogenCount();
-    if(c == 0) {
-      b.text = this.atom.symbol
-    }else {
-      bond_direction = this.bondDirection();
-      var d = "center";
-      if(bond_direction == "SW" || bond_direction == "W" || bond_direction == "NW") {
-        d = "right";
-        if(c == 1) {
-          b.text = "H"
-        }b.text += this.atom.symbol
-      }else {
-        d = "left";
-        b.text = this.atom.symbol + "H"
-      }if(c > 1) {
-        b.subscript = String(c)
-      }
-    }if(this.atom.charge) {
-      if(this.atom.charge > 1) {
-        b.superscript += "+" + this.atom.charge
-      }else {
-        if(this.atom.charge < -1) {
-          b.superscript += this.atom.charge
-        }else {
-          if(this.atom.charge == -1) {
-            b.superscript = "-"
-          }else {
-            if(this.atom.charge == 1) {
-              b.superscript = "+"
-            }
-          }
-        }
-      }
-    }
-  }else {
-    b.text = ""
-  }b.justification = d;
-  return b
-};
-a.bondOrientation = function(b) {
-  b = this.atom.bonds.getValues()[b];
-  var c = b.target.coord, d = b.source.coord, e = c.y - d.y;
-  c = c.x - d.x;
-  if(this.atom == b.source) {
-    c = -c;
-    e = -e
-  }b = Math.atan2(e, c) * 180 / Math.PI;
-  if(b < 0) {
-    b = 360 + b
-  }return b
-};
-a.bondDirection = function() {
-  var b = this.atom.bonds.getCount(), c = this.bondOrientation(0);
-  if(b > 1) {
-    for(var d = 1;d < b;++d) {
-      c += this.bondOrientation(d)
-    }c = c / b % 360
-  }return c > 350 || c <= 10 ? "E" : c > 10 && c <= 80 ? "SE" : c > 80 && c <= 100 ? "S" : c > 100 && c <= 170 ? "SW" : c > 170 && c <= 190 ? "W" : c > 190 && c <= 260 ? "NW" : c > 260 && c <= 280 ? "N" : "NE"
-};goog.math.Line = function(b, c, d, e) {
-  this.x0 = b;
-  this.y0 = c;
-  this.x1 = d;
-  this.y1 = e
-};
-a = goog.math.Line.prototype;
-a.clone = function() {
-  return new goog.math.Line(this.x0, this.y0, this.x1, this.y1)
-};
-a.equals = function(b) {
-  return this.x0 == b.x0 && this.y0 == b.y0 && this.x1 == b.x1 && this.y1 == b.y1
-};
-a.getSegmentLengthSquared = function() {
-  var b = this.x1 - this.x0, c = this.y1 - this.y0;
-  return b * b + c * c
-};
-a.getSegmentLength = function() {
-  return Math.sqrt(this.getSegmentLengthSquared())
-};
-a.getClosestLinearInterpolation_ = function(b, c) {
-  if(b instanceof goog.math.Coordinate) {
-    c = b.y;
-    b = b.x
-  }else {
-    c = c
-  }var d = this.x0, e = this.y0;
-  return((b - d) * (this.x1 - d) + (c - e) * (this.y1 - e)) / this.getSegmentLengthSquared()
-};
-a.getInterpolatedPoint = function(b) {
-  return new goog.math.Coordinate(goog.math.lerp(this.x0, this.x1, b), goog.math.lerp(this.y0, this.y1, b))
-};
-a.getClosestPoint = function(b, c) {
-  return this.getInterpolatedPoint(this.getClosestLinearInterpolation_(b, c))
-};
-a.getClosestSegmentPoint = function(b, c) {
-  return this.getInterpolatedPoint(goog.math.clamp(this.getClosestLinearInterpolation_(b, c), 0, 1))
-};jchemhub.math = {};
-jchemhub.math.Line = function(b, c) {
-  goog.math.Line.call(this, b.x, b.y, c.x, c.y)
-};
-goog.inherits(jchemhub.math.Line, goog.math.Line);
-jchemhub.math.Line.prototype.getTheta = function() {
-  return Math.atan2(this.y1 - this.y0, this.x1 - this.x0)
-};
-jchemhub.math.Line.prototype.getStart = function() {
-  return new goog.math.Coordinate(this.x0, this.y0)
-};
-jchemhub.math.Line.prototype.getEnd = function() {
-  return new goog.math.Coordinate(this.x1, this.y1)
-};jchemhub.view.BondDrawing = function(b) {
-  jchemhub.view.Drawing.call(this);
-  this.bond = b
-};
-goog.inherits(jchemhub.view.BondDrawing, jchemhub.view.Drawing);
-a = jchemhub.view.BondDrawing.prototype;
-a.getCoords = function() {
-  return[this.bond.source.coord, this.bond.target.coord]
-};
-a.getBoundingBox = function() {
-  var b = this.getConfig().get("bond").stroke.width / 2;
-  return goog.math.Box.boundingBox.apply(null, [new goog.math.Coordinate(this.bond.source.coord.x - b, this.bond.source.coord.y - b), new goog.math.Coordinate(this.bond.target.coord.x + b, this.bond.target.coord.y + b)])
-};
-a.getTheta = function() {
-  return(new jchemhub.math.Line(this.bond.source.coord, this.bond.target.coord)).getTheta()
-};
-a.render = function() {
-  var b = new goog.graphics.SolidFill("red", 0.0010), c = this.getConfig().get("highlight").radius * 3, d = this.getTheta(), e = d + Math.PI / 2;
-  d = d - Math.PI / 2;
-  e = goog.graphics.AffineTransform.getTranslateInstance(Math.cos(e) * c, Math.sin(e) * c, 0, 0, 0);
-  c = goog.graphics.AffineTransform.getTranslateInstance(Math.cos(d) * c, Math.sin(d) * c, 0, 0, 0);
-  e = this.transformCoords(e, this.getCoords());
-  c = this.transformCoords(c, this.getCoords());
-  c = this.transformCoords(this.getTransform(), [e[0], e[1], c[0], c[1]]);
-  bondBoxPath = new goog.graphics.Path;
-  bondBoxPath.moveTo(c[0].x, c[0].y);
-  bondBoxPath.lineTo(c[2].x, c[2].y);
-  bondBoxPath.lineTo(c[3].x, c[3].y);
-  bondBoxPath.lineTo(c[1].x, c[1].y);
-  bondBoxPath.close();
-  this.getGraphics().drawPath(bondBoxPath, null, b, this.getGroup());
-  this.getGroup().getElement()._parentGroup = this.getGroup()
-};
-a._highlightOn = function(b) {
-  b = b.currentTarget;
-  var c = b.getConfig(), d = c.get("bond").stroke.width;
-  d = new goog.graphics.Stroke(d, c.get("highlight").color);
-  c = c.get("highlight").radius * b.getTransform().getScaleX();
-  var e = this.getTheta(), f = e - Math.PI / 2;
-  e = e <= 0 ? b.bond.source.coord.y <= b.bond.target.coord.y ? -180 : 180 : b.bond.source.coord.y > b.bond.target.coord.y ? 180 : -180;
-  var g = b.transformCoords(b.getTransform(), b.getCoords()), h = new goog.graphics.Path;
-  h.arc(g[0].x, g[0].y, c, c, f, e);
-  h.arc(g[1].x, g[1].y, c, c, f, -e);
-  if(!b.bondHighlightGroup) {
-    b.bondHighlightGroup = b.getGraphics().createGroup()
-  }b.getGraphics().drawPath(h, d, null, b.bondHighlightGroup)
-};
-a._highlightOff = function(b) {
-  b.currentTarget.bondHighlightGroup && b.currentTarget.bondHighlightGroup.clear()
-};
-a.drag = function(b) {
-  var c = b.currentTarget, d = new goog.fx.Dragger(c.getGroup().getElement());
-  d.prevX = b.clientX;
-  d.prevY = b.clientY;
-  d.bond = c;
-  d.addEventListener(goog.fx.Dragger.EventType.DRAG, function(e) {
-    var f = d.bond.getGroup().getTransform(), g = e.clientX - d.prevX + f.getTranslateX();
-    f = e.clientY - d.prevY + f.getTranslateY();
-    c.getGroup().setTransformation(g, f, 0, 0, 0);
-    d.prevX = e.clientX;
-    d.prevY = e.clientY
-  });
-  d.addEventListener(goog.fx.Dragger.EventType.END, function() {
-    console.log("finish");
-    d.dispose()
-  });
-  d.startDrag(b)
-};jchemhub.view.SingleBondDownDrawing = function(b) {
-  jchemhub.view.BondDrawing.call(this, b)
-};
-goog.inherits(jchemhub.view.SingleBondDownDrawing, jchemhub.view.BondDrawing);
-jchemhub.view.SingleBondDownDrawing.prototype.render = function() {
-  var b = new goog.graphics.Path, c = this.getConfig().get("bond").stroke.width / 10, d = this.getTheta(), e = d + Math.PI / 2;
-  d = d - Math.PI / 2;
-  e = goog.graphics.AffineTransform.getTranslateInstance(Math.cos(e) * c, Math.sin(e) * c, 0, 0, 0);
-  c = goog.graphics.AffineTransform.getTranslateInstance(Math.cos(d) * c, Math.sin(d) * c, 0, 0, 0);
-  e = this.transformCoords(e, this.getCoords());
-  c = this.transformCoords(c, this.getCoords());
-  c = this.transformCoords(this.getTransform(), [e[0], e[1], c[0], c[1]]);
-  e = new goog.graphics.Stroke(this.getConfig().get("bond").stroke.width, this.getConfig().get("bond").stroke.color);
-  for(d = 1;d < 6;d++) {
-    b.moveTo(c[0].x + (c[1].x - c[0].x) * d / 6, c[0].y + (c[1].y - c[0].y) * d / 6);
-    b.lineTo(c[2].x + (c[3].x - c[2].x) * d / 6, c[2].y + (c[3].y - c[2].y) * d / 6)
-  }this._elements.push(this.getGraphics().drawPath(b, e, null, this.getGroup()));
-  jchemhub.view.SingleBondDownDrawing.superClass_.render.call(this)
-};jchemhub.view.SingleBondDrawing = function(b) {
-  jchemhub.view.BondDrawing.call(this, b)
-};
-goog.inherits(jchemhub.view.SingleBondDrawing, jchemhub.view.BondDrawing);
-jchemhub.view.SingleBondDrawing.prototype.render = function() {
-  var b = new goog.graphics.Path, c = new goog.graphics.Stroke(this.getConfig().get("bond").stroke.width, this.getConfig().get("bond").stroke.color), d = this.transformCoords(this.getTransform(), this.getCoords());
-  b.moveTo(d[0].x, d[0].y);
-  b.lineTo(d[1].x, d[1].y);
-  this._elements.push(this.getGraphics().drawPath(b, c, null, this.getGroup()));
-  jchemhub.view.SingleBondDrawing.superClass_.render.call(this)
-};jchemhub.view.SingleBondUpDrawing = function(b) {
-  jchemhub.view.BondDrawing.call(this, b)
-};
-goog.inherits(jchemhub.view.SingleBondUpDrawing, jchemhub.view.BondDrawing);
-jchemhub.view.SingleBondUpDrawing.prototype.render = function() {
-  var b = new goog.graphics.Path, c = this.getConfig().get("bond").stroke.width / 10, d = new goog.graphics.Stroke(c, this.getConfig().get("bond").stroke.color), e = new goog.graphics.SolidFill(this.getConfig().get("bond").fill.color), f = this.getTheta(), g = f + Math.PI / 2;
-  f = f - Math.PI / 2;
-  g = this.transformCoords(goog.graphics.AffineTransform.getTranslateInstance(Math.cos(g) * c, Math.sin(g) * c, 0, 0, 0), [this.bond.target.coord])[0];
-  c = this.transformCoords(goog.graphics.AffineTransform.getTranslateInstance(Math.cos(f) * c, Math.sin(f) * c, 0, 0, 0), [this.bond.target.coord])[0];
-  c = this.transformCoords(this.getTransform(), [this.bond.source.coord, g, c]);
-  b.moveTo(c[0].x, c[0].y);
-  b.lineTo(c[1].x, c[1].y);
-  b.lineTo(c[2].x, c[2].y);
-  this._elements.push(this.getGraphics().drawPath(b, d, e, this.getGroup()));
-  jchemhub.view.SingleBondUpDrawing.superClass_.render.call(this)
-};jchemhub.view.SingleBondEitherDrawing = function(b) {
-  jchemhub.view.BondDrawing.call(this, b)
-};
-goog.inherits(jchemhub.view.SingleBondEitherDrawing, jchemhub.view.BondDrawing);
-jchemhub.view.SingleBondEitherDrawing.prototype.render = function() {
-  var b = new goog.graphics.Path, c = this.getConfig().get("bond").stroke.width / 10, d = this.getTheta(), e = d + Math.PI / 2;
-  d = d - Math.PI / 2;
-  e = goog.graphics.AffineTransform.getTranslateInstance(Math.cos(e) * c, Math.sin(e) * c, 0, 0, 0);
-  c = goog.graphics.AffineTransform.getTranslateInstance(Math.cos(d) * c, Math.sin(d) * c, 0, 0, 0);
-  e = this.transformCoords(e, this.getCoords());
-  c = this.transformCoords(c, this.getCoords());
-  c = this.transformCoords(this.getTransform(), [e[0], e[1], c[0], c[1]]);
-  e = new goog.graphics.Stroke(this.getConfig().get("bond").stroke.width, this.getConfig().get("bond").stroke.color);
-  b.moveTo(c[0].x, c[0].y);
-  for(d = 1;d < 10;d++) {
-    d % 2 ? b.lineTo(c[0].x + (c[1].x - c[0].x) * d / 10, c[0].y + (c[1].y - c[0].y) * d / 10) : b.lineTo(c[2].x + (c[3].x - c[2].x) * d / 10, c[2].y + (c[3].y - c[2].y) * d / 10)
-  }this._elements.push(this.getGraphics().drawPath(b, e, null, this.getGroup()));
-  jchemhub.view.SingleBondDownDrawing.superClass_.render.call(this)
-};jchemhub.view.DoubleBondDrawing = function(b) {
-  jchemhub.view.BondDrawing.call(this, b)
-};
-goog.inherits(jchemhub.view.DoubleBondDrawing, jchemhub.view.BondDrawing);
-jchemhub.view.DoubleBondDrawing.prototype.getFirstRing = function() {
-  return goog.array.find(this.getParent().molecule.getRings(), function(b) {
-    return goog.array.contains(b.bonds, this.bond)
-  }, this)
-};
-jchemhub.view.DoubleBondDrawing.prototype.render = function() {
-  var b = this.getConfig().get("bond").stroke.width;
-  b = new goog.graphics.Stroke(b, this.getConfig().get("bond").stroke.color);
-  var c = this.getFirstRing();
-  if(c) {
-    var d = c.ringCenter;
-    c = goog.math.Coordinate.difference(d, this.bond.source.coord);
-    c = goog.math.Coordinate.sum(new goog.math.Coordinate(c.x / 5, c.y / 5), this.bond.source.coord);
-    d = goog.math.Coordinate.difference(d, this.bond.target.coord);
-    d = goog.math.Coordinate.sum(new goog.math.Coordinate(d.x / 5, d.y / 5), this.bond.target.coord);
-    c = this.transformCoords(this.getTransform(), [this.bond.source.coord, this.bond.target.coord, c, d]);
-    d = new goog.graphics.Path
-  }else {
-    d = this.getTheta();
-    c = d + Math.PI / 2;
-    d = d - Math.PI / 2;
-    var e = goog.math.Coordinate.distance(this.bond.source.coord, this.bond.target.coord) / 12;
-    c = goog.graphics.AffineTransform.getTranslateInstance(Math.cos(c) * e, Math.sin(c) * e, 0, 0, 0);
-    d = goog.graphics.AffineTransform.getTranslateInstance(Math.cos(d) * e, Math.sin(d) * e, 0, 0, 0);
-    c = this.transformCoords(c, this.getCoords());
-    d = this.transformCoords(d, this.getCoords());
-    c = this.transformCoords(this.getTransform(), [c[0], c[1], d[0], d[1]]);
-    d = new goog.graphics.Path
-  }d.moveTo(c[0].x, c[0].y);
-  d.lineTo(c[1].x, c[1].y);
-  d.moveTo(c[2].x, c[2].y);
-  d.lineTo(c[3].x, c[3].y);
-  this._elements.push(this.getGraphics().drawPath(d, b, null, this.getGroup()));
-  jchemhub.view.DoubleBondDrawing.superClass_.render.call(this)
-};jchemhub.view.TripleBondDrawing = function(b) {
-  jchemhub.view.BondDrawing.call(this, b)
-};
-goog.inherits(jchemhub.view.TripleBondDrawing, jchemhub.view.BondDrawing);
-jchemhub.view.TripleBondDrawing.prototype.render = function() {
-  var b = this.getConfig().get("bond").stroke.width;
-  b = new goog.graphics.Stroke(b, this.getConfig().get("bond").stroke.color);
-  var c = this.getTheta(), d = c + Math.PI / 2;
-  c = c - Math.PI / 2;
-  var e = goog.math.Coordinate.distance(this.bond.source.coord, this.bond.target.coord) / 6;
-  d = goog.graphics.AffineTransform.getTranslateInstance(Math.cos(d) * e, Math.sin(d) * e, 0, 0, 0);
-  c = goog.graphics.AffineTransform.getTranslateInstance(Math.cos(c) * e, Math.sin(c) * e, 0, 0, 0);
-  d = this.transformCoords(d, this.getCoords());
-  c = this.transformCoords(c, this.getCoords());
-  d = this.transformCoords(this.getTransform(), [this.bond.source.coord, this.bond.target.coord, d[0], d[1], c[0], c[1]]);
-  c = new goog.graphics.Path;
-  c.moveTo(d[0].x, d[0].y);
-  c.lineTo(d[1].x, d[1].y);
-  c.moveTo(d[2].x, d[2].y);
-  c.lineTo(d[3].x, d[3].y);
-  c.moveTo(d[4].x, d[4].y);
-  c.lineTo(d[5].x, d[5].y);
-  this._elements.push(this.getGraphics().drawPath(c, b, null, this.getGroup()));
-  jchemhub.view.TripleBondDrawing.superClass_.render.call(this)
-};jchemhub.view.MoleculeDrawing = function(b) {
-  jchemhub.view.Drawing.call(this);
-  this.molecule = b;
-  goog.array.forEach(b.bonds, function(c) {
-    this.add(jchemhub.controller.Controller.createBondDrawing(c))
-  }, this);
-  goog.array.forEach(b.atoms, function(c) {
-    this.add(new jchemhub.view.AtomDrawing(c))
-  }, this);
-  this.addEventListener(goog.events.EventType.MOUSEDOWN, this.drag)
-};
-goog.inherits(jchemhub.view.MoleculeDrawing, jchemhub.view.Drawing);
-a = jchemhub.view.MoleculeDrawing.prototype;
-a.layoutChildren = function() {
-  goog.array.forEach(this.getChildren(), function(b) {
-    b.setTransform(this.getTransform())
-  }, this)
-};
-a.render = function() {
-  this.renderChildren()
-};
-a.toggleHighlight = function() {
-  this.isSelected = this.isSelected ? false : true;
-  goog.array.forEach(this.getChildren(), function(b) {
-    b.toggleHighlight()
-  })
-};
-a.drag = function(b) {
-  var c = b.currentTarget, d = new goog.fx.Dragger(c.getGroup().getElement());
-  d._prevX = b.clientX;
-  d._prevY = b.clientY;
-  d._startX = b.clientX;
-  d._startY = b.clientY;
-  d.molecule = c;
-  d.addEventListener(goog.fx.Dragger.EventType.DRAG, function(e) {
-    goog.array.forEach(d.molecule.getChildren(), function(f) {
-      var g = f.getGroup().getTransform(), h = e.clientX - d._prevX + g.getTranslateX();
-      g = e.clientY - d._prevY + g.getTranslateY();
-      f.getGroup().setTransformation(h, g, 0, 0, 0)
-    });
-    d._prevX = e.clientX;
-    d._prevY = e.clientY
-  });
-  d.addEventListener(goog.fx.Dragger.EventType.END, function(e) {
-    e = new goog.graphics.AffineTransform.getTranslateInstance(e.clientX - d._startX, e.clientY - d._startY);
-    d.molecule.transformDrawing(e);
-    d.dispose()
-  });
-  d.startDrag(b)
-};
-a.getRect = function() {
-  return jchemhub.view.MoleculeDrawing.boundingRect([this.molecule])
-};
-jchemhub.view.MoleculeDrawing.boundingBox = function(b) {
-  b = goog.array.flatten(goog.array.map(b, function(c) {
-    return c.atoms
-  }));
-  b = goog.array.map(b, function(c) {
-    return c.coord
-  });
-  return b.length > 0 ? goog.math.Box.boundingBox.apply(null, b) : new goog.math.Box(0, 0, 0, 0)
-};
-jchemhub.view.MoleculeDrawing.boundingRect = function(b) {
-  return goog.math.Rect.createFromBox(this.boundingBox(b))
-};
-jchemhub.view.MoleculeDrawing.prototype.transformDrawing = function(b) {
-  goog.array.forEach(this.getChildren(), function(c) {
-    c instanceof jchemhub.view.AtomDrawing && c.transformDrawing(b)
-  })
-};jchemhub.view.ReactionDrawing = function(b) {
-  jchemhub.view.Drawing.call(this);
-  this.reaction = b;
-  var c;
-  goog.array.forEach(b.reactants, function(e) {
-    if(c) {
-      var f = jchemhub.view.ReactionDrawing.center([c, e]);
-      this.add(new jchemhub.view.PlusDrawing(f))
-    }c = e;
-    this.add(jchemhub.controller.Controller.buildMoleculeDrawing(e))
-  }, this);
-  var d = jchemhub.view.ReactionDrawing.center(goog.array.concat(b.reactants, b.products));
-  this.add(new jchemhub.view.ArrowDrawing(d));
-  c = null;
-  goog.array.forEach(b.products, function(e) {
-    if(c) {
-      var f = jchemhub.view.ReactionDrawing.center([c, e]);
-      this.add(new jchemhub.view.PlusDrawing(f))
-    }c = e;
-    this.add(jchemhub.controller.Controller.buildMoleculeDrawing(e))
-  }, this)
-};
-goog.inherits(jchemhub.view.ReactionDrawing, jchemhub.view.Drawing);
-jchemhub.view.ReactionDrawing.center = function(b) {
-  b = jchemhub.view.MoleculeDrawing.boundingRect(b);
-  return new goog.math.Coordinate(b.left + b.width / 2, b.top + b.height / 2)
-};
-jchemhub.view.ReactionDrawing.prototype.render = function() {
-  this.renderChildren()
-};
-jchemhub.view.ReactionDrawing.prototype.getRect = function() {
-  return jchemhub.view.MoleculeDrawing.boundingRect(goog.array.concat(this.reaction.reactants, this.reaction.products))
-};jchemhub.view.ArrowDrawing = function(b) {
-  jchemhub.view.Drawing.call(this);
-  this._nock = new goog.math.Coordinate(b.x - 0.5, b.y);
-  this._tip = new goog.math.Coordinate(this._nock.x + 1, this._nock.y);
-  this._head1 = new goog.math.Coordinate(this._tip.x - 0.25, this._nock.y + 0.125);
-  this._head2 = new goog.math.Coordinate(this._head1.x, this._head1.y - 0.25)
-};
-goog.inherits(jchemhub.view.ArrowDrawing, jchemhub.view.Drawing);
-jchemhub.view.ArrowDrawing.prototype.render = function() {
-  var b = new goog.graphics.Path, c = new goog.graphics.Stroke(this.getConfig().get("arrow").stroke.width, this.getConfig().get("arrow").stroke.color), d = this.transformCoords(this.getTransform(), [this._nock, this._tip, this._head1, this._head2]);
-  b.moveTo(d[0].x, d[0].y);
-  b.lineTo(d[1].x, d[1].y);
-  b.lineTo(d[2].x, d[2].y);
-  b.moveTo(d[1].x, d[1].y);
-  b.lineTo(d[3].x, d[3].y);
-  this.getGraphics().drawPath(b, c, null, this.getGroup())
-};
-jchemhub.view.ArrowDrawing.prototype.getCoords = function() {
-  return[this._nock, this._tip, this._head1, this._head2]
-};
-jchemhub.view.Drawing.prototype.updateTransformedCoords = function() {
-};jchemhub.view.PlusDrawing = function(b) {
-  jchemhub.view.Drawing.call(this);
-  this._h0 = new goog.math.Coordinate(b.x - 0.125, b.y);
-  this._h1 = new goog.math.Coordinate(this._h0.x + 0.25, this._h0.y);
-  this._v0 = new goog.math.Coordinate(b.x, b.y + 0.125);
-  this._v1 = new goog.math.Coordinate(this._v0.x, this._v0.y - 0.25)
-};
-goog.inherits(jchemhub.view.PlusDrawing, jchemhub.view.Drawing);
-jchemhub.view.PlusDrawing.prototype.render = function() {
-  var b = new goog.graphics.Path, c = new goog.graphics.Stroke(this.getConfig().get("plus").stroke.width, this.getConfig().get("plus").stroke.color), d = this.transformCoords(this.getTransform(), [this._h0, this._h1, this._v0, this._v1]);
-  b.moveTo(d[0].x, d[0].y);
-  b.lineTo(d[1].x, d[1].y);
-  b.moveTo(d[2].x, d[2].y);
-  b.lineTo(d[3].x, d[3].y);
-  this.getGraphics().drawPath(b, c, null, this.getGroup())
-};
-jchemhub.view.PlusDrawing.prototype.getCoords = function() {
-  return[this._h0, this._h1, this._v0, this._v1]
-};
-jchemhub.view.Drawing.prototype.updateTransformedCoords = function() {
-};jchemhub.resource = {};
-jchemhub.resource.Covalence = {C:4, Si:4, N:3, P:3, O:2, S:2, H:1};goog.structs.getCount = function(b) {
-  if(typeof b.getCount == "function") {
-    return b.getCount()
-  }if(goog.isArrayLike(b) || goog.isString(b)) {
-    return b.length
-  }return goog.object.getCount(b)
-};
-goog.structs.getValues = function(b) {
-  if(typeof b.getValues == "function") {
-    return b.getValues()
-  }if(goog.isString(b)) {
-    return b.split("")
-  }if(goog.isArrayLike(b)) {
-    for(var c = [], d = b.length, e = 0;e < d;e++) {
-      c.push(b[e])
-    }return c
-  }return goog.object.getValues(b)
-};
-goog.structs.getKeys = function(b) {
-  if(typeof b.getKeys == "function") {
-    return b.getKeys()
-  }if(typeof b.getValues != "function") {
-    if(goog.isArrayLike(b) || goog.isString(b)) {
-      var c = [];
-      b = b.length;
-      for(var d = 0;d < b;d++) {
-        c.push(d)
-      }return c
-    }return goog.object.getKeys(b)
-  }
-};
-goog.structs.contains = function(b, c) {
-  if(typeof b.contains == "function") {
-    return b.contains(c)
-  }if(typeof b.containsValue == "function") {
-    return b.containsValue(c)
-  }if(goog.isArrayLike(b) || goog.isString(b)) {
-    return goog.array.contains(b, c)
-  }return goog.object.containsValue(b, c)
-};
-goog.structs.isEmpty = function(b) {
-  if(typeof b.isEmpty == "function") {
-    return b.isEmpty()
-  }if(goog.isArrayLike(b) || goog.isString(b)) {
-    return goog.array.isEmpty(b)
-  }return goog.object.isEmpty(b)
-};
-goog.structs.clear = function(b) {
-  if(typeof b.clear == "function") {
-    b.clear()
-  }else {
-    goog.isArrayLike(b) ? goog.array.clear(b) : goog.object.clear(b)
-  }
-};
-goog.structs.forEach = function(b, c, d) {
-  if(typeof b.forEach == "function") {
-    b.forEach(c, d)
-  }else {
-    if(goog.isArrayLike(b) || goog.isString(b)) {
-      goog.array.forEach(b, c, d)
-    }else {
-      for(var e = goog.structs.getKeys(b), f = goog.structs.getValues(b), g = f.length, h = 0;h < g;h++) {
-        c.call(d, f[h], e && e[h], b)
-      }
-    }
-  }
-};
-goog.structs.filter = function(b, c, d) {
-  if(typeof b.filter == "function") {
-    return b.filter(c, d)
-  }if(goog.isArrayLike(b) || goog.isString(b)) {
-    return goog.array.filter(b, c, d)
-  }var e, f = goog.structs.getKeys(b), g = goog.structs.getValues(b), h = g.length;
-  if(f) {
-    e = {};
-    for(var j = 0;j < h;j++) {
-      if(c.call(d, g[j], f[j], b)) {
-        e[f[j]] = g[j]
-      }
-    }
-  }else {
-    e = [];
-    for(j = 0;j < h;j++) {
-      c.call(d, g[j], undefined, b) && e.push(g[j])
-    }
-  }return e
-};
-goog.structs.map = function(b, c, d) {
-  if(typeof b.map == "function") {
-    return b.map(c, d)
-  }if(goog.isArrayLike(b) || goog.isString(b)) {
-    return goog.array.map(b, c, d)
-  }var e, f = goog.structs.getKeys(b), g = goog.structs.getValues(b), h = g.length;
-  if(f) {
-    e = {};
-    for(var j = 0;j < h;j++) {
-      e[f[j]] = c.call(d, g[j], f[j], b)
-    }
-  }else {
-    e = [];
-    for(j = 0;j < h;j++) {
-      e[j] = c.call(d, g[j], undefined, b)
-    }
-  }return e
-};
-goog.structs.some = function(b, c, d) {
-  if(typeof b.some == "function") {
-    return b.some(c, d)
-  }if(goog.isArrayLike(b) || goog.isString(b)) {
-    return goog.array.some(b, c, d)
-  }for(var e = goog.structs.getKeys(b), f = goog.structs.getValues(b), g = f.length, h = 0;h < g;h++) {
-    if(c.call(d, f[h], e && e[h], b)) {
-      return true
-    }
-  }return false
-};
-goog.structs.every = function(b, c, d) {
-  if(typeof b.every == "function") {
-    return b.every(c, d)
-  }if(goog.isArrayLike(b) || goog.isString(b)) {
-    return goog.array.every(b, c, d)
-  }for(var e = goog.structs.getKeys(b), f = goog.structs.getValues(b), g = f.length, h = 0;h < g;h++) {
-    if(!c.call(d, f[h], e && e[h], b)) {
-      return false
-    }
-  }return true
-};goog.iter = {};
-goog.iter.Iterable = goog.typedef;
-goog.iter.StopIteration = "StopIteration" in goog.global ? goog.global.StopIteration : Error("StopIteration");
-goog.iter.Iterator = function() {
-};
-goog.iter.Iterator.prototype.next = function() {
-  throw goog.iter.StopIteration;
-};
-goog.iter.Iterator.prototype.__iterator__ = function() {
-  return this
-};
-goog.iter.toIterator = function(b) {
-  if(b instanceof goog.iter.Iterator) {
-    return b
-  }if(typeof b.__iterator__ == "function") {
-    return b.__iterator__(false)
-  }if(goog.isArrayLike(b)) {
-    var c = 0, d = new goog.iter.Iterator;
-    d.next = function() {
-      for(;;) {
-        if(c >= b.length) {
-          throw goog.iter.StopIteration;
-        }if(c in b) {
-          return b[c++]
-        }else {
-          c++
-        }
-      }
-    };
-    return d
-  }throw Error("Not implemented");
-};
-goog.iter.forEach = function(b, c, d) {
-  if(goog.isArrayLike(b)) {
-    try {
-      goog.array.forEach(b, c, d)
-    }catch(e) {
-      if(e !== goog.iter.StopIteration) {
-        throw e;
-      }
-    }
-  }else {
-    b = goog.iter.toIterator(b);
-    try {
-      for(;;) {
-        c.call(d, b.next(), undefined, b)
-      }
-    }catch(f) {
-      if(f !== goog.iter.StopIteration) {
-        throw f;
-      }
-    }
-  }
-};
-goog.iter.filter = function(b, c, d) {
-  b = goog.iter.toIterator(b);
-  var e = new goog.iter.Iterator;
-  e.next = function() {
-    for(;;) {
-      var f = b.next();
-      if(c.call(d, f, undefined, b)) {
-        return f
-      }
-    }
-  };
-  return e
-};
-goog.iter.range = function(b, c, d) {
-  var e = 0, f = b, g = d || 1;
-  if(arguments.length > 1) {
-    e = b;
-    f = c
-  }if(g == 0) {
-    throw Error("Range step argument must not be zero");
-  }var h = new goog.iter.Iterator;
-  h.next = function() {
-    if(g > 0 && e >= f || g < 0 && e <= f) {
-      throw goog.iter.StopIteration;
-    }var j = e;
-    e += g;
-    return j
-  };
-  return h
-};
-goog.iter.join = function(b, c) {
-  return goog.iter.toArray(b).join(c)
-};
-goog.iter.map = function(b, c, d) {
-  b = goog.iter.toIterator(b);
-  var e = new goog.iter.Iterator;
-  e.next = function() {
-    for(;;) {
-      var f = b.next();
-      return c.call(d, f, undefined, b)
-    }
-  };
-  return e
-};
-goog.iter.reduce = function(b, c, d, e) {
-  var f = d;
-  goog.iter.forEach(b, function(g) {
-    f = c.call(e, f, g)
-  });
-  return f
-};
-goog.iter.some = function(b, c, d) {
-  b = goog.iter.toIterator(b);
-  try {
-    for(;;) {
-      if(c.call(d, b.next(), undefined, b)) {
-        return true
-      }
-    }
-  }catch(e) {
-    if(e !== goog.iter.StopIteration) {
-      throw e;
-    }
-  }return false
-};
-goog.iter.every = function(b, c, d) {
-  b = goog.iter.toIterator(b);
-  try {
-    for(;;) {
-      if(!c.call(d, b.next(), undefined, b)) {
-        return false
-      }
-    }
-  }catch(e) {
-    if(e !== goog.iter.StopIteration) {
-      throw e;
-    }
-  }return true
-};
-goog.iter.chain = function() {
-  var b = arguments, c = b.length, d = 0, e = new goog.iter.Iterator;
-  e.next = function() {
-    try {
-      if(d >= c) {
-        throw goog.iter.StopIteration;
-      }return goog.iter.toIterator(b[d]).next()
-    }catch(f) {
-      if(f !== goog.iter.StopIteration || d >= c) {
-        throw f;
-      }else {
-        d++;
-        return this.next()
-      }
-    }
-  };
-  return e
-};
-goog.iter.dropWhile = function(b, c, d) {
-  b = goog.iter.toIterator(b);
-  var e = new goog.iter.Iterator, f = true;
-  e.next = function() {
-    for(;;) {
-      var g = b.next();
-      if(!(f && c.call(d, g, undefined, b))) {
-        f = false;
-        return g
-      }
-    }
-  };
-  return e
-};
-goog.iter.takeWhile = function(b, c, d) {
-  b = goog.iter.toIterator(b);
-  var e = new goog.iter.Iterator, f = true;
-  e.next = function() {
-    for(;;) {
-      if(f) {
-        var g = b.next();
-        if(c.call(d, g, undefined, b)) {
-          return g
-        }else {
-          f = false
-        }
-      }else {
-        throw goog.iter.StopIteration;
-      }
-    }
-  };
-  return e
-};
-goog.iter.toArray = function(b) {
-  if(goog.isArrayLike(b)) {
-    return goog.array.toArray(b)
-  }b = goog.iter.toIterator(b);
-  var c = [];
-  goog.iter.forEach(b, function(d) {
-    c.push(d)
-  });
-  return c
-};
-goog.iter.equals = function(b, c) {
-  b = goog.iter.toIterator(b);
-  c = goog.iter.toIterator(c);
-  var d, e;
-  try {
-    for(;;) {
-      d = e = false;
-      var f = b.next();
-      d = true;
-      var g = c.next();
-      e = true;
-      if(f != g) {
-        return false
-      }
-    }
-  }catch(h) {
-    if(h !== goog.iter.StopIteration) {
-      throw h;
-    }else {
-      if(d && !e) {
-        return false
-      }if(!e) {
-        try {
-          c.next();
-          return false
-        }catch(j) {
-          if(j !== goog.iter.StopIteration) {
-            throw j;
-          }return true
-        }
-      }
-    }
-  }return false
-};
-goog.iter.nextOrValue = function(b, c) {
-  try {
-    return goog.iter.toIterator(b).next()
-  }catch(d) {
-    if(d != goog.iter.StopIteration) {
-      throw d;
-    }return c
-  }
-};goog.structs.Map = function(b) {
-  this.map_ = {};
-  this.keys_ = [];
-  var c = arguments.length;
-  if(c > 1) {
-    if(c % 2) {
-      throw Error("Uneven number of arguments");
-    }for(var d = 0;d < c;d += 2) {
-      this.set(arguments[d], arguments[d + 1])
-    }
-  }else {
-    b && this.addAll(b)
-  }
-};
-a = goog.structs.Map.prototype;
-a.count_ = 0;
-a.version_ = 0;
-a.getCount = function() {
-  return this.count_
-};
-a.getValues = function() {
-  this.cleanupKeysArray_();
-  for(var b = [], c = 0;c < this.keys_.length;c++) {
-    b.push(this.map_[this.keys_[c]])
-  }return b
-};
-a.getKeys = function() {
-  this.cleanupKeysArray_();
-  return this.keys_.concat()
-};
-a.containsKey = function(b) {
-  return goog.structs.Map.hasKey_(this.map_, b)
-};
-a.containsValue = function(b) {
-  for(var c = 0;c < this.keys_.length;c++) {
-    var d = this.keys_[c];
-    if(goog.structs.Map.hasKey_(this.map_, d) && this.map_[d] == b) {
-      return true
-    }
-  }return false
-};
-a.equals = function(b, c) {
-  if(this === b) {
-    return true
-  }if(this.count_ != b.getCount()) {
-    return false
-  }c = c || goog.structs.Map.defaultEquals;
-  this.cleanupKeysArray_();
-  for(var d, e = 0;d = this.keys_[e];e++) {
-    if(!c(this.get(d), b.get(d))) {
-      return false
-    }
-  }return true
-};
-goog.structs.Map.defaultEquals = function(b, c) {
-  return b === c
-};
-a = goog.structs.Map.prototype;
-a.isEmpty = function() {
-  return this.count_ == 0
-};
-a.clear = function() {
-  this.map_ = {};
-  this.version_ = this.count_ = this.keys_.length = 0
-};
-a.remove = function(b) {
-  if(goog.structs.Map.hasKey_(this.map_, b)) {
-    delete this.map_[b];
-    this.count_--;
-    this.version_++;
-    this.keys_.length > 2 * this.count_ && this.cleanupKeysArray_();
-    return true
-  }return false
-};
-a.cleanupKeysArray_ = function() {
-  if(this.count_ != this.keys_.length) {
-    for(var b = 0, c = 0;b < this.keys_.length;) {
-      var d = this.keys_[b];
-      if(goog.structs.Map.hasKey_(this.map_, d)) {
-        this.keys_[c++] = d
-      }b++
-    }this.keys_.length = c
-  }if(this.count_ != this.keys_.length) {
-    var e = {};
-    for(c = b = 0;b < this.keys_.length;) {
-      d = this.keys_[b];
-      if(!goog.structs.Map.hasKey_(e, d)) {
-        this.keys_[c++] = d;
-        e[d] = 1
-      }b++
-    }this.keys_.length = c
-  }
-};
-a.get = function(b, c) {
-  if(goog.structs.Map.hasKey_(this.map_, b)) {
-    return this.map_[b]
-  }return c
-};
-a.set = function(b, c) {
-  if(!goog.structs.Map.hasKey_(this.map_, b)) {
-    this.count_++;
-    this.keys_.push(b);
-    this.version_++
-  }this.map_[b] = c
-};
-a.addAll = function(b) {
-  var c;
-  if(b instanceof goog.structs.Map) {
-    c = b.getKeys();
-    b = b.getValues()
-  }else {
-    c = goog.object.getKeys(b);
-    b = goog.object.getValues(b)
-  }for(var d = 0;d < c.length;d++) {
-    this.set(c[d], b[d])
-  }
-};
-a.clone = function() {
-  return new goog.structs.Map(this)
-};
-a.transpose = function() {
-  for(var b = new goog.structs.Map, c = 0;c < this.keys_.length;c++) {
-    var d = this.keys_[c];
-    b.set(this.map_[d], d)
-  }return b
-};
-a.getKeyIterator = function() {
-  return this.__iterator__(true)
-};
-a.getValueIterator = function() {
-  return this.__iterator__(false)
-};
-a.__iterator__ = function(b) {
-  this.cleanupKeysArray_();
-  var c = 0, d = this.keys_, e = this.map_, f = this.version_, g = this, h = new goog.iter.Iterator;
-  h.next = function() {
-    for(;;) {
-      if(f != g.version_) {
-        throw Error("The map has changed since the iterator was created");
-      }if(c >= d.length) {
-        throw goog.iter.StopIteration;
-      }var j = d[c++];
-      return b ? j : e[j]
-    }
-  };
-  return h
-};
-goog.structs.Map.hasKey_ = function(b, c) {
-  return Object.prototype.hasOwnProperty.call(b, c)
-};goog.structs.Set = function(b) {
-  this.map_ = new goog.structs.Map;
-  b && this.addAll(b)
-};
-goog.structs.Set.getKey_ = function(b) {
-  var c = typeof b;
-  return c == "object" && b || c == "function" ? "o" + goog.getUid(b) : c.substr(0, 1) + b
-};
-a = goog.structs.Set.prototype;
-a.getCount = function() {
-  return this.map_.getCount()
-};
-a.add = function(b) {
-  this.map_.set(goog.structs.Set.getKey_(b), b)
-};
-a.addAll = function(b) {
-  b = goog.structs.getValues(b);
-  for(var c = b.length, d = 0;d < c;d++) {
-    this.add(b[d])
-  }
-};
-a.removeAll = function(b) {
-  b = goog.structs.getValues(b);
-  for(var c = b.length, d = 0;d < c;d++) {
-    this.remove(b[d])
-  }
-};
-a.remove = function(b) {
-  return this.map_.remove(goog.structs.Set.getKey_(b))
-};
-a.clear = function() {
-  this.map_.clear()
-};
-a.isEmpty = function() {
-  return this.map_.isEmpty()
-};
-a.contains = function(b) {
-  return this.map_.containsKey(goog.structs.Set.getKey_(b))
-};
-a.containsAll = function(b) {
-  return goog.structs.every(b, this.contains, this)
-};
-a.intersection = function(b) {
-  var c = new goog.structs.Set;
-  b = goog.structs.getValues(b);
-  for(var d = 0;d < b.length;d++) {
-    var e = b[d];
-    this.contains(e) && c.add(e)
-  }return c
-};
-a.getValues = function() {
-  return this.map_.getValues()
-};
-a.clone = function() {
-  return new goog.structs.Set(this)
-};
-a.equals = function(b) {
-  return this.getCount() == goog.structs.getCount(b) && this.isSubsetOf(b)
-};
-a.isSubsetOf = function(b) {
-  var c = goog.structs.getCount(b);
-  if(this.getCount() > c) {
-    return false
-  }if(!(b instanceof goog.structs.Set) && c > 5) {
-    b = new goog.structs.Set(b)
-  }return goog.structs.every(this, function(d) {
-    return goog.structs.contains(b, d)
-  })
-};
-a.__iterator__ = function() {
-  return this.map_.__iterator__(false)
-};jchemhub.model = {};
-jchemhub.model.Atom = function(b, c, d, e, f, g) {
-  this.symbol = b;
-  this.coord = new goog.math.Coordinate(c, d);
-  this.bonds = new goog.structs.Set;
-  this.charge = goog.isDef(e) ? e : 0;
-  this.isotope = goog.isDef(g) ? g : 0;
-  this.aromatic = goog.isDef(f) ? f : false;
-  this.hybridization = null
-};
-jchemhub.model.Atom.prototype.countBonds = function() {
-  return this.bonds.getCount()
-};
-jchemhub.model.Atom.prototype.hydrogenCount = function() {
-  var b = jchemhub.resource.Covalence[this.symbol], c = goog.array.reduce(this.bonds.getValues(), function(e, f) {
-    return e + f.constructor.ORDER
-  }, 0), d = 0;
+  this.dragCanceled = !!i
+};
+goog.inherits(goog.fx.DragEvent, goog.events.Event);goog.editor = {};
+goog.editor.defines = {};
+goog.editor.defines.USE_CONTENTEDITABLE_IN_FIREFOX_3 = false;goog.userAgent.product = {};
+goog.userAgent.product.ASSUME_FIREFOX = false;
+goog.userAgent.product.ASSUME_CAMINO = false;
+goog.userAgent.product.ASSUME_IPHONE = false;
+goog.userAgent.product.ASSUME_IPAD = false;
+goog.userAgent.product.ASSUME_ANDROID = false;
+goog.userAgent.product.ASSUME_CHROME = false;
+goog.userAgent.product.ASSUME_SAFARI = false;
+goog.userAgent.product.PRODUCT_KNOWN_ = goog.userAgent.ASSUME_IE || goog.userAgent.ASSUME_OPERA || goog.userAgent.product.ASSUME_FIREFOX || goog.userAgent.product.ASSUME_CAMINO || goog.userAgent.product.ASSUME_IPHONE || goog.userAgent.product.ASSUME_IPAD || goog.userAgent.product.ASSUME_ANDROID || goog.userAgent.product.ASSUME_CHROME || goog.userAgent.product.ASSUME_SAFARI;
+goog.userAgent.product.init_ = function() {
+  goog.userAgent.product.detectedFirefox_ = false;
+  goog.userAgent.product.detectedCamino_ = false;
+  goog.userAgent.product.detectedIphone_ = false;
+  goog.userAgent.product.detectedIpad_ = false;
+  goog.userAgent.product.detectedAndroid_ = false;
+  goog.userAgent.product.detectedChrome_ = false;
+  goog.userAgent.product.detectedSafari_ = false;
+  var b = goog.userAgent.getUserAgentString();
   if(b) {
-    d = b - c + this.charge
-  }return d
-};
-jchemhub.model.Atom.Hybridizations = {S:0, SP1:1, SP2:2, SP3:3, PLANAR3:4, SP3D1:5, SP3D2:6, SP3D3:7, SP3D4:8, SP3D5:9};jchemhub.model.Bond = function(b, c) {
-  this.source = b;
-  this.target = c
-};jchemhub.model.SingleBond = function(b, c) {
-  jchemhub.model.Bond.call(this, b, c)
-};
-goog.inherits(jchemhub.model.SingleBond, jchemhub.model.Bond);
-jchemhub.model.SingleBond.ORDER = 1;jchemhub.model.SingleBondUp = function(b, c) {
-  jchemhub.model.SingleBond.call(this, b, c)
-};
-goog.inherits(jchemhub.model.SingleBondUp, jchemhub.model.SingleBond);
-jchemhub.model.SingleBondUp.ORDER = 1;jchemhub.model.SingleBondDown = function(b, c) {
-  jchemhub.model.SingleBond.call(this, b, c)
-};
-goog.inherits(jchemhub.model.SingleBondDown, jchemhub.model.SingleBond);
-jchemhub.model.SingleBondDown.ORDER = 1;jchemhub.model.SingleBondUpOrDown = function(b, c) {
-  jchemhub.model.SingleBond.call(this, b, c)
-};
-goog.inherits(jchemhub.model.SingleBondUpOrDown, jchemhub.model.SingleBond);
-jchemhub.model.SingleBondUpOrDown.ORDER = 1;jchemhub.model.DoubleBond = function(b, c) {
-  jchemhub.model.Bond.call(this, b, c)
-};
-goog.inherits(jchemhub.model.DoubleBond, jchemhub.model.Bond);
-jchemhub.model.DoubleBond.ORDER = 2;jchemhub.model.TripleBond = function(b, c) {
-  jchemhub.model.Bond.call(this, b, c)
-};
-goog.inherits(jchemhub.model.TripleBond, jchemhub.model.Bond);
-jchemhub.model.TripleBond.ORDER = 3;jchemhub.model.QuadrupleBond = function(b, c) {
-  jchemhub.model.Bond.call(this, b, c)
-};
-goog.inherits(jchemhub.model.QuadrupleBond, jchemhub.model.Bond);
-jchemhub.model.QuadrupleBond.ORDER = 4;jchemhub.model.Reaction = function() {
-  this.header = "";
-  this.reactants = [];
-  this.products = []
-};
-jchemhub.model.Reaction.prototype.addReactant = function(b) {
-  this.reactants.push(b)
-};
-jchemhub.model.Reaction.prototype.addProduct = function(b) {
-  this.products.push(b)
-};jchemhub.ring = {};
-jchemhub.ring.Ring = function(b, c) {
-  this.atoms = b;
-  this.bonds = c;
-  for(var d = c = 0, e = 0, f = b.length;e < f;e++) {
-    c += b[e].coord.x;
-    d += b[e].coord.y
-  }this.ringCenter = new goog.math.Coordinate(c / b.length, d / b.length)
-};jchemhub.ring.RingFinder = function() {
-};
-jchemhub.ring.RingFinder.findRings = function(b) {
-  var c = [];
-  graph = new jchemhub.ring.PathGraph(b);
-  for(var d = 0, e = b.countAtoms();d < e;d++) {
-    for(var f = graph.remove(b.getAtom(d)), g = 0;g < f.length;g++) {
-      edge = f[g];
-      atom_ring = edge.atoms;
-      c.push(atom_ring)
-    }
-  }goog.array.sort(c);
-  f = [];
-  d = 0;
-  for(e = c.length;d < e;d++) {
-    f.push(this.createRing(c[d], b))
-  }return f
-};
-jchemhub.ring.RingFinder.createRing = function(b, c) {
-  for(var d = [], e = 0, f = b.length - 1;e < f;e++) {
-    bond = c.findBond(b[e], b[e + 1]);
-    bond != null && d.push(bond)
-  }goog.array.removeAt(b, b.length - 1);
-  return new jchemhub.ring.Ring(b, d)
-};
-jchemhub.ring.PathGraph = function(b) {
-  this.edges = [];
-  this.atoms = [];
-  for(var c = 0, d = b.countBonds();c < d;c++) {
-    bond = b.getBond(c);
-    this.edges.push(new jchemhub.ring.PathEdge([bond.source, bond.target]))
-  }c = 0;
-  for(d = b.countAtoms();c < d;c++) {
-    this.atoms.push(b.getAtom(c))
-  }
-};
-jchemhub.ring.PathGraph.prototype.remove = function(b) {
-  var c = this.getEdges(b);
-  result = [];
-  for(var d = 0, e = c.length;d < e;d++) {
-    c[d].isCycle() && result.push(c[d])
-  }d = 0;
-  for(e = result.length;d < e;d++) {
-    goog.array.contains(c, result[d]) && goog.array.remove(c, result[d]);
-    goog.array.contains(this.edges, result[d]) && goog.array.remove(this.edges, result[d])
-  }newEdges = this.spliceEdges(c);
-  d = 0;
-  for(e = c.length;d < e;d++) {
-    goog.array.contains(this.edges, c[d]) && goog.array.remove(this.edges, c[d])
-  }d = 0;
-  for(e = newEdges.length;d < e;d++) {
-    goog.array.contains(this.edges, newEdges[d]) || this.edges.push(newEdges[d])
-  }goog.array.remove(this.atoms, b);
-  return result
-};
-jchemhub.ring.PathGraph.prototype.getEdges = function(b) {
-  for(var c = [], d = 0, e = this.edges.length;d < e;d++) {
-    edge = this.edges[d];
-    if(edge.isCycle()) {
-      goog.array.contains(edge.atoms, b) && c.push(edge)
+    if(b.indexOf("Firefox") != -1) {
+      goog.userAgent.product.detectedFirefox_ = true
     }else {
-      var f = edge.atoms.length - 1;
-      if(edge.atoms[0] == b || edge.atoms[f] == b) {
-        c.push(edge)
-      }
-    }
-  }return c
-};
-jchemhub.ring.PathGraph.prototype.spliceEdges = function(b) {
-  for(var c = [], d = 0, e = b.length;d < e;d++) {
-    for(var f = d + 1;f < e;f++) {
-      spliced = b[f].splice(b[d]);
-      spliced != null && c.push(spliced)
-    }
-  }return c
-};
-jchemhub.ring.PathEdge = function(b) {
-  this.atoms = b
-};
-jchemhub.ring.PathEdge.prototype.isCycle = function() {
-  var b = this.atoms.length - 1;
-  return this.atoms.length > 2 && this.atoms[0] == this.atoms[b]
-};
-jchemhub.ring.PathEdge.prototype.splice = function(b) {
-  intersection = this.getIntersection(b.atoms);
-  newAtoms = [];
-  for(var c = 0, d = this.atoms.length;c < d;c++) {
-    newAtoms.push(this.atoms[c])
-  }this.atoms[0] == intersection && newAtoms.reverse();
-  if(b.atoms[0] == intersection) {
-    c = 1;
-    for(d = b.atoms.length;c < d;c++) {
-      newAtoms.push(b.atoms[c])
-    }
-  }else {
-    for(c = b.atoms.length - 2;c >= 0;c--) {
-      newAtoms.push(b.atoms[c])
-    }
-  }if(!this.isRealPath(newAtoms)) {
-    return null
-  }return new jchemhub.ring.PathEdge(newAtoms)
-};
-jchemhub.ring.PathEdge.prototype.isRealPath = function(b) {
-  for(var c = 1, d = b.length - 1;c < d;c++) {
-    for(var e = 1;e < d;e++) {
-      if(c != e) {
-        if(b[c] == b[e]) {
-          return false
-        }
-      }
-    }
-  }return true
-};
-jchemhub.ring.PathEdge.prototype.getIntersection = function(b) {
-  var c = this.atoms.length - 1, d = b.length - 1;
-  if(this.atoms[c] == b[0] || this.atoms[c] == b[d]) {
-    return this.atoms[c]
-  }if(this.atoms[0] == b[0] || this.atoms[0] == b[d]) {
-    return this.atoms[0]
-  }throw"Couldn't splice - no intersection";
-};jchemhub.model.Molecule = function(b) {
-  this.bonds = [];
-  this.atoms = [];
-  this.name = b ? b : ""
-};
-a = jchemhub.model.Molecule.prototype;
-a.addBond = function(b) {
-  this.bonds.push(b);
-  b.source.bonds.add(b);
-  b.target.bonds.add(b)
-};
-a.getAtom = function(b) {
-  return this.atoms[b]
-};
-a.getBond = function(b) {
-  return this.bonds[b]
-};
-a.findBond = function(b, c) {
-  for(var d = 0, e = this.bonds.length;d < e;d++) {
-    var f = this.bonds[d];
-    if(b == f.source && c == f.target || c == f.source && b == f.target) {
-      return f
-    }
-  }return null
-};
-a.indexOfAtom = function(b) {
-  return goog.array.indexOf(this.atoms, b)
-};
-a.indexOfBond = function(b) {
-  return goog.array.indexOf(this.bonds, b)
-};
-a.removeAtom = function(b) {
-  var c;
-  if(b.constructor == Number) {
-    c = this.atoms[b]
-  }else {
-    if(b.constructor == jchemhub.model.Atom) {
-      c = b
-    }
-  }b = c.bonds.getValues();
-  var d = this.bonds;
-  goog.array.forEach(b, function(e) {
-    goog.array.remove(d, e)
-  });
-  c.bonds.clear();
-  goog.array.remove(this.atoms, c)
-};
-a.removeBond = function(b) {
-  var c;
-  if(b.constructor == Number) {
-    c = this.bonds[b]
-  }else {
-    if(b.constructor == jchemhub.model.Bond) {
-      c = b
-    }
-  }c.source.bonds.remove(c);
-  c.target.bonds.remove(c);
-  goog.array.remove(this.bonds, c)
-};
-a.countAtoms = function() {
-  return this.atoms.length
-};
-a.countBonds = function() {
-  return this.bonds.length
-};
-a.addAtom = function(b) {
-  this.atoms.push(b)
-};
-a.getRings = function() {
-  return jchemhub.ring.RingFinder.findRings(this)
-};jchemhub.model.AromaticBond = function(b, c) {
-  jchemhub.model.Bond.call(this, b, c)
-};
-goog.inherits(jchemhub.model.AromaticBond, jchemhub.model.Bond);
-jchemhub.model.AromaticBond.ORDER = 1.5;goog.json = {};
-goog.json.isValid_ = function(b) {
-  if(/^\s*$/.test(b)) {
-    return false
-  }return/^[\],:{}\s\u2028\u2029]*$/.test(b.replace(/\\["\\\/bfnrtu]/g, "@").replace(/"[^"\\\n\r\u2028\u2029\x00-\x08\x10-\x1f\x80-\x9f]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, "]").replace(/(?:^|:|,)(?:[\s\u2028\u2029]*\[)+/g, ""))
-};
-goog.json.parse = function(b) {
-  b = String(b);
-  if(goog.json.isValid_(b)) {
-    try {
-      return eval("(" + b + ")")
-    }catch(c) {
-    }
-  }throw Error("Invalid JSON string: " + b);
-};
-goog.json.unsafeParse = function(b) {
-  return eval("(" + b + ")")
-};
-goog.json.serialize = function(b) {
-  return(new goog.json.Serializer).serialize(b)
-};
-goog.json.Serializer = function() {
-};
-goog.json.Serializer.prototype.serialize = function(b) {
-  var c = [];
-  this.serialize_(b, c);
-  return c.join("")
-};
-goog.json.Serializer.prototype.serialize_ = function(b, c) {
-  switch(typeof b) {
-    case "string":
-      this.serializeString_(b, c);
-      break;
-    case "number":
-      this.serializeNumber_(b, c);
-      break;
-    case "boolean":
-      c.push(b);
-      break;
-    case "undefined":
-      c.push("null");
-      break;
-    case "object":
-      if(b == null) {
-        c.push("null");
-        break
-      }if(goog.isArray(b)) {
-        this.serializeArray_(b, c);
-        break
-      }this.serializeObject_(b, c);
-      break;
-    case "function":
-      break;
-    default:
-      throw Error("Unknown type: " + typeof b);
-  }
-};
-goog.json.Serializer.charToJsonCharCache_ = {'"':'\\"', "\\":"\\\\", "/":"\\/", "\u0008":"\\b", "\u000c":"\\f", "\n":"\\n", "\r":"\\r", "\t":"\\t", "\u000b":"\\u000b"};
-goog.json.Serializer.charsToReplace_ = /\uffff/.test("\uffff") ? /[\\\"\x00-\x1f\x7f-\uffff]/g : /[\\\"\x00-\x1f\x7f-\xff]/g;
-goog.json.Serializer.prototype.serializeString_ = function(b, c) {
-  c.push('"', b.replace(goog.json.Serializer.charsToReplace_, function(d) {
-    if(d in goog.json.Serializer.charToJsonCharCache_) {
-      return goog.json.Serializer.charToJsonCharCache_[d]
-    }var e = d.charCodeAt(0), f = "\\u";
-    if(e < 16) {
-      f += "000"
-    }else {
-      if(e < 256) {
-        f += "00"
+      if(b.indexOf("Camino") != -1) {
+        goog.userAgent.product.detectedCamino_ = true
       }else {
-        if(e < 4096) {
-          f += "0"
-        }
-      }
-    }return goog.json.Serializer.charToJsonCharCache_[d] = f + e.toString(16)
-  }), '"')
-};
-goog.json.Serializer.prototype.serializeNumber_ = function(b, c) {
-  c.push(isFinite(b) && !isNaN(b) ? b : "null")
-};
-goog.json.Serializer.prototype.serializeArray_ = function(b, c) {
-  var d = b.length;
-  c.push("[");
-  for(var e = "", f = 0;f < d;f++) {
-    c.push(e);
-    this.serialize_(b[f], c);
-    e = ","
-  }c.push("]")
-};
-goog.json.Serializer.prototype.serializeObject_ = function(b, c) {
-  c.push("{");
-  var d = "";
-  for(var e in b) {
-    if(b.hasOwnProperty(e)) {
-      var f = b[e];
-      if(typeof f != "function") {
-        c.push(d);
-        this.serializeString_(e, c);
-        c.push(":");
-        this.serialize_(f, c);
-        d = ","
-      }
-    }
-  }c.push("}")
-};jchemhub.io = {};
-jchemhub.io.json = {};
-jchemhub.io.json.BondType = {SINGLE_BOND:"SINGLE_BOND", DOUBLE_BOND:"DOUBLE_BOND", TRIPLE_BOND:"TRIPLE_BOND", QUADRUPLE_BOND:"QUADRUPLE_BOND", AROMATIC:"AROMATIC", SINGLE_OR_DOUBLE:"SINGLE_OR_DOUBLE", SINGLE_OR_AROMATIC:"SINGLE_OR_AROMATIC", DOUBLE_OR_AROMATIC:"DOUBLE_OR_AROMATIC", ANY:"ANY"};
-jchemhub.io.json.StereoType = {NOT_STEREO:"NOT_STEREO", SINGLE_BOND_UP:"SINGLE_BOND_UP", SINGLE_BOND_UP_OR_DOWN:"SINGLE_BOND_UP_OR_DOWN", SINGLE_BOND_DOWN:"SINGLE_BOND_DOWN"};
-jchemhub.io.json.getTypeCode = function(b) {
-  if(b instanceof jchemhub.model.SingleBond) {
-    return jchemhub.io.json.BondType.SINGLE_BOND
-  }if(b instanceof jchemhub.model.DoubleBond) {
-    return jchemhub.io.json.BondType.DOUBLE_BOND
-  }if(b instanceof jchemhub.model.TripleBond) {
-    return jchemhub.io.json.BondType.TRIPLE_BOND
-  }throw new Error("Invalid bond type [" + b + "]");
-};
-jchemhub.io.json.getStereoCode = function(b) {
-  if(b instanceof jchemhub.model.SingleBondUp) {
-    return jchemhub.io.json.StereoType.SINGLE_BOND_UP
-  }if(b instanceof jchemhub.model.SingleBondDown) {
-    return jchemhub.io.json.StereoType.SINGLE_BOND_DOWN
-  }if(b instanceof jchemhub.model.SingleBondUpOrDown) {
-    return jchemhub.io.json.StereoType.SINGLE_BOND_UP_OR_DOWN
-  }return jchemhub.io.json.StereoType.NOT_STEREO
-};
-jchemhub.io.json.createBond = function(b, c, d, e) {
-  switch(b) {
-    case jchemhub.io.json.BondType.SINGLE_BOND:
-      switch(c) {
-        case jchemhub.io.json.StereoType.NOT_STEREO:
-          return new jchemhub.model.SingleBond(d, e);
-        case jchemhub.io.json.StereoType.SINGLE_BOND_UP:
-          return new jchemhub.model.SingleBondUp(d, e);
-        case jchemhub.io.json.StereoType.SINGLE_BOND_UP_OR_DOWN:
-          return new jchemhub.model.SingleBondUpOrDown(d, e);
-        case jchemhub.io.json.StereoType.SINGLE_BOND_DOWN:
-          return new jchemhub.model.SingleBondDown(d, e);
-        default:
-          throw new Error("invalid bond type/stereo [" + b + "]/[" + c + "]");
-      }
-    ;
-    case jchemhub.io.json.BondType.DOUBLE_BOND:
-      return new jchemhub.model.DoubleBond(d, e);
-    case jchemhub.io.json.BondType.TRIPLE_BOND:
-      return new jchemhub.model.TripleBond(d, e);
-    case jchemhub.io.json.BondType.AROMATIC:
-      return new jchemhub.model.AromaticBond(d, e);
-    case jchemhub.io.json.BondType.SINGLE_OR_DOUBLE:
-    ;
-    case jchemhub.io.json.BondType.SINGLE_OR_AROMATIC:
-    ;
-    case jchemhub.io.json.BondType.DOUBLE_OR_AROMATIC:
-    ;
-    case jchemhub.io.json.BondType.ANY:
-    ;
-    default:
-      throw new Error("invalid bond type/stereo [" + b + "]/[" + c + "]");
-  }
-};
-jchemhub.io.json.readMolecule = function(b) {
-  b = b.constructor == String ? goog.json.parse(b) : b;
-  var c = new jchemhub.model.Molecule;
-  c.name = b.name;
-  goog.array.forEach(b.atoms, function(d) {
-    c.addAtom(new jchemhub.model.Atom(d.symbol, d.coord.x, d.coord.y, d.charge))
-  });
-  goog.array.forEach(b.bondindex, function(d) {
-    c.addBond(jchemhub.io.json.createBond(d.type, d.stereo, c.getAtom(d.source), c.getAtom(d.target)))
-  });
-  return c
-};
-jchemhub.io.json.writeMolecule = function(b) {
-  return(new goog.json.Serializer).serialize(jchemhub.io.json.moleculeToJson(b))
-};
-jchemhub.io.json.moleculeToJson = function(b) {
-  var c = goog.array.map(b.atoms, function(e) {
-    return{symbol:e.symbol, coord:{x:e.coord.x, y:e.coord.y}, charge:e.charge}
-  }), d = goog.array.map(b.bonds, function(e) {
-    var f = jchemhub.io.json.getTypeCode(e), g = jchemhub.io.json.getStereoCode(e);
-    return{source:b.indexOfAtom(e.source), target:b.indexOfAtom(e.target), type:f, stereo:g}
-  });
-  return{name:b.name, atoms:c, bondindex:d}
-};
-jchemhub.io.json.readReaction = function(b) {
-  b = b.constructor == String ? goog.json.parse(b) : b;
-  var c = new jchemhub.model.Reaction;
-  c.header = b.header;
-  c.reactants = goog.array.map(b.reactants, jchemhub.io.json.readMolecule);
-  c.products = goog.array.map(b.products, jchemhub.io.json.readMolecule);
-  return c
-};
-jchemhub.io.json.reactionToJson = function(b) {
-  var c = b.header, d = goog.array.map(b.reactants, jchemhub.io.json.moleculeToJson);
-  b = goog.array.map(b.products, jchemhub.io.json.moleculeToJson);
-  return{header:c, reactants:d, products:b}
-};
-jchemhub.io.json.writeReaction = function(b) {
-  return(new goog.json.Serializer).serialize(jchemhub.io.json.reactionToJson(b))
-};goog.debug.Error = function(b) {
-  this.stack = (new Error).stack || "";
-  if(b) {
-    this.message = String(b)
-  }
-};
-goog.inherits(goog.debug.Error, Error);
-goog.debug.Error.prototype.name = "CustomError";goog.asserts = {};
-goog.asserts.ENABLE_ASSERTS = goog.DEBUG;
-goog.asserts.AssertionError = function(b, c) {
-  c.unshift(b);
-  goog.debug.Error.call(this, goog.string.subs.apply(null, c));
-  c.shift();
-  this.messagePattern = b
-};
-goog.inherits(goog.asserts.AssertionError, goog.debug.Error);
-goog.asserts.AssertionError.prototype.name = "AssertionError";
-goog.asserts.doAssertFailure_ = function(b, c, d, e) {
-  var f = "Assertion failed";
-  if(d) {
-    f += ": " + d;
-    var g = e
-  }else {
-    if(b) {
-      f += ": " + b;
-      g = c
-    }
-  }throw new goog.asserts.AssertionError("" + f, g || []);
-};
-goog.asserts.assert = function(b, c) {
-  goog.asserts.ENABLE_ASSERTS && !b && goog.asserts.doAssertFailure_("", null, c, Array.prototype.slice.call(arguments, 2))
-};
-goog.asserts.fail = function(b) {
-  if(goog.asserts.ENABLE_ASSERTS) {
-    throw new goog.asserts.AssertionError("Failure" + (b ? ": " + b : ""), Array.prototype.slice.call(arguments, 1));
-  }
-};
-goog.asserts.assertNumber = function(b, c) {
-  goog.asserts.ENABLE_ASSERTS && !goog.isNumber(b) && goog.asserts.doAssertFailure_("Expected number but got %s.", [b], c, Array.prototype.slice.call(arguments, 2));
-  return b
-};
-goog.asserts.assertString = function(b, c) {
-  goog.asserts.ENABLE_ASSERTS && !goog.isString(b) && goog.asserts.doAssertFailure_("Expected string but got %s.", [b], c, Array.prototype.slice.call(arguments, 2));
-  return b
-};
-goog.asserts.assertFunction = function(b, c) {
-  goog.asserts.ENABLE_ASSERTS && !goog.isFunction(b) && goog.asserts.doAssertFailure_("Expected function but got %s.", [b], c, Array.prototype.slice.call(arguments, 2));
-  return b
-};
-goog.asserts.assertObject = function(b, c) {
-  goog.asserts.ENABLE_ASSERTS && !goog.isObject(b) && goog.asserts.doAssertFailure_("Expected object but got %s.", [b], c, Array.prototype.slice.call(arguments, 2));
-  return b
-};
-goog.asserts.assertArray = function(b, c) {
-  goog.asserts.ENABLE_ASSERTS && !goog.isArray(b) && goog.asserts.doAssertFailure_("Expected array but got %s.", [b], c, Array.prototype.slice.call(arguments, 2));
-  return b
-};
-goog.asserts.assertInstanceof = function(b, c, d) {
-  goog.asserts.ENABLE_ASSERTS && !(b instanceof c) && goog.asserts.doAssertFailure_("instanceof check failed.", null, d, Array.prototype.slice.call(arguments, 3))
-};goog.i18n = {};
-goog.i18n.DateTimeSymbols_en_ISO = {ERAS:["BC", "AD"], ERANAMES:["Before Christ", "Anno Domini"], NARROWMONTHS:["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], STANDALONENARROWMONTHS:["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], MONTHS:["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"], STANDALONEMONTHS:["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", 
-"November", "December"], SHORTMONTHS:["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], STANDALONESHORTMONTHS:["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], WEEKDAYS:["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], STANDALONEWEEKDAYS:["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], SHORTWEEKDAYS:["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], STANDALONESHORTWEEKDAYS:["Sun", 
-"Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], NARROWWEEKDAYS:["S", "M", "T", "W", "T", "F", "S"], STANDALONENARROWWEEKDAYS:["S", "M", "T", "W", "T", "F", "S"], SHORTQUARTERS:["Q1", "Q2", "Q3", "Q4"], QUARTERS:["1st quarter", "2nd quarter", "3rd quarter", "4th quarter"], AMPMS:["AM", "PM"], DATEFORMATS:["EEEE, y MMMM dd", "y MMMM d", "y MMM d", "yyyy-MM-dd"], TIMEFORMATS:["HH:mm:ss v", "HH:mm:ss z", "HH:mm:ss", "HH:mm"], AVAILABLEFORMATS:{Md:"M/d", MMMMd:"MMMM d", MMMd:"MMM d"}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 
-6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_ar = {ERAS:["\u0642.\u0645", "\u0645"], ERANAMES:["\u0642\u0628\u0644 \u0627\u0644\u0645\u064a\u0644\u0627\u062f", "\u0645\u064a\u0644\u0627\u062f\u064a"], NARROWMONTHS:["\u064a", "\u0641", "\u0645", "\u0623", "\u0648", "\u0646", "\u0644", "\u063a", "\u0633", "\u0643", "\u0628", "\u062f"], STANDALONENARROWMONTHS:["\u064a", "\u0641", "\u0645", "\u0623", "\u0648", "\u0646", "\u0644", "\u063a", "\u0633", "\u0643", "\u0628", "\u062f"], MONTHS:["\u064a\u0646\u0627\u064a\u0631", 
-"\u0641\u0628\u0631\u0627\u064a\u0631", "\u0645\u0627\u0631\u0633", "\u0623\u0628\u0631\u064a\u0644", "\u0645\u0627\u064a\u0648", "\u064a\u0648\u0646\u064a\u0648", "\u064a\u0648\u0644\u064a\u0648", "\u0623\u063a\u0633\u0637\u0633", "\u0633\u0628\u062a\u0645\u0628\u0631", "\u0623\u0643\u062a\u0648\u0628\u0631", "\u0646\u0648\u0641\u0645\u0628\u0631", "\u062f\u064a\u0633\u0645\u0628\u0631"], STANDALONEMONTHS:["\u064a\u0646\u0627\u064a\u0631", "\u0641\u0628\u0631\u0627\u064a\u0631", "\u0645\u0627\u0631\u0633", 
-"\u0623\u0628\u0631\u064a\u0644", "\u0645\u0627\u064a\u0648", "\u064a\u0648\u0646\u064a\u0648", "\u064a\u0648\u0644\u064a\u0648", "\u0623\u063a\u0633\u0637\u0633", "\u0633\u0628\u062a\u0645\u0628\u0631", "\u0623\u0643\u062a\u0648\u0628\u0631", "\u0646\u0648\u0641\u0645\u0628\u0631", "\u062f\u064a\u0633\u0645\u0628\u0631"], SHORTMONTHS:["\u064a\u0646\u0627\u064a\u0631", "\u0641\u0628\u0631\u0627\u064a\u0631", "\u0645\u0627\u0631\u0633", "\u0623\u0628\u0631\u064a\u0644", "\u0645\u0627\u064a\u0648", 
-"\u064a\u0648\u0646\u064a\u0648", "\u064a\u0648\u0644\u064a\u0648", "\u0623\u063a\u0633\u0637\u0633", "\u0633\u0628\u062a\u0645\u0628\u0631", "\u0623\u0643\u062a\u0648\u0628\u0631", "\u0646\u0648\u0641\u0645\u0628\u0631", "\u062f\u064a\u0633\u0645\u0628\u0631"], STANDALONESHORTMONTHS:["\u064a\u0646\u0627\u064a\u0631", "\u0641\u0628\u0631\u0627\u064a\u0631", "\u0645\u0627\u0631\u0633", "\u0623\u0628\u0631\u064a\u0644", "\u0645\u0627\u064a\u0648", "\u064a\u0648\u0646\u064a\u0648", "\u064a\u0648\u0644\u064a\u0648", 
-"\u0623\u063a\u0633\u0637\u0633", "\u0633\u0628\u062a\u0645\u0628\u0631", "\u0623\u0643\u062a\u0648\u0628\u0631", "\u0646\u0648\u0641\u0645\u0628\u0631", "\u062f\u064a\u0633\u0645\u0628\u0631"], WEEKDAYS:["\u0627\u0644\u0623\u062d\u062f", "\u0627\u0644\u0625\u062b\u0646\u064a\u0646", "\u0627\u0644\u062b\u0644\u0627\u062b\u0627\u0621", "\u0627\u0644\u0623\u0631\u0628\u0639\u0627\u0621", "\u0627\u0644\u062e\u0645\u064a\u0633", "\u0627\u0644\u062c\u0645\u0639\u0629", "\u0627\u0644\u0633\u0628\u062a"], 
-STANDALONEWEEKDAYS:["\u0627\u0644\u0623\u062d\u062f", "\u0627\u0644\u0625\u062b\u0646\u064a\u0646", "\u0627\u0644\u062b\u0644\u0627\u062b\u0627\u0621", "\u0627\u0644\u0623\u0631\u0628\u0639\u0627\u0621", "\u0627\u0644\u062e\u0645\u064a\u0633", "\u0627\u0644\u062c\u0645\u0639\u0629", "\u0627\u0644\u0633\u0628\u062a"], SHORTWEEKDAYS:["\u0623\u062d\u062f", "\u0625\u062b\u0646\u064a\u0646", "\u062b\u0644\u0627\u062b\u0627\u0621", "\u0623\u0631\u0628\u0639\u0627\u0621", "\u062e\u0645\u064a\u0633", "\u062c\u0645\u0639\u0629", 
-"\u0633\u0628\u062a"], STANDALONESHORTWEEKDAYS:["\u0623\u062d\u062f", "\u0625\u062b\u0646\u064a\u0646", "\u062b\u0644\u0627\u062b\u0627\u0621", "\u0623\u0631\u0628\u0639\u0627\u0621", "\u062e\u0645\u064a\u0633", "\u062c\u0645\u0639\u0629", "\u0633\u0628\u062a"], NARROWWEEKDAYS:["\u062d", "\u0646", "\u062b", "\u0631", "\u062e", "\u062c", "\u0633"], STANDALONENARROWWEEKDAYS:["\u062d", "\u0646", "\u062b", "\u0631", "\u062e", "\u062c", "\u0633"], SHORTQUARTERS:["\u0627\u0644\u0631\u0628\u0639 \u0627\u0644\u0623\u0648\u0644", 
-"\u0627\u0644\u0631\u0628\u0639 \u0627\u0644\u062b\u0627\u0646\u064a", "\u0627\u0644\u0631\u0628\u0639 \u0627\u0644\u062b\u0627\u0644\u062b", "\u0627\u0644\u0631\u0628\u0639 \u0627\u0644\u0631\u0627\u0628\u0639"], QUARTERS:["\u0627\u0644\u0631\u0628\u0639 \u0627\u0644\u0623\u0648\u0644", "\u0627\u0644\u0631\u0628\u0639 \u0627\u0644\u062b\u0627\u0646\u064a", "\u0627\u0644\u0631\u0628\u0639 \u0627\u0644\u062b\u0627\u0644\u062b", "\u0627\u0644\u0631\u0628\u0639 \u0627\u0644\u0631\u0627\u0628\u0639"], 
-AMPMS:["\u0635", "\u0645"], DATEFORMATS:["EEEE\u060c d MMMM\u060c y", "d MMMM\u060c y", "dd/MM/yyyy", "d/M/yyyy"], TIMEFORMATS:["zzzz h:mm:ss a", "z h:mm:ss a", "h:mm:ss a", "h:mm a"], AVAILABLEFORMATS:{Md:"d/M", MMMMd:"d MMMM", MMMd:"d MMM"}, FIRSTDAYOFWEEK:5, WEEKENDRANGE:[4, 5], FIRSTWEEKCUTOFFDAY:1};
-goog.i18n.DateTimeSymbols_bg = {ERAS:["\u043f\u0440. \u043d. \u0435.", "\u043e\u0442 \u043d. \u0435."], ERANAMES:["\u043f\u0440.\u0425\u0440.", "\u0441\u043b.\u0425\u0440."], NARROWMONTHS:["\u044f", "\u0444", "\u043c", "\u0430", "\u043c", "\u044e", "\u044e", "\u0430", "\u0441", "\u043e", "\u043d", "\u0434"], STANDALONENARROWMONTHS:["\u044f", "\u0444", "\u043c", "\u0430", "\u043c", "\u044e", "\u044e", "\u0430", "\u0441", "\u043e", "\u043d", "\u0434"], MONTHS:["\u044f\u043d\u0443\u0430\u0440\u0438", 
-"\u0444\u0435\u0432\u0440\u0443\u0430\u0440\u0438", "\u043c\u0430\u0440\u0442", "\u0430\u043f\u0440\u0438\u043b", "\u043c\u0430\u0439", "\u044e\u043d\u0438", "\u044e\u043b\u0438", "\u0430\u0432\u0433\u0443\u0441\u0442", "\u0441\u0435\u043f\u0442\u0435\u043c\u0432\u0440\u0438", "\u043e\u043a\u0442\u043e\u043c\u0432\u0440\u0438", "\u043d\u043e\u0435\u043c\u0432\u0440\u0438", "\u0434\u0435\u043a\u0435\u043c\u0432\u0440\u0438"], STANDALONEMONTHS:["\u044f\u043d\u0443\u0430\u0440\u0438", "\u0444\u0435\u0432\u0440\u0443\u0430\u0440\u0438", 
-"\u043c\u0430\u0440\u0442", "\u0430\u043f\u0440\u0438\u043b", "\u043c\u0430\u0439", "\u044e\u043d\u0438", "\u044e\u043b\u0438", "\u0430\u0432\u0433\u0443\u0441\u0442", "\u0441\u0435\u043f\u0442\u0435\u043c\u0432\u0440\u0438", "\u043e\u043a\u0442\u043e\u043c\u0432\u0440\u0438", "\u043d\u043e\u0435\u043c\u0432\u0440\u0438", "\u0434\u0435\u043a\u0435\u043c\u0432\u0440\u0438"], SHORTMONTHS:["\u044f\u043d.", "\u0444\u0435\u0432\u0440.", "\u043c\u0430\u0440\u0442", "\u0430\u043f\u0440.", "\u043c\u0430\u0439", 
-"\u044e\u043d\u0438", "\u044e\u043b\u0438", "\u0430\u0432\u0433.", "\u0441\u0435\u043f\u0442.", "\u043e\u043a\u0442.", "\u043d\u043e\u0435\u043c.", "\u0434\u0435\u043a."], STANDALONESHORTMONTHS:["\u044f\u043d.", "\u0444\u0435\u0432\u0440.", "\u043c\u0430\u0440\u0442", "\u0430\u043f\u0440.", "\u043c\u0430\u0439", "\u044e\u043d\u0438", "\u044e\u043b\u0438", "\u0430\u0432\u0433.", "\u0441\u0435\u043f\u0442.", "\u043e\u043a\u0442.", "\u043d\u043e\u0435\u043c.", "\u0434\u0435\u043a."], WEEKDAYS:["\u043d\u0435\u0434\u0435\u043b\u044f", 
-"\u043f\u043e\u043d\u0435\u0434\u0435\u043b\u043d\u0438\u043a", "\u0432\u0442\u043e\u0440\u043d\u0438\u043a", "\u0441\u0440\u044f\u0434\u0430", "\u0447\u0435\u0442\u0432\u044a\u0440\u0442\u044a\u043a", "\u043f\u0435\u0442\u044a\u043a", "\u0441\u044a\u0431\u043e\u0442\u0430"], STANDALONEWEEKDAYS:["\u043d\u0435\u0434\u0435\u043b\u044f", "\u043f\u043e\u043d\u0435\u0434\u0435\u043b\u043d\u0438\u043a", "\u0432\u0442\u043e\u0440\u043d\u0438\u043a", "\u0441\u0440\u044f\u0434\u0430", "\u0447\u0435\u0442\u0432\u044a\u0440\u0442\u044a\u043a", 
-"\u043f\u0435\u0442\u044a\u043a", "\u0441\u044a\u0431\u043e\u0442\u0430"], SHORTWEEKDAYS:["\u043d\u0434", "\u043f\u043d", "\u0432\u0442", "\u0441\u0440", "\u0447\u0442", "\u043f\u0442", "\u0441\u0431"], STANDALONESHORTWEEKDAYS:["\u043d\u0434", "\u043f\u043d", "\u0432\u0442", "\u0441\u0440", "\u0447\u0442", "\u043f\u0442", "\u0441\u0431"], NARROWWEEKDAYS:["\u043d", "\u043f", "\u0432", "\u0441", "\u0447", "\u043f", "\u0441"], STANDALONENARROWWEEKDAYS:["\u043d", "\u043f", "\u0432", "\u0441", "\u0447", 
-"\u043f", "\u0441"], SHORTQUARTERS:["I \u0442\u0440\u0438\u043c.", "II \u0442\u0440\u0438\u043c.", "III \u0442\u0440\u0438\u043c.", "IV \u0442\u0440\u0438\u043c."], QUARTERS:["1-\u0432\u043e \u0442\u0440\u0438\u043c\u0435\u0441\u0435\u0447\u0438\u0435", "2-\u0440\u043e \u0442\u0440\u0438\u043c\u0435\u0441\u0435\u0447\u0438\u0435", "3-\u0442\u043e \u0442\u0440\u0438\u043c\u0435\u0441\u0435\u0447\u0438\u0435", "4-\u0442\u043e \u0442\u0440\u0438\u043c\u0435\u0441\u0435\u0447\u0438\u0435"], AMPMS:["\u043f\u0440. \u043e\u0431.", 
-"\u0441\u043b. \u043e\u0431."], DATEFORMATS:["dd MMMM y, EEEE", "dd MMMM y", "dd.MM.yyyy", "dd.MM.yy"], TIMEFORMATS:["HH:mm:ss zzzz", "HH:mm:ss z", "HH:mm:ss", "HH:mm"], AVAILABLEFORMATS:{Md:"M-d", MMMMd:"d MMMM", MMMd:"MMM d"}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_bn = {ERAS:["\u0996\u09c3\u09b7\u09cd\u099f\u09aa\u09c2\u09b0\u09cd\u09ac", "\u0996\u09c3\u09b7\u09cd\u099f\u09be\u09ac\u09cd\u09a6"], ERANAMES:["\u0996\u09c3\u09b7\u09cd\u099f\u09aa\u09c2\u09b0\u09cd\u09ac", "\u0996\u09c3\u09b7\u09cd\u099f\u09be\u09ac\u09cd\u09a6"], NARROWMONTHS:["\u099c\u09be", "\u09ab\u09c7", "\u09ae\u09be", "\u098f", "\u09ae\u09c7", "\u099c\u09c1\u09a8", "\u099c\u09c1", "\u0986", "\u09b8\u09c7", "\u0985", "\u09a8", "\u09a1\u09bf"], STANDALONENARROWMONTHS:["\u099c\u09be", 
-"\u09ab\u09c7", "\u09ae\u09be", "\u098f", "\u09ae\u09c7", "\u099c\u09c1\u09a8", "\u099c\u09c1", "\u0986", "\u09b8\u09c7", "\u0985", "\u09a8", "\u09a1\u09bf"], MONTHS:["\u099c\u09be\u09a8\u09c1\u09af\u09bc\u09be\u09b0\u09c0", "\u09ab\u09c7\u09ac\u09cd\u09b0\u09c1\u09af\u09bc\u09be\u09b0\u09c0", "\u09ae\u09be\u09b0\u09cd\u099a", "\u098f\u09aa\u09cd\u09b0\u09bf\u09b2", "\u09ae\u09c7", "\u099c\u09c1\u09a8", "\u099c\u09c1\u09b2\u09be\u0987", "\u0986\u0997\u09b8\u09cd\u099f", "\u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0", 
-"\u0985\u0995\u09cd\u099f\u09cb\u09ac\u09b0", "\u09a8\u09ad\u09c7\u09ae\u09cd\u09ac\u09b0", "\u09a1\u09bf\u09b8\u09c7\u09ae\u09cd\u09ac\u09b0"], STANDALONEMONTHS:["\u099c\u09be\u09a8\u09c1\u09af\u09bc\u09be\u09b0\u09c0", "\u09ab\u09c7\u09ac\u09cd\u09b0\u09c1\u09af\u09bc\u09be\u09b0\u09c0", "\u09ae\u09be\u09b0\u09cd\u099a", "\u098f\u09aa\u09cd\u09b0\u09bf\u09b2", "\u09ae\u09c7", "\u099c\u09c1\u09a8", "\u099c\u09c1\u09b2\u09be\u0987", "\u0986\u0997\u09b8\u09cd\u099f", "\u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0", 
-"\u0985\u0995\u09cd\u099f\u09cb\u09ac\u09b0", "\u09a8\u09ad\u09c7\u09ae\u09cd\u09ac\u09b0", "\u09a1\u09bf\u09b8\u09c7\u09ae\u09cd\u09ac\u09b0"], SHORTMONTHS:["\u099c\u09be\u09a8\u09c1\u09af\u09bc\u09be\u09b0\u09c0", "\u09ab\u09c7\u09ac\u09cd\u09b0\u09c1\u09af\u09bc\u09be\u09b0\u09c0", "\u09ae\u09be\u09b0\u09cd\u099a", "\u098f\u09aa\u09cd\u09b0\u09bf\u09b2", "\u09ae\u09c7", "\u099c\u09c1\u09a8", "\u099c\u09c1\u09b2\u09be\u0987", "\u0986\u0997\u09b8\u09cd\u099f", "\u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0", 
-"\u0985\u0995\u09cd\u099f\u09cb\u09ac\u09b0", "\u09a8\u09ad\u09c7\u09ae\u09cd\u09ac\u09b0", "\u09a1\u09bf\u09b8\u09c7\u09ae\u09cd\u09ac\u09b0"], STANDALONESHORTMONTHS:["\u099c\u09be\u09a8\u09c1\u09af\u09bc\u09be\u09b0\u09c0", "\u09ab\u09c7\u09ac\u09cd\u09b0\u09c1\u09af\u09bc\u09be\u09b0\u09c0", "\u09ae\u09be\u09b0\u09cd\u099a", "\u098f\u09aa\u09cd\u09b0\u09bf\u09b2", "\u09ae\u09c7", "\u099c\u09c1\u09a8", "\u099c\u09c1\u09b2\u09be\u0987", "\u0986\u0997\u09b8\u09cd\u099f", "\u09b8\u09c7\u09aa\u09cd\u099f\u09c7\u09ae\u09cd\u09ac\u09b0", 
-"\u0985\u0995\u09cd\u099f\u09cb\u09ac\u09b0", "\u09a8\u09ad\u09c7\u09ae\u09cd\u09ac\u09b0", "\u09a1\u09bf\u09b8\u09c7\u09ae\u09cd\u09ac\u09b0"], WEEKDAYS:["\u09b0\u09ac\u09bf\u09ac\u09be\u09b0", "\u09b8\u09cb\u09ae\u09ac\u09be\u09b0", "\u09ae\u0999\u09cd\u0997\u09b2\u09ac\u09be\u09b0", "\u09ac\u09c1\u09a7\u09ac\u09be\u09b0", "\u09ac\u09c3\u09b9\u09b7\u09cd\u09aa\u09a4\u09bf\u09ac\u09be\u09b0", "\u09b6\u09c1\u0995\u09cd\u09b0\u09ac\u09be\u09b0", "\u09b6\u09a8\u09bf\u09ac\u09be\u09b0"], STANDALONEWEEKDAYS:["\u09b0\u09ac\u09bf\u09ac\u09be\u09b0", 
-"\u09b8\u09cb\u09ae\u09ac\u09be\u09b0", "\u09ae\u0999\u09cd\u0997\u09b2\u09ac\u09be\u09b0", "\u09ac\u09c1\u09a7\u09ac\u09be\u09b0", "\u09ac\u09c3\u09b9\u09b7\u09cd\u09aa\u09a4\u09bf\u09ac\u09be\u09b0", "\u09b6\u09c1\u0995\u09cd\u09b0\u09ac\u09be\u09b0", "\u09b6\u09a8\u09bf\u09ac\u09be\u09b0"], SHORTWEEKDAYS:["\u09b0\u09ac\u09bf", "\u09b8\u09cb\u09ae", "\u09ae\u0999\u09cd\u0997\u09b2", "\u09ac\u09c1\u09a7", "\u09ac\u09c3\u09b9\u09b8\u09cd\u09aa\u09a4\u09bf", "\u09b6\u09c1\u0995\u09cd\u09b0", "\u09b6\u09a8\u09bf"], 
-STANDALONESHORTWEEKDAYS:["\u09b0\u09ac\u09bf", "\u09b8\u09cb\u09ae", "\u09ae\u0999\u09cd\u0997\u09b2", "\u09ac\u09c1\u09a7", "\u09ac\u09c3\u09b9\u09b8\u09cd\u09aa\u09a4\u09bf", "\u09b6\u09c1\u0995\u09cd\u09b0", "\u09b6\u09a8\u09bf"], NARROWWEEKDAYS:["\u09b0", "\u09b8\u09cb", "\u09ae", "\u09ac\u09c1", "\u09ac\u09c3", "\u09b6\u09c1", "\u09b6"], STANDALONENARROWWEEKDAYS:["\u09b0", "\u09b8\u09cb", "\u09ae", "\u09ac\u09c1", "\u09ac\u09c3", "\u09b6\u09c1", "\u09b6"], SHORTQUARTERS:["\u099a\u09a4\u09c1\u09b0\u09cd\u09a5\u09be\u0982\u09b6 \u09e7", 
-"\u099a\u09a4\u09c1\u09b0\u09cd\u09a5\u09be\u0982\u09b6 \u09e8", "\u099a\u09a4\u09c1\u09b0\u09cd\u09a5\u09be\u0982\u09b6 \u09e9", "\u099a\u09a4\u09c1\u09b0\u09cd\u09a5\u09be\u0982\u09b6 \u09ea"], QUARTERS:["\u09aa\u09cd\u09b0\u09a5\u09ae \u099a\u09a4\u09c1\u09b0\u09cd\u09a5\u09be\u0982\u09b6", "\u09a6\u09cd\u09ac\u09bf\u09a4\u09c0\u09af\u09bc \u099a\u09a4\u09c1\u09b0\u09cd\u09a5\u09be\u0982\u09b6", "\u09a4\u09c3\u09a4\u09c0\u09af\u09bc \u099a\u09a4\u09c1\u09b0\u09cd\u09a5\u09be\u0982\u09b6", "\u099a\u09a4\u09c1\u09b0\u09cd\u09a5 \u099a\u09a4\u09c1\u09b0\u09cd\u09a5\u09be\u0982\u09b6"], 
-AMPMS:["am", "pm"], DATEFORMATS:["EEEE, d MMMM, y", "d MMMM, y", "d MMM, y", "d/M/yy"], TIMEFORMATS:["h:mm:ss a zzzz", "h:mm:ss a z", "h:mm:ss a", "h:mm a"], AVAILABLEFORMATS:{Md:"d/M", MMMMd:"d MMMM", MMMd:"d MMM"}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_ca = {ERAS:["aC", "dC"], ERANAMES:["aC", "dC"], NARROWMONTHS:["g", "f", "m", "a", "m", "j", "j", "a", "s", "o", "n", "d"], STANDALONENARROWMONTHS:["g", "f", "m", "a", "m", "j", "j", "a", "s", "o", "n", "d"], MONTHS:["de gener", "de febrer", "de mar\u00e7", "d\u2019abril", "de maig", "de juny", "de juliol", "d\u2019agost", "de setembre", "d\u2019octubre", "de novembre", "de desembre"], STANDALONEMONTHS:["gener", "febrer", "mar\u00e7", "abril", "maig", "juny", "juliol", "agost", 
-"setembre", "octubre", "novembre", "desembre"], SHORTMONTHS:["gen.", "febr.", "mar\u00e7", "abr.", "maig", "juny", "jul.", "ag.", "set.", "oct.", "nov.", "des."], STANDALONESHORTMONTHS:["gen.", "febr.", "mar\u00e7", "abr.", "maig", "juny", "jul.", "ag.", "set.", "oct.", "nov.", "des."], WEEKDAYS:["diumenge", "dilluns", "dimarts", "dimecres", "dijous", "divendres", "dissabte"], STANDALONEWEEKDAYS:["diumenge", "dilluns", "dimarts", "dimecres", "dijous", "divendres", "dissabte"], SHORTWEEKDAYS:["dg.", 
-"dl.", "dt.", "dc.", "dj.", "dv.", "ds."], STANDALONESHORTWEEKDAYS:["dg", "dl", "dt", "dc", "dj", "dv", "ds"], NARROWWEEKDAYS:["g", "l", "t", "c", "j", "v", "s"], STANDALONENARROWWEEKDAYS:["g", "l", "t", "c", "j", "v", "s"], SHORTQUARTERS:["1T", "2T", "3T", "4T"], QUARTERS:["1r trimestre", "2n trimestre", "3r trimestre", "4t trimestre"], AMPMS:["a.m.", "p.m."], DATEFORMATS:["EEEE d MMMM 'de' y", "d MMMM 'de' y", "dd/MM/yyyy", "dd/MM/yy"], TIMEFORMATS:["H:mm:ss zzzz", "H:mm:ss z", "H:mm:ss", "H:mm"], 
-AVAILABLEFORMATS:{Md:"d/M", MMMMd:"d MMMM", MMMd:"d MMM"}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_cs = {ERAS:["p\u0159.Kr.", "po Kr."], ERANAMES:["p\u0159.Kr.", "po Kr."], NARROWMONTHS:["l", "\u00fa", "b", "d", "k", "\u010d", "\u010d", "s", "z", "\u0159", "l", "p"], STANDALONENARROWMONTHS:["l", "\u00fa", "b", "d", "k", "\u010d", "\u010d", "s", "z", "\u0159", "l", "p"], MONTHS:["ledna", "\u00fanora", "b\u0159ezna", "dubna", "kv\u011btna", "\u010dervna", "\u010dervence", "srpna", "z\u00e1\u0159\u00ed", "\u0159\u00edjna", "listopadu", "prosince"], STANDALONEMONTHS:["leden", 
-"\u00fanor", "b\u0159ezen", "duben", "kv\u011bten", "\u010derven", "\u010dervenec", "srpen", "z\u00e1\u0159\u00ed", "\u0159\u00edjen", "listopad", "prosinec"], SHORTMONTHS:["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"], STANDALONESHORTMONTHS:["1.", "2.", "3.", "4.", "5.", "6.", "7.", "8.", "9.", "10.", "11.", "12."], WEEKDAYS:["ned\u011ble", "pond\u011bl\u00ed", "\u00fater\u00fd", "st\u0159eda", "\u010dtvrtek", "p\u00e1tek", "sobota"], STANDALONEWEEKDAYS:["ned\u011ble", "pond\u011bl\u00ed", 
-"\u00fater\u00fd", "st\u0159eda", "\u010dtvrtek", "p\u00e1tek", "sobota"], SHORTWEEKDAYS:["ne", "po", "\u00fat", "st", "\u010dt", "p\u00e1", "so"], STANDALONESHORTWEEKDAYS:["ne", "po", "\u00fat", "st", "\u010dt", "p\u00e1", "so"], NARROWWEEKDAYS:["N", "P", "\u00da", "S", "\u010c", "P", "S"], STANDALONENARROWWEEKDAYS:["N", "P", "\u00da", "S", "\u010c", "P", "S"], SHORTQUARTERS:["Q1", "Q2", "Q3", "Q4"], QUARTERS:["1. \u010dtvrtlet\u00ed", "2. \u010dtvrtlet\u00ed", "3. \u010dtvrtlet\u00ed", "4. \u010dtvrtlet\u00ed"], 
-AMPMS:["dop.", "odp."], DATEFORMATS:["EEEE, d. MMMM y", "d. MMMM y", "d.M.yyyy", "d.M.yy"], TIMEFORMATS:["HH:mm:ss zzzz", "HH:mm:ss z", "H:mm:ss", "H:mm"], AVAILABLEFORMATS:{Md:"d.M", MMMMd:"d. MMMM", MMMd:"MMM d"}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_da = {ERAS:["f.Kr.", "e.Kr."], ERANAMES:["f.Kr.", "e.Kr."], NARROWMONTHS:["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], STANDALONENARROWMONTHS:["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], MONTHS:["januar", "februar", "marts", "april", "maj", "juni", "juli", "august", "september", "oktober", "november", "december"], STANDALONEMONTHS:["januar", "februar", "marts", "april", "maj", "juni", "juli", "august", "september", "oktober", "november", 
-"december"], SHORTMONTHS:["jan.", "feb.", "mar.", "apr.", "maj", "jun.", "jul.", "aug.", "sep.", "okt.", "nov.", "dec."], STANDALONESHORTMONTHS:["jan", "feb", "mar", "apr", "maj", "jun", "jul", "aug", "sep", "okt", "nov", "dec"], WEEKDAYS:["s\u00f8ndag", "mandag", "tirsdag", "onsdag", "torsdag", "fredag", "l\u00f8rdag"], STANDALONEWEEKDAYS:["s\u00f8ndag", "mandag", "tirsdag", "onsdag", "torsdag", "fredag", "l\u00f8rdag"], SHORTWEEKDAYS:["s\u00f8n", "man", "tir", "ons", "tor", "fre", "l\u00f8r"], 
-STANDALONESHORTWEEKDAYS:["s\u00f8n", "man", "tir", "ons", "tor", "fre", "l\u00f8r"], NARROWWEEKDAYS:["S", "M", "T", "O", "T", "F", "L"], STANDALONENARROWWEEKDAYS:["S", "M", "T", "O", "T", "F", "L"], SHORTQUARTERS:["K1", "K2", "K3", "K4"], QUARTERS:["1. kvartal", "2. kvartal", "3. kvartal", "4. kvartal"], AMPMS:["f.m.", "e.m."], DATEFORMATS:["EEEE 'den' d. MMMM y", "d. MMM y", "dd/MM/yyyy", "dd/MM/yy"], TIMEFORMATS:["HH.mm.ss zzzz", "HH:mm:ss z", "HH.mm.ss", "HH.mm"], AVAILABLEFORMATS:{Md:"d/M", MMMMd:"d. MMMM", 
-MMMd:"d. MMM"}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_de = {ERAS:["v. Chr.", "n. Chr."], ERANAMES:["v. Chr.", "n. Chr."], NARROWMONTHS:["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], STANDALONENARROWMONTHS:["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], MONTHS:["Januar", "Februar", "M\u00e4rz", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"], STANDALONEMONTHS:["Januar", "Februar", "M\u00e4rz", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", 
-"November", "Dezember"], SHORTMONTHS:["Jan", "Feb", "M\u00e4r", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"], STANDALONESHORTMONTHS:["Jan", "Feb", "M\u00e4r", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"], WEEKDAYS:["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"], STANDALONEWEEKDAYS:["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"], SHORTWEEKDAYS:["So.", "Mo.", "Di.", "Mi.", "Do.", "Fr.", "Sa."], STANDALONESHORTWEEKDAYS:["So.", 
-"Mo.", "Di.", "Mi.", "Do.", "Fr.", "Sa."], NARROWWEEKDAYS:["S", "M", "D", "M", "D", "F", "S"], STANDALONENARROWWEEKDAYS:["S", "M", "D", "M", "D", "F", "S"], SHORTQUARTERS:["Q1", "Q2", "Q3", "Q4"], QUARTERS:["1. Quartal", "2. Quartal", "3. Quartal", "4. Quartal"], AMPMS:["vorm.", "nachm."], DATEFORMATS:["EEEE, d. MMMM y", "d. MMMM y", "dd.MM.yyyy", "dd.MM.yy"], TIMEFORMATS:["HH:mm:ss zzzz", "HH:mm:ss z", "HH:mm:ss", "HH:mm"], AVAILABLEFORMATS:{Md:"d.M.", MMMMd:"d. MMMM", MMMd:"d. MMM"}, FIRSTDAYOFWEEK:0, 
-WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_de_AT = {ERAS:["v. Chr.", "n. Chr."], ERANAMES:["v. Chr.", "n. Chr."], NARROWMONTHS:["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], STANDALONENARROWMONTHS:["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], MONTHS:["J\u00e4nner", "Februar", "M\u00e4rz", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"], STANDALONEMONTHS:["J\u00e4nner", "Februar", "M\u00e4rz", "April", "Mai", "Juni", "Juli", "August", "September", 
-"Oktober", "November", "Dezember"], SHORTMONTHS:["J\u00e4n", "Feb", "M\u00e4r", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"], STANDALONESHORTMONTHS:["J\u00e4n", "Feb", "M\u00e4r", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"], WEEKDAYS:["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"], STANDALONEWEEKDAYS:["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"], SHORTWEEKDAYS:["So.", "Mo.", "Di.", "Mi.", "Do.", 
-"Fr.", "Sa."], STANDALONESHORTWEEKDAYS:["So.", "Mo.", "Di.", "Mi.", "Do.", "Fr.", "Sa."], NARROWWEEKDAYS:["S", "M", "D", "M", "D", "F", "S"], STANDALONENARROWWEEKDAYS:["S", "M", "D", "M", "D", "F", "S"], SHORTQUARTERS:["Q1", "Q2", "Q3", "Q4"], QUARTERS:["1. Quartal", "2. Quartal", "3. Quartal", "4. Quartal"], AMPMS:["vorm.", "nachm."], DATEFORMATS:["EEEE, dd. MMMM y", "dd. MMMM y", "dd.MM.yyyy", "dd.MM.yy"], TIMEFORMATS:["HH:mm:ss zzzz", "HH:mm:ss z", "HH:mm:ss", "HH:mm"], AVAILABLEFORMATS:{Md:"d.M.", 
-MMMMd:"d. MMMM", MMMd:"d. MMM"}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_de_CH = goog.i18n.DateTimeSymbols_de;
-goog.i18n.DateTimeSymbols_el = {ERAS:["\u03c0.\u03a7.", "\u03bc.\u03a7."], ERANAMES:["\u03c0.\u03a7.", "\u03bc.\u03a7."], NARROWMONTHS:["\u0399", "\u03a6", "\u039c", "\u0391", "\u039c", "\u0399", "\u0399", "\u0391", "\u03a3", "\u039f", "\u039d", "\u0394"], STANDALONENARROWMONTHS:["\u0399", "\u03a6", "\u039c", "\u0391", "\u039c", "\u0399", "\u0399", "\u0391", "\u03a3", "\u039f", "\u039d", "\u0394"], MONTHS:["\u0399\u03b1\u03bd\u03bf\u03c5\u03b1\u03c1\u03af\u03bf\u03c5", "\u03a6\u03b5\u03b2\u03c1\u03bf\u03c5\u03b1\u03c1\u03af\u03bf\u03c5", 
-"\u039c\u03b1\u03c1\u03c4\u03af\u03bf\u03c5", "\u0391\u03c0\u03c1\u03b9\u03bb\u03af\u03bf\u03c5", "\u039c\u03b1\u0390\u03bf\u03c5", "\u0399\u03bf\u03c5\u03bd\u03af\u03bf\u03c5", "\u0399\u03bf\u03c5\u03bb\u03af\u03bf\u03c5", "\u0391\u03c5\u03b3\u03bf\u03cd\u03c3\u03c4\u03bf\u03c5", "\u03a3\u03b5\u03c0\u03c4\u03b5\u03bc\u03b2\u03c1\u03af\u03bf\u03c5", "\u039f\u03ba\u03c4\u03c9\u03b2\u03c1\u03af\u03bf\u03c5", "\u039d\u03bf\u03b5\u03bc\u03b2\u03c1\u03af\u03bf\u03c5", "\u0394\u03b5\u03ba\u03b5\u03bc\u03b2\u03c1\u03af\u03bf\u03c5"], 
-STANDALONEMONTHS:["\u0399\u03b1\u03bd\u03bf\u03c5\u03ac\u03c1\u03b9\u03bf\u03c2", "\u03a6\u03b5\u03b2\u03c1\u03bf\u03c5\u03ac\u03c1\u03b9\u03bf\u03c2", "\u039c\u03ac\u03c1\u03c4\u03b9\u03bf\u03c2", "\u0391\u03c0\u03c1\u03af\u03bb\u03b9\u03bf\u03c2", "\u039c\u03ac\u03b9\u03bf\u03c2", "\u0399\u03bf\u03cd\u03bd\u03b9\u03bf\u03c2", "\u0399\u03bf\u03cd\u03bb\u03b9\u03bf\u03c2", "\u0391\u03cd\u03b3\u03bf\u03c5\u03c3\u03c4\u03bf\u03c2", "\u03a3\u03b5\u03c0\u03c4\u03ad\u03bc\u03b2\u03c1\u03b9\u03bf\u03c2", 
-"\u039f\u03ba\u03c4\u03ce\u03b2\u03c1\u03b9\u03bf\u03c2", "\u039d\u03bf\u03ad\u03bc\u03b2\u03c1\u03b9\u03bf\u03c2", "\u0394\u03b5\u03ba\u03ad\u03bc\u03b2\u03c1\u03b9\u03bf\u03c2"], SHORTMONTHS:["\u0399\u03b1\u03bd", "\u03a6\u03b5\u03b2", "\u039c\u03b1\u03c1", "\u0391\u03c0\u03c1", "\u039c\u03b1\u03ca", "\u0399\u03bf\u03c5\u03bd", "\u0399\u03bf\u03c5\u03bb", "\u0391\u03c5\u03b3", "\u03a3\u03b5\u03c0", "\u039f\u03ba\u03c4", "\u039d\u03bf\u03b5", "\u0394\u03b5\u03ba"], STANDALONESHORTMONTHS:["\u0399\u03b1\u03bd", 
-"\u03a6\u03b5\u03b2", "\u039c\u03b1\u03c1", "\u0391\u03c0\u03c1", "\u039c\u03b1\u03ca", "\u0399\u03bf\u03c5\u03bd", "\u0399\u03bf\u03c5\u03bb", "\u0391\u03c5\u03b3", "\u03a3\u03b5\u03c0", "\u039f\u03ba\u03c4", "\u039d\u03bf\u03b5", "\u0394\u03b5\u03ba"], WEEKDAYS:["\u039a\u03c5\u03c1\u03b9\u03b1\u03ba\u03ae", "\u0394\u03b5\u03c5\u03c4\u03ad\u03c1\u03b1", "\u03a4\u03c1\u03af\u03c4\u03b7", "\u03a4\u03b5\u03c4\u03ac\u03c1\u03c4\u03b7", "\u03a0\u03ad\u03bc\u03c0\u03c4\u03b7", "\u03a0\u03b1\u03c1\u03b1\u03c3\u03ba\u03b5\u03c5\u03ae", 
-"\u03a3\u03ac\u03b2\u03b2\u03b1\u03c4\u03bf"], STANDALONEWEEKDAYS:["\u039a\u03c5\u03c1\u03b9\u03b1\u03ba\u03ae", "\u0394\u03b5\u03c5\u03c4\u03ad\u03c1\u03b1", "\u03a4\u03c1\u03af\u03c4\u03b7", "\u03a4\u03b5\u03c4\u03ac\u03c1\u03c4\u03b7", "\u03a0\u03ad\u03bc\u03c0\u03c4\u03b7", "\u03a0\u03b1\u03c1\u03b1\u03c3\u03ba\u03b5\u03c5\u03ae", "\u03a3\u03ac\u03b2\u03b2\u03b1\u03c4\u03bf"], SHORTWEEKDAYS:["\u039a\u03c5\u03c1", "\u0394\u03b5\u03c5", "\u03a4\u03c1\u03b9", "\u03a4\u03b5\u03c4", "\u03a0\u03b5\u03bc", 
-"\u03a0\u03b1\u03c1", "\u03a3\u03b1\u03b2"], STANDALONESHORTWEEKDAYS:["\u039a\u03c5\u03c1", "\u0394\u03b5\u03c5", "\u03a4\u03c1\u03b9", "\u03a4\u03b5\u03c4", "\u03a0\u03b5\u03bc", "\u03a0\u03b1\u03c1", "\u03a3\u03b1\u03b2"], NARROWWEEKDAYS:["\u039a", "\u0394", "\u03a4", "\u03a4", "\u03a0", "\u03a0", "\u03a3"], STANDALONENARROWWEEKDAYS:["\u039a", "\u0394", "\u03a4", "\u03a4", "\u03a0", "\u03a0", "\u03a3"], SHORTQUARTERS:["\u03a41", "\u03a42", "\u03a43", "\u03a44"], QUARTERS:["1\u03bf \u03c4\u03c1\u03af\u03bc\u03b7\u03bd\u03bf", 
-"2\u03bf \u03c4\u03c1\u03af\u03bc\u03b7\u03bd\u03bf", "3\u03bf \u03c4\u03c1\u03af\u03bc\u03b7\u03bd\u03bf", "4\u03bf \u03c4\u03c1\u03af\u03bc\u03b7\u03bd\u03bf"], AMPMS:["\u03c0.\u03bc.", "\u03bc.\u03bc."], DATEFORMATS:["EEEE, dd MMMM y", "dd MMMM y", "dd MMM y", "dd/MM/yyyy"], TIMEFORMATS:["h:mm:ss a zzzz", "h:mm:ss a z", "h:mm:ss a", "h:mm a"], AVAILABLEFORMATS:{Md:"d/M", MMMMd:"d MMMM", MMMd:"d MMM"}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_en = {ERAS:["BC", "AD"], ERANAMES:["Before Christ", "Anno Domini"], NARROWMONTHS:["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], STANDALONENARROWMONTHS:["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], MONTHS:["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"], STANDALONEMONTHS:["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", 
-"November", "December"], SHORTMONTHS:["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], STANDALONESHORTMONTHS:["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], WEEKDAYS:["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], STANDALONEWEEKDAYS:["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], SHORTWEEKDAYS:["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], STANDALONESHORTWEEKDAYS:["Sun", 
-"Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], NARROWWEEKDAYS:["S", "M", "T", "W", "T", "F", "S"], STANDALONENARROWWEEKDAYS:["S", "M", "T", "W", "T", "F", "S"], SHORTQUARTERS:["Q1", "Q2", "Q3", "Q4"], QUARTERS:["1st quarter", "2nd quarter", "3rd quarter", "4th quarter"], AMPMS:["AM", "PM"], DATEFORMATS:["EEEE, MMMM d, y", "MMMM d, y", "MMM d, y", "M/d/yy"], TIMEFORMATS:["h:mm:ss a zzzz", "h:mm:ss a z", "h:mm:ss a", "h:mm a"], AVAILABLEFORMATS:{Md:"M/d", MMMMd:"MMMM d", MMMd:"MMM d"}, FIRSTDAYOFWEEK:6, 
-WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:2};
-goog.i18n.DateTimeSymbols_en_AU = {ERAS:["BC", "AD"], ERANAMES:["Before Christ", "Anno Domini"], NARROWMONTHS:["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], STANDALONENARROWMONTHS:["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], MONTHS:["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"], STANDALONEMONTHS:["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", 
-"November", "December"], SHORTMONTHS:["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], STANDALONESHORTMONTHS:["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], WEEKDAYS:["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], STANDALONEWEEKDAYS:["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], SHORTWEEKDAYS:["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], STANDALONESHORTWEEKDAYS:["Sun", 
-"Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], NARROWWEEKDAYS:["S", "M", "T", "W", "T", "F", "S"], STANDALONENARROWWEEKDAYS:["S", "M", "T", "W", "T", "F", "S"], SHORTQUARTERS:["Q1", "Q2", "Q3", "Q4"], QUARTERS:["1st quarter", "2nd quarter", "3rd quarter", "4th quarter"], AMPMS:["AM", "PM"], DATEFORMATS:["EEEE, d MMMM y", "d MMMM y", "dd/MM/yyyy", "d/MM/yy"], TIMEFORMATS:["h:mm:ss a zzzz", "h:mm:ss a z", "h:mm:ss a", "h:mm a"], AVAILABLEFORMATS:{Md:"M/d", MMMMd:"d MMMM", MMMd:"MMM d"}, FIRSTDAYOFWEEK:0, 
-WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_en_GB = {ERAS:["BC", "AD"], ERANAMES:["Before Christ", "Anno Domini"], NARROWMONTHS:["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], STANDALONENARROWMONTHS:["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], MONTHS:["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"], STANDALONEMONTHS:["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", 
-"November", "December"], SHORTMONTHS:["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], STANDALONESHORTMONTHS:["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], WEEKDAYS:["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], STANDALONEWEEKDAYS:["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], SHORTWEEKDAYS:["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], STANDALONESHORTWEEKDAYS:["Sun", 
-"Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], NARROWWEEKDAYS:["S", "M", "T", "W", "T", "F", "S"], STANDALONENARROWWEEKDAYS:["S", "M", "T", "W", "T", "F", "S"], SHORTQUARTERS:["Q1", "Q2", "Q3", "Q4"], QUARTERS:["1st quarter", "2nd quarter", "3rd quarter", "4th quarter"], AMPMS:["AM", "PM"], DATEFORMATS:["EEEE, d MMMM y", "d MMMM y", "d MMM y", "dd/MM/yyyy"], TIMEFORMATS:["HH:mm:ss zzzz", "HH:mm:ss z", "HH:mm:ss", "HH:mm"], AVAILABLEFORMATS:{Md:"d/M", MMMMd:"d MMMM", MMMd:"MMM d"}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 
-6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_en_IE = {ERAS:["BC", "AD"], ERANAMES:["Before Christ", "Anno Domini"], NARROWMONTHS:["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], STANDALONENARROWMONTHS:["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], MONTHS:["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"], STANDALONEMONTHS:["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", 
-"November", "December"], SHORTMONTHS:["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], STANDALONESHORTMONTHS:["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], WEEKDAYS:["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], STANDALONEWEEKDAYS:["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], SHORTWEEKDAYS:["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], STANDALONESHORTWEEKDAYS:["Sun", 
-"Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], NARROWWEEKDAYS:["S", "M", "T", "W", "T", "F", "S"], STANDALONENARROWWEEKDAYS:["S", "M", "T", "W", "T", "F", "S"], SHORTQUARTERS:["Q1", "Q2", "Q3", "Q4"], QUARTERS:["1st quarter", "2nd quarter", "3rd quarter", "4th quarter"], AMPMS:["a.m.", "p.m."], DATEFORMATS:["EEEE d MMMM y", "d MMMM y", "d MMM y", "dd/MM/yyyy"], TIMEFORMATS:["HH:mm:ss zzzz", "HH:mm:ss z", "HH:mm:ss", "HH:mm"], AVAILABLEFORMATS:{Md:"d/M", MMMMd:"d MMMM", MMMd:"MMM d"}, FIRSTDAYOFWEEK:6, 
-WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:2};
-goog.i18n.DateTimeSymbols_en_IN = {ERAS:["BC", "AD"], ERANAMES:["Before Christ", "Anno Domini"], NARROWMONTHS:["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], STANDALONENARROWMONTHS:["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], MONTHS:["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"], STANDALONEMONTHS:["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", 
-"November", "December"], SHORTMONTHS:["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], STANDALONESHORTMONTHS:["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], WEEKDAYS:["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], STANDALONEWEEKDAYS:["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], SHORTWEEKDAYS:["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], STANDALONESHORTWEEKDAYS:["Sun", 
-"Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], NARROWWEEKDAYS:["S", "M", "T", "W", "T", "F", "S"], STANDALONENARROWWEEKDAYS:["S", "M", "T", "W", "T", "F", "S"], SHORTQUARTERS:["Q1", "Q2", "Q3", "Q4"], QUARTERS:["1st quarter", "2nd quarter", "3rd quarter", "4th quarter"], AMPMS:["AM", "PM"], DATEFORMATS:["EEEE d MMMM y", "d MMMM y", "dd-MMM-y", "dd/MM/yy"], TIMEFORMATS:["h:mm:ss a zzzz", "h:mm:ss a z", "h:mm:ss a", "h:mm a"], AVAILABLEFORMATS:{Md:"M/d", MMMMd:"d MMMM", MMMd:"MMM d"}, FIRSTDAYOFWEEK:6, 
-WEEKENDRANGE:[6, 6], FIRSTWEEKCUTOFFDAY:2};
-goog.i18n.DateTimeSymbols_en_SG = goog.i18n.DateTimeSymbols_en;
-goog.i18n.DateTimeSymbols_en_US = goog.i18n.DateTimeSymbols_en;
-goog.i18n.DateTimeSymbols_en_ZA = {ERAS:["BC", "AD"], ERANAMES:["Before Christ", "Anno Domini"], NARROWMONTHS:["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], STANDALONENARROWMONTHS:["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], MONTHS:["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"], STANDALONEMONTHS:["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", 
-"November", "December"], SHORTMONTHS:["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], STANDALONESHORTMONTHS:["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], WEEKDAYS:["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], STANDALONEWEEKDAYS:["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], SHORTWEEKDAYS:["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], STANDALONESHORTWEEKDAYS:["Sun", 
-"Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], NARROWWEEKDAYS:["S", "M", "T", "W", "T", "F", "S"], STANDALONENARROWWEEKDAYS:["S", "M", "T", "W", "T", "F", "S"], SHORTQUARTERS:["Q1", "Q2", "Q3", "Q4"], QUARTERS:["1st quarter", "2nd quarter", "3rd quarter", "4th quarter"], AMPMS:["AM", "PM"], DATEFORMATS:["EEEE dd MMMM y", "dd MMMM y", "dd MMM y", "yyyy/MM/dd"], TIMEFORMATS:["h:mm:ss a zzzz", "h:mm:ss a z", "h:mm:ss a", "h:mm a"], AVAILABLEFORMATS:{Md:"M/d", MMMMd:"MMMM d", MMMd:"MMM d"}, FIRSTDAYOFWEEK:0, 
-WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_es = {ERAS:["a.C.", "d.C."], ERANAMES:["antes de Cristo", "anno D\u00f3mini"], NARROWMONTHS:["E", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], STANDALONENARROWMONTHS:["E", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], MONTHS:["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"], STANDALONEMONTHS:["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", 
-"octubre", "noviembre", "diciembre"], SHORTMONTHS:["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"], STANDALONESHORTMONTHS:["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"], WEEKDAYS:["domingo", "lunes", "martes", "mi\u00e9rcoles", "jueves", "viernes", "s\u00e1bado"], STANDALONEWEEKDAYS:["domingo", "lunes", "martes", "mi\u00e9rcoles", "jueves", "viernes", "s\u00e1bado"], SHORTWEEKDAYS:["dom", "lun", "mar", "mi\u00e9", "jue", "vie", 
-"s\u00e1b"], STANDALONESHORTWEEKDAYS:["dom", "lun", "mar", "mi\u00e9", "jue", "vie", "s\u00e1b"], NARROWWEEKDAYS:["D", "L", "M", "M", "J", "V", "S"], STANDALONENARROWWEEKDAYS:["D", "L", "M", "M", "J", "V", "S"], SHORTQUARTERS:["T1", "T2", "T3", "T4"], QUARTERS:["1er trimestre", "2\u00ba trimestre", "3er trimestre", "4\u00ba trimestre"], AMPMS:["a.m.", "p.m."], DATEFORMATS:["EEEE d 'de' MMMM 'de' y", "d 'de' MMMM 'de' y", "dd/MM/yyyy", "dd/MM/yy"], TIMEFORMATS:["HH:mm:ss zzzz", "HH:mm:ss z", "HH:mm:ss", 
-"HH:mm"], AVAILABLEFORMATS:{Md:"d/M", MMMMd:"d 'de' MMMM", MMMd:"d MMM"}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_et = {ERAS:["e.m.a.", "m.a.j."], ERANAMES:["enne meie aega", "meie aja j\u00e4rgi"], NARROWMONTHS:["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"], STANDALONENARROWMONTHS:["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"], MONTHS:["jaanuar", "veebruar", "m\u00e4rts", "aprill", "mai", "juuni", "juuli", "august", "september", "oktoober", "november", "detsember"], STANDALONEMONTHS:["jaanuar", "veebruar", "m\u00e4rts", "aprill", "mai", "juuni", "juuli", 
-"august", "september", "oktoober", "november", "detsember"], SHORTMONTHS:["jaan", "veebr", "m\u00e4rts", "apr", "mai", "juuni", "juuli", "aug", "sept", "okt", "nov", "dets"], STANDALONESHORTMONTHS:["jaan", "veebr", "m\u00e4rts", "apr", "mai", "juuni", "juuli", "aug", "sept", "okt", "nov", "dets"], WEEKDAYS:["p\u00fchap\u00e4ev", "esmasp\u00e4ev", "teisip\u00e4ev", "kolmap\u00e4ev", "neljap\u00e4ev", "reede", "laup\u00e4ev"], STANDALONEWEEKDAYS:["p\u00fchap\u00e4ev", "esmasp\u00e4ev", "teisip\u00e4ev", 
-"kolmap\u00e4ev", "neljap\u00e4ev", "reede", "laup\u00e4ev"], SHORTWEEKDAYS:["P", "E", "T", "K", "N", "R", "L"], STANDALONESHORTWEEKDAYS:["P", "E", "T", "K", "N", "R", "L"], NARROWWEEKDAYS:["1", "2", "3", "4", "5", "6", "7"], STANDALONENARROWWEEKDAYS:["1", "2", "3", "4", "5", "6", "7"], SHORTQUARTERS:["K1", "K2", "K3", "K4"], QUARTERS:["1. kvartal", "2. kvartal", "3. kvartal", "4. kvartal"], AMPMS:["AM", "PM"], DATEFORMATS:["EEEE, d, MMMM y", "d MMMM y", "dd.MM.yyyy", "dd.MM.yy"], TIMEFORMATS:["H:mm:ss zzzz", 
-"H:mm:ss z", "H:mm:ss", "H:mm"], AVAILABLEFORMATS:{Md:"M-d", MMMMd:"d MMMM", MMMd:"MMM d"}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_eu = {ERAS:["BCE", "CE"], ERANAMES:["BCE", "CE"], NARROWMONTHS:["U", "O", "M", "A", "M", "E", "U", "A", "I", "U", "A", "A"], STANDALONENARROWMONTHS:["U", "O", "M", "A", "M", "E", "U", "A", "I", "U", "A", "A"], MONTHS:["urtarrila", "otsaila", "martxoa", "apirila", "maiatza", "ekaina", "uztaila", "abuztua", "iraila", "urria", "azaroa", "abendua"], STANDALONEMONTHS:["urtarrila", "otsaila", "martxoa", "apirila", "maiatza", "ekaina", "uztaila", "abuztua", "iraila", "urria", "azaroa", 
-"abendua"], SHORTMONTHS:["urt", "ots", "mar", "api", "mai", "eka", "uzt", "abu", "ira", "urr", "aza", "abe"], STANDALONESHORTMONTHS:["urt", "ots", "mar", "api", "mai", "eka", "uzt", "abu", "ira", "urr", "aza", "abe"], WEEKDAYS:["igandea", "astelehena", "asteartea", "asteazkena", "osteguna", "ostirala", "larunbata"], STANDALONEWEEKDAYS:["igandea", "astelehena", "asteartea", "asteazkena", "osteguna", "ostirala", "larunbata"], SHORTWEEKDAYS:["ig", "al", "as", "az", "og", "or", "lr"], STANDALONESHORTWEEKDAYS:["ig", 
-"al", "as", "az", "og", "or", "lr"], NARROWWEEKDAYS:["1", "2", "3", "4", "5", "6", "7"], STANDALONENARROWWEEKDAYS:["1", "2", "3", "4", "5", "6", "7"], SHORTQUARTERS:["1Hh", "2Hh", "3Hh", "4Hh"], QUARTERS:["1. hiruhilekoa", "2. hiruhilekoa", "3. hiruhilekoa", "4. hiruhilekoa"], AMPMS:["AM", "PM"], DATEFORMATS:["EEEE, y'eko' MMMM'ren' dd'a'", "y'eko' MMM'ren' dd'a'", "y MMM d", "yyyy-MM-dd"], TIMEFORMATS:["HH:mm:ss zzzz", "HH:mm:ss z", "HH:mm:ss", "HH:mm"], AVAILABLEFORMATS:{Md:"M-d", MMMMd:"MMMM d", 
-MMMd:"MMM d"}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_fa = {ERAS:["\u0642.\u0645.", "\u0645."], ERANAMES:["\u0642\u0628\u0644 \u0627\u0632 \u0645\u06cc\u0644\u0627\u062f", "\u0645\u06cc\u0644\u0627\u062f\u06cc"], NARROWMONTHS:["\u0698", "\u0641", "\u0645", "\u0622", "\u0645", "\u0698", "\u0698", "\u0627", "\u0633", "\u0627", "\u0646", "\u062f"], STANDALONENARROWMONTHS:["\u0698", "\u0641", "\u0645", "\u0622", "\u0645", "\u0698", "\u0698", "\u0627", "\u0633", "\u0627", "\u0646", "\u062f"], MONTHS:["\u0698\u0627\u0646\u0648\u06cc\u0647\u0654", 
-"\u0641\u0648\u0631\u06cc\u0647\u0654", "\u0645\u0627\u0631\u0633", "\u0622\u0648\u0631\u06cc\u0644", "\u0645\u0647\u0654", "\u0698\u0648\u0626\u0646", "\u0698\u0648\u0626\u06cc\u0647\u0654", "\u0627\u0648\u062a", "\u0633\u067e\u062a\u0627\u0645\u0628\u0631", "\u0627\u06a9\u062a\u0628\u0631", "\u0646\u0648\u0627\u0645\u0628\u0631", "\u062f\u0633\u0627\u0645\u0628\u0631"], STANDALONEMONTHS:["\u0698\u0627\u0646\u0648\u06cc\u0647", "\u0641\u0648\u0631\u06cc\u0647", "\u0645\u0627\u0631\u0633", "\u0622\u0648\u0631\u06cc\u0644", 
-"\u0645\u0647", "\u0698\u0648\u0626\u0646", "\u0698\u0648\u0626\u06cc\u0647", "\u0627\u0648\u062a", "\u0633\u067e\u062a\u0627\u0645\u0628\u0631", "\u0627\u06a9\u062a\u0628\u0631", "\u0646\u0648\u0627\u0645\u0628\u0631", "\u062f\u0633\u0627\u0645\u0628\u0631"], SHORTMONTHS:["\u0698\u0627\u0646\u0648\u06cc\u0647\u0654", "\u0641\u0648\u0631\u06cc\u0647\u0654", "\u0645\u0627\u0631\u0633", "\u0622\u0648\u0631\u06cc\u0644", "\u0645\u0647\u0654", "\u0698\u0648\u0626\u0646", "\u0698\u0648\u0626\u06cc\u0647\u0654", 
-"\u0627\u0648\u062a", "\u0633\u067e\u062a\u0627\u0645\u0628\u0631", "\u0627\u06a9\u062a\u0628\u0631", "\u0646\u0648\u0627\u0645\u0628\u0631", "\u062f\u0633\u0627\u0645\u0628\u0631"], STANDALONESHORTMONTHS:["\u0698\u0627\u0646\u0648\u06cc\u0647", "\u0641\u0648\u0631\u06cc\u0647", "\u0645\u0627\u0631\u0633", "\u0622\u0648\u0631\u06cc\u0644", "\u0645\u0647", "\u0698\u0648\u0626\u0646", "\u0698\u0648\u0626\u06cc\u0647", "\u0627\u0648\u062a", "\u0633\u067e\u062a\u0627\u0645\u0628\u0631", "\u0627\u06a9\u062a\u0628\u0631", 
-"\u0646\u0648\u0627\u0645\u0628\u0631", "\u062f\u0633\u0627\u0645\u0628\u0631"], WEEKDAYS:["\u06cc\u06a9\u0634\u0646\u0628\u0647", "\u062f\u0648\u0634\u0646\u0628\u0647", "\u0633\u0647\u0634\u0646\u0628\u0647", "\u0686\u0647\u0627\u0631\u0634\u0646\u0628\u0647", "\u067e\u0646\u062c\u0634\u0646\u0628\u0647", "\u062c\u0645\u0639\u0647", "\u0634\u0646\u0628\u0647"], STANDALONEWEEKDAYS:["\u06cc\u06a9\u0634\u0646\u0628\u0647", "\u062f\u0648\u0634\u0646\u0628\u0647", "\u0633\u0647\u0634\u0646\u0628\u0647", 
-"\u0686\u0647\u0627\u0631\u0634\u0646\u0628\u0647", "\u067e\u0646\u062c\u0634\u0646\u0628\u0647", "\u062c\u0645\u0639\u0647", "\u0634\u0646\u0628\u0647"], SHORTWEEKDAYS:["\u06cc\u06a9\u0634\u0646\u0628\u0647", "\u062f\u0648\u0634\u0646\u0628\u0647", "\u0633\u0647\u0634\u0646\u0628\u0647", "\u0686\u0647\u0627\u0631\u0634\u0646\u0628\u0647", "\u067e\u0646\u062c\u0634\u0646\u0628\u0647", "\u062c\u0645\u0639\u0647", "\u0634\u0646\u0628\u0647"], STANDALONESHORTWEEKDAYS:["\u06cc\u06a9\u0634\u0646\u0628\u0647", 
-"\u062f\u0648\u0634\u0646\u0628\u0647", "\u0633\u0647\u0634\u0646\u0628\u0647", "\u0686\u0647\u0627\u0631\u0634\u0646\u0628\u0647", "\u067e\u0646\u062c\u0634\u0646\u0628\u0647", "\u062c\u0645\u0639\u0647", "\u0634\u0646\u0628\u0647"], NARROWWEEKDAYS:["\u06cc", "\u062f", "\u0633", "\u0686", "\u067e", "\u062c", "\u0634"], STANDALONENARROWWEEKDAYS:["\u06cc", "\u062f", "\u0633", "\u0686", "\u067e", "\u062c", "\u0634"], SHORTQUARTERS:["\u0633\u0645\u06f1", "\u0633\u0645\u06f2", "\u0633\u0645\u06f3", "\u0633\u0645\u06f4"], 
-QUARTERS:["\u0633\u0647\u0645\u0627\u0647\u0647\u0654 \u0627\u0648\u0644", "\u0633\u0647\u0645\u0627\u0647\u0647\u0654 \u062f\u0648\u0645", "\u0633\u0647\u0645\u0627\u0647\u0647\u0654 \u0633\u0648\u0645", "\u0633\u0647\u0645\u0627\u0647\u0647\u0654 \u0686\u0647\u0627\u0631\u0645"], AMPMS:["\u0642\u0628\u0644 \u0627\u0632 \u0638\u0647\u0631", "\u0628\u0639\u062f \u0627\u0632 \u0638\u0647\u0631"], DATEFORMATS:["EEEE d MMMM y", "d MMMM y", "yyyy/M/d", "yy/M/d"], TIMEFORMATS:["H:mm:ss (zzzz)", "H:mm:ss (z)", 
-"H:mm:ss", "H:mm"], AVAILABLEFORMATS:{Md:"M/d", MMMMd:"d LLLL", MMMd:"d LLL"}, FIRSTDAYOFWEEK:5, WEEKENDRANGE:[3, 4], FIRSTWEEKCUTOFFDAY:1};
-goog.i18n.DateTimeSymbols_fi = {ERAS:["eKr.", "jKr."], ERANAMES:["ennen Kristuksen syntym\u00e4\u00e4", "j\u00e4lkeen Kristuksen syntym\u00e4n"], NARROWMONTHS:["T", "H", "M", "H", "T", "K", "H", "E", "S", "L", "M", "J"], STANDALONENARROWMONTHS:["T", "H", "M", "H", "T", "K", "H", "E", "S", "L", "M", "J"], MONTHS:["tammikuuta", "helmikuuta", "maaliskuuta", "huhtikuuta", "toukokuuta", "kes\u00e4kuuta", "hein\u00e4kuuta", "elokuuta", "syyskuuta", "lokakuuta", "marraskuuta", "joulukuuta"], STANDALONEMONTHS:["tammikuu", 
-"helmikuu", "maaliskuu", "huhtikuu", "toukokuu", "kes\u00e4kuu", "hein\u00e4kuu", "elokuu", "syyskuu", "lokakuu", "marraskuu", "joulukuu"], SHORTMONTHS:["tammikuuta", "helmikuuta", "maaliskuuta", "huhtikuuta", "toukokuuta", "kes\u00e4kuuta", "hein\u00e4kuuta", "elokuuta", "syyskuuta", "lokakuuta", "marraskuuta", "joulukuuta"], STANDALONESHORTMONTHS:["tammi", "helmi", "maalis", "huhti", "touko", "kes\u00e4", "hein\u00e4", "elo", "syys", "loka", "marras", "joulu"], WEEKDAYS:["sunnuntaina", "maanantaina", 
-"tiistaina", "keskiviikkona", "torstaina", "perjantaina", "lauantaina"], STANDALONEWEEKDAYS:["sunnuntai", "maanantai", "tiistai", "keskiviikko", "torstai", "perjantai", "lauantai"], SHORTWEEKDAYS:["su", "ma", "ti", "ke", "to", "pe", "la"], STANDALONESHORTWEEKDAYS:["su", "ma", "ti", "ke", "to", "pe", "la"], NARROWWEEKDAYS:["S", "M", "T", "K", "T", "P", "L"], STANDALONENARROWWEEKDAYS:["S", "M", "T", "K", "T", "P", "L"], SHORTQUARTERS:["1. nelj.", "2. nelj.", "3. nelj.", "4. nelj."], QUARTERS:["1. nelj\u00e4nnes", 
-"2. nelj\u00e4nnes", "3. nelj\u00e4nnes", "4. nelj\u00e4nnes"], AMPMS:["ap.", "ip."], DATEFORMATS:["EEEE d. MMMM y", "d. MMMM y", "d.M.yyyy", "d.M.yyyy"], TIMEFORMATS:["H.mm.ss zzzz", "H.mm.ss z", "H.mm.ss", "H.mm"], AVAILABLEFORMATS:{Md:"d.M.", MMMMd:"d. MMMM", MMMd:"d. MMM"}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_fil = {ERAS:["BCE", "CE"], ERANAMES:["BCE", "CE"], NARROWMONTHS:["E", "P", "M", "A", "M", "H", "H", "A", "S", "O", "N", "D"], STANDALONENARROWMONTHS:["E", "P", "M", "A", "M", "H", "H", "A", "S", "O", "N", "D"], MONTHS:["Enero", "Pebrero", "Marso", "Abril", "Mayo", "Hunyo", "Hulyo", "Agosto", "Setyembre", "Oktubre", "Nobyembre", "Disyembre"], STANDALONEMONTHS:["Enero", "Pebrero", "Marso", "Abril", "Mayo", "Hunyo", "Hulyo", "Agosto", "Setyembre", "Oktubre", "Nobyembre", "Disyembre"], 
-SHORTMONTHS:["Ene", "Peb", "Mar", "Abr", "May", "Hun", "Hul", "Ago", "Set", "Okt", "Nob", "Dis"], STANDALONESHORTMONTHS:["Ene", "Peb", "Mar", "Abr", "May", "Hun", "Hul", "Ago", "Set", "Okt", "Nob", "Dis"], WEEKDAYS:["Linggo", "Lunes", "Martes", "Miyerkules", "Huwebes", "Biyernes", "Sabado"], STANDALONEWEEKDAYS:["Linggo", "Lunes", "Martes", "Miyerkules", "Huwebes", "Biyernes", "Sabado"], SHORTWEEKDAYS:["Lin", "Lun", "Mar", "Mye", "Huw", "Bye", "Sab"], STANDALONESHORTWEEKDAYS:["Lin", "Lun", "Mar", 
-"Miy", "Huw", "Biy", "Sab"], NARROWWEEKDAYS:["L", "L", "M", "M", "H", "B", "S"], STANDALONENARROWWEEKDAYS:["L", "L", "M", "M", "H", "B", "S"], SHORTQUARTERS:["Q1", "Q2", "Q3", "Q4"], QUARTERS:["Q1", "Q2", "Q3", "Q4"], AMPMS:["AM", "PM"], DATEFORMATS:["EEEE, MMMM dd y", "MMMM d, y", "MMM d, y", "M/d/yy"], TIMEFORMATS:["HH:mm:ss zzzz", "HH:mm:ss z", "HH:mm:ss", "HH:mm"], AVAILABLEFORMATS:{Md:"M-d", MMMMd:"MMMM d", MMMd:"MMM d"}, FIRSTDAYOFWEEK:6, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:2};
-goog.i18n.DateTimeSymbols_fr = {ERAS:["av. J.-C.", "ap. J.-C."], ERANAMES:["avant J\u00e9sus-Christ", "apr\u00e8s J\u00e9sus-Christ"], NARROWMONTHS:["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], STANDALONENARROWMONTHS:["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], MONTHS:["janvier", "f\u00e9vrier", "mars", "avril", "mai", "juin", "juillet", "ao\u00fbt", "septembre", "octobre", "novembre", "d\u00e9cembre"], STANDALONEMONTHS:["janvier", "f\u00e9vrier", "mars", "avril", 
-"mai", "juin", "juillet", "ao\u00fbt", "septembre", "octobre", "novembre", "d\u00e9cembre"], SHORTMONTHS:["janv.", "f\u00e9vr.", "mars", "avr.", "mai", "juin", "juil.", "ao\u00fbt", "sept.", "oct.", "nov.", "d\u00e9c."], STANDALONESHORTMONTHS:["janv.", "f\u00e9vr.", "mars", "avr.", "mai", "juin", "juil.", "ao\u00fbt", "sept.", "oct.", "nov.", "d\u00e9c."], WEEKDAYS:["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"], STANDALONEWEEKDAYS:["dimanche", "lundi", "mardi", "mercredi", 
-"jeudi", "vendredi", "samedi"], SHORTWEEKDAYS:["dim.", "lun.", "mar.", "mer.", "jeu.", "ven.", "sam."], STANDALONESHORTWEEKDAYS:["dim.", "lun.", "mar.", "mer.", "jeu.", "ven.", "sam."], NARROWWEEKDAYS:["D", "L", "M", "M", "J", "V", "S"], STANDALONENARROWWEEKDAYS:["D", "L", "M", "M", "J", "V", "S"], SHORTQUARTERS:["T1", "T2", "T3", "T4"], QUARTERS:["1er trimestre", "2e trimestre", "3e trimestre", "4e trimestre"], AMPMS:["AM", "PM"], DATEFORMATS:["EEEE d MMMM y", "d MMMM y", "d MMM y", "dd/MM/yy"], 
-TIMEFORMATS:["HH:mm:ss zzzz", "HH:mm:ss z", "HH:mm:ss", "HH:mm"], AVAILABLEFORMATS:{Md:"d/M", MMMMd:"d MMMM", MMMd:"d MMM"}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_fr_CA = {ERAS:["av. J.-C.", "ap. J.-C."], ERANAMES:["avant J\u00e9sus-Christ", "apr\u00e8s J\u00e9sus-Christ"], NARROWMONTHS:["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], STANDALONENARROWMONTHS:["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], MONTHS:["janvier", "f\u00e9vrier", "mars", "avril", "mai", "juin", "juillet", "ao\u00fbt", "septembre", "octobre", "novembre", "d\u00e9cembre"], STANDALONEMONTHS:["janvier", "f\u00e9vrier", "mars", "avril", 
-"mai", "juin", "juillet", "ao\u00fbt", "septembre", "octobre", "novembre", "d\u00e9cembre"], SHORTMONTHS:["janv.", "f\u00e9vr.", "mars", "avr.", "mai", "juin", "juil.", "ao\u00fbt", "sept.", "oct.", "nov.", "d\u00e9c."], STANDALONESHORTMONTHS:["janv.", "f\u00e9vr.", "mars", "avr.", "mai", "juin", "juil.", "ao\u00fbt", "sept.", "oct.", "nov.", "d\u00e9c."], WEEKDAYS:["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"], STANDALONEWEEKDAYS:["dimanche", "lundi", "mardi", "mercredi", 
-"jeudi", "vendredi", "samedi"], SHORTWEEKDAYS:["dim.", "lun.", "mar.", "mer.", "jeu.", "ven.", "sam."], STANDALONESHORTWEEKDAYS:["dim.", "lun.", "mar.", "mer.", "jeu.", "ven.", "sam."], NARROWWEEKDAYS:["D", "L", "M", "M", "J", "V", "S"], STANDALONENARROWWEEKDAYS:["D", "L", "M", "M", "J", "V", "S"], SHORTQUARTERS:["T1", "T2", "T3", "T4"], QUARTERS:["1er trimestre", "2e trimestre", "3e trimestre", "4e trimestre"], AMPMS:["AM", "PM"], DATEFORMATS:["EEEE d MMMM y", "d MMMM y", "yyyy-MM-dd", "yy-MM-dd"], 
-TIMEFORMATS:["HH 'h' mm 'min' ss 's' zzzz", "HH:mm:ss z", "HH:mm:ss", "HH:mm"], AVAILABLEFORMATS:{Md:"M-d", MMMMd:"d MMMM", MMMd:"d MMM"}, FIRSTDAYOFWEEK:6, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:2};
-goog.i18n.DateTimeSymbols_gl = {ERAS:["a.C.", "d.C."], ERANAMES:["antes de Cristo", "despois de Cristo"], NARROWMONTHS:["X", "F", "M", "A", "M", "X", "X", "A", "S", "O", "N", "D"], STANDALONENARROWMONTHS:["X", "F", "M", "A", "M", "X", "X", "A", "S", "O", "N", "D"], MONTHS:["Xaneiro", "Febreiro", "Marzo", "Abril", "Maio", "Xu\u00f1o", "Xullo", "Agosto", "Setembro", "Outubro", "Novembro", "Decembro"], STANDALONEMONTHS:["Xaneiro", "Febreiro", "Marzo", "Abril", "Maio", "Xu\u00f1o", "Xullo", "Agosto", 
-"Setembro", "Outubro", "Novembro", "Decembro"], SHORTMONTHS:["Xan", "Feb", "Mar", "Abr", "Mai", "Xu\u00f1", "Xul", "Ago", "Set", "Out", "Nov", "Dec"], STANDALONESHORTMONTHS:["Xan", "Feb", "Mar", "Abr", "Mai", "Xu\u00f1", "Xul", "Ago", "Set", "Out", "Nov", "Dec"], WEEKDAYS:["Domingo", "Luns", "Martes", "M\u00e9rcores", "Xoves", "Venres", "S\u00e1bado"], STANDALONEWEEKDAYS:["Domingo", "Luns", "Martes", "M\u00e9rcores", "Xoves", "Venres", "S\u00e1bado"], SHORTWEEKDAYS:["Dom", "Lun", "Mar", "M\u00e9r", 
-"Xov", "Ven", "S\u00e1b"], STANDALONESHORTWEEKDAYS:["Dom", "Lun", "Mar", "M\u00e9r", "Xov", "Ven", "S\u00e1b"], NARROWWEEKDAYS:["D", "L", "M", "M", "X", "V", "S"], STANDALONENARROWWEEKDAYS:["D", "L", "M", "M", "X", "V", "S"], SHORTQUARTERS:["T1", "T2", "T3", "T4"], QUARTERS:["1o trimestre", "2o trimestre", "3o trimestre", "4o trimestre"], AMPMS:["AM", "PM"], DATEFORMATS:["EEEE dd MMMM y", "dd MMMM y", "d MMM, y", "dd/MM/yy"], TIMEFORMATS:["HH:mm:ss zzzz", "HH:mm:ss z", "HH:mm:ss", "HH:mm"], AVAILABLEFORMATS:{Md:"d-M", 
-MMMMd:"d MMMM", MMMd:"d MMM"}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_gsw = {ERAS:["v. Chr.", "n. Chr."], ERANAMES:["v. Chr.", "n. Chr."], NARROWMONTHS:["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], STANDALONENARROWMONTHS:["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], MONTHS:["Januar", "Februar", "M\u00e4rz", "April", "Mai", "Juni", "Juli", "Auguscht", "Sept\u00e4mber", "Oktoober", "Nov\u00e4mber", "Dez\u00e4mber"], STANDALONEMONTHS:["Januar", "Februar", "M\u00e4rz", "April", "Mai", "Juni", "Juli", "Auguscht", 
-"Sept\u00e4mber", "Oktoober", "Nov\u00e4mber", "Dez\u00e4mber"], SHORTMONTHS:["Jan", "Feb", "M\u00e4r", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"], STANDALONESHORTMONTHS:["Jan", "Feb", "M\u00e4r", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"], WEEKDAYS:["Sunntig", "M\u00e4\u00e4ntig", "Ziischtig", "Mittwuch", "Dunschtig", "Friitig", "Samschtig"], STANDALONEWEEKDAYS:["Sunntig", "M\u00e4\u00e4ntig", "Ziischtig", "Mittwuch", "Dunschtig", "Friitig", "Samschtig"], 
-SHORTWEEKDAYS:["Su.", "M\u00e4.", "Zi.", "Mi.", "Du.", "Fr.", "Sa."], STANDALONESHORTWEEKDAYS:["Su.", "M\u00e4.", "Zi.", "Mi.", "Du.", "Fr.", "Sa."], NARROWWEEKDAYS:["S", "M", "D", "M", "D", "F", "S"], STANDALONENARROWWEEKDAYS:["S", "M", "D", "M", "D", "F", "S"], SHORTQUARTERS:["Q1", "Q2", "Q3", "Q4"], QUARTERS:["1. Quartal", "2. Quartal", "3. Quartal", "4. Quartal"], AMPMS:["vorm.", "nam."], DATEFORMATS:["EEEE, d. MMMM y", "d. MMMM y", "dd.MM.yyyy", "dd.MM.yy"], TIMEFORMATS:["HH:mm:ss zzzz", "HH:mm:ss z", 
-"HH:mm:ss", "HH:mm"], AVAILABLEFORMATS:{Md:"d.M.", MMMMd:"d. MMMM", MMMd:"d. MMM"}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_gu = {ERAS:["BCE", "CE"], ERANAMES:["\u0a88\u0ab8\u0ab5\u0ac0\u0ab8\u0aa8 \u0aaa\u0ac2\u0ab0\u0acd\u0ab5\u0ac7", "\u0a87\u0ab8\u0ab5\u0ac0\u0ab8\u0aa8"], NARROWMONTHS:["\u0a9c\u0abe", "\u0aab\u0ac7", "\u0aae\u0abe", "\u0a8f", "\u0aae\u0ac7", "\u0a9c\u0ac2", "\u0a9c\u0ac1", "\u0a91", "\u0ab8", "\u0a91", "\u0aa8", "\u0aa1\u0abf"], STANDALONENARROWMONTHS:["\u0a9c\u0abe", "\u0aab\u0ac7", "\u0aae\u0abe", "\u0a8f", "\u0aae\u0ac7", "\u0a9c\u0ac2", "\u0a9c\u0ac1", "\u0a91", "\u0ab8", 
-"\u0a91", "\u0aa8", "\u0aa1\u0abf"], MONTHS:["\u0a9c\u0abe\u0aa8\u0acd\u0aaf\u0ac1\u0a86\u0ab0\u0ac0", "\u0aab\u0ac7\u0aac\u0acd\u0ab0\u0ac1\u0a86\u0ab0\u0ac0", "\u0aae\u0abe\u0ab0\u0acd\u0a9a", "\u0a8f\u0aaa\u0acd\u0ab0\u0abf\u0ab2", "\u0aae\u0ac7", "\u0a9c\u0ac2\u0aa8", "\u0a9c\u0ac1\u0ab2\u0abe\u0a88", "\u0a91\u0a97\u0ab8\u0acd\u0a9f", "\u0ab8\u0aaa\u0acd\u0a9f\u0ac7\u0aae\u0acd\u0aac\u0ab0", "\u0a91\u0a95\u0acd\u0a9f\u0acd\u0aac\u0ab0", "\u0aa8\u0ab5\u0ac7\u0aae\u0acd\u0aac\u0ab0", "\u0aa1\u0abf\u0ab8\u0ac7\u0aae\u0acd\u0aac\u0ab0"], 
-STANDALONEMONTHS:["\u0a9c\u0abe\u0aa8\u0acd\u0aaf\u0ac1\u0a86\u0ab0\u0ac0", "\u0aab\u0ac7\u0aac\u0acd\u0ab0\u0ac1\u0a86\u0ab0\u0ac0", "\u0aae\u0abe\u0ab0\u0acd\u0a9a", "\u0a8f\u0aaa\u0acd\u0ab0\u0abf\u0ab2", "\u0aae\u0ac7", "\u0a9c\u0ac2\u0aa8", "\u0a9c\u0ac1\u0ab2\u0abe\u0a88", "\u0a91\u0a97\u0ab8\u0acd\u0a9f", "\u0ab8\u0aaa\u0acd\u0a9f\u0ac7\u0aae\u0acd\u0aac\u0ab0", "\u0a91\u0a95\u0acd\u0a9f\u0acd\u0aac\u0ab0", "\u0aa8\u0ab5\u0ac7\u0aae\u0acd\u0aac\u0ab0", "\u0aa1\u0abf\u0ab8\u0ac7\u0aae\u0acd\u0aac\u0ab0"], 
-SHORTMONTHS:["\u0a9c\u0abe\u0aa8\u0acd\u0aaf\u0ac1", "\u0aab\u0ac7\u0aac\u0acd\u0ab0\u0ac1", "\u0aae\u0abe\u0ab0\u0acd\u0a9a", "\u0a8f\u0aaa\u0acd\u0ab0\u0abf\u0ab2", "\u0aae\u0ac7", "\u0a9c\u0ac2\u0aa8", "\u0a9c\u0ac1\u0ab2\u0abe\u0a88", "\u0a91\u0a97\u0ab8\u0acd\u0a9f", "\u0ab8\u0aaa\u0acd\u0a9f\u0ac7", "\u0a91\u0a95\u0acd\u0a9f\u0acb", "\u0aa8\u0ab5\u0ac7", "\u0aa1\u0abf\u0ab8\u0ac7"], STANDALONESHORTMONTHS:["\u0a9c\u0abe\u0aa8\u0acd\u0aaf\u0ac1", "\u0aab\u0ac7\u0aac\u0acd\u0ab0\u0ac1", "\u0aae\u0abe\u0ab0\u0acd\u0a9a", 
-"\u0a8f\u0aaa\u0acd\u0ab0\u0abf\u0ab2", "\u0aae\u0ac7", "\u0a9c\u0ac2\u0aa8", "\u0a9c\u0ac1\u0ab2\u0abe\u0a88", "\u0a91\u0a97\u0ab8\u0acd\u0a9f", "\u0ab8\u0aaa\u0acd\u0a9f\u0ac7", "\u0a91\u0a95\u0acd\u0a9f\u0acb", "\u0aa8\u0ab5\u0ac7", "\u0aa1\u0abf\u0ab8\u0ac7"], WEEKDAYS:["\u0ab0\u0ab5\u0abf\u0ab5\u0abe\u0ab0", "\u0ab8\u0acb\u0aae\u0ab5\u0abe\u0ab0", "\u0aae\u0a82\u0a97\u0ab3\u0ab5\u0abe\u0ab0", "\u0aac\u0ac1\u0aa7\u0ab5\u0abe\u0ab0", "\u0a97\u0ac1\u0ab0\u0ac1\u0ab5\u0abe\u0ab0", "\u0ab6\u0ac1\u0a95\u0acd\u0ab0\u0ab5\u0abe\u0ab0", 
-"\u0ab6\u0aa8\u0abf\u0ab5\u0abe\u0ab0"], STANDALONEWEEKDAYS:["\u0ab0\u0ab5\u0abf\u0ab5\u0abe\u0ab0", "\u0ab8\u0acb\u0aae\u0ab5\u0abe\u0ab0", "\u0aae\u0a82\u0a97\u0ab3\u0ab5\u0abe\u0ab0", "\u0aac\u0ac1\u0aa7\u0ab5\u0abe\u0ab0", "\u0a97\u0ac1\u0ab0\u0ac1\u0ab5\u0abe\u0ab0", "\u0ab6\u0ac1\u0a95\u0acd\u0ab0\u0ab5\u0abe\u0ab0", "\u0ab6\u0aa8\u0abf\u0ab5\u0abe\u0ab0"], SHORTWEEKDAYS:["\u0ab0\u0ab5\u0abf", "\u0ab8\u0acb\u0aae", "\u0aae\u0a82\u0a97\u0ab3", "\u0aac\u0ac1\u0aa7", "\u0a97\u0ac1\u0ab0\u0ac1", 
-"\u0ab6\u0ac1\u0a95\u0acd\u0ab0", "\u0ab6\u0aa8\u0abf"], STANDALONESHORTWEEKDAYS:["\u0ab0\u0ab5\u0abf", "\u0ab8\u0acb\u0aae", "\u0aae\u0a82\u0a97\u0ab3", "\u0aac\u0ac1\u0aa7", "\u0a97\u0ac1\u0ab0\u0ac1", "\u0ab6\u0ac1\u0a95\u0acd\u0ab0", "\u0ab6\u0aa8\u0abf"], NARROWWEEKDAYS:["\u0ab0", "\u0ab8\u0acb", "\u0aae\u0a82", "\u0aac\u0ac1", "\u0a97\u0ac1", "\u0ab6\u0ac1", "\u0ab6"], STANDALONENARROWWEEKDAYS:["\u0ab0", "\u0ab8\u0acb", "\u0aae\u0a82", "\u0aac\u0ac1", "\u0a97\u0ac1", "\u0ab6\u0ac1", "\u0ab6"], 
-SHORTQUARTERS:["\u0aa4\u0acd\u0ab0\u0abf\u0aae\u0abe\u0ab8\u0abf\u0a95 \u0ae7", "\u0aa4\u0acd\u0ab0\u0abf\u0aae\u0abe\u0ab8\u0abf\u0a95 \u0ae8", "\u0aa4\u0acd\u0ab0\u0abf\u0aae\u0abe\u0ab8\u0abf\u0a95 \u0ae9", "\u0aa4\u0acd\u0ab0\u0abf\u0aae\u0abe\u0ab8\u0abf\u0a95 \u0aea"], QUARTERS:["\u0aaa\u0ab9\u0ab2\u0ac0 \u0aa4\u0acd\u0ab0\u0abf\u0aae\u0abe\u0ab8\u0abf\u0a95", "\u0aac\u0ac0\u0a9c\u0ac0 \u0aa4\u0acd\u0ab0\u0abf\u0aae\u0abe\u0ab8\u0abf\u0a95", "\u0aa4\u0acd\u0ab0\u0ac0\u0a9c\u0ac0 \u0aa4\u0acd\u0ab0\u0abf\u0aae\u0abe\u0ab8\u0abf\u0a95", 
-"\u0a9a\u0acc\u0aa5\u0ac0 \u0aa4\u0acd\u0ab0\u0abf\u0aae\u0abe\u0ab8\u0abf\u0a95"], AMPMS:["am", "pm"], DATEFORMATS:["EEEE, d MMMM, y", "d MMMM, y", "d MMM, y", "d-MM-yy"], TIMEFORMATS:["hh:mm:ss a zzzz", "hh:mm:ss a z", "hh:mm:ss a", "hh:mm a"], AVAILABLEFORMATS:{Md:"M-d", MMMMd:"d MMMM", MMMd:"MMM d"}, FIRSTDAYOFWEEK:6, WEEKENDRANGE:[6, 6], FIRSTWEEKCUTOFFDAY:2};
-goog.i18n.DateTimeSymbols_he = {ERAS:["\u05dc\u05e4\u05e0\u05d4\u05f4\u05e1", "\u05dc\u05e1\u05d4\u05f4\u05e0"], ERANAMES:["\u05dc\u05e4\u05e0\u05d9 \u05d4\u05e1\u05e4\u05d9\u05e8\u05d4", "\u05dc\u05e1\u05e4\u05d9\u05e8\u05d4"], NARROWMONTHS:["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"], STANDALONENARROWMONTHS:["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"], MONTHS:["\u05d9\u05e0\u05d5\u05d0\u05e8", "\u05e4\u05d1\u05e8\u05d5\u05d0\u05e8", "\u05de\u05e8\u05e1", "\u05d0\u05e4\u05e8\u05d9\u05dc", 
-"\u05de\u05d0\u05d9", "\u05d9\u05d5\u05e0\u05d9", "\u05d9\u05d5\u05dc\u05d9", "\u05d0\u05d5\u05d2\u05d5\u05e1\u05d8", "\u05e1\u05e4\u05d8\u05de\u05d1\u05e8", "\u05d0\u05d5\u05e7\u05d8\u05d5\u05d1\u05e8", "\u05e0\u05d5\u05d1\u05de\u05d1\u05e8", "\u05d3\u05e6\u05de\u05d1\u05e8"], STANDALONEMONTHS:["\u05d9\u05e0\u05d5\u05d0\u05e8", "\u05e4\u05d1\u05e8\u05d5\u05d0\u05e8", "\u05de\u05e8\u05e1", "\u05d0\u05e4\u05e8\u05d9\u05dc", "\u05de\u05d0\u05d9", "\u05d9\u05d5\u05e0\u05d9", "\u05d9\u05d5\u05dc\u05d9", 
-"\u05d0\u05d5\u05d2\u05d5\u05e1\u05d8", "\u05e1\u05e4\u05d8\u05de\u05d1\u05e8", "\u05d0\u05d5\u05e7\u05d8\u05d5\u05d1\u05e8", "\u05e0\u05d5\u05d1\u05de\u05d1\u05e8", "\u05d3\u05e6\u05de\u05d1\u05e8"], SHORTMONTHS:["\u05d9\u05e0\u05d5", "\u05e4\u05d1\u05e8", "\u05de\u05e8\u05e1", "\u05d0\u05e4\u05e8", "\u05de\u05d0\u05d9", "\u05d9\u05d5\u05e0", "\u05d9\u05d5\u05dc", "\u05d0\u05d5\u05d2", "\u05e1\u05e4\u05d8", "\u05d0\u05d5\u05e7", "\u05e0\u05d5\u05d1", "\u05d3\u05e6\u05de"], STANDALONESHORTMONTHS:["\u05d9\u05e0\u05d5", 
-"\u05e4\u05d1\u05e8", "\u05de\u05e8\u05e1", "\u05d0\u05e4\u05e8", "\u05de\u05d0\u05d9", "\u05d9\u05d5\u05e0", "\u05d9\u05d5\u05dc", "\u05d0\u05d5\u05d2", "\u05e1\u05e4\u05d8", "\u05d0\u05d5\u05e7", "\u05e0\u05d5\u05d1", "\u05d3\u05e6\u05de"], WEEKDAYS:["\u05d9\u05d5\u05dd \u05e8\u05d0\u05e9\u05d5\u05df", "\u05d9\u05d5\u05dd \u05e9\u05e0\u05d9", "\u05d9\u05d5\u05dd \u05e9\u05dc\u05d9\u05e9\u05d9", "\u05d9\u05d5\u05dd \u05e8\u05d1\u05d9\u05e2\u05d9", "\u05d9\u05d5\u05dd \u05d7\u05de\u05d9\u05e9\u05d9", 
-"\u05d9\u05d5\u05dd \u05e9\u05d9\u05e9\u05d9", "\u05d9\u05d5\u05dd \u05e9\u05d1\u05ea"], STANDALONEWEEKDAYS:["\u05d9\u05d5\u05dd \u05e8\u05d0\u05e9\u05d5\u05df", "\u05d9\u05d5\u05dd \u05e9\u05e0\u05d9", "\u05d9\u05d5\u05dd \u05e9\u05dc\u05d9\u05e9\u05d9", "\u05d9\u05d5\u05dd \u05e8\u05d1\u05d9\u05e2\u05d9", "\u05d9\u05d5\u05dd \u05d7\u05de\u05d9\u05e9\u05d9", "\u05d9\u05d5\u05dd \u05e9\u05d9\u05e9\u05d9", "\u05d9\u05d5\u05dd \u05e9\u05d1\u05ea"], SHORTWEEKDAYS:["\u05d9\u05d5\u05dd \u05d0'", "\u05d9\u05d5\u05dd \u05d1'", 
-"\u05d9\u05d5\u05dd \u05d2'", "\u05d9\u05d5\u05dd \u05d3'", "\u05d9\u05d5\u05dd \u05d4'", "\u05d9\u05d5\u05dd \u05d5'", "\u05e9\u05d1\u05ea"], STANDALONESHORTWEEKDAYS:["\u05d9\u05d5\u05dd \u05d0'", "\u05d9\u05d5\u05dd \u05d1'", "\u05d9\u05d5\u05dd \u05d2'", "\u05d9\u05d5\u05dd \u05d3'", "\u05d9\u05d5\u05dd \u05d4'", "\u05d9\u05d5\u05dd \u05d5'", "\u05e9\u05d1\u05ea"], NARROWWEEKDAYS:["\u05d0", "\u05d1", "\u05d2", "\u05d3", "\u05d4", "\u05d5", "\u05e9"], STANDALONENARROWWEEKDAYS:["\u05d0", "\u05d1", 
-"\u05d2", "\u05d3", "\u05d4", "\u05d5", "\u05e9"], SHORTQUARTERS:["\u05e8\u05d1\u05e2\u05d5\u05df 1", "\u05e8\u05d1\u05e2\u05d5\u05df 2", "\u05e8\u05d1\u05e2\u05d5\u05df 3", "\u05e8\u05d1\u05e2\u05d5\u05df 4"], QUARTERS:["\u05e8\u05d1\u05e2\u05d5\u05df 1", "\u05e8\u05d1\u05e2\u05d5\u05df 2", "\u05e8\u05d1\u05e2\u05d5\u05df 3", "\u05e8\u05d1\u05e2\u05d5\u05df 4"], AMPMS:['\u05dc\u05e4\u05e0\u05d4"\u05e6', '\u05d0\u05d7\u05d4"\u05e6'], DATEFORMATS:["EEEE, d \u05d1MMMM y", "d \u05d1MMMM y", "dd/MM/yyyy", 
-"dd/MM/yy"], TIMEFORMATS:["HH:mm:ss zzzz", "HH:mm:ss z", "HH:mm:ss", "HH:mm"], AVAILABLEFORMATS:{Md:"d/M", MMMMd:"d \u05d1MMMM", MMMd:"MMM d"}, FIRSTDAYOFWEEK:6, WEEKENDRANGE:[4, 5], FIRSTWEEKCUTOFFDAY:2};
-goog.i18n.DateTimeSymbols_hi = {ERAS:["\u0908\u0938\u093e\u092a\u0942\u0930\u094d\u0935", "\u0938\u0928"], ERANAMES:["\u0908\u0938\u093e\u092a\u0942\u0930\u094d\u0935", "\u0938\u0928"], NARROWMONTHS:["\u091c", "\u092b\u093c", "\u092e\u093e", "\u0905", "\u092e", "\u091c\u0942", "\u091c\u0941", "\u0905", "\u0938\u093f", "\u0905", "\u0928", "\u0926\u093f"], STANDALONENARROWMONTHS:["\u091c", "\u092b\u093c", "\u092e\u093e", "\u0905", "\u092e", "\u091c\u0942", "\u091c\u0941", "\u0905", "\u0938\u093f", 
-"\u0905", "\u0928", "\u0926\u093f"], MONTHS:["\u091c\u0928\u0935\u0930\u0940", "\u092b\u0930\u0935\u0930\u0940", "\u092e\u093e\u0930\u094d\u091a", "\u0905\u092a\u094d\u0930\u0948\u0932", "\u092e\u0908", "\u091c\u0942\u0928", "\u091c\u0941\u0932\u093e\u0908", "\u0905\u0917\u0938\u094d\u0924", "\u0938\u093f\u0924\u092e\u094d\u092c\u0930", "\u0905\u0915\u094d\u0924\u0942\u092c\u0930", "\u0928\u0935\u092e\u094d\u092c\u0930", "\u0926\u093f\u0938\u092e\u094d\u092c\u0930"], STANDALONEMONTHS:["\u091c\u0928\u0935\u0930\u0940", 
-"\u092b\u0930\u0935\u0930\u0940", "\u092e\u093e\u0930\u094d\u091a", "\u0905\u092a\u094d\u0930\u0948\u0932", "\u092e\u0908", "\u091c\u0942\u0928", "\u091c\u0941\u0932\u093e\u0908", "\u0905\u0917\u0938\u094d\u0924", "\u0938\u093f\u0924\u092e\u094d\u092c\u0930", "\u0905\u0915\u094d\u0924\u0942\u092c\u0930", "\u0928\u0935\u092e\u094d\u092c\u0930", "\u0926\u093f\u0938\u092e\u094d\u092c\u0930"], SHORTMONTHS:["\u091c\u0928\u0935\u0930\u0940", "\u092b\u0930\u0935\u0930\u0940", "\u092e\u093e\u0930\u094d\u091a", 
-"\u0905\u092a\u094d\u0930\u0948\u0932", "\u092e\u0908", "\u091c\u0942\u0928", "\u091c\u0941\u0932\u093e\u0908", "\u0905\u0917\u0938\u094d\u0924", "\u0938\u093f\u0924\u092e\u094d\u092c\u0930", "\u0905\u0915\u094d\u0924\u0942\u092c\u0930", "\u0928\u0935\u092e\u094d\u092c\u0930", "\u0926\u093f\u0938\u092e\u094d\u092c\u0930"], STANDALONESHORTMONTHS:["\u091c\u0928\u0935\u0930\u0940", "\u092b\u0930\u0935\u0930\u0940", "\u092e\u093e\u0930\u094d\u091a", "\u0905\u092a\u094d\u0930\u0948\u0932", "\u092e\u0908", 
-"\u091c\u0942\u0928", "\u091c\u0941\u0932\u093e\u0908", "\u0905\u0917\u0938\u094d\u0924", "\u0938\u093f\u0924\u092e\u094d\u092c\u0930", "\u0905\u0915\u094d\u0924\u0942\u092c\u0930", "\u0928\u0935\u092e\u094d\u092c\u0930", "\u0926\u093f\u0938\u092e\u094d\u092c\u0930"], WEEKDAYS:["\u0930\u0935\u093f\u0935\u093e\u0930", "\u0938\u094b\u092e\u0935\u093e\u0930", "\u092e\u0902\u0917\u0932\u0935\u093e\u0930", "\u092c\u0941\u0927\u0935\u093e\u0930", "\u0917\u0941\u0930\u0941\u0935\u093e\u0930", "\u0936\u0941\u0915\u094d\u0930\u0935\u093e\u0930", 
-"\u0936\u0928\u093f\u0935\u093e\u0930"], STANDALONEWEEKDAYS:["\u0930\u0935\u093f\u0935\u093e\u0930", "\u0938\u094b\u092e\u0935\u093e\u0930", "\u092e\u0902\u0917\u0932\u0935\u093e\u0930", "\u092c\u0941\u0927\u0935\u093e\u0930", "\u0917\u0941\u0930\u0941\u0935\u093e\u0930", "\u0936\u0941\u0915\u094d\u0930\u0935\u093e\u0930", "\u0936\u0928\u093f\u0935\u093e\u0930"], SHORTWEEKDAYS:["\u0930\u0935\u093f", "\u0938\u094b\u092e", "\u092e\u0902\u0917\u0932", "\u092c\u0941\u0927", "\u0917\u0941\u0930\u0941", 
-"\u0936\u0941\u0915\u094d\u0930", "\u0936\u0928\u093f"], STANDALONESHORTWEEKDAYS:["\u0930\u0935\u093f", "\u0938\u094b\u092e", "\u092e\u0902\u0917\u0932", "\u092c\u0941\u0927", "\u0917\u0941\u0930\u0941", "\u0936\u0941\u0915\u094d\u0930", "\u0936\u0928\u093f"], NARROWWEEKDAYS:["\u0930", "\u0938\u094b", "\u092e\u0902", "\u092c\u0941", "\u0917\u0941", "\u0936\u0941", "\u0936"], STANDALONENARROWWEEKDAYS:["\u0930", "\u0938\u094b", "\u092e\u0902", "\u092c\u0941", "\u0917\u0941", "\u0936\u0941", "\u0936"], 
-SHORTQUARTERS:["\u092a\u094d\u0930\u0925\u092e \u091a\u094c\u0925\u093e\u0908", "\u0926\u094d\u0935\u093f\u0924\u0940\u092f \u091a\u094c\u0925\u093e\u0908", "\u0924\u0943\u0924\u0940\u092f \u091a\u094c\u0925\u093e\u0908", "\u091a\u0924\u0941\u0930\u094d\u0925 \u091a\u094c\u0925\u093e\u0908"], QUARTERS:["\u092a\u094d\u0930\u0925\u092e \u091a\u094c\u0925\u093e\u0908", "\u0926\u094d\u0935\u093f\u0924\u0940\u092f \u091a\u094c\u0925\u093e\u0908", "\u0924\u0943\u0924\u0940\u092f \u091a\u094c\u0925\u093e\u0908", 
-"\u091a\u0924\u0941\u0930\u094d\u0925 \u091a\u094c\u0925\u093e\u0908"], AMPMS:["AM", "PM"], DATEFORMATS:["EEEE, d MMMM y", "d MMMM y", "dd-MM-yyyy", "d-M-yy"], TIMEFORMATS:["h:mm:ss a zzzz", "h:mm:ss a z", "h:mm:ss a", "h:mm a"], AVAILABLEFORMATS:{Md:"d/M", MMMMd:"d MMMM", MMMd:"d MMM"}, FIRSTDAYOFWEEK:6, WEEKENDRANGE:[6, 6], FIRSTWEEKCUTOFFDAY:2};
-goog.i18n.DateTimeSymbols_hr = {ERAS:["pr.n.e.", "AD"], ERANAMES:["Prije Krista", "Poslije Krista"], NARROWMONTHS:["1.", "2.", "3.", "4.", "5.", "6.", "7.", "8.", "9.", "10.", "11.", "12."], STANDALONENARROWMONTHS:["1.", "2.", "3.", "4.", "5.", "6.", "7.", "8.", "9.", "10.", "11.", "12."], MONTHS:["sije\u010dnja", "velja\u010de", "o\u017eujka", "travnja", "svibnja", "lipnja", "srpnja", "kolovoza", "rujna", "listopada", "studenoga", "prosinca"], STANDALONEMONTHS:["sije\u010danj", "velja\u010da", "o\u017eujak", 
-"travanj", "svibanj", "lipanj", "srpanj", "kolovoz", "rujan", "listopad", "studeni", "prosinac"], SHORTMONTHS:["01.", "02.", "03.", "04.", "05.", "06.", "07.", "08.", "09.", "10.", "11.", "12."], STANDALONESHORTMONTHS:["01.", "02.", "03.", "04.", "05.", "06.", "07.", "08.", "09.", "10.", "11.", "12."], WEEKDAYS:["nedjelja", "ponedjeljak", "utorak", "srijeda", "\u010detvrtak", "petak", "subota"], STANDALONEWEEKDAYS:["nedjelja", "ponedjeljak", "utorak", "srijeda", "\u010detvrtak", "petak", "subota"], 
-SHORTWEEKDAYS:["ned", "pon", "uto", "sri", "\u010det", "pet", "sub"], STANDALONESHORTWEEKDAYS:["ned", "pon", "uto", "sri", "\u010det", "pet", "sub"], NARROWWEEKDAYS:["n", "p", "u", "s", "\u010d", "p", "s"], STANDALONENARROWWEEKDAYS:["n", "p", "u", "s", "\u010d", "p", "s"], SHORTQUARTERS:["1kv", "2kv", "3kv", "4kv"], QUARTERS:["1. kvartal", "2. kvartal", "3. kvartal", "4. kvartal"], AMPMS:["AM", "PM"], DATEFORMATS:["EEEE, d. MMMM y.", "d. MMMM y.", "d.M.yyyy.", "dd.MM.yyyy."], TIMEFORMATS:["HH:mm:ss zzzz", 
-"HH:mm:ss z", "HH:mm:ss", "HH:mm"], AVAILABLEFORMATS:{Md:"d.M.", MMMMd:"d. MMMM", MMMd:"d.MMM."}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_hu = {ERAS:["i. e.", "i. sz."], ERANAMES:["id\u0151sz\u00e1m\u00edt\u00e1sunk el\u0151tt", "id\u0151sz\u00e1m\u00edt\u00e1sunk szerint"], NARROWMONTHS:["J", "F", "M", "\u00c1", "M", "J", "J", "A", "Sz", "O", "N", "D"], STANDALONENARROWMONTHS:["J", "F", "M", "\u00c1", "M", "J", "J", "A", "Sz", "O", "N", "D"], MONTHS:["janu\u00e1r", "febru\u00e1r", "m\u00e1rcius", "\u00e1prilis", "m\u00e1jus", "j\u00fanius", "j\u00falius", "augusztus", "szeptember", "okt\u00f3ber", "november", 
-"december"], STANDALONEMONTHS:["janu\u00e1r", "febru\u00e1r", "m\u00e1rcius", "\u00e1prilis", "m\u00e1jus", "j\u00fanius", "j\u00falius", "augusztus", "szeptember", "okt\u00f3ber", "november", "december"], SHORTMONTHS:["jan.", "febr.", "m\u00e1rc.", "\u00e1pr.", "m\u00e1j.", "j\u00fan.", "j\u00fal.", "aug.", "szept.", "okt.", "nov.", "dec."], STANDALONESHORTMONTHS:["jan.", "febr.", "m\u00e1rc.", "\u00e1pr.", "m\u00e1j.", "j\u00fan.", "j\u00fal.", "aug.", "szept.", "okt.", "nov.", "dec."], WEEKDAYS:["vas\u00e1rnap", 
-"h\u00e9tf\u0151", "kedd", "szerda", "cs\u00fct\u00f6rt\u00f6k", "p\u00e9ntek", "szombat"], STANDALONEWEEKDAYS:["vas\u00e1rnap", "h\u00e9tf\u0151", "kedd", "szerda", "cs\u00fct\u00f6rt\u00f6k", "p\u00e9ntek", "szombat"], SHORTWEEKDAYS:["V", "H", "K", "Sze", "Cs", "P", "Szo"], STANDALONESHORTWEEKDAYS:["V", "H", "K", "Sze", "Cs", "P", "Szo"], NARROWWEEKDAYS:["V", "H", "K", "Sz", "Cs", "P", "Sz"], STANDALONENARROWWEEKDAYS:["V", "H", "K", "Sz", "Cs", "P", "Sz"], SHORTQUARTERS:["N1", "N2", "N3", "N4"], 
-QUARTERS:["I. negyed\u00e9v", "II. negyed\u00e9v", "III. negyed\u00e9v", "IV. negyed\u00e9v"], AMPMS:["de.", "du."], DATEFORMATS:["y. MMMM d., EEEE", "y. MMMM d.", "yyyy.MM.dd.", "yyyy.MM.dd."], TIMEFORMATS:["H:mm:ss zzzz", "H:mm:ss z", "H:mm:ss", "H:mm"], AVAILABLEFORMATS:{Md:"M. d.", MMMMd:"MMMM d.", MMMd:"MMM d."}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_id = {ERAS:["BCE", "CE"], ERANAMES:["BCE", "CE"], NARROWMONTHS:["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"], STANDALONENARROWMONTHS:["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"], MONTHS:["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"], STANDALONEMONTHS:["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", 
-"Desember"], SHORTMONTHS:["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"], STANDALONESHORTMONTHS:["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"], WEEKDAYS:["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"], STANDALONEWEEKDAYS:["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"], SHORTWEEKDAYS:["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"], STANDALONESHORTWEEKDAYS:["Min", "Sen", "Sel", "Rab", "Kam", 
-"Jum", "Sab"], NARROWWEEKDAYS:["1", "2", "3", "4", "5", "6", "7"], STANDALONENARROWWEEKDAYS:["1", "2", "3", "4", "5", "6", "7"], SHORTQUARTERS:["K1", "K2", "K3", "K4"], QUARTERS:["kuartal pertama", "kuartal kedua", "kuartal ketiga", "kuartal keempat"], AMPMS:["AM", "PM"], DATEFORMATS:["EEEE, dd MMMM yyyy", "d MMMM yyyy", "d MMM yyyy", "dd/MM/yy"], TIMEFORMATS:["H:mm:ss zzzz", "HH:mm:ss z", "HH:mm:ss", "HH:mm"], AVAILABLEFORMATS:{Md:"M-d", MMMMd:"MMMM d", MMMd:"MMM d"}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 
-6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_in = {ERAS:["BCE", "CE"], ERANAMES:["BCE", "CE"], NARROWMONTHS:["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"], STANDALONENARROWMONTHS:["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"], MONTHS:["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"], STANDALONEMONTHS:["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", 
-"Desember"], SHORTMONTHS:["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"], STANDALONESHORTMONTHS:["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"], WEEKDAYS:["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"], STANDALONEWEEKDAYS:["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"], SHORTWEEKDAYS:["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"], STANDALONESHORTWEEKDAYS:["Min", "Sen", "Sel", "Rab", "Kam", 
-"Jum", "Sab"], NARROWWEEKDAYS:["1", "2", "3", "4", "5", "6", "7"], STANDALONENARROWWEEKDAYS:["1", "2", "3", "4", "5", "6", "7"], SHORTQUARTERS:["K1", "K2", "K3", "K4"], QUARTERS:["kuartal pertama", "kuartal kedua", "kuartal ketiga", "kuartal keempat"], AMPMS:["AM", "PM"], DATEFORMATS:["EEEE, dd MMMM yyyy", "d MMMM yyyy", "d MMM yyyy", "dd/MM/yy"], TIMEFORMATS:["H:mm:ss zzzz", "HH:mm:ss z", "HH:mm:ss", "HH:mm"], AVAILABLEFORMATS:{Md:"M-d", MMMMd:"MMMM d", MMMd:"MMM d"}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 
-6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_is = {ERAS:["fyrir Krist", "eftir Krist"], ERANAMES:["fyrir Krist", "eftir Krist"], NARROWMONTHS:["j", "f", "m", "a", "m", "j", "j", "\u00e1", "s", "o", "n", "d"], STANDALONENARROWMONTHS:["j", "f", "m", "a", "m", "j", "j", "\u00e1", "s", "o", "n", "d"], MONTHS:["jan\u00faar", "febr\u00faar", "mars", "apr\u00edl", "ma\u00ed", "j\u00fan\u00ed", "j\u00fal\u00ed", "\u00e1g\u00fast", "september", "okt\u00f3ber", "n\u00f3vember", "desember"], STANDALONEMONTHS:["jan\u00faar", "febr\u00faar", 
-"mars", "apr\u00edl", "ma\u00ed", "j\u00fan\u00ed", "j\u00fal\u00ed", "\u00e1g\u00fast", "september", "okt\u00f3ber", "n\u00f3vember", "desember"], SHORTMONTHS:["jan", "feb", "mar", "apr", "ma\u00ed", "j\u00fan", "j\u00fal", "\u00e1g\u00fa", "sep", "okt", "n\u00f3v", "des"], STANDALONESHORTMONTHS:["jan", "feb", "mar", "apr", "ma\u00ed", "j\u00fan", "j\u00fal", "\u00e1g\u00fa", "sep", "okt", "n\u00f3v", "des"], WEEKDAYS:["sunnudagur", "m\u00e1nudagur", "\u00feri\u00f0judagur", "mi\u00f0vikudagur", 
-"fimmtudagur", "f\u00f6studagur", "laugardagur"], STANDALONEWEEKDAYS:["sunnudagur", "m\u00e1nudagur", "\u00feri\u00f0judagur", "mi\u00f0vikudagur", "fimmtudagur", "f\u00f6studagur", "laugardagur"], SHORTWEEKDAYS:["sun", "m\u00e1n", "\u00feri", "mi\u00f0", "fim", "f\u00f6s", "lau"], STANDALONESHORTWEEKDAYS:["sun", "m\u00e1n", "\u00feri", "mi\u00f0", "fim", "f\u00f6s", "lau"], NARROWWEEKDAYS:["s", "m", "\u00fe", "m", "f", "f", "l"], STANDALONENARROWWEEKDAYS:["s", "m", "\u00fe", "m", "f", "f", "l"], 
-SHORTQUARTERS:["F1", "F2", "F3", "F4"], QUARTERS:["1st fj\u00f3r\u00f0ungur", "2nd fj\u00f3r\u00f0ungur", "3rd fj\u00f3r\u00f0ungur", "4th fj\u00f3r\u00f0ungur"], AMPMS:["f.h.", "e.h."], DATEFORMATS:["EEEE, d. MMMM y", "d. MMMM y", "d.M.yyyy", "d.M.yyyy"], TIMEFORMATS:["HH:mm:ss zzzz", "HH:mm:ss z", "HH:mm:ss", "HH:mm"], AVAILABLEFORMATS:{Md:"d.M", MMMMd:"d. MMMM", MMMd:"d. MMM"}, FIRSTDAYOFWEEK:6, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:2};
-goog.i18n.DateTimeSymbols_it = {ERAS:["aC", "dC"], ERANAMES:["a.C.", "d.C"], NARROWMONTHS:["G", "F", "M", "A", "M", "G", "L", "A", "S", "O", "N", "D"], STANDALONENARROWMONTHS:["G", "F", "M", "A", "M", "G", "L", "A", "S", "O", "N", "D"], MONTHS:["gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno", "luglio", "agosto", "settembre", "ottobre", "novembre", "dicembre"], STANDALONEMONTHS:["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", 
-"Dicembre"], SHORTMONTHS:["gen", "feb", "mar", "apr", "mag", "giu", "lug", "ago", "set", "ott", "nov", "dic"], STANDALONESHORTMONTHS:["gen", "feb", "mar", "apr", "mag", "giu", "lug", "ago", "set", "ott", "nov", "dic"], WEEKDAYS:["domenica", "luned\u00ec", "marted\u00ec", "mercoled\u00ec", "gioved\u00ec", "venerd\u00ec", "sabato"], STANDALONEWEEKDAYS:["Domenica", "Luned\u00ec", "Marted\u00ec", "Mercoled\u00ec", "Gioved\u00ec", "Venerd\u00ec", "Sabato"], SHORTWEEKDAYS:["dom", "lun", "mar", "mer", "gio", 
-"ven", "sab"], STANDALONESHORTWEEKDAYS:["dom", "lun", "mar", "mer", "gio", "ven", "sab"], NARROWWEEKDAYS:["D", "L", "M", "M", "G", "V", "S"], STANDALONENARROWWEEKDAYS:["D", "L", "M", "M", "G", "V", "S"], SHORTQUARTERS:["T1", "T2", "T3", "T4"], QUARTERS:["1o trimestre", "2o trimestre", "3o trimestre", "4o trimestre"], AMPMS:["m.", "p."], DATEFORMATS:["EEEE d MMMM y", "dd MMMM y", "dd/MMM/y", "dd/MM/yy"], TIMEFORMATS:["HH.mm.ss zzzz", "HH.mm.ss z", "HH.mm.ss", "HH.mm"], AVAILABLEFORMATS:{Md:"d/M", 
-MMMMd:"d MMMM", MMMd:"d MMM"}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_iw = {ERAS:["\u05dc\u05e4\u05e0\u05d4\u05f4\u05e1", "\u05dc\u05e1\u05d4\u05f4\u05e0"], ERANAMES:["\u05dc\u05e4\u05e0\u05d9 \u05d4\u05e1\u05e4\u05d9\u05e8\u05d4", "\u05dc\u05e1\u05e4\u05d9\u05e8\u05d4"], NARROWMONTHS:["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"], STANDALONENARROWMONTHS:["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"], MONTHS:["\u05d9\u05e0\u05d5\u05d0\u05e8", "\u05e4\u05d1\u05e8\u05d5\u05d0\u05e8", "\u05de\u05e8\u05e1", "\u05d0\u05e4\u05e8\u05d9\u05dc", 
-"\u05de\u05d0\u05d9", "\u05d9\u05d5\u05e0\u05d9", "\u05d9\u05d5\u05dc\u05d9", "\u05d0\u05d5\u05d2\u05d5\u05e1\u05d8", "\u05e1\u05e4\u05d8\u05de\u05d1\u05e8", "\u05d0\u05d5\u05e7\u05d8\u05d5\u05d1\u05e8", "\u05e0\u05d5\u05d1\u05de\u05d1\u05e8", "\u05d3\u05e6\u05de\u05d1\u05e8"], STANDALONEMONTHS:["\u05d9\u05e0\u05d5\u05d0\u05e8", "\u05e4\u05d1\u05e8\u05d5\u05d0\u05e8", "\u05de\u05e8\u05e1", "\u05d0\u05e4\u05e8\u05d9\u05dc", "\u05de\u05d0\u05d9", "\u05d9\u05d5\u05e0\u05d9", "\u05d9\u05d5\u05dc\u05d9", 
-"\u05d0\u05d5\u05d2\u05d5\u05e1\u05d8", "\u05e1\u05e4\u05d8\u05de\u05d1\u05e8", "\u05d0\u05d5\u05e7\u05d8\u05d5\u05d1\u05e8", "\u05e0\u05d5\u05d1\u05de\u05d1\u05e8", "\u05d3\u05e6\u05de\u05d1\u05e8"], SHORTMONTHS:["\u05d9\u05e0\u05d5", "\u05e4\u05d1\u05e8", "\u05de\u05e8\u05e1", "\u05d0\u05e4\u05e8", "\u05de\u05d0\u05d9", "\u05d9\u05d5\u05e0", "\u05d9\u05d5\u05dc", "\u05d0\u05d5\u05d2", "\u05e1\u05e4\u05d8", "\u05d0\u05d5\u05e7", "\u05e0\u05d5\u05d1", "\u05d3\u05e6\u05de"], STANDALONESHORTMONTHS:["\u05d9\u05e0\u05d5", 
-"\u05e4\u05d1\u05e8", "\u05de\u05e8\u05e1", "\u05d0\u05e4\u05e8", "\u05de\u05d0\u05d9", "\u05d9\u05d5\u05e0", "\u05d9\u05d5\u05dc", "\u05d0\u05d5\u05d2", "\u05e1\u05e4\u05d8", "\u05d0\u05d5\u05e7", "\u05e0\u05d5\u05d1", "\u05d3\u05e6\u05de"], WEEKDAYS:["\u05d9\u05d5\u05dd \u05e8\u05d0\u05e9\u05d5\u05df", "\u05d9\u05d5\u05dd \u05e9\u05e0\u05d9", "\u05d9\u05d5\u05dd \u05e9\u05dc\u05d9\u05e9\u05d9", "\u05d9\u05d5\u05dd \u05e8\u05d1\u05d9\u05e2\u05d9", "\u05d9\u05d5\u05dd \u05d7\u05de\u05d9\u05e9\u05d9", 
-"\u05d9\u05d5\u05dd \u05e9\u05d9\u05e9\u05d9", "\u05d9\u05d5\u05dd \u05e9\u05d1\u05ea"], STANDALONEWEEKDAYS:["\u05d9\u05d5\u05dd \u05e8\u05d0\u05e9\u05d5\u05df", "\u05d9\u05d5\u05dd \u05e9\u05e0\u05d9", "\u05d9\u05d5\u05dd \u05e9\u05dc\u05d9\u05e9\u05d9", "\u05d9\u05d5\u05dd \u05e8\u05d1\u05d9\u05e2\u05d9", "\u05d9\u05d5\u05dd \u05d7\u05de\u05d9\u05e9\u05d9", "\u05d9\u05d5\u05dd \u05e9\u05d9\u05e9\u05d9", "\u05d9\u05d5\u05dd \u05e9\u05d1\u05ea"], SHORTWEEKDAYS:["\u05d9\u05d5\u05dd \u05d0'", "\u05d9\u05d5\u05dd \u05d1'", 
-"\u05d9\u05d5\u05dd \u05d2'", "\u05d9\u05d5\u05dd \u05d3'", "\u05d9\u05d5\u05dd \u05d4'", "\u05d9\u05d5\u05dd \u05d5'", "\u05e9\u05d1\u05ea"], STANDALONESHORTWEEKDAYS:["\u05d9\u05d5\u05dd \u05d0'", "\u05d9\u05d5\u05dd \u05d1'", "\u05d9\u05d5\u05dd \u05d2'", "\u05d9\u05d5\u05dd \u05d3'", "\u05d9\u05d5\u05dd \u05d4'", "\u05d9\u05d5\u05dd \u05d5'", "\u05e9\u05d1\u05ea"], NARROWWEEKDAYS:["\u05d0", "\u05d1", "\u05d2", "\u05d3", "\u05d4", "\u05d5", "\u05e9"], STANDALONENARROWWEEKDAYS:["\u05d0", "\u05d1", 
-"\u05d2", "\u05d3", "\u05d4", "\u05d5", "\u05e9"], SHORTQUARTERS:["\u05e8\u05d1\u05e2\u05d5\u05df 1", "\u05e8\u05d1\u05e2\u05d5\u05df 2", "\u05e8\u05d1\u05e2\u05d5\u05df 3", "\u05e8\u05d1\u05e2\u05d5\u05df 4"], QUARTERS:["\u05e8\u05d1\u05e2\u05d5\u05df 1", "\u05e8\u05d1\u05e2\u05d5\u05df 2", "\u05e8\u05d1\u05e2\u05d5\u05df 3", "\u05e8\u05d1\u05e2\u05d5\u05df 4"], AMPMS:['\u05dc\u05e4\u05e0\u05d4"\u05e6', '\u05d0\u05d7\u05d4"\u05e6'], DATEFORMATS:["EEEE, d \u05d1MMMM y", "d \u05d1MMMM y", "dd/MM/yyyy", 
-"dd/MM/yy"], TIMEFORMATS:["HH:mm:ss zzzz", "HH:mm:ss z", "HH:mm:ss", "HH:mm"], AVAILABLEFORMATS:{Md:"d/M", MMMMd:"d \u05d1MMMM", MMMd:"MMM d"}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_ja = {ERAS:["\u7d00\u5143\u524d", "\u897f\u66a6"], ERANAMES:["\u7d00\u5143\u524d", "\u897f\u66a6"], NARROWMONTHS:["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"], STANDALONENARROWMONTHS:["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"], MONTHS:["1\u6708", "2\u6708", "3\u6708", "4\u6708", "5\u6708", "6\u6708", "7\u6708", "8\u6708", "9\u6708", "10\u6708", "11\u6708", "12\u6708"], STANDALONEMONTHS:["1\u6708", "2\u6708", "3\u6708", "4\u6708", "5\u6708", 
-"6\u6708", "7\u6708", "8\u6708", "9\u6708", "10\u6708", "11\u6708", "12\u6708"], SHORTMONTHS:["1\u6708", "2\u6708", "3\u6708", "4\u6708", "5\u6708", "6\u6708", "7\u6708", "8\u6708", "9\u6708", "10\u6708", "11\u6708", "12\u6708"], STANDALONESHORTMONTHS:["1\u6708", "2\u6708", "3\u6708", "4\u6708", "5\u6708", "6\u6708", "7\u6708", "8\u6708", "9\u6708", "10\u6708", "11\u6708", "12\u6708"], WEEKDAYS:["\u65e5\u66dc\u65e5", "\u6708\u66dc\u65e5", "\u706b\u66dc\u65e5", "\u6c34\u66dc\u65e5", "\u6728\u66dc\u65e5", 
-"\u91d1\u66dc\u65e5", "\u571f\u66dc\u65e5"], STANDALONEWEEKDAYS:["\u65e5\u66dc\u65e5", "\u6708\u66dc\u65e5", "\u706b\u66dc\u65e5", "\u6c34\u66dc\u65e5", "\u6728\u66dc\u65e5", "\u91d1\u66dc\u65e5", "\u571f\u66dc\u65e5"], SHORTWEEKDAYS:["\u65e5", "\u6708", "\u706b", "\u6c34", "\u6728", "\u91d1", "\u571f"], STANDALONESHORTWEEKDAYS:["\u65e5", "\u6708", "\u706b", "\u6c34", "\u6728", "\u91d1", "\u571f"], NARROWWEEKDAYS:["\u65e5", "\u6708", "\u706b", "\u6c34", "\u6728", "\u91d1", "\u571f"], STANDALONENARROWWEEKDAYS:["\u65e5", 
-"\u6708", "\u706b", "\u6c34", "\u6728", "\u91d1", "\u571f"], SHORTQUARTERS:["Q1", "Q2", "Q3", "Q4"], QUARTERS:["\u7b2c1\u56db\u534a\u671f", "\u7b2c2\u56db\u534a\u671f", "\u7b2c3\u56db\u534a\u671f", "\u7b2c4\u56db\u534a\u671f"], AMPMS:["\u5348\u524d", "\u5348\u5f8c"], DATEFORMATS:["y\u5e74M\u6708d\u65e5EEEE", "y\u5e74M\u6708d\u65e5", "yyyy/MM/dd", "yy/MM/dd"], TIMEFORMATS:["H\u6642mm\u5206ss\u79d2 zzzz", "HH:mm:ss z", "H:mm:ss", "H:mm"], AVAILABLEFORMATS:{Md:"M/d", MMMMd:"M\u6708d\u65e5", MMMd:"M\u6708d\u65e5"}, 
-FIRSTDAYOFWEEK:6, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:2};
-goog.i18n.DateTimeSymbols_kn = {ERAS:["BCE", "CE"], ERANAMES:["\u0c88\u0cb8\u0caa\u0cc2\u0cb5\u0cef.", "\u0c95\u0ccd\u0cb0\u0cbf\u0cb8\u0ccd\u0ca4 \u0cb6\u0c95"], NARROWMONTHS:["\u0c9c", "\u0cab\u0cc6", "\u0cae\u0cbe", "\u0c8e", "\u0cae\u0cc7", "\u0c9c\u0cc2", "\u0c9c\u0cc1", "\u0c86", "\u0cb8\u0cc6", "\u0c85", "\u0ca8", "\u0ca1\u0cbf"], STANDALONENARROWMONTHS:["\u0c9c", "\u0cab\u0cc6", "\u0cae\u0cbe", "\u0c8e", "\u0cae\u0cc7", "\u0c9c\u0cc2", "\u0c9c\u0cc1", "\u0c86", "\u0cb8\u0cc6", "\u0c85", "\u0ca8", 
-"\u0ca1\u0cbf"], MONTHS:["\u0c9c\u0ca8\u0cb5\u0cb0\u0cc0", "\u0cab\u0cc6\u0cac\u0ccd\u0cb0\u0cb5\u0cb0\u0cc0", "\u0cae\u0cbe\u0cb0\u0ccd\u0c9a\u0ccd", "\u0c8e\u0caa\u0ccd\u0cb0\u0cbf\u0cb2\u0ccd", "\u0cae\u0cc6", "\u0c9c\u0cc2\u0ca8\u0ccd", "\u0c9c\u0cc1\u0cb2\u0cc8", "\u0c86\u0c97\u0cb8\u0ccd\u0c9f\u0ccd", "\u0cb8\u0caa\u0ccd\u0c9f\u0cc6\u0c82\u0cac\u0cb0\u0ccd", "\u0c85\u0c95\u0ccd\u0c9f\u0ccb\u0cac\u0cb0\u0ccd", "\u0ca8\u0cb5\u0cc6\u0c82\u0cac\u0cb0\u0ccd", "\u0ca1\u0cbf\u0cb8\u0cc6\u0c82\u0cac\u0cb0\u0ccd"], 
-STANDALONEMONTHS:["\u0c9c\u0ca8\u0cb5\u0cb0\u0cc0", "\u0cab\u0cc6\u0cac\u0ccd\u0cb0\u0cb5\u0cb0\u0cc0", "\u0cae\u0cbe\u0cb0\u0ccd\u0c9a\u0ccd", "\u0c8e\u0caa\u0ccd\u0cb0\u0cbf\u0cb2\u0ccd", "\u0cae\u0cc6", "\u0c9c\u0cc2\u0ca8\u0ccd", "\u0c9c\u0cc1\u0cb2\u0cc8", "\u0c86\u0c97\u0cb8\u0ccd\u0c9f\u0ccd", "\u0cb8\u0caa\u0ccd\u0c9f\u0cc6\u0c82\u0cac\u0cb0\u0ccd", "\u0c85\u0c95\u0ccd\u0c9f\u0ccb\u0cac\u0cb0\u0ccd", "\u0ca8\u0cb5\u0cc6\u0c82\u0cac\u0cb0\u0ccd", "\u0ca1\u0cbf\u0cb8\u0cc6\u0c82\u0cac\u0cb0\u0ccd"], 
-SHORTMONTHS:["\u0c9c\u0ca8\u0cb5\u0cb0\u0cc0", "\u0cab\u0cc6\u0cac\u0ccd\u0cb0\u0cb5\u0cb0\u0cc0", "\u0cae\u0cbe\u0cb0\u0ccd\u0c9a\u0ccd", "\u0c8e\u0caa\u0ccd\u0cb0\u0cbf\u0cb2\u0ccd", "\u0cae\u0cc6", "\u0c9c\u0cc2\u0ca8\u0ccd", "\u0c9c\u0cc1\u0cb2\u0cc8", "\u0c86\u0c97\u0cb8\u0ccd\u0c9f\u0ccd", "\u0cb8\u0caa\u0ccd\u0c9f\u0cc6\u0c82\u0cac\u0cb0\u0ccd", "\u0c85\u0c95\u0ccd\u0c9f\u0ccb\u0cac\u0cb0\u0ccd", "\u0ca8\u0cb5\u0cc6\u0c82\u0cac\u0cb0\u0ccd", "\u0ca1\u0cbf\u0cb8\u0cc6\u0c82\u0cac\u0cb0\u0ccd"], 
-STANDALONESHORTMONTHS:["\u0c9c\u0ca8\u0cb5\u0cb0\u0cc0", "\u0cab\u0cc6\u0cac\u0ccd\u0cb0\u0cb5\u0cb0\u0cc0", "\u0cae\u0cbe\u0cb0\u0ccd\u0c9a\u0ccd", "\u0c8e\u0caa\u0ccd\u0cb0\u0cbf\u0cb2\u0ccd", "\u0cae\u0cc6", "\u0c9c\u0cc2\u0ca8\u0ccd", "\u0c9c\u0cc1\u0cb2\u0cc8", "\u0c86\u0c97\u0cb8\u0ccd\u0c9f\u0ccd", "\u0cb8\u0caa\u0ccd\u0c9f\u0cc6\u0c82\u0cac\u0cb0\u0ccd", "\u0c85\u0c95\u0ccd\u0c9f\u0ccb\u0cac\u0cb0\u0ccd", "\u0ca8\u0cb5\u0cc6\u0c82\u0cac\u0cb0\u0ccd", "\u0ca1\u0cbf\u0cb8\u0cc6\u0c82\u0cac\u0cb0\u0ccd"], 
-WEEKDAYS:["\u0cb0\u0cb5\u0cbf\u0cb5\u0cbe\u0cb0", "\u0cb8\u0ccb\u0cae\u0cb5\u0cbe\u0cb0", "\u0cae\u0c82\u0c97\u0cb3\u0cb5\u0cbe\u0cb0", "\u0cac\u0cc1\u0ca7\u0cb5\u0cbe\u0cb0", "\u0c97\u0cc1\u0cb0\u0cc1\u0cb5\u0cbe\u0cb0", "\u0cb6\u0cc1\u0c95\u0ccd\u0cb0\u0cb5\u0cbe\u0cb0", "\u0cb6\u0ca8\u0cbf\u0cb5\u0cbe\u0cb0"], STANDALONEWEEKDAYS:["\u0cb0\u0cb5\u0cbf\u0cb5\u0cbe\u0cb0", "\u0cb8\u0ccb\u0cae\u0cb5\u0cbe\u0cb0", "\u0cae\u0c82\u0c97\u0cb3\u0cb5\u0cbe\u0cb0", "\u0cac\u0cc1\u0ca7\u0cb5\u0cbe\u0cb0", 
-"\u0c97\u0cc1\u0cb0\u0cc1\u0cb5\u0cbe\u0cb0", "\u0cb6\u0cc1\u0c95\u0ccd\u0cb0\u0cb5\u0cbe\u0cb0", "\u0cb6\u0ca8\u0cbf\u0cb5\u0cbe\u0cb0"], SHORTWEEKDAYS:["\u0cb0.", "\u0cb8\u0ccb.", "\u0cae\u0c82.", "\u0cac\u0cc1.", "\u0c97\u0cc1.", "\u0cb6\u0cc1.", "\u0cb6\u0ca8\u0cbf."], STANDALONESHORTWEEKDAYS:["\u0cb0.", "\u0cb8\u0ccb.", "\u0cae\u0c82.", "\u0cac\u0cc1.", "\u0c97\u0cc1.", "\u0cb6\u0cc1.", "\u0cb6\u0ca8\u0cbf."], NARROWWEEKDAYS:["\u0cb0", "\u0cb8\u0ccb", "\u0cae\u0c82", "\u0cac\u0cc1", "\u0c97\u0cc1", 
-"\u0cb6\u0cc1", "\u0cb6"], STANDALONENARROWWEEKDAYS:["\u0cb0", "\u0cb8\u0ccb", "\u0cae\u0c82", "\u0cac\u0cc1", "\u0c97\u0cc1", "\u0cb6\u0cc1", "\u0cb6"], SHORTQUARTERS:["Q1", "Q2", "Q3", "Q4"], QUARTERS:["\u0c92\u0c82\u0ca6\u0cc1 1", "\u0c8e\u0cb0\u0ca1\u0cc1 2", "\u0cae\u0cc2\u0cb0\u0cc1 3", "\u0ca8\u0cbe\u0cb2\u0cc3\u0c95 4"], AMPMS:["am", "pm"], DATEFORMATS:["EEEE d MMMM y", "d MMMM y", "d MMM y", "d-M-yy"], TIMEFORMATS:["hh:mm:ss a zzzz", "hh:mm:ss a z", "hh:mm:ss a", "hh:mm a"], AVAILABLEFORMATS:{Md:"M-d", 
-MMMMd:"d MMMM", MMMd:"MMM d"}, FIRSTDAYOFWEEK:6, WEEKENDRANGE:[6, 6], FIRSTWEEKCUTOFFDAY:2};
-goog.i18n.DateTimeSymbols_ko = {ERAS:["\uae30\uc6d0\uc804", "\uc11c\uae30"], ERANAMES:["\uc11c\ub825\uae30\uc6d0\uc804", "\uc11c\ub825\uae30\uc6d0"], NARROWMONTHS:["1\uc6d4", "2\uc6d4", "3\uc6d4", "4\uc6d4", "5\uc6d4", "6\uc6d4", "7\uc6d4", "8\uc6d4", "9\uc6d4", "10\uc6d4", "11\uc6d4", "12\uc6d4"], STANDALONENARROWMONTHS:["1\uc6d4", "2\uc6d4", "3\uc6d4", "4\uc6d4", "5\uc6d4", "6\uc6d4", "7\uc6d4", "8\uc6d4", "9\uc6d4", "10\uc6d4", "11\uc6d4", "12\uc6d4"], MONTHS:["1\uc6d4", "2\uc6d4", "3\uc6d4", 
-"4\uc6d4", "5\uc6d4", "6\uc6d4", "7\uc6d4", "8\uc6d4", "9\uc6d4", "10\uc6d4", "11\uc6d4", "12\uc6d4"], STANDALONEMONTHS:["1\uc6d4", "2\uc6d4", "3\uc6d4", "4\uc6d4", "5\uc6d4", "6\uc6d4", "7\uc6d4", "8\uc6d4", "9\uc6d4", "10\uc6d4", "11\uc6d4", "12\uc6d4"], SHORTMONTHS:["1\uc6d4", "2\uc6d4", "3\uc6d4", "4\uc6d4", "5\uc6d4", "6\uc6d4", "7\uc6d4", "8\uc6d4", "9\uc6d4", "10\uc6d4", "11\uc6d4", "12\uc6d4"], STANDALONESHORTMONTHS:["1\uc6d4", "2\uc6d4", "3\uc6d4", "4\uc6d4", "5\uc6d4", "6\uc6d4", "7\uc6d4", 
-"8\uc6d4", "9\uc6d4", "10\uc6d4", "11\uc6d4", "12\uc6d4"], WEEKDAYS:["\uc77c\uc694\uc77c", "\uc6d4\uc694\uc77c", "\ud654\uc694\uc77c", "\uc218\uc694\uc77c", "\ubaa9\uc694\uc77c", "\uae08\uc694\uc77c", "\ud1a0\uc694\uc77c"], STANDALONEWEEKDAYS:["\uc77c\uc694\uc77c", "\uc6d4\uc694\uc77c", "\ud654\uc694\uc77c", "\uc218\uc694\uc77c", "\ubaa9\uc694\uc77c", "\uae08\uc694\uc77c", "\ud1a0\uc694\uc77c"], SHORTWEEKDAYS:["\uc77c", "\uc6d4", "\ud654", "\uc218", "\ubaa9", "\uae08", "\ud1a0"], STANDALONESHORTWEEKDAYS:["\uc77c", 
-"\uc6d4", "\ud654", "\uc218", "\ubaa9", "\uae08", "\ud1a0"], NARROWWEEKDAYS:["\uc77c", "\uc6d4", "\ud654", "\uc218", "\ubaa9", "\uae08", "\ud1a0"], STANDALONENARROWWEEKDAYS:["\uc77c", "\uc6d4", "\ud654", "\uc218", "\ubaa9", "\uae08", "\ud1a0"], SHORTQUARTERS:["1\ubd84\uae30", "2\ubd84\uae30", "3\ubd84\uae30", "4\ubd84\uae30"], QUARTERS:["\uc81c 1/4\ubd84\uae30", "\uc81c 2/4\ubd84\uae30", "\uc81c 3/4\ubd84\uae30", "\uc81c 4/4\ubd84\uae30"], AMPMS:["\uc624\uc804", "\uc624\ud6c4"], DATEFORMATS:["y\ub144 M\uc6d4 d\uc77c EEEE", 
-"y\ub144 M\uc6d4 d\uc77c", "yyyy. M. d.", "yy. M. d."], TIMEFORMATS:["a hh\uc2dc mm\ubd84 ss\ucd08 zzzz", "a hh\uc2dc mm\ubd84 ss\ucd08 z", "a h:mm:ss", "a h:mm"], AVAILABLEFORMATS:{Md:"M. d.", MMMMd:"MMMM d\uc77c", MMMd:"MMM d\uc77c"}, FIRSTDAYOFWEEK:6, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:2};
-goog.i18n.DateTimeSymbols_ln = {ERAS:["libos\u00f3 ya Y.-K.", "nsima ya Y.-K."], ERANAMES:["libos\u00f3 ya Y.-K.", "nsima ya Y.-K."], NARROWMONTHS:["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"], STANDALONENARROWMONTHS:["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"], MONTHS:["s\u00e1nz\u00e1 ya yambo", "s\u00e1nz\u00e1 ya m\u00edbal\u00e9", "s\u00e1nz\u00e1 ya m\u00eds\u00e1to", "s\u00e1nz\u00e1 ya m\u00ednei", "s\u00e1nz\u00e1 ya m\u00edt\u00e1no", "s\u00e1nz\u00e1 ya mot\u00f3b\u00e1", 
-"s\u00e1nz\u00e1 ya nsambo", "s\u00e1nz\u00e1 ya mwambe", "s\u00e1nz\u00e1 ya libwa", "s\u00e1nz\u00e1 ya z\u00f3mi", "s\u00e1nz\u00e1 ya z\u00f3mi na m\u0254\u030ck\u0254\u0301", "s\u00e1nz\u00e1 ya z\u00f3mi na m\u00edbal\u00e9"], STANDALONEMONTHS:["s\u00e1nz\u00e1 ya yambo", "s\u00e1nz\u00e1 ya m\u00edbal\u00e9", "s\u00e1nz\u00e1 ya m\u00eds\u00e1to", "s\u00e1nz\u00e1 ya m\u00ednei", "s\u00e1nz\u00e1 ya m\u00edt\u00e1no", "s\u00e1nz\u00e1 ya mot\u00f3b\u00e1", "s\u00e1nz\u00e1 ya nsambo", "s\u00e1nz\u00e1 ya mwambe", 
-"s\u00e1nz\u00e1 ya libwa", "s\u00e1nz\u00e1 ya z\u00f3mi", "s\u00e1nz\u00e1 ya z\u00f3mi na m\u0254\u030ck\u0254\u0301", "s\u00e1nz\u00e1 ya z\u00f3mi na m\u00edbal\u00e9"], SHORTMONTHS:["s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8", "s9", "s10", "s11", "s12"], STANDALONESHORTMONTHS:["s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8", "s9", "s10", "s11", "s12"], WEEKDAYS:["eyenga", "mok\u0254l\u0254 ya libos\u00f3", "mok\u0254l\u0254 ya m\u00edbal\u00e9", "mok\u0254l\u0254 ya m\u00eds\u00e1to", "mok\u0254l\u0254 ya m\u00edn\u00e9i", 
-"mok\u0254l\u0254 ya m\u00edt\u00e1no", "mp\u0254\u0301s\u0254"], STANDALONEWEEKDAYS:["eyenga", "mok\u0254l\u0254 ya libos\u00f3", "mok\u0254l\u0254 ya m\u00edbal\u00e9", "mok\u0254l\u0254 ya m\u00eds\u00e1to", "mok\u0254l\u0254 ya m\u00edn\u00e9i", "mok\u0254l\u0254 ya m\u00edt\u00e1no", "mp\u0254\u0301s\u0254"], SHORTWEEKDAYS:["eye", "m1", "m2", "m3", "m4", "m5", "mps"], STANDALONESHORTWEEKDAYS:["eye", "m1", "m2", "m3", "m4", "m5", "mps"], NARROWWEEKDAYS:["1", "2", "3", "4", "5", "6", "7"], STANDALONENARROWWEEKDAYS:["1", 
-"2", "3", "4", "5", "6", "7"], SHORTQUARTERS:["SM1", "SM2", "SM3", "SM4"], QUARTERS:["s\u00e1nz\u00e1 m\u00eds\u00e1to ya yambo", "s\u00e1nz\u00e1 m\u00eds\u00e1to ya m\u00edbal\u00e9", "s\u00e1nz\u00e1 m\u00eds\u00e1to ya m\u00eds\u00e1to", "s\u00e1nz\u00e1 m\u00eds\u00e1to ya m\u00ednei"], AMPMS:["AM", "PM"], DATEFORMATS:["EEEE, y MMMM dd", "y MMMM d", "y MMM d", "yy/MM/dd"], TIMEFORMATS:["HH:mm:ss zzzz", "HH:mm:ss z", "HH:mm:ss", "HH:mm"], AVAILABLEFORMATS:{Md:"M-d", MMMMd:"MMMM d", MMMd:"MMM d"}, 
-FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_lt = {ERAS:["pr. Kr.", "po Kr."], ERANAMES:["prie\u0161 Krist\u0173", "po Kristaus"], NARROWMONTHS:["S", "V", "K", "B", "G", "B", "L", "R", "R", "S", "L", "G"], STANDALONENARROWMONTHS:["S", "V", "K", "B", "G", "B", "L", "R", "R", "S", "L", "G"], MONTHS:["sausio", "vasario", "kovo", "baland\u017eio", "gegu\u017e\u0117s", "bir\u017eelio", "liepos", "rugpj\u016b\u010dio", "rugs\u0117jo", "spalio", "lapkri\u010dio", "gruod\u017eio"], STANDALONEMONTHS:["Sausis", "Vasaris", "Kovas", 
-"Balandis", "Gegu\u017e\u0117", "Bir\u017eelis", "Liepa", "Rugpj\u016btis", "Rugs\u0117jis", "Spalis", "Lapkritis", "Gruodis"], SHORTMONTHS:["Sau", "Vas", "Kov", "Bal", "Geg", "Bir", "Lie", "Rgp", "Rgs", "Spl", "Lap", "Grd"], STANDALONESHORTMONTHS:["Sau", "Vas", "Kov", "Bal", "Geg", "Bir", "Lie", "Rgp", "Rgs", "Spl", "Lap", "Grd"], WEEKDAYS:["sekmadienis", "pirmadienis", "antradienis", "tre\u010diadienis", "ketvirtadienis", "penktadienis", "\u0161e\u0161tadienis"], STANDALONEWEEKDAYS:["sekmadienis", 
-"pirmadienis", "antradienis", "tre\u010diadienis", "ketvirtadienis", "penktadienis", "\u0161e\u0161tadienis"], SHORTWEEKDAYS:["Sk", "Pr", "An", "Tr", "Kt", "Pn", "\u0160t"], STANDALONESHORTWEEKDAYS:["Sk", "Pr", "An", "Tr", "Kt", "Pn", "\u0160t"], NARROWWEEKDAYS:["S", "P", "A", "T", "K", "P", "\u0160"], STANDALONENARROWWEEKDAYS:["S", "P", "A", "T", "K", "P", "\u0160"], SHORTQUARTERS:["K1", "K2", "K3", "K4"], QUARTERS:["pirmas ketvirtis", "antras ketvirtis", "tre\u010dias ketvirtis", "ketvirtas ketvirtis"], 
-AMPMS:["prie\u0161piet", "popiet"], DATEFORMATS:["y 'm'. MMMM d 'd'.,EEEE", "y 'm'. MMMM d 'd'.", "yyyy.MM.dd", "yyyy-MM-dd"], TIMEFORMATS:["HH:mm:ss zzzz", "HH:mm:ss z", "HH:mm:ss", "HH:mm"], AVAILABLEFORMATS:{Md:"M-d", MMMMd:"MMMM d", MMMd:"MMM d"}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_lv = {ERAS:["p.m.\u0113.", "m.\u0113."], ERANAMES:["pirms m\u016bsu \u0113ras", "m\u016bsu \u0113r\u0101"], NARROWMONTHS:["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], STANDALONENARROWMONTHS:["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], MONTHS:["janv\u0101ris", "febru\u0101ris", "marts", "apr\u012blis", "maijs", "j\u016bnijs", "j\u016blijs", "augusts", "septembris", "oktobris", "novembris", "decembris"], STANDALONEMONTHS:["janv\u0101ris", "febru\u0101ris", 
-"marts", "apr\u012blis", "maijs", "j\u016bnijs", "j\u016blijs", "augusts", "septembris", "oktobris", "novembris", "decembris"], SHORTMONTHS:["janv.", "febr.", "marts", "apr.", "maijs", "j\u016bn.", "j\u016bl.", "aug.", "sept.", "okt.", "nov.", "dec."], STANDALONESHORTMONTHS:["janv.", "febr.", "marts", "apr.", "maijs", "j\u016bn.", "j\u016bl.", "aug.", "sept.", "okt.", "nov.", "dec."], WEEKDAYS:["sv\u0113tdiena", "pirmdiena", "otrdiena", "tre\u0161diena", "ceturtdiena", "piektdiena", "sestdiena"], 
-STANDALONEWEEKDAYS:["sv\u0113tdiena", "pirmdiena", "otrdiena", "tre\u0161diena", "ceturtdiena", "piektdiena", "sestdiena"], SHORTWEEKDAYS:["Sv", "Pr", "Ot", "Tr", "Ce", "Pk", "Se"], STANDALONESHORTWEEKDAYS:["Sv", "Pr", "Ot", "Tr", "Ce", "Pk", "Se"], NARROWWEEKDAYS:["S", "P", "O", "T", "C", "P", "S"], STANDALONENARROWWEEKDAYS:["S", "P", "O", "T", "C", "P", "S"], SHORTQUARTERS:["C1", "C2", "C3", "C4"], QUARTERS:["1. ceturksnis", "2. ceturksnis", "3. ceturksnis", "4. ceturksnis"], AMPMS:["AM", "PM"], 
-DATEFORMATS:["EEEE, y. 'gada' d. MMMM", "y. 'gada' d. MMMM", "y. 'gada' d. MMM", "dd.MM.yy"], TIMEFORMATS:["HH:mm:ss zzzz", "HH:mm:ss z", "HH:mm:ss", "HH:mm"], AVAILABLEFORMATS:{Md:"dd.mm.", MMMMd:"d. MMMM", MMMd:"d. MMM"}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_ml = {ERAS:["\u0d15\u0d4d\u0d30\u0d3f.\u0d2e\u0d41.", "\u0d15\u0d4d\u0d30\u0d3f.\u0d2a\u0d3f."], ERANAMES:["\u0d15\u0d4d\u0d30\u0d3f\u0d38\u0d4d\u0d24\u0d41\u0d35\u0d3f\u0d28\u0d41\u0d4d \u0d2e\u0d41\u0d2e\u0d4d\u0d2a\u0d4d", "\u0d15\u0d4d\u0d30\u0d3f\u0d38\u0d4d\u0d24\u0d41\u0d35\u0d3f\u0d28\u0d4d \u0d2a\u0d3f\u0d28\u0d4d\u0d2a\u0d4d"], NARROWMONTHS:["\u0d1c", "\u0d2b\u0d46", "\u0d2e\u0d3e", "\u0d0f", "\u0d2e\u0d47", "\u0d1c\u0d42", "\u0d1c\u0d42", "\u0d13", "\u0d38\u0d46", 
-"\u0d12", "\u0d28", "\u0d21\u0d3f"], STANDALONENARROWMONTHS:["\u0d1c", "\u0d2b\u0d46", "\u0d2e\u0d3e", "\u0d0f", "\u0d2e\u0d47", "\u0d1c\u0d42", "\u0d1c\u0d42", "\u0d13", "\u0d38\u0d46", "\u0d12", "\u0d28", "\u0d21\u0d3f"], MONTHS:["\u0d1c\u0d28\u0d41\u0d35\u0d30\u0d3f", "\u0d2b\u0d46\u0d2c\u0d4d\u0d30\u0d41\u0d35\u0d30\u0d3f", "\u0d2e\u0d3e\u0d30\u0d4d\u0d1a\u0d4d\u0d1a\u0d4d", "\u0d0f\u0d2a\u0d4d\u0d30\u0d3f\u0d32\u0d4d", "\u0d2e\u0d47\u0d2f\u0d4d", "\u0d1c\u0d42\u0d23\u0d4d", "\u0d1c\u0d42\u0d32\u0d48", 
-"\u0d13\u0d17\u0d38\u0d4d\u0d31\u0d4d\u0d31\u0d4d", "\u0d38\u0d46\u0d2a\u0d4d\u0d31\u0d4d\u0d31\u0d02\u0d2c\u0d30\u0d4d", "\u0d12\u0d15\u0d4d\u0d1f\u0d4b\u0d2c\u0d30\u0d4d", "\u0d28\u0d35\u0d02\u0d2c\u0d30\u0d4d", "\u0d21\u0d3f\u0d38\u0d02\u0d2c\u0d30\u0d4d"], STANDALONEMONTHS:["\u0d1c\u0d28\u0d41\u0d35\u0d30\u0d3f", "\u0d2b\u0d46\u0d2c\u0d4d\u0d30\u0d41\u0d35\u0d30\u0d3f", "\u0d2e\u0d3e\u0d30\u0d4d\u0d1a\u0d4d\u0d1a\u0d4d", "\u0d0f\u0d2a\u0d4d\u0d30\u0d3f\u0d32\u0d4d", "\u0d2e\u0d47\u0d2f\u0d4d", 
-"\u0d1c\u0d42\u0d23\u0d4d", "\u0d1c\u0d42\u0d32\u0d48", "\u0d13\u0d17\u0d38\u0d4d\u0d31\u0d4d\u0d31\u0d4d", "\u0d38\u0d46\u0d2a\u0d4d\u0d31\u0d4d\u0d31\u0d02\u0d2c\u0d30\u0d4d", "\u0d12\u0d15\u0d4d\u0d1f\u0d4b\u0d2c\u0d30\u0d4d", "\u0d28\u0d35\u0d02\u0d2c\u0d30\u0d4d", "\u0d21\u0d3f\u0d38\u0d02\u0d2c\u0d30\u0d4d"], SHORTMONTHS:["\u0d1c\u0d28\u0d41", "\u0d2b\u0d46\u0d2c\u0d4d\u0d30\u0d41", "\u0d2e\u0d3e\u0d30\u0d4d", "\u0d0f\u0d2a\u0d4d\u0d30\u0d3f", "\u0d2e\u0d47\u0d2f\u0d4d", "\u0d1c\u0d42\u0d23\u0d4d", 
-"\u0d1c\u0d42\u0d32\u0d48", "\u0d13\u0d17", "\u0d38\u0d46\u0d2a\u0d4d\u0d31\u0d4d\u0d31\u0d02", "\u0d12\u0d15\u0d4d\u0d1f\u0d4b", "\u0d28\u0d35\u0d02", "\u0d21\u0d3f\u0d38\u0d02"], STANDALONESHORTMONTHS:["\u0d1c\u0d28\u0d41", "\u0d2b\u0d46\u0d2c\u0d4d\u0d30\u0d41", "\u0d2e\u0d3e\u0d30\u0d4d", "\u0d0f\u0d2a\u0d4d\u0d30\u0d3f", "\u0d2e\u0d47\u0d2f\u0d4d", "\u0d1c\u0d42\u0d23\u0d4d", "\u0d1c\u0d42\u0d32\u0d48", "\u0d13\u0d17", "\u0d38\u0d46\u0d2a\u0d4d\u0d31\u0d4d\u0d31\u0d02", "\u0d12\u0d15\u0d4d\u0d1f\u0d4b", 
-"\u0d28\u0d35\u0d02", "\u0d21\u0d3f\u0d38\u0d02"], WEEKDAYS:["\u0d1e\u0d3e\u0d2f\u0d31\u0d3e\u0d34\u0d4d\u0d1a", "\u0d24\u0d3f\u0d19\u0d4d\u0d15\u0d33\u0d3e\u0d34\u0d4d\u0d1a", "\u0d1a\u0d4a\u0d35\u0d4d\u0d35\u0d3e\u0d34\u0d4d\u0d1a", "\u0d2c\u0d41\u0d27\u0d28\u0d3e\u0d34\u0d4d\u0d1a", "\u0d35\u0d4d\u0d2f\u0d3e\u0d34\u0d3e\u0d34\u0d4d\u0d1a", "\u0d35\u0d46\u0d33\u0d4d\u0d33\u0d3f\u0d2f\u0d3e\u0d34\u0d4d\u0d1a", "\u0d36\u0d28\u0d3f\u0d2f\u0d3e\u0d34\u0d4d\u0d1a"], STANDALONEWEEKDAYS:["\u0d1e\u0d3e\u0d2f\u0d31\u0d3e\u0d34\u0d4d\u0d1a", 
-"\u0d24\u0d3f\u0d19\u0d4d\u0d15\u0d33\u0d3e\u0d34\u0d4d\u0d1a", "\u0d1a\u0d4a\u0d35\u0d4d\u0d35\u0d3e\u0d34\u0d4d\u0d1a", "\u0d2c\u0d41\u0d27\u0d28\u0d3e\u0d34\u0d4d\u0d1a", "\u0d35\u0d4d\u0d2f\u0d3e\u0d34\u0d3e\u0d34\u0d4d\u0d1a", "\u0d35\u0d46\u0d33\u0d4d\u0d33\u0d3f\u0d2f\u0d3e\u0d34\u0d4d\u0d1a", "\u0d36\u0d28\u0d3f\u0d2f\u0d3e\u0d34\u0d4d\u0d1a"], SHORTWEEKDAYS:["\u0d1e\u0d3e\u0d2f\u0d30\u0d4d", "\u0d24\u0d3f\u0d19\u0d4d\u0d15\u0d33\u0d4d", "\u0d1a\u0d4a\u0d35\u0d4d\u0d35", "\u0d2c\u0d41\u0d27\u0d28\u0d4d", 
-"\u0d35\u0d4d\u0d2f\u0d3e\u0d34\u0d02", "\u0d35\u0d46\u0d33\u0d4d\u0d33\u0d3f", "\u0d36\u0d28\u0d3f"], STANDALONESHORTWEEKDAYS:["\u0d1e\u0d3e\u0d2f\u0d30\u0d4d", "\u0d24\u0d3f\u0d19\u0d4d\u0d15\u0d33\u0d4d", "\u0d1a\u0d4a\u0d35\u0d4d\u0d35", "\u0d2c\u0d41\u0d27\u0d28\u0d4d", "\u0d35\u0d4d\u0d2f\u0d3e\u0d34\u0d02", "\u0d35\u0d46\u0d33\u0d4d\u0d33\u0d3f", "\u0d36\u0d28\u0d3f"], NARROWWEEKDAYS:["\u0d1e\u0d3e", "\u0d24\u0d3f", "\u0d1a\u0d4a", "\u0d2c\u0d41", "\u0d35\u0d4d\u0d2f\u0d3e", "\u0d35\u0d46", 
-"\u0d36"], STANDALONENARROWWEEKDAYS:["\u0d1e\u0d3e", "\u0d24\u0d3f", "\u0d1a\u0d4a", "\u0d2c\u0d41", "\u0d35\u0d4d\u0d2f\u0d3e", "\u0d35\u0d46", "\u0d36"], SHORTQUARTERS:["Q1", "Q2", "Q3", "Q4"], QUARTERS:["\u0d12\u0d28\u0d4d\u0d28\u0d3e\u0d02 \u0d2a\u0d3e\u0d26\u0d02", "\u0d30\u0d23\u0d4d\u0d1f\u0d3e\u0d02 \u0d2a\u0d3e\u0d26\u0d02", "\u0d2e\u0d42\u0d28\u0d4d\u0d28\u0d3e\u0d02 \u0d2a\u0d3e\u0d26\u0d02", "\u0d28\u0d3e\u0d32\u0d3e\u0d02 \u0d2a\u0d3e\u0d26\u0d02"], AMPMS:["am", "pm"], DATEFORMATS:["y, MMMM d, EEEE", 
-"y, MMMM d", "y, MMM d", "dd/MM/yy"], TIMEFORMATS:["h:mm:ss a zzzz", "h:mm:ss a z", "h:mm:ss a", "h:mm a"], AVAILABLEFORMATS:{Md:"d/M", MMMMd:"MMMM d", MMMd:"MMM d"}, FIRSTDAYOFWEEK:6, WEEKENDRANGE:[6, 6], FIRSTWEEKCUTOFFDAY:2};
-goog.i18n.DateTimeSymbols_mo = {ERAS:["\u00ee.Hr.", "d.Hr."], ERANAMES:["\u00eenainte de Hristos", "dup\u0103 Hristos"], NARROWMONTHS:["I", "F", "M", "A", "M", "I", "I", "A", "S", "O", "N", "D"], STANDALONENARROWMONTHS:["I", "F", "M", "A", "M", "I", "I", "A", "S", "O", "N", "D"], MONTHS:["ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie", "august", "septembrie", "octombrie", "noiembrie", "decembrie"], STANDALONEMONTHS:["ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", 
-"iulie", "august", "septembrie", "octombrie", "noiembrie", "decembrie"], SHORTMONTHS:["ian.", "feb.", "mar.", "apr.", "mai", "iun.", "iul.", "aug.", "sept.", "oct.", "nov.", "dec."], STANDALONESHORTMONTHS:["ian.", "feb.", "mar.", "apr.", "mai", "iun.", "iul.", "aug.", "sept.", "oct.", "nov.", "dec."], WEEKDAYS:["duminic\u0103", "luni", "mar\u021bi", "miercuri", "joi", "vineri", "s\u00e2mb\u0103t\u0103"], STANDALONEWEEKDAYS:["duminic\u0103", "luni", "mar\u021bi", "miercuri", "joi", "vineri", "s\u00e2mb\u0103t\u0103"], 
-SHORTWEEKDAYS:["Du", "Lu", "Ma", "Mi", "Jo", "Vi", "S\u00e2"], STANDALONESHORTWEEKDAYS:["Du", "Lu", "Ma", "Mi", "Jo", "Vi", "S\u00e2"], NARROWWEEKDAYS:["D", "L", "M", "M", "J", "V", "S"], STANDALONENARROWWEEKDAYS:["D", "L", "M", "M", "J", "V", "S"], SHORTQUARTERS:["trim. I", "trim. II", "trim. III", "trim. IV"], QUARTERS:["trimestrul I", "trimestrul al II-lea", "trimestrul al III-lea", "trimestrul al IV-lea"], AMPMS:["AM", "PM"], DATEFORMATS:["EEEE, d MMMM y", "d MMMM y", "dd.MM.yyyy", "dd.MM.yyyy"], 
-TIMEFORMATS:["HH:mm:ss zzzz", "HH:mm:ss z", "HH:mm:ss", "HH:mm"], AVAILABLEFORMATS:{Md:"d.M", MMMMd:"d MMMM", MMMd:"d MMM"}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_mr = {ERAS:["\u0908.\u0938.\u092a\u0942.", "\u0908.\u0938."], ERANAMES:["\u0908\u0938\u0935\u0940\u0938\u0928\u092a\u0942\u0930\u094d\u0935", "\u0908\u0938\u0935\u0940\u0938\u0928"], NARROWMONTHS:["\u091c\u093e", "\u092b\u0947", "\u092e\u093e", "\u090f", "\u092e\u0947", "\u091c\u0942", "\u091c\u0941", "\u0911", "\u0938", "\u0911", "\u0928\u094b", "\u0921\u093f"], STANDALONENARROWMONTHS:["\u091c\u093e", "\u092b\u0947", "\u092e\u093e", "\u090f", "\u092e\u0947", "\u091c\u0942", 
-"\u091c\u0941", "\u0911", "\u0938", "\u0911", "\u0928\u094b", "\u0921\u093f"], MONTHS:["\u091c\u093e\u0928\u0947\u0935\u093e\u0930\u0940", "\u092b\u0947\u092c\u094d\u0930\u0941\u0935\u093e\u0930\u0940", "\u092e\u093e\u0930\u094d\u091a", "\u090f\u092a\u094d\u0930\u093f\u0932", "\u092e\u0947", "\u091c\u0942\u0928", "\u091c\u0941\u0932\u0948", "\u0911\u0917\u0938\u094d\u091f", "\u0938\u092a\u094d\u091f\u0947\u0902\u092c\u0930", "\u0911\u0915\u094d\u091f\u094b\u092c\u0930", "\u0928\u094b\u0935\u094d\u0939\u0947\u0902\u092c\u0930", 
-"\u0921\u093f\u0938\u0947\u0902\u092c\u0930"], STANDALONEMONTHS:["\u091c\u093e\u0928\u0947\u0935\u093e\u0930\u0940", "\u092b\u0947\u092c\u094d\u0930\u0941\u0935\u093e\u0930\u0940", "\u092e\u093e\u0930\u094d\u091a", "\u090f\u092a\u094d\u0930\u093f\u0932", "\u092e\u0947", "\u091c\u0942\u0928", "\u091c\u0941\u0932\u0948", "\u0911\u0917\u0938\u094d\u091f", "\u0938\u092a\u094d\u091f\u0947\u0902\u092c\u0930", "\u0911\u0915\u094d\u091f\u094b\u092c\u0930", "\u0928\u094b\u0935\u094d\u0939\u0947\u0902\u092c\u0930", 
-"\u0921\u093f\u0938\u0947\u0902\u092c\u0930"], SHORTMONTHS:["\u091c\u093e\u0928\u0947\u0935\u093e\u0930\u0940", "\u092b\u0947\u092c\u094d\u0930\u0941\u0935\u093e\u0930\u0940", "\u092e\u093e\u0930\u094d\u091a", "\u090f\u092a\u094d\u0930\u093f\u0932", "\u092e\u0947", "\u091c\u0942\u0928", "\u091c\u0941\u0932\u0948", "\u0911\u0917\u0938\u094d\u091f", "\u0938\u092a\u094d\u091f\u0947\u0902\u092c\u0930", "\u0911\u0915\u094d\u091f\u094b\u092c\u0930", "\u0928\u094b\u0935\u094d\u0939\u0947\u0902\u092c\u0930", 
-"\u0921\u093f\u0938\u0947\u0902\u092c\u0930"], STANDALONESHORTMONTHS:["\u091c\u093e\u0928\u0947\u0935\u093e\u0930\u0940", "\u092b\u0947\u092c\u094d\u0930\u0941\u0935\u093e\u0930\u0940", "\u092e\u093e\u0930\u094d\u091a", "\u090f\u092a\u094d\u0930\u093f\u0932", "\u092e\u0947", "\u091c\u0942\u0928", "\u091c\u0941\u0932\u0948", "\u0911\u0917\u0938\u094d\u091f", "\u0938\u092a\u094d\u091f\u0947\u0902\u092c\u0930", "\u0911\u0915\u094d\u091f\u094b\u092c\u0930", "\u0928\u094b\u0935\u094d\u0939\u0947\u0902\u092c\u0930", 
-"\u0921\u093f\u0938\u0947\u0902\u092c\u0930"], WEEKDAYS:["\u0930\u0935\u093f\u0935\u093e\u0930", "\u0938\u094b\u092e\u0935\u093e\u0930", "\u092e\u0902\u0917\u0933\u0935\u093e\u0930", "\u092c\u0941\u0927\u0935\u093e\u0930", "\u0917\u0941\u0930\u0941\u0935\u093e\u0930", "\u0936\u0941\u0915\u094d\u0930\u0935\u093e\u0930", "\u0936\u0928\u093f\u0935\u093e\u0930"], STANDALONEWEEKDAYS:["\u0930\u0935\u093f\u0935\u093e\u0930", "\u0938\u094b\u092e\u0935\u093e\u0930", "\u092e\u0902\u0917\u0933\u0935\u093e\u0930", 
-"\u092c\u0941\u0927\u0935\u093e\u0930", "\u0917\u0941\u0930\u0941\u0935\u093e\u0930", "\u0936\u0941\u0915\u094d\u0930\u0935\u093e\u0930", "\u0936\u0928\u093f\u0935\u093e\u0930"], SHORTWEEKDAYS:["\u0930\u0935\u093f", "\u0938\u094b\u092e", "\u092e\u0902\u0917\u0933", "\u092c\u0941\u0927", "\u0917\u0941\u0930\u0941", "\u0936\u0941\u0915\u094d\u0930", "\u0936\u0928\u093f"], STANDALONESHORTWEEKDAYS:["\u0930\u0935\u093f", "\u0938\u094b\u092e", "\u092e\u0902\u0917\u0933", "\u092c\u0941\u0927", "\u0917\u0941\u0930\u0941", 
-"\u0936\u0941\u0915\u094d\u0930", "\u0936\u0928\u093f"], NARROWWEEKDAYS:["\u0930", "\u0938\u094b", "\u092e\u0902", "\u092c\u0941", "\u0917\u0941", "\u0936\u0941", "\u0936"], STANDALONENARROWWEEKDAYS:["\u0930", "\u0938\u094b", "\u092e\u0902", "\u092c\u0941", "\u0917\u0941", "\u0936\u0941", "\u0936"], SHORTQUARTERS:["Q1", "Q2", "Q3", "Q4"], QUARTERS:["\u092a\u094d\u0930\u0925\u092e \u0924\u093f\u092e\u093e\u0939\u0940", "\u0926\u094d\u0935\u093f\u0924\u0940\u092f \u0924\u093f\u092e\u093e\u0939\u0940", 
-"\u0924\u0943\u0924\u0940\u092f \u0924\u093f\u092e\u093e\u0939\u0940", "\u091a\u0924\u0941\u0930\u094d\u0925 \u0924\u093f\u092e\u093e\u0939\u0940"], AMPMS:["am", "pm"], DATEFORMATS:["EEEE d MMMM y", "d MMMM y", "d MMM y", "d-M-yy"], TIMEFORMATS:["h-mm-ss a zzzz", "h-mm-ss a z", "h-mm-ss a", "h-mm a"], AVAILABLEFORMATS:{Md:"M-d", MMMMd:"d MMMM", MMMd:"MMM d"}, FIRSTDAYOFWEEK:6, WEEKENDRANGE:[6, 6], FIRSTWEEKCUTOFFDAY:2};
-goog.i18n.DateTimeSymbols_ms = {ERAS:["S.M.", "T.M."], ERANAMES:["S.M.", "T.M."], NARROWMONTHS:["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"], STANDALONENARROWMONTHS:["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"], MONTHS:["Januari", "Februari", "Mac", "April", "Mei", "Jun", "Julai", "Ogos", "September", "Oktober", "November", "Disember"], STANDALONEMONTHS:["Januari", "Februari", "Mac", "April", "Mei", "Jun", "Julai", "Ogos", "September", "Oktober", "November", "Disember"], 
-SHORTMONTHS:["Jan", "Feb", "Mac", "Apr", "Mei", "Jun", "Jul", "Ogos", "Sep", "Okt", "Nov", "Dis"], STANDALONESHORTMONTHS:["Jan", "Feb", "Mac", "Apr", "Mei", "Jun", "Jul", "Ogos", "Sep", "Okt", "Nov", "Dis"], WEEKDAYS:["Ahad", "Isnin", "Selasa", "Rabu", "Khamis", "Jumaat", "Sabtu"], STANDALONEWEEKDAYS:["Ahad", "Isnin", "Selasa", "Rabu", "Khamis", "Jumaat", "Sabtu"], SHORTWEEKDAYS:["Ahd", "Isn", "Sel", "Rab", "Kha", "Jum", "Sab"], STANDALONESHORTWEEKDAYS:["Ahd", "Isn", "Sel", "Rab", "Kha", "Jum", "Sab"], 
-NARROWWEEKDAYS:["1", "2", "3", "4", "5", "6", "7"], STANDALONENARROWWEEKDAYS:["1", "2", "3", "4", "5", "6", "7"], SHORTQUARTERS:["S1", "S2", "S3", "S4"], QUARTERS:["suku pertama", "suku kedua", "suku ketiga", "suku keempat"], AMPMS:["AM", "PM"], DATEFORMATS:["EEEE dd MMM y", "dd MMMM y", "dd MMM y", "dd/MM/yyyy"], TIMEFORMATS:["h:mm:ss a zzzz", "h:mm:ss a z", "h:mm:ss a", "h:mm"], AVAILABLEFORMATS:{Md:"M-d", MMMMd:"MMMM d", MMMd:"MMM d"}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_mt = {ERAS:["QK", "WK"], ERANAMES:["Qabel Kristu", "Wara Kristu"], NARROWMONTHS:["J", "F", "M", "A", "M", "\u0120", "L", "A", "S", "O", "N", "D"], STANDALONENARROWMONTHS:["J", "F", "M", "A", "M", "\u0120", "L", "A", "S", "O", "N", "D"], MONTHS:["Jannar", "Frar", "Marzu", "April", "Mejju", "\u0120unju", "Lulju", "Awwissu", "Settembru", "Ottubru", "Novembru", "Di\u010bembru"], STANDALONEMONTHS:["Jannar", "Frar", "Marzu", "April", "Mejju", "\u0120unju", "Lulju", "Awwissu", 
-"Settembru", "Ottubru", "Novembru", "Di\u010bembru"], SHORTMONTHS:["Jan", "Fra", "Mar", "Apr", "Mej", "\u0120un", "Lul", "Aww", "Set", "Ott", "Nov", "Di\u010b"], STANDALONESHORTMONTHS:["Jan", "Fra", "Mar", "Apr", "Mej", "\u0120un", "Lul", "Aww", "Set", "Ott", "Nov", "Di\u010b"], WEEKDAYS:["Il-\u0126add", "It-Tnejn", "It-Tlieta", "L-Erbg\u0127a", "Il-\u0126amis", "Il-\u0120img\u0127a", "Is-Sibt"], STANDALONEWEEKDAYS:["Il-\u0126add", "It-Tnejn", "It-Tlieta", "L-Erbg\u0127a", "Il-\u0126amis", "Il-\u0120img\u0127a", 
-"Is-Sibt"], SHORTWEEKDAYS:["\u0126ad", "Tne", "Tli", "Erb", "\u0126am", "\u0120im", "Sib"], STANDALONESHORTWEEKDAYS:["\u0126ad", "Tne", "Tli", "Erb", "\u0126am", "\u0120im", "Sib"], NARROWWEEKDAYS:["\u0126", "T", "T", "E", "\u0126", "\u0120", "S"], STANDALONENARROWWEEKDAYS:["\u0126", "T", "T", "E", "\u0126", "\u0120", "S"], SHORTQUARTERS:["K1", "K2", "K3", "K4"], QUARTERS:["K1", "K2", "K3", "K4"], AMPMS:["QN", "WN"], DATEFORMATS:["EEEE, d 'ta'\u2019 MMMM y", "d 'ta'\u2019 MMMM y", "dd MMM y", "dd/MM/yyyy"], 
-TIMEFORMATS:["HH:mm:ss zzzz", "HH:mm:ss z", "HH:mm:ss", "HH:mm"], AVAILABLEFORMATS:{Md:"M-d", MMMMd:"d 'ta'\u2019 MMMM", MMMd:"MMM d"}, FIRSTDAYOFWEEK:6, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:2};
-goog.i18n.DateTimeSymbols_nl = {ERAS:["v. Chr.", "n. Chr."], ERANAMES:["Voor Christus", "Anno Domini"], NARROWMONTHS:["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], STANDALONENARROWMONTHS:["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], MONTHS:["januari", "februari", "maart", "april", "mei", "juni", "juli", "augustus", "september", "oktober", "november", "december"], STANDALONEMONTHS:["januari", "februari", "maart", "april", "mei", "juni", "juli", "augustus", "september", 
-"oktober", "november", "december"], SHORTMONTHS:["jan.", "feb.", "mrt.", "apr.", "mei", "jun.", "jul.", "aug.", "sep.", "okt.", "nov.", "dec."], STANDALONESHORTMONTHS:["jan.", "feb.", "mrt.", "apr.", "mei", "jun.", "jul.", "aug.", "sep.", "okt.", "nov.", "dec."], WEEKDAYS:["zondag", "maandag", "dinsdag", "woensdag", "donderdag", "vrijdag", "zaterdag"], STANDALONEWEEKDAYS:["zondag", "maandag", "dinsdag", "woensdag", "donderdag", "vrijdag", "zaterdag"], SHORTWEEKDAYS:["zo", "ma", "di", "wo", "do", 
-"vr", "za"], STANDALONESHORTWEEKDAYS:["zo", "ma", "di", "wo", "do", "vr", "za"], NARROWWEEKDAYS:["Z", "M", "D", "W", "D", "V", "Z"], STANDALONENARROWWEEKDAYS:["Z", "M", "D", "W", "D", "V", "Z"], SHORTQUARTERS:["K1", "K2", "K3", "K4"], QUARTERS:["1e kwartaal", "2e kwartaal", "3e kwartaal", "4e kwartaal"], AMPMS:["AM", "PM"], DATEFORMATS:["EEEE d MMMM y", "d MMMM y", "d MMM y", "dd-MM-yy"], TIMEFORMATS:["HH:mm:ss zzzz", "HH:mm:ss z", "HH:mm:ss", "HH:mm"], AVAILABLEFORMATS:{Md:"d-M", MMMMd:"d MMMM", 
-MMMd:"d-MMM"}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_no = {ERAS:["f.Kr.", "e.Kr."], ERANAMES:["f.Kr.", "e.Kr."], NARROWMONTHS:["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], STANDALONENARROWMONTHS:["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], MONTHS:["januar", "februar", "mars", "april", "mai", "juni", "juli", "august", "september", "oktober", "november", "desember"], STANDALONEMONTHS:["januar", "februar", "mars", "april", "mai", "juni", "juli", "august", "september", "oktober", "november", "desember"], 
-SHORTMONTHS:["jan.", "feb.", "mars", "apr.", "mai", "juni", "juli", "aug.", "sep.", "okt.", "nov.", "des."], STANDALONESHORTMONTHS:["jan.", "feb.", "mars", "apr.", "mai", "juni", "juli", "aug.", "sep.", "okt.", "nov.", "des."], WEEKDAYS:["s\u00f8ndag", "mandag", "tirsdag", "onsdag", "torsdag", "fredag", "l\u00f8rdag"], STANDALONEWEEKDAYS:["s\u00f8ndag", "mandag", "tirsdag", "onsdag", "torsdag", "fredag", "l\u00f8rdag"], SHORTWEEKDAYS:["s\u00f8n.", "man.", "tir.", "ons.", "tor.", "fre.", "l\u00f8r."], 
-STANDALONESHORTWEEKDAYS:["s\u00f8n.", "man.", "tir.", "ons.", "tor.", "fre.", "l\u00f8r."], NARROWWEEKDAYS:["S", "M", "T", "O", "T", "F", "L"], STANDALONENARROWWEEKDAYS:["S", "M", "T", "O", "T", "F", "L"], SHORTQUARTERS:["K1", "K2", "K3", "K4"], QUARTERS:["1. kvartal", "2. kvartal", "3. kvartal", "4. kvartal"], AMPMS:["AM", "PM"], DATEFORMATS:["EEEE d. MMMM y", "d. MMMM y", "d. MMM y", "dd.MM.yy"], TIMEFORMATS:["'kl'. HH.mm.ss zzzz", "HH.mm.ss z", "HH.mm.ss", "HH.mm"], AVAILABLEFORMATS:{Md:"d.M.", 
-MMMMd:"d. MMMM", MMMd:"d. MMM"}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_or = {ERAS:["BCE", "CE"], ERANAMES:["BCE", "CE"], NARROWMONTHS:["\u0b1c\u0b3e", "\u0b2b\u0b47", "\u0b2e\u0b3e", "\u0b05", "\u0b2e\u0b47", "\u0b1c\u0b41", "\u0b1c\u0b41", "\u0b05", "\u0b38\u0b47", "\u0b05", "\u0b28", "\u0b21\u0b3f"], STANDALONENARROWMONTHS:["\u0b1c\u0b3e", "\u0b2b\u0b47", "\u0b2e\u0b3e", "\u0b05", "\u0b2e\u0b47", "\u0b1c\u0b41", "\u0b1c\u0b41", "\u0b05", "\u0b38\u0b47", "\u0b05", "\u0b28", "\u0b21\u0b3f"], MONTHS:["\u0b1c\u0b3e\u0b28\u0b41\u0b06\u0b30\u0b40", 
-"\u0b2b\u0b47\u0b2c\u0b4d\u0b30\u0b41\u0b5f\u0b3e\u0b30\u0b40", "\u0b2e\u0b3e\u0b30\u0b4d\u0b1a\u0b4d\u0b1a", "\u0b05\u0b2a\u0b4d\u0b30\u0b47\u0b32", "\u0b2e\u0b47", "\u0b1c\u0b41\u0b28", "\u0b1c\u0b41\u0b32\u0b3e\u0b07", "\u0b05\u0b17\u0b37\u0b4d\u0b1f", "\u0b38\u0b47\u0b2a\u0b4d\u0b1f\u0b47\u0b2e\u0b4d\u0b2c\u0b30", "\u0b05\u0b15\u0b4d\u0b1f\u0b4b\u0b2c\u0b30", "\u0b28\u0b2d\u0b47\u0b2e\u0b4d\u0b2c\u0b30", "\u0b21\u0b3f\u0b38\u0b47\u0b2e\u0b4d\u0b2c\u0b30"], STANDALONEMONTHS:["\u0b1c\u0b3e\u0b28\u0b41\u0b06\u0b30\u0b40", 
-"\u0b2b\u0b47\u0b2c\u0b4d\u0b30\u0b41\u0b5f\u0b3e\u0b30\u0b40", "\u0b2e\u0b3e\u0b30\u0b4d\u0b1a\u0b4d\u0b1a", "\u0b05\u0b2a\u0b4d\u0b30\u0b47\u0b32", "\u0b2e\u0b47", "\u0b1c\u0b41\u0b28", "\u0b1c\u0b41\u0b32\u0b3e\u0b07", "\u0b05\u0b17\u0b37\u0b4d\u0b1f", "\u0b38\u0b47\u0b2a\u0b4d\u0b1f\u0b47\u0b2e\u0b4d\u0b2c\u0b30", "\u0b05\u0b15\u0b4d\u0b1f\u0b4b\u0b2c\u0b30", "\u0b28\u0b2d\u0b47\u0b2e\u0b4d\u0b2c\u0b30", "\u0b21\u0b3f\u0b38\u0b47\u0b2e\u0b4d\u0b2c\u0b30"], SHORTMONTHS:["\u0b1c\u0b3e\u0b28\u0b41\u0b06\u0b30\u0b40", 
-"\u0b2b\u0b47\u0b2c\u0b4d\u0b30\u0b41\u0b5f\u0b3e\u0b30\u0b40", "\u0b2e\u0b3e\u0b30\u0b4d\u0b1a\u0b4d\u0b1a", "\u0b05\u0b2a\u0b4d\u0b30\u0b47\u0b32", "\u0b2e\u0b47", "\u0b1c\u0b41\u0b28", "\u0b1c\u0b41\u0b32\u0b3e\u0b07", "\u0b05\u0b17\u0b37\u0b4d\u0b1f", "\u0b38\u0b47\u0b2a\u0b4d\u0b1f\u0b47\u0b2e\u0b4d\u0b2c\u0b30", "\u0b05\u0b15\u0b4d\u0b1f\u0b4b\u0b2c\u0b30", "\u0b28\u0b2d\u0b47\u0b2e\u0b4d\u0b2c\u0b30", "\u0b21\u0b3f\u0b38\u0b47\u0b2e\u0b4d\u0b2c\u0b30"], STANDALONESHORTMONTHS:["\u0b1c\u0b3e\u0b28\u0b41\u0b06\u0b30\u0b40", 
-"\u0b2b\u0b47\u0b2c\u0b4d\u0b30\u0b41\u0b5f\u0b3e\u0b30\u0b40", "\u0b2e\u0b3e\u0b30\u0b4d\u0b1a\u0b4d\u0b1a", "\u0b05\u0b2a\u0b4d\u0b30\u0b47\u0b32", "\u0b2e\u0b47", "\u0b1c\u0b41\u0b28", "\u0b1c\u0b41\u0b32\u0b3e\u0b07", "\u0b05\u0b17\u0b37\u0b4d\u0b1f", "\u0b38\u0b47\u0b2a\u0b4d\u0b1f\u0b47\u0b2e\u0b4d\u0b2c\u0b30", "\u0b05\u0b15\u0b4d\u0b1f\u0b4b\u0b2c\u0b30", "\u0b28\u0b2d\u0b47\u0b2e\u0b4d\u0b2c\u0b30", "\u0b21\u0b3f\u0b38\u0b47\u0b2e\u0b4d\u0b2c\u0b30"], WEEKDAYS:["\u0b30\u0b2c\u0b3f\u0b2c\u0b3e\u0b30", 
-"\u0b38\u0b4b\u0b2e\u0b2c\u0b3e\u0b30", "\u0b2e\u0b19\u0b4d\u0b17\u0b33\u0b2c\u0b3e\u0b30", "\u0b2c\u0b41\u0b27\u0b2c\u0b3e\u0b30", "\u0b17\u0b41\u0b30\u0b41\u0b2c\u0b3e\u0b30", "\u0b36\u0b41\u0b15\u0b4d\u0b30\u0b2c\u0b3e\u0b30", "\u0b36\u0b28\u0b3f\u0b2c\u0b3e\u0b30"], STANDALONEWEEKDAYS:["\u0b30\u0b2c\u0b3f\u0b2c\u0b3e\u0b30", "\u0b38\u0b4b\u0b2e\u0b2c\u0b3e\u0b30", "\u0b2e\u0b19\u0b4d\u0b17\u0b33\u0b2c\u0b3e\u0b30", "\u0b2c\u0b41\u0b27\u0b2c\u0b3e\u0b30", "\u0b17\u0b41\u0b30\u0b41\u0b2c\u0b3e\u0b30", 
-"\u0b36\u0b41\u0b15\u0b4d\u0b30\u0b2c\u0b3e\u0b30", "\u0b36\u0b28\u0b3f\u0b2c\u0b3e\u0b30"], SHORTWEEKDAYS:["\u0b30\u0b2c\u0b3f", "\u0b38\u0b4b\u0b2e", "\u0b2e\u0b19\u0b4d\u0b17\u0b33", "\u0b2c\u0b41\u0b27", "\u0b17\u0b41\u0b30\u0b41", "\u0b36\u0b41\u0b15\u0b4d\u0b30", "\u0b36\u0b28\u0b3f"], STANDALONESHORTWEEKDAYS:["\u0b30\u0b2c\u0b3f", "\u0b38\u0b4b\u0b2e", "\u0b2e\u0b19\u0b4d\u0b17\u0b33", "\u0b2c\u0b41\u0b27", "\u0b17\u0b41\u0b30\u0b41", "\u0b36\u0b41\u0b15\u0b4d\u0b30", "\u0b36\u0b28\u0b3f"], 
-NARROWWEEKDAYS:["\u0b30", "\u0b38\u0b4b", "\u0b2e", "\u0b2c\u0b41", "\u0b17\u0b41", "\u0b36\u0b41", "\u0b36"], STANDALONENARROWWEEKDAYS:["\u0b30", "\u0b38\u0b4b", "\u0b2e", "\u0b2c\u0b41", "\u0b17\u0b41", "\u0b36\u0b41", "\u0b36"], SHORTQUARTERS:["Q1", "Q2", "Q3", "Q4"], QUARTERS:["Q1", "Q2", "Q3", "Q4"], AMPMS:["am", "pm"], DATEFORMATS:["EEEE, d MMMM y", "d MMMM y", "d MMM y", "d-M-yy"], TIMEFORMATS:["h:mm:ss a zzzz", "h:mm:ss a z", "h:mm:ss a", "h:mm a"], AVAILABLEFORMATS:{Md:"M-d", MMMMd:"MMMM d", 
-MMMd:"MMM d"}, FIRSTDAYOFWEEK:6, WEEKENDRANGE:[6, 6], FIRSTWEEKCUTOFFDAY:2};
-goog.i18n.DateTimeSymbols_pl = {ERAS:["p.n.e.", "n.e."], ERANAMES:["p.n.e.", "n.e."], NARROWMONTHS:["s", "l", "m", "k", "m", "c", "l", "s", "w", "p", "l", "g"], STANDALONENARROWMONTHS:["s", "l", "m", "k", "m", "c", "l", "s", "w", "p", "l", "g"], MONTHS:["stycznia", "lutego", "marca", "kwietnia", "maja", "czerwca", "lipca", "sierpnia", "wrze\u015bnia", "pa\u017adziernika", "listopada", "grudnia"], STANDALONEMONTHS:["stycze\u0144", "luty", "marzec", "kwiecie\u0144", "maj", "czerwiec", "lipiec", "sierpie\u0144", 
-"wrzesie\u0144", "pa\u017adziernik", "listopad", "grudzie\u0144"], SHORTMONTHS:["sty", "lut", "mar", "kwi", "maj", "cze", "lip", "sie", "wrz", "pa\u017a", "lis", "gru"], STANDALONESHORTMONTHS:["sty", "lut", "mar", "kwi", "maj", "cze", "lip", "sie", "wrz", "pa\u017a", "lis", "gru"], WEEKDAYS:["niedziela", "poniedzia\u0142ek", "wtorek", "\u015broda", "czwartek", "pi\u0105tek", "sobota"], STANDALONEWEEKDAYS:["niedziela", "poniedzia\u0142ek", "wtorek", "\u015broda", "czwartek", "pi\u0105tek", "sobota"], 
-SHORTWEEKDAYS:["niedz.", "pon.", "wt.", "\u015br.", "czw.", "pt.", "sob."], STANDALONESHORTWEEKDAYS:["niedz.", "pon.", "wt.", "\u015br.", "czw.", "pt.", "sob."], NARROWWEEKDAYS:["N", "P", "W", "\u015a", "C", "P", "S"], STANDALONENARROWWEEKDAYS:["N", "P", "W", "\u015a", "C", "P", "S"], SHORTQUARTERS:["K1", "K2", "K3", "K4"], QUARTERS:["I kwarta\u0142", "II kwarta\u0142", "III kwarta\u0142", "IV kwarta\u0142"], AMPMS:["AM", "PM"], DATEFORMATS:["EEEE, d MMMM y", "d MMMM y", "dd-MM-yyyy", "dd-MM-yy"], 
-TIMEFORMATS:["HH:mm:ss zzzz", "HH:mm:ss z", "HH:mm:ss", "HH:mm"], AVAILABLEFORMATS:{Md:"d.M", MMMMd:"d MMMM", MMMd:"MMM d"}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_pt = {ERAS:["a.C.", "d.C."], ERANAMES:["Antes de Cristo", "Ano do Senhor"], NARROWMONTHS:["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], STANDALONENARROWMONTHS:["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], MONTHS:["janeiro", "fevereiro", "mar\u00e7o", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"], STANDALONEMONTHS:["janeiro", "fevereiro", "mar\u00e7o", "abril", "maio", "junho", "julho", "agosto", 
-"setembro", "outubro", "novembro", "dezembro"], SHORTMONTHS:["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"], STANDALONESHORTMONTHS:["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"], WEEKDAYS:["domingo", "segunda-feira", "ter\u00e7a-feira", "quarta-feira", "quinta-feira", "sexta-feira", "s\u00e1bado"], STANDALONEWEEKDAYS:["domingo", "segunda-feira", "ter\u00e7a-feira", "quarta-feira", "quinta-feira", "sexta-feira", "s\u00e1bado"], 
-SHORTWEEKDAYS:["dom", "seg", "ter", "qua", "qui", "sex", "s\u00e1b"], STANDALONESHORTWEEKDAYS:["dom", "seg", "ter", "qua", "qui", "sex", "s\u00e1b"], NARROWWEEKDAYS:["D", "S", "T", "Q", "Q", "S", "S"], STANDALONENARROWWEEKDAYS:["D", "S", "T", "Q", "Q", "S", "S"], SHORTQUARTERS:["T1", "T2", "T3", "T4"], QUARTERS:["1\u00ba trimestre", "2\u00ba trimestre", "3\u00ba trimestre", "4\u00ba trimestre"], AMPMS:["AM", "PM"], DATEFORMATS:["EEEE, d 'de' MMMM 'de' y", "d 'de' MMMM 'de' y", "dd/MM/yyyy", "dd/MM/yy"], 
-TIMEFORMATS:["HH'h'mm'min'ss's' zzzz", "HH'h'mm'min'ss's' z", "HH:mm:ss", "HH:mm"], AVAILABLEFORMATS:{Md:"d/M", MMMMd:"d 'de' MMMM", MMMd:"d 'de' MMM"}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_pt_BR = goog.i18n.DateTimeSymbols_pt;
-goog.i18n.DateTimeSymbols_pt_PT = {ERAS:["a.C.", "d.C."], ERANAMES:["Antes de Cristo", "Ano do Senhor"], NARROWMONTHS:["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], STANDALONENARROWMONTHS:["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], MONTHS:["Janeiro", "Fevereiro", "Mar\u00e7o", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"], STANDALONEMONTHS:["Janeiro", "Fevereiro", "Mar\u00e7o", "Abril", "Maio", "Junho", "Julho", "Agosto", 
-"Setembro", "Outubro", "Novembro", "Dezembro"], SHORTMONTHS:["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"], STANDALONESHORTMONTHS:["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"], WEEKDAYS:["domingo", "segunda-feira", "ter\u00e7a-feira", "quarta-feira", "quinta-feira", "sexta-feira", "s\u00e1bado"], STANDALONEWEEKDAYS:["domingo", "segunda-feira", "ter\u00e7a-feira", "quarta-feira", "quinta-feira", "sexta-feira", "s\u00e1bado"], 
-SHORTWEEKDAYS:["dom", "seg", "ter", "qua", "qui", "sex", "s\u00e1b"], STANDALONESHORTWEEKDAYS:["dom", "seg", "ter", "qua", "qui", "sex", "s\u00e1b"], NARROWWEEKDAYS:["D", "S", "T", "Q", "Q", "S", "S"], STANDALONENARROWWEEKDAYS:["D", "S", "T", "Q", "Q", "S", "S"], SHORTQUARTERS:["T1", "T2", "T3", "T4"], QUARTERS:["1.\u00ba trimestre", "2.\u00ba trimestre", "3.\u00ba trimestre", "4.\u00ba trimestre"], AMPMS:["Antes do meio-dia", "Depois do meio-dia"], DATEFORMATS:["EEEE, d 'de' MMMM 'de' y", "d 'de' MMMM 'de' y", 
-"d 'de' MMM 'de' yyyy", "dd/MM/yy"], TIMEFORMATS:["HH'h'mm'min'ss's' zzzz", "HH'h'mm'min'ss's' z", "HH:mm:ss", "HH:mm"], AVAILABLEFORMATS:{Md:"d/M", MMMMd:"d 'de' MMMM", MMMd:"d 'de' MMM"}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_ro = {ERAS:["\u00ee.Hr.", "d.Hr."], ERANAMES:["\u00eenainte de Hristos", "dup\u0103 Hristos"], NARROWMONTHS:["I", "F", "M", "A", "M", "I", "I", "A", "S", "O", "N", "D"], STANDALONENARROWMONTHS:["I", "F", "M", "A", "M", "I", "I", "A", "S", "O", "N", "D"], MONTHS:["ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie", "august", "septembrie", "octombrie", "noiembrie", "decembrie"], STANDALONEMONTHS:["ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", 
-"iulie", "august", "septembrie", "octombrie", "noiembrie", "decembrie"], SHORTMONTHS:["ian.", "feb.", "mar.", "apr.", "mai", "iun.", "iul.", "aug.", "sept.", "oct.", "nov.", "dec."], STANDALONESHORTMONTHS:["ian.", "feb.", "mar.", "apr.", "mai", "iun.", "iul.", "aug.", "sept.", "oct.", "nov.", "dec."], WEEKDAYS:["duminic\u0103", "luni", "mar\u021bi", "miercuri", "joi", "vineri", "s\u00e2mb\u0103t\u0103"], STANDALONEWEEKDAYS:["duminic\u0103", "luni", "mar\u021bi", "miercuri", "joi", "vineri", "s\u00e2mb\u0103t\u0103"], 
-SHORTWEEKDAYS:["Du", "Lu", "Ma", "Mi", "Jo", "Vi", "S\u00e2"], STANDALONESHORTWEEKDAYS:["Du", "Lu", "Ma", "Mi", "Jo", "Vi", "S\u00e2"], NARROWWEEKDAYS:["D", "L", "M", "M", "J", "V", "S"], STANDALONENARROWWEEKDAYS:["D", "L", "M", "M", "J", "V", "S"], SHORTQUARTERS:["trim. I", "trim. II", "trim. III", "trim. IV"], QUARTERS:["trimestrul I", "trimestrul al II-lea", "trimestrul al III-lea", "trimestrul al IV-lea"], AMPMS:["AM", "PM"], DATEFORMATS:["EEEE, d MMMM y", "d MMMM y", "dd.MM.yyyy", "dd.MM.yyyy"], 
-TIMEFORMATS:["HH:mm:ss zzzz", "HH:mm:ss z", "HH:mm:ss", "HH:mm"], AVAILABLEFORMATS:{Md:"d.M", MMMMd:"d MMMM", MMMd:"d MMM"}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_ru = {ERAS:["\u0434\u043e \u043d.\u044d.", "\u043d.\u044d."], ERANAMES:["\u0434\u043e \u043d.\u044d.", "\u043d.\u044d."], NARROWMONTHS:["\u042f", "\u0424", "\u041c", "\u0410", "\u041c", "\u0418", "\u0418", "\u0410", "\u0421", "\u041e", "\u041d", "\u0414"], STANDALONENARROWMONTHS:["\u042f", "\u0424", "\u041c", "\u0410", "\u041c", "\u0418", "\u0418", "\u0410", "\u0421", "\u041e", "\u041d", "\u0414"], MONTHS:["\u044f\u043d\u0432\u0430\u0440\u044f", "\u0444\u0435\u0432\u0440\u0430\u043b\u044f", 
-"\u043c\u0430\u0440\u0442\u0430", "\u0430\u043f\u0440\u0435\u043b\u044f", "\u043c\u0430\u044f", "\u0438\u044e\u043d\u044f", "\u0438\u044e\u043b\u044f", "\u0430\u0432\u0433\u0443\u0441\u0442\u0430", "\u0441\u0435\u043d\u0442\u044f\u0431\u0440\u044f", "\u043e\u043a\u0442\u044f\u0431\u0440\u044f", "\u043d\u043e\u044f\u0431\u0440\u044f", "\u0434\u0435\u043a\u0430\u0431\u0440\u044f"], STANDALONEMONTHS:["\u042f\u043d\u0432\u0430\u0440\u044c", "\u0424\u0435\u0432\u0440\u0430\u043b\u044c", "\u041c\u0430\u0440\u0442", 
-"\u0410\u043f\u0440\u0435\u043b\u044c", "\u041c\u0430\u0439", "\u0418\u044e\u043d\u044c", "\u0418\u044e\u043b\u044c", "\u0410\u0432\u0433\u0443\u0441\u0442", "\u0421\u0435\u043d\u0442\u044f\u0431\u0440\u044c", "\u041e\u043a\u0442\u044f\u0431\u0440\u044c", "\u041d\u043e\u044f\u0431\u0440\u044c", "\u0414\u0435\u043a\u0430\u0431\u0440\u044c"], SHORTMONTHS:["\u044f\u043d\u0432.", "\u0444\u0435\u0432\u0440.", "\u043c\u0430\u0440\u0442\u0430", "\u0430\u043f\u0440.", "\u043c\u0430\u044f", "\u0438\u044e\u043d\u044f", 
-"\u0438\u044e\u043b\u044f", "\u0430\u0432\u0433.", "\u0441\u0435\u043d\u0442.", "\u043e\u043a\u0442.", "\u043d\u043e\u044f\u0431.", "\u0434\u0435\u043a."], STANDALONESHORTMONTHS:["\u044f\u043d\u0432.", "\u0444\u0435\u0432\u0440.", "\u043c\u0430\u0440\u0442", "\u0430\u043f\u0440.", "\u043c\u0430\u0439", "\u0438\u044e\u043d\u044c", "\u0438\u044e\u043b\u044c", "\u0430\u0432\u0433.", "\u0441\u0435\u043d\u0442.", "\u043e\u043a\u0442.", "\u043d\u043e\u044f\u0431.", "\u0434\u0435\u043a."], WEEKDAYS:["\u0432\u043e\u0441\u043a\u0440\u0435\u0441\u0435\u043d\u044c\u0435", 
-"\u043f\u043e\u043d\u0435\u0434\u0435\u043b\u044c\u043d\u0438\u043a", "\u0432\u0442\u043e\u0440\u043d\u0438\u043a", "\u0441\u0440\u0435\u0434\u0430", "\u0447\u0435\u0442\u0432\u0435\u0440\u0433", "\u043f\u044f\u0442\u043d\u0438\u0446\u0430", "\u0441\u0443\u0431\u0431\u043e\u0442\u0430"], STANDALONEWEEKDAYS:["\u0412\u043e\u0441\u043a\u0440\u0435\u0441\u0435\u043d\u044c\u0435", "\u041f\u043e\u043d\u0435\u0434\u0435\u043b\u044c\u043d\u0438\u043a", "\u0412\u0442\u043e\u0440\u043d\u0438\u043a", "\u0421\u0440\u0435\u0434\u0430", 
-"\u0427\u0435\u0442\u0432\u0435\u0440\u0433", "\u041f\u044f\u0442\u043d\u0438\u0446\u0430", "\u0421\u0443\u0431\u0431\u043e\u0442\u0430"], SHORTWEEKDAYS:["\u0412\u0441", "\u041f\u043d", "\u0412\u0442", "\u0421\u0440", "\u0427\u0442", "\u041f\u0442", "\u0421\u0431"], STANDALONESHORTWEEKDAYS:["\u0412\u0441", "\u041f\u043d", "\u0412\u0442", "\u0421\u0440", "\u0427\u0442", "\u041f\u0442", "\u0421\u0431"], NARROWWEEKDAYS:["\u0412", "\u041f", "\u0412", "\u0421", "\u0427", "\u041f", "\u0421"], STANDALONENARROWWEEKDAYS:["\u0412", 
-"\u041f", "\u0412", "\u0421", "\u0427", "\u041f", "\u0421"], SHORTQUARTERS:["1-\u0439 \u043a\u0432.", "2-\u0439 \u043a\u0432.", "3-\u0439 \u043a\u0432.", "4-\u0439 \u043a\u0432."], QUARTERS:["1-\u0439 \u043a\u0432\u0430\u0440\u0442\u0430\u043b", "2-\u0439 \u043a\u0432\u0430\u0440\u0442\u0430\u043b", "3-\u0439 \u043a\u0432\u0430\u0440\u0442\u0430\u043b", "4-\u0439 \u043a\u0432\u0430\u0440\u0442\u0430\u043b"], AMPMS:["AM", "PM"], DATEFORMATS:["EEEE, d MMMM y '\u0433'.", "d MMMM y '\u0433'.", "dd.MM.yyyy", 
-"dd.MM.yy"], TIMEFORMATS:["H:mm:ss zzzz", "H:mm:ss z", "H:mm:ss", "H:mm"], AVAILABLEFORMATS:{Md:"d.M", MMMMd:"d MMMM", MMMd:"d MMM"}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_sk = {ERAS:["pred n.l.", "n.l."], ERANAMES:["pred n.l.", "n.l."], NARROWMONTHS:["j", "f", "m", "a", "m", "j", "j", "a", "s", "o", "n", "d"], STANDALONENARROWMONTHS:["j", "f", "m", "a", "m", "j", "j", "a", "s", "o", "n", "d"], MONTHS:["janu\u00e1ra", "febru\u00e1ra", "marca", "apr\u00edla", "m\u00e1ja", "j\u00fana", "j\u00fala", "augusta", "septembra", "okt\u00f3bra", "novembra", "decembra"], STANDALONEMONTHS:["janu\u00e1r", "febru\u00e1r", "marec", "apr\u00edl", "m\u00e1j", 
-"j\u00fan", "j\u00fal", "august", "september", "okt\u00f3ber", "november", "december"], SHORTMONTHS:["jan", "feb", "mar", "apr", "m\u00e1j", "j\u00fan", "j\u00fal", "aug", "sep", "okt", "nov", "dec"], STANDALONESHORTMONTHS:["jan", "feb", "mar", "apr", "m\u00e1j", "j\u00fan", "j\u00fal", "aug", "sep", "okt", "nov", "dec"], WEEKDAYS:["nede\u013ea", "pondelok", "utorok", "streda", "\u0161tvrtok", "piatok", "sobota"], STANDALONEWEEKDAYS:["nede\u013ea", "pondelok", "utorok", "streda", "\u0161tvrtok", 
-"piatok", "sobota"], SHORTWEEKDAYS:["ne", "po", "ut", "st", "\u0161t", "pi", "so"], STANDALONESHORTWEEKDAYS:["ne", "po", "ut", "st", "\u0161t", "pi", "so"], NARROWWEEKDAYS:["N", "P", "U", "S", "\u0160", "P", "S"], STANDALONENARROWWEEKDAYS:["N", "P", "U", "S", "\u0160", "P", "S"], SHORTQUARTERS:["Q1", "Q2", "Q3", "Q4"], QUARTERS:["1. \u0161tvr\u0165rok", "2. \u0161tvr\u0165rok", "3. \u0161tvr\u0165rok", "4. \u0161tvr\u0165rok"], AMPMS:["dopoludnia", "popoludn\u00ed"], DATEFORMATS:["EEEE, d. MMMM y", 
-"d. MMMM y", "d.M.yyyy", "d.M.yyyy"], TIMEFORMATS:["H:mm:ss zzzz", "H:mm:ss z", "H:mm:ss", "H:mm"], AVAILABLEFORMATS:{Md:"d.M.", MMMMd:"d. MMMM", MMMd:"d. MMM"}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_sl = {ERAS:["pr. n. \u0161t.", "po Kr."], ERANAMES:["pred na\u0161im \u0161tetjem", "na\u0161e \u0161tetje"], NARROWMONTHS:["j", "f", "m", "a", "m", "j", "j", "a", "s", "o", "n", "d"], STANDALONENARROWMONTHS:["j", "f", "m", "a", "m", "j", "j", "a", "s", "o", "n", "d"], MONTHS:["januar", "februar", "marec", "april", "maj", "junij", "julij", "avgust", "september", "oktober", "november", "december"], STANDALONEMONTHS:["januar", "februar", "marec", "april", "maj", "junij", "julij", 
-"avgust", "september", "oktober", "november", "december"], SHORTMONTHS:["jan", "feb", "mar", "apr", "maj", "jun", "jul", "avg", "sep", "okt", "nov", "dec"], STANDALONESHORTMONTHS:["jan", "feb", "mar", "apr", "maj", "jun", "jul", "avg", "sep", "okt", "nov", "dec"], WEEKDAYS:["nedelja", "ponedeljek", "torek", "sreda", "\u010detrtek", "petek", "sobota"], STANDALONEWEEKDAYS:["nedelja", "ponedeljek", "torek", "sreda", "\u010detrtek", "petek", "sobota"], SHORTWEEKDAYS:["ned", "pon", "tor", "sre", "\u010det", 
-"pet", "sob"], STANDALONESHORTWEEKDAYS:["ned", "pon", "tor", "sre", "\u010det", "pet", "sob"], NARROWWEEKDAYS:["n", "p", "t", "s", "\u010d", "p", "s"], STANDALONENARROWWEEKDAYS:["n", "p", "t", "s", "\u010d", "p", "s"], SHORTQUARTERS:["Q1", "Q2", "Q3", "Q4"], QUARTERS:["1. \u010detrtletje", "2. \u010detrtletje", "3. \u010detrtletje", "4. \u010detrtletje"], AMPMS:["dop.", "pop."], DATEFORMATS:["EEEE, dd. MMMM y", "dd. MMMM y", "d. MMM. yyyy", "d. MM. yy"], TIMEFORMATS:["H:mm:ss zzzz", "HH:mm:ss z", 
-"HH:mm:ss", "HH:mm"], AVAILABLEFORMATS:{Md:"d. M.", MMMMd:"d. MMMM", MMMd:"MMM d"}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_sq = {ERAS:["p.e.r.", "n.e.r."], ERANAMES:["p.e.r.", "n.e.r."], NARROWMONTHS:["J", "S", "M", "P", "M", "Q", "K", "G", "S", "T", "N", "D"], STANDALONENARROWMONTHS:["J", "S", "M", "P", "M", "Q", "K", "G", "S", "T", "N", "D"], MONTHS:["janar", "shkurt", "mars", "prill", "maj", "qershor", "korrik", "gusht", "shtator", "tetor", "n\u00ebntor", "dhjetor"], STANDALONEMONTHS:["janar", "shkurt", "mars", "prill", "maj", "qershor", "korrik", "gusht", "shtator", "tetor", "n\u00ebntor", 
-"dhjetor"], SHORTMONTHS:["Jan", "Shk", "Mar", "Pri", "Maj", "Qer", "Kor", "Gsh", "Sht", "Tet", "N\u00ebn", "Dhj"], STANDALONESHORTMONTHS:["Jan", "Shk", "Mar", "Pri", "Maj", "Qer", "Kor", "Gsh", "Sht", "Tet", "N\u00ebn", "Dhj"], WEEKDAYS:["e diel", "e h\u00ebn\u00eb", "e mart\u00eb", "e m\u00ebrkur\u00eb", "e enjte", "e premte", "e shtun\u00eb"], STANDALONEWEEKDAYS:["e diel", "e h\u00ebn\u00eb", "e mart\u00eb", "e m\u00ebrkur\u00eb", "e enjte", "e premte", "e shtun\u00eb"], SHORTWEEKDAYS:["Die", "H\u00ebn", 
-"Mar", "M\u00ebr", "Enj", "Pre", "Sht"], STANDALONESHORTWEEKDAYS:["Die", "H\u00ebn", "Mar", "M\u00ebr", "Enj", "Pre", "Sht"], NARROWWEEKDAYS:["D", "H", "M", "M", "E", "P", "S"], STANDALONENARROWWEEKDAYS:["D", "H", "M", "M", "E", "P", "S"], SHORTQUARTERS:["Q1", "Q2", "Q3", "Q4"], QUARTERS:["Q1", "Q2", "Q3", "Q4"], AMPMS:["PD", "MD"], DATEFORMATS:["EEEE, dd MMMM y", "dd MMMM y", "yyyy-MM-dd", "yy-MM-dd"], TIMEFORMATS:["h.mm.ss.a zzzz", "h.mm.ss.a z", "h.mm.ss.a", "h.mm.a"], AVAILABLEFORMATS:{Md:"M-d", 
-MMMMd:"d MMMM", MMMd:"d MMM"}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_sr = {ERAS:["\u043f. \u043d. \u0435.", "\u043d. \u0435"], ERANAMES:["\u041f\u0440\u0435 \u043d\u043e\u0432\u0435 \u0435\u0440\u0435", "\u041d\u043e\u0432\u0435 \u0435\u0440\u0435"], NARROWMONTHS:["\u0458", "\u0444", "\u043c", "\u0430", "\u043c", "\u0458", "\u0458", "\u0430", "\u0441", "\u043e", "\u043d", "\u0434"], STANDALONENARROWMONTHS:["\u0458", "\u0444", "\u043c", "\u0430", "\u043c", "\u0458", "\u0458", "\u0430", "\u0441", "\u043e", "\u043d", "\u0434"], MONTHS:["\u0458\u0430\u043d\u0443\u0430\u0440", 
-"\u0444\u0435\u0431\u0440\u0443\u0430\u0440", "\u043c\u0430\u0440\u0442", "\u0430\u043f\u0440\u0438\u043b", "\u043c\u0430\u0458", "\u0458\u0443\u043d", "\u0458\u0443\u043b", "\u0430\u0432\u0433\u0443\u0441\u0442", "\u0441\u0435\u043f\u0442\u0435\u043c\u0431\u0430\u0440", "\u043e\u043a\u0442\u043e\u0431\u0430\u0440", "\u043d\u043e\u0432\u0435\u043c\u0431\u0430\u0440", "\u0434\u0435\u0446\u0435\u043c\u0431\u0430\u0440"], STANDALONEMONTHS:["\u0458\u0430\u043d\u0443\u0430\u0440", "\u0444\u0435\u0431\u0440\u0443\u0430\u0440", 
-"\u043c\u0430\u0440\u0442", "\u0430\u043f\u0440\u0438\u043b", "\u043c\u0430\u0458", "\u0458\u0443\u043d", "\u0458\u0443\u043b", "\u0430\u0432\u0433\u0443\u0441\u0442", "\u0441\u0435\u043f\u0442\u0435\u043c\u0431\u0430\u0440", "\u043e\u043a\u0442\u043e\u0431\u0430\u0440", "\u043d\u043e\u0432\u0435\u043c\u0431\u0430\u0440", "\u0434\u0435\u0446\u0435\u043c\u0431\u0430\u0440"], SHORTMONTHS:["\u0458\u0430\u043d", "\u0444\u0435\u0431", "\u043c\u0430\u0440", "\u0430\u043f\u0440", "\u043c\u0430\u0458", "\u0458\u0443\u043d", 
-"\u0458\u0443\u043b", "\u0430\u0432\u0433", "\u0441\u0435\u043f", "\u043e\u043a\u0442", "\u043d\u043e\u0432", "\u0434\u0435\u0446"], STANDALONESHORTMONTHS:["\u0458\u0430\u043d", "\u0444\u0435\u0431", "\u043c\u0430\u0440", "\u0430\u043f\u0440", "\u043c\u0430\u0458", "\u0458\u0443\u043d", "\u0458\u0443\u043b", "\u0430\u0432\u0433", "\u0441\u0435\u043f", "\u043e\u043a\u0442", "\u043d\u043e\u0432", "\u0434\u0435\u0446"], WEEKDAYS:["\u043d\u0435\u0434\u0435\u0459\u0430", "\u043f\u043e\u043d\u0435\u0434\u0435\u0459\u0430\u043a", 
-"\u0443\u0442\u043e\u0440\u0430\u043a", "\u0441\u0440\u0435\u0434\u0430", "\u0447\u0435\u0442\u0432\u0440\u0442\u0430\u043a", "\u043f\u0435\u0442\u0430\u043a", "\u0441\u0443\u0431\u043e\u0442\u0430"], STANDALONEWEEKDAYS:["\u043d\u0435\u0434\u0435\u0459\u0430", "\u043f\u043e\u043d\u0435\u0434\u0435\u0459\u0430\u043a", "\u0443\u0442\u043e\u0440\u0430\u043a", "\u0441\u0440\u0435\u0434\u0430", "\u0447\u0435\u0442\u0432\u0440\u0442\u0430\u043a", "\u043f\u0435\u0442\u0430\u043a", "\u0441\u0443\u0431\u043e\u0442\u0430"], 
-SHORTWEEKDAYS:["\u043d\u0435\u0434", "\u043f\u043e\u043d", "\u0443\u0442\u043e", "\u0441\u0440\u0435", "\u0447\u0435\u0442", "\u043f\u0435\u0442", "\u0441\u0443\u0431"], STANDALONESHORTWEEKDAYS:["\u043d\u0435\u0434", "\u043f\u043e\u043d", "\u0443\u0442\u043e", "\u0441\u0440\u0435", "\u0447\u0435\u0442", "\u043f\u0435\u0442", "\u0441\u0443\u0431"], NARROWWEEKDAYS:["\u043d", "\u043f", "\u0443", "\u0441", "\u0447", "\u043f", "\u0441"], STANDALONENARROWWEEKDAYS:["\u043d", "\u043f", "\u0443", "\u0441", 
-"\u0447", "\u043f", "\u0441"], SHORTQUARTERS:["\u041a1", "\u041a2", "\u041a3", "\u041a4"], QUARTERS:["\u041f\u0440\u0432\u043e \u0442\u0440\u043e\u043c\u0435\u0441\u0435\u0447\u0458\u0435", "\u0414\u0440\u0443\u0433\u043e \u0442\u0440\u043e\u043c\u0435\u0441\u0435\u0447\u0458\u0435", "\u0422\u0440\u0435\u045b\u0435 \u0442\u0440\u043e\u043c\u0435\u0441\u0435\u0447\u0458\u0435", "\u0427\u0435\u0442\u0432\u0440\u0442\u043e \u0442\u0440\u043e\u043c\u0435\u0441\u0435\u0447\u0458\u0435"], AMPMS:["\u043f\u0440\u0435 \u043f\u043e\u0434\u043d\u0435", 
-"\u043f\u043e\u043f\u043e\u0434\u043d\u0435"], DATEFORMATS:["EEEE, dd. MMMM y.", "dd. MMMM y.", "dd.MM.y.", "d.M.yy."], TIMEFORMATS:["HH.mm.ss zzzz", "HH.mm.ss z", "HH.mm.ss", "HH.mm"], AVAILABLEFORMATS:{Md:"d/M", MMMMd:"MMMM d.", MMMd:"MMM d."}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_sv = {ERAS:["f.Kr.", "e.Kr."], ERANAMES:["f\u00f6re Kristus", "efter Kristus"], NARROWMONTHS:["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], STANDALONENARROWMONTHS:["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"], MONTHS:["januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", "oktober", "november", "december"], STANDALONEMONTHS:["januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", 
-"oktober", "november", "december"], SHORTMONTHS:["jan", "feb", "mar", "apr", "maj", "jun", "jul", "aug", "sep", "okt", "nov", "dec"], STANDALONESHORTMONTHS:["jan", "feb", "mar", "apr", "maj", "jun", "jul", "aug", "sep", "okt", "nov", "dec"], WEEKDAYS:["s\u00f6ndag", "m\u00e5ndag", "tisdag", "onsdag", "torsdag", "fredag", "l\u00f6rdag"], STANDALONEWEEKDAYS:["s\u00f6ndag", "m\u00e5ndag", "tisdag", "onsdag", "torsdag", "fredag", "l\u00f6rdag"], SHORTWEEKDAYS:["s\u00f6n", "m\u00e5n", "tis", "ons", "tors", 
-"fre", "l\u00f6r"], STANDALONESHORTWEEKDAYS:["s\u00f6n", "m\u00e5n", "tis", "ons", "tors", "fre", "l\u00f6r"], NARROWWEEKDAYS:["S", "M", "T", "O", "T", "F", "L"], STANDALONENARROWWEEKDAYS:["S", "M", "T", "O", "T", "F", "L"], SHORTQUARTERS:["K1", "K2", "K3", "K4"], QUARTERS:["1:a kvartalet", "2:a kvartalet", "3:e kvartalet", "4:e kvartalet"], AMPMS:["fm", "em"], DATEFORMATS:["EEEE d MMMM y", "d MMMM y", "d MMM y", "yyyy-MM-dd"], TIMEFORMATS:["'kl'. HH.mm.ss zzzz", "HH.mm.ss z", "HH.mm.ss", "HH.mm"], 
-AVAILABLEFORMATS:{Md:"d/M", MMMMd:"d MMMM", MMMd:"d MMM"}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_ta = {ERAS:["\u0b95\u0bbf\u0bae\u0bc1", "\u0b95\u0bbf\u0baa\u0bbf"], ERANAMES:["\u0b95\u0bbf\u0bb1\u0bbf\u0bb8\u0bcd\u0ba4\u0bc1\u0bb5\u0bc1\u0b95\u0bcd\u0b95\u0bc1 \u0bae\u0bc1\u0ba9\u0bcd", "\u0b85\u0ba9\u0bcb \u0b9f\u0bcb\u0bae\u0bbf\u0ba9\u0bbf"], NARROWMONTHS:["\u0b9c", "\u0baa\u0bbf", "\u0bae\u0bbe", "\u0b8f", "\u0bae\u0bc7", "\u0b9c\u0bc2", "\u0b9c\u0bc2", "\u0b86", "\u0b9a\u0bc6", "\u0b85", "\u0ba8", "\u0b9f\u0bbf"], STANDALONENARROWMONTHS:["\u0b9c", "\u0baa\u0bbf", 
-"\u0bae\u0bbe", "\u0b8f", "\u0bae\u0bc7", "\u0b9c\u0bc2", "\u0b9c\u0bc2", "\u0b86", "\u0b9a\u0bc6", "\u0b85", "\u0ba8", "\u0b9f\u0bbf"], MONTHS:["\u0b9c\u0ba9\u0bb5\u0bb0\u0bbf", "\u0baa\u0bbf\u0baa\u0bcd\u0bb0\u0bb5\u0bb0\u0bbf", "\u0bae\u0bbe\u0bb0\u0bcd\u0b9a\u0bcd", "\u0b8f\u0baa\u0bcd\u0bb0\u0bb2\u0bcd", "\u0bae\u0bc7", "\u0b9c\u0bc2\u0ba9\u0bcd", "\u0b9c\u0bc2\u0bb2\u0bc8", "\u0b86\u0b95\u0bb8\u0bcd\u0b9f\u0bcd", "\u0b9a\u0bc6\u0baa\u0bcd\u0b9f\u0bae\u0bcd\u0baa\u0bb0\u0bcd", "\u0b85\u0b95\u0bcd\u0b9f\u0bcb\u0baa\u0bb0\u0bcd", 
-"\u0ba8\u0bb5\u0bae\u0bcd\u0baa\u0bb0\u0bcd", "\u0b9f\u0bbf\u0b9a\u0bae\u0bcd\u0baa\u0bb0\u0bcd"], STANDALONEMONTHS:["\u0b9c\u0ba9\u0bb5\u0bb0\u0bbf", "\u0baa\u0bbf\u0baa\u0bcd\u0bb0\u0bb5\u0bb0\u0bbf", "\u0bae\u0bbe\u0bb0\u0bcd\u0b9a\u0bcd", "\u0b8f\u0baa\u0bcd\u0bb0\u0bb2\u0bcd", "\u0bae\u0bc7", "\u0b9c\u0bc2\u0ba9\u0bcd", "\u0b9c\u0bc2\u0bb2\u0bc8", "\u0b86\u0b95\u0bb8\u0bcd\u0b9f\u0bcd", "\u0b9a\u0bc6\u0baa\u0bcd\u0b9f\u0bae\u0bcd\u0baa\u0bb0\u0bcd", "\u0b85\u0b95\u0bcd\u0b9f\u0bcb\u0baa\u0bb0\u0bcd", 
-"\u0ba8\u0bb5\u0bae\u0bcd\u0baa\u0bb0\u0bcd", "\u0b9f\u0bbf\u0b9a\u0bae\u0bcd\u0baa\u0bb0\u0bcd"], SHORTMONTHS:["\u0b9c\u0ba9.", "\u0baa\u0bbf\u0baa\u0bcd.", "\u0bae\u0bbe\u0bb0\u0bcd.", "\u0b8f\u0baa\u0bcd.", "\u0bae\u0bc7", "\u0b9c\u0bc2\u0ba9\u0bcd", "\u0b9c\u0bc2\u0bb2\u0bc8", "\u0b86\u0b95.", "\u0b9a\u0bc6\u0baa\u0bcd.", "\u0b85\u0b95\u0bcd.", "\u0ba8\u0bb5.", "\u0b9f\u0bbf\u0b9a."], STANDALONESHORTMONTHS:["\u0b9c\u0ba9.", "\u0baa\u0bbf\u0baa\u0bcd.", "\u0bae\u0bbe\u0bb0\u0bcd.", "\u0b8f\u0baa\u0bcd.", 
-"\u0bae\u0bc7", "\u0b9c\u0bc2\u0ba9\u0bcd", "\u0b9c\u0bc2\u0bb2\u0bc8", "\u0b86\u0b95.", "\u0b9a\u0bc6\u0baa\u0bcd.", "\u0b85\u0b95\u0bcd.", "\u0ba8\u0bb5.", "\u0b9f\u0bbf\u0b9a."], WEEKDAYS:["\u0b9e\u0bbe\u0baf\u0bbf\u0bb1\u0bc1", "\u0ba4\u0bbf\u0b99\u0bcd\u0b95\u0bb3\u0bcd", "\u0b9a\u0bc6\u0bb5\u0bcd\u0bb5\u0bbe\u0baf\u0bcd", "\u0baa\u0bc1\u0ba4\u0ba9\u0bcd", "\u0bb5\u0bbf\u0baf\u0bbe\u0bb4\u0ba9\u0bcd", "\u0bb5\u0bc6\u0bb3\u0bcd\u0bb3\u0bbf", "\u0b9a\u0ba9\u0bbf"], STANDALONEWEEKDAYS:["\u0b9e\u0bbe\u0baf\u0bbf\u0bb1\u0bc1", 
-"\u0ba4\u0bbf\u0b99\u0bcd\u0b95\u0bb3\u0bcd", "\u0b9a\u0bc6\u0bb5\u0bcd\u0bb5\u0bbe\u0baf\u0bcd", "\u0baa\u0bc1\u0ba4\u0ba9\u0bcd", "\u0bb5\u0bbf\u0baf\u0bbe\u0bb4\u0ba9\u0bcd", "\u0bb5\u0bc6\u0bb3\u0bcd\u0bb3\u0bbf", "\u0b9a\u0ba9\u0bbf"], SHORTWEEKDAYS:["\u0b9e\u0bbe", "\u0ba4\u0bbf", "\u0b9a\u0bc6", "\u0baa\u0bc1", "\u0bb5\u0bbf", "\u0bb5\u0bc6", "\u0b9a"], STANDALONESHORTWEEKDAYS:["\u0b9e\u0bbe", "\u0ba4\u0bbf", "\u0b9a\u0bc6", "\u0baa\u0bc1", "\u0bb5\u0bbf", "\u0bb5\u0bc6", "\u0b9a"], NARROWWEEKDAYS:["\u0b9e\u0bbe", 
-"\u0ba4\u0bbf", "\u0b9a\u0bc6", "\u0baa\u0bc1", "\u0bb5\u0bbf", "\u0bb5\u0bc6", "\u0b9a"], STANDALONENARROWWEEKDAYS:["\u0b9e\u0bbe", "\u0ba4\u0bbf", "\u0b9a\u0bc6", "\u0baa\u0bc1", "\u0bb5\u0bbf", "\u0bb5\u0bc6", "\u0b9a"], SHORTQUARTERS:["Q1", "Q2", "Q3", "Q4"], QUARTERS:["1\u0b86\u0bae\u0bcd \u0b95\u0bbe\u0bb2\u0bbe\u0ba3\u0bcd\u0b9f\u0bc1", "2\u0b86\u0bae\u0bcd \u0b95\u0bbe\u0bb2\u0bbe\u0ba3\u0bcd\u0b9f\u0bc1", "3\u0b86\u0bae\u0bcd \u0b95\u0bbe\u0bb2\u0bbe\u0ba3\u0bcd\u0b9f\u0bc1", "4\u0b86\u0bae\u0bcd \u0b95\u0bbe\u0bb2\u0bbe\u0ba3\u0bcd\u0b9f\u0bc1"], 
-AMPMS:["am", "pm"], DATEFORMATS:["EEEE, d MMMM, y", "d MMMM, y", "d MMM, y", "d-M-yy"], TIMEFORMATS:["h:mm:ss a zzzz", "h:mm:ss a z", "h:mm:ss a", "h:mm a"], AVAILABLEFORMATS:{Md:"M-d", MMMMd:"d MMMM", MMMd:"MMM d"}, FIRSTDAYOFWEEK:6, WEEKENDRANGE:[6, 6], FIRSTWEEKCUTOFFDAY:2};
-goog.i18n.DateTimeSymbols_te = {ERAS:["BCE", "CE"], ERANAMES:["\u0c08\u0c38\u0c3e\u0c2a\u0c42\u0c30\u0c4d\u0c35.", "\u0c38\u0c28\u0c4d."], NARROWMONTHS:["\u0c1c", "\u0c2b\u0c3f", "\u0c2e", "\u0c0e", "\u0c2e\u0c46", "\u0c1c\u0c41", "\u0c1c\u0c41", "\u0c06", "\u0c38\u0c46", "\u0c05", "\u0c28", "\u0c21\u0c3f"], STANDALONENARROWMONTHS:["\u0c1c", "\u0c2b\u0c3f", "\u0c2e", "\u0c0e", "\u0c2e\u0c46", "\u0c1c\u0c41", "\u0c1c\u0c41", "\u0c06", "\u0c38\u0c46", "\u0c05", "\u0c28", "\u0c21\u0c3f"], MONTHS:["\u0c1c\u0c28\u0c35\u0c30\u0c3f", 
-"\u0c2b\u0c3f\u0c2c\u0c4d\u0c30\u0c35\u0c30\u0c3f", "\u0c2e\u0c3e\u0c30\u0c4d\u0c1a\u0c3f", "\u0c0f\u0c2a\u0c4d\u0c30\u0c3f\u0c32\u0c4d", "\u0c2e\u0c47", "\u0c1c\u0c42\u0c28\u0c4d", "\u0c1c\u0c42\u0c32\u0c48", "\u0c06\u0c17\u0c38\u0c4d\u0c1f\u0c41", "\u0c38\u0c46\u0c2a\u0c4d\u0c1f\u0c46\u0c02\u0c2c\u0c30\u0c4d", "\u0c05\u0c15\u0c4d\u0c1f\u0c4b\u0c2c\u0c30\u0c4d", "\u0c28\u0c35\u0c02\u0c2c\u0c30\u0c4d", "\u0c21\u0c3f\u0c38\u0c46\u0c02\u0c2c\u0c30\u0c4d"], STANDALONEMONTHS:["\u0c1c\u0c28\u0c35\u0c30\u0c3f", 
-"\u0c2b\u0c3f\u0c2c\u0c4d\u0c30\u0c35\u0c30\u0c3f", "\u0c2e\u0c3e\u0c30\u0c4d\u0c1a\u0c3f", "\u0c0f\u0c2a\u0c4d\u0c30\u0c3f\u0c32\u0c4d", "\u0c2e\u0c47", "\u0c1c\u0c42\u0c28\u0c4d", "\u0c1c\u0c42\u0c32\u0c48", "\u0c06\u0c17\u0c38\u0c4d\u0c1f\u0c41", "\u0c38\u0c46\u0c2a\u0c4d\u0c1f\u0c46\u0c02\u0c2c\u0c30\u0c4d", "\u0c05\u0c15\u0c4d\u0c1f\u0c4b\u0c2c\u0c30\u0c4d", "\u0c28\u0c35\u0c02\u0c2c\u0c30\u0c4d", "\u0c21\u0c3f\u0c38\u0c46\u0c02\u0c2c\u0c30\u0c4d"], SHORTMONTHS:["\u0c1c\u0c28\u0c35\u0c30\u0c3f", 
-"\u0c2b\u0c3f\u0c2c\u0c4d\u0c30\u0c35\u0c30\u0c3f", "\u0c2e\u0c3e\u0c30\u0c4d\u0c1a\u0c3f", "\u0c0f\u0c2a\u0c4d\u0c30\u0c3f\u0c32\u0c4d", "\u0c2e\u0c47", "\u0c1c\u0c42\u0c28\u0c4d", "\u0c1c\u0c42\u0c32\u0c48", "\u0c06\u0c17\u0c38\u0c4d\u0c1f\u0c41", "\u0c38\u0c46\u0c2a\u0c4d\u0c1f\u0c46\u0c02\u0c2c\u0c30\u0c4d", "\u0c05\u0c15\u0c4d\u0c1f\u0c4b\u0c2c\u0c30\u0c4d", "\u0c28\u0c35\u0c02\u0c2c\u0c30\u0c4d", "\u0c21\u0c3f\u0c38\u0c46\u0c02\u0c2c\u0c30\u0c4d"], STANDALONESHORTMONTHS:["\u0c1c\u0c28\u0c35\u0c30\u0c3f", 
-"\u0c2b\u0c3f\u0c2c\u0c4d\u0c30\u0c35\u0c30\u0c3f", "\u0c2e\u0c3e\u0c30\u0c4d\u0c1a\u0c3f", "\u0c0f\u0c2a\u0c4d\u0c30\u0c3f\u0c32\u0c4d", "\u0c2e\u0c47", "\u0c1c\u0c42\u0c28\u0c4d", "\u0c1c\u0c42\u0c32\u0c48", "\u0c06\u0c17\u0c38\u0c4d\u0c1f\u0c41", "\u0c38\u0c46\u0c2a\u0c4d\u0c1f\u0c46\u0c02\u0c2c\u0c30\u0c4d", "\u0c05\u0c15\u0c4d\u0c1f\u0c4b\u0c2c\u0c30\u0c4d", "\u0c28\u0c35\u0c02\u0c2c\u0c30\u0c4d", "\u0c21\u0c3f\u0c38\u0c46\u0c02\u0c2c\u0c30\u0c4d"], WEEKDAYS:["\u0c06\u0c26\u0c3f\u0c35\u0c3e\u0c30\u0c02", 
-"\u0c38\u0c4b\u0c2e\u0c35\u0c3e\u0c30\u0c02", "\u0c2e\u0c02\u0c17\u0c33\u0c35\u0c3e\u0c30\u0c02", "\u0c2c\u0c41\u0c27\u0c35\u0c3e\u0c30\u0c02", "\u0c17\u0c41\u0c30\u0c41\u0c35\u0c3e\u0c30\u0c02", "\u0c36\u0c41\u0c15\u0c4d\u0c30\u0c35\u0c3e\u0c30\u0c02", "\u0c36\u0c28\u0c3f\u0c35\u0c3e\u0c30\u0c02"], STANDALONEWEEKDAYS:["\u0c06\u0c26\u0c3f\u0c35\u0c3e\u0c30\u0c02", "\u0c38\u0c4b\u0c2e\u0c35\u0c3e\u0c30\u0c02", "\u0c2e\u0c02\u0c17\u0c33\u0c35\u0c3e\u0c30\u0c02", "\u0c2c\u0c41\u0c27\u0c35\u0c3e\u0c30\u0c02", 
-"\u0c17\u0c41\u0c30\u0c41\u0c35\u0c3e\u0c30\u0c02", "\u0c36\u0c41\u0c15\u0c4d\u0c30\u0c35\u0c3e\u0c30\u0c02", "\u0c36\u0c28\u0c3f\u0c35\u0c3e\u0c30\u0c02"], SHORTWEEKDAYS:["\u0c06\u0c26\u0c3f", "\u0c38\u0c4b\u0c2e", "\u0c2e\u0c02\u0c17\u0c33", "\u0c2c\u0c41\u0c27", "\u0c17\u0c41\u0c30\u0c41", "\u0c36\u0c41\u0c15\u0c4d\u0c30", "\u0c36\u0c28\u0c3f"], STANDALONESHORTWEEKDAYS:["\u0c06\u0c26\u0c3f", "\u0c38\u0c4b\u0c2e", "\u0c2e\u0c02\u0c17\u0c33", "\u0c2c\u0c41\u0c27", "\u0c17\u0c41\u0c30\u0c41", "\u0c36\u0c41\u0c15\u0c4d\u0c30", 
-"\u0c36\u0c28\u0c3f"], NARROWWEEKDAYS:["\u0c06", "\u0c38\u0c4b", "\u0c2e", "\u0c2d\u0c41", "\u0c17\u0c41", "\u0c36\u0c41", "\u0c36"], STANDALONENARROWWEEKDAYS:["\u0c06", "\u0c38\u0c4b", "\u0c2e", "\u0c2d\u0c41", "\u0c17\u0c41", "\u0c36\u0c41", "\u0c36"], SHORTQUARTERS:["Q1", "Q2", "Q3", "Q4"], QUARTERS:["\u0c12\u0c15\u0c1f\u0c3f 1", "\u0c30\u0c46\u0c02\u0c21\u0c41 2", "\u0c2e\u0c42\u0c21\u0c41 3", "\u0c28\u0c3e\u0c32\u0c41\u0c17\u0c41 4"], AMPMS:["am", "pm"], DATEFORMATS:["EEEE d MMMM y", "d MMMM y", 
-"d MMM y", "dd-MM-yy"], TIMEFORMATS:["h:mm:ss a zzzz", "h:mm:ss a z", "h:mm:ss a", "h:mm a"], AVAILABLEFORMATS:{Md:"M-d", MMMMd:"d MMMM", MMMd:"MMM d"}, FIRSTDAYOFWEEK:6, WEEKENDRANGE:[6, 6], FIRSTWEEKCUTOFFDAY:2};
-goog.i18n.DateTimeSymbols_th = {ERAS:["\u0e1b\u0e35\u0e01\u0e48\u0e2d\u0e19 \u0e04.\u0e28.", "\u0e04.\u0e28."], ERANAMES:["\u0e1b\u0e35\u0e01\u0e48\u0e2d\u0e19\u0e04\u0e23\u0e34\u0e2a\u0e15\u0e4c\u0e28\u0e31\u0e01\u0e23\u0e32\u0e0a", "\u0e04\u0e23\u0e34\u0e2a\u0e15\u0e4c\u0e28\u0e31\u0e01\u0e23\u0e32\u0e0a"], NARROWMONTHS:["\u0e21.\u0e04.", "\u0e01.\u0e1e.", "\u0e21\u0e35.\u0e04.", "\u0e40\u0e21.\u0e22.", "\u0e1e.\u0e04.", "\u0e21\u0e34.\u0e22.", "\u0e01.\u0e04.", "\u0e2a.\u0e04.", "\u0e01.\u0e22.", 
-"\u0e15.\u0e04.", "\u0e1e.\u0e22.", "\u0e18.\u0e04."], STANDALONENARROWMONTHS:["\u0e21.\u0e04.", "\u0e01.\u0e1e.", "\u0e21\u0e35.\u0e04.", "\u0e40\u0e21.\u0e22.", "\u0e1e.\u0e04.", "\u0e21\u0e34.\u0e22.", "\u0e01.\u0e04.", "\u0e2a.\u0e04.", "\u0e01.\u0e22.", "\u0e15.\u0e04.", "\u0e1e.\u0e22.", "\u0e18.\u0e04."], MONTHS:["\u0e21\u0e01\u0e23\u0e32\u0e04\u0e21", "\u0e01\u0e38\u0e21\u0e20\u0e32\u0e1e\u0e31\u0e19\u0e18\u0e4c", "\u0e21\u0e35\u0e19\u0e32\u0e04\u0e21", "\u0e40\u0e21\u0e29\u0e32\u0e22\u0e19", 
-"\u0e1e\u0e24\u0e29\u0e20\u0e32\u0e04\u0e21", "\u0e21\u0e34\u0e16\u0e38\u0e19\u0e32\u0e22\u0e19", "\u0e01\u0e23\u0e01\u0e0e\u0e32\u0e04\u0e21", "\u0e2a\u0e34\u0e07\u0e2b\u0e32\u0e04\u0e21", "\u0e01\u0e31\u0e19\u0e22\u0e32\u0e22\u0e19", "\u0e15\u0e38\u0e25\u0e32\u0e04\u0e21", "\u0e1e\u0e24\u0e28\u0e08\u0e34\u0e01\u0e32\u0e22\u0e19", "\u0e18\u0e31\u0e19\u0e27\u0e32\u0e04\u0e21"], STANDALONEMONTHS:["\u0e21\u0e01\u0e23\u0e32\u0e04\u0e21", "\u0e01\u0e38\u0e21\u0e20\u0e32\u0e1e\u0e31\u0e19\u0e18\u0e4c", 
-"\u0e21\u0e35\u0e19\u0e32\u0e04\u0e21", "\u0e40\u0e21\u0e29\u0e32\u0e22\u0e19", "\u0e1e\u0e24\u0e29\u0e20\u0e32\u0e04\u0e21", "\u0e21\u0e34\u0e16\u0e38\u0e19\u0e32\u0e22\u0e19", "\u0e01\u0e23\u0e01\u0e0e\u0e32\u0e04\u0e21", "\u0e2a\u0e34\u0e07\u0e2b\u0e32\u0e04\u0e21", "\u0e01\u0e31\u0e19\u0e22\u0e32\u0e22\u0e19", "\u0e15\u0e38\u0e25\u0e32\u0e04\u0e21", "\u0e1e\u0e24\u0e28\u0e08\u0e34\u0e01\u0e32\u0e22\u0e19", "\u0e18\u0e31\u0e19\u0e27\u0e32\u0e04\u0e21"], SHORTMONTHS:["\u0e21.\u0e04.", "\u0e01.\u0e1e.", 
-"\u0e21\u0e35.\u0e04.", "\u0e40\u0e21.\u0e22.", "\u0e1e.\u0e04.", "\u0e21\u0e34.\u0e22.", "\u0e01.\u0e04.", "\u0e2a.\u0e04.", "\u0e01.\u0e22.", "\u0e15.\u0e04.", "\u0e1e.\u0e22.", "\u0e18.\u0e04."], STANDALONESHORTMONTHS:["\u0e21.\u0e04.", "\u0e01.\u0e1e.", "\u0e21\u0e35.\u0e04.", "\u0e40\u0e21.\u0e22.", "\u0e1e.\u0e04.", "\u0e21\u0e34.\u0e22.", "\u0e01.\u0e04.", "\u0e2a.\u0e04.", "\u0e01.\u0e22.", "\u0e15.\u0e04.", "\u0e1e.\u0e22.", "\u0e18.\u0e04."], WEEKDAYS:["\u0e27\u0e31\u0e19\u0e2d\u0e32\u0e17\u0e34\u0e15\u0e22\u0e4c", 
-"\u0e27\u0e31\u0e19\u0e08\u0e31\u0e19\u0e17\u0e23\u0e4c", "\u0e27\u0e31\u0e19\u0e2d\u0e31\u0e07\u0e04\u0e32\u0e23", "\u0e27\u0e31\u0e19\u0e1e\u0e38\u0e18", "\u0e27\u0e31\u0e19\u0e1e\u0e24\u0e2b\u0e31\u0e2a\u0e1a\u0e14\u0e35", "\u0e27\u0e31\u0e19\u0e28\u0e38\u0e01\u0e23\u0e4c", "\u0e27\u0e31\u0e19\u0e40\u0e2a\u0e32\u0e23\u0e4c"], STANDALONEWEEKDAYS:["\u0e27\u0e31\u0e19\u0e2d\u0e32\u0e17\u0e34\u0e15\u0e22\u0e4c", "\u0e27\u0e31\u0e19\u0e08\u0e31\u0e19\u0e17\u0e23\u0e4c", "\u0e27\u0e31\u0e19\u0e2d\u0e31\u0e07\u0e04\u0e32\u0e23", 
-"\u0e27\u0e31\u0e19\u0e1e\u0e38\u0e18", "\u0e27\u0e31\u0e19\u0e1e\u0e24\u0e2b\u0e31\u0e2a\u0e1a\u0e14\u0e35", "\u0e27\u0e31\u0e19\u0e28\u0e38\u0e01\u0e23\u0e4c", "\u0e27\u0e31\u0e19\u0e40\u0e2a\u0e32\u0e23\u0e4c"], SHORTWEEKDAYS:["\u0e2d\u0e32.", "\u0e08.", "\u0e2d.", "\u0e1e.", "\u0e1e\u0e24.", "\u0e28.", "\u0e2a."], STANDALONESHORTWEEKDAYS:["\u0e2d\u0e32.", "\u0e08.", "\u0e2d.", "\u0e1e.", "\u0e1e\u0e24.", "\u0e28.", "\u0e2a."], NARROWWEEKDAYS:["\u0e2d", "\u0e08", "\u0e2d", "\u0e1e", "\u0e1e", 
-"\u0e28", "\u0e2a"], STANDALONENARROWWEEKDAYS:["\u0e2d", "\u0e08", "\u0e2d", "\u0e1e", "\u0e1e", "\u0e28", "\u0e2a"], SHORTQUARTERS:["Q1", "Q2", "Q3", "Q4"], QUARTERS:["\u0e44\u0e15\u0e23\u0e21\u0e32\u0e2a 1", "\u0e44\u0e15\u0e23\u0e21\u0e32\u0e2a 2", "\u0e44\u0e15\u0e23\u0e21\u0e32\u0e2a 3", "\u0e44\u0e15\u0e23\u0e21\u0e32\u0e2a 4"], AMPMS:["\u0e01\u0e48\u0e2d\u0e19\u0e40\u0e17\u0e35\u0e48\u0e22\u0e07", "\u0e2b\u0e25\u0e31\u0e07\u0e40\u0e17\u0e35\u0e48\u0e22\u0e07"], DATEFORMATS:["EEEE\u0e17\u0e35\u0e48 d MMMM G y", 
-"d MMMM y", "d MMM y", "d/M/yyyy"], TIMEFORMATS:["H \u0e19\u0e32\u0e2c\u0e34\u0e01\u0e32 m \u0e19\u0e32\u0e17\u0e35 ss \u0e27\u0e34\u0e19\u0e32\u0e17\u0e35 zzzz", "H \u0e19\u0e32\u0e2c\u0e34\u0e01\u0e32 m \u0e19\u0e32\u0e17\u0e35 ss \u0e27\u0e34\u0e19\u0e32\u0e17\u0e35 z", "H:mm:ss", "H:mm"], AVAILABLEFORMATS:{Md:"d/M", MMMMd:"d MMMM", MMMd:"d MMM"}, FIRSTDAYOFWEEK:6, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:2};
-goog.i18n.DateTimeSymbols_tl = {ERAS:["BCE", "CE"], ERANAMES:["BCE", "CE"], NARROWMONTHS:["E", "P", "M", "A", "M", "H", "H", "A", "S", "O", "N", "D"], STANDALONENARROWMONTHS:["E", "P", "M", "A", "M", "H", "H", "A", "S", "O", "N", "D"], MONTHS:["Enero", "Pebrero", "Marso", "Abril", "Mayo", "Hunyo", "Hulyo", "Agosto", "Setyembre", "Oktubre", "Nobyembre", "Disyembre"], STANDALONEMONTHS:["Enero", "Pebrero", "Marso", "Abril", "Mayo", "Hunyo", "Hulyo", "Agosto", "Setyembre", "Oktubre", "Nobyembre", "Disyembre"], 
-SHORTMONTHS:["Ene", "Peb", "Mar", "Abr", "May", "Hun", "Hul", "Ago", "Set", "Okt", "Nob", "Dis"], STANDALONESHORTMONTHS:["Ene", "Peb", "Mar", "Abr", "May", "Hun", "Hul", "Ago", "Set", "Okt", "Nob", "Dis"], WEEKDAYS:["Linggo", "Lunes", "Martes", "Miyerkules", "Huwebes", "Biyernes", "Sabado"], STANDALONEWEEKDAYS:["Linggo", "Lunes", "Martes", "Miyerkules", "Huwebes", "Biyernes", "Sabado"], SHORTWEEKDAYS:["Lin", "Lun", "Mar", "Mye", "Huw", "Bye", "Sab"], STANDALONESHORTWEEKDAYS:["Lin", "Lun", "Mar", 
-"Miy", "Huw", "Biy", "Sab"], NARROWWEEKDAYS:["L", "L", "M", "M", "H", "B", "S"], STANDALONENARROWWEEKDAYS:["L", "L", "M", "M", "H", "B", "S"], SHORTQUARTERS:["Q1", "Q2", "Q3", "Q4"], QUARTERS:["Q1", "Q2", "Q3", "Q4"], AMPMS:["AM", "PM"], DATEFORMATS:["EEEE, MMMM dd y", "MMMM d, y", "MMM d, y", "M/d/yy"], TIMEFORMATS:["HH:mm:ss zzzz", "HH:mm:ss z", "HH:mm:ss", "HH:mm"], AVAILABLEFORMATS:{Md:"M-d", MMMMd:"MMMM d", MMMd:"MMM d"}, FIRSTDAYOFWEEK:6, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:2};
-goog.i18n.DateTimeSymbols_tr = {ERAS:["M\u00d6", "MS"], ERANAMES:["Milattan \u00d6nce", "Milattan Sonra"], NARROWMONTHS:["O", "\u015e", "M", "N", "M", "H", "T", "A", "E", "E", "K", "A"], STANDALONENARROWMONTHS:["O", "\u015e", "M", "N", "M", "H", "T", "A", "E", "E", "K", "A"], MONTHS:["Ocak", "\u015eubat", "Mart", "Nisan", "May\u0131s", "Haziran", "Temmuz", "A\u011fustos", "Eyl\u00fcl", "Ekim", "Kas\u0131m", "Aral\u0131k"], STANDALONEMONTHS:["Ocak", "\u015eubat", "Mart", "Nisan", "May\u0131s", "Haziran", 
-"Temmuz", "A\u011fustos", "Eyl\u00fcl", "Ekim", "Kas\u0131m", "Aral\u0131k"], SHORTMONTHS:["Oca", "\u015eub", "Mar", "Nis", "May", "Haz", "Tem", "A\u011fu", "Eyl", "Eki", "Kas", "Ara"], STANDALONESHORTMONTHS:["Oca", "\u015eub", "Mar", "Nis", "May", "Haz", "Tem", "A\u011fu", "Eyl", "Eki", "Kas", "Ara"], WEEKDAYS:["Pazar", "Pazartesi", "Sal\u0131", "\u00c7ar\u015famba", "Per\u015fembe", "Cuma", "Cumartesi"], STANDALONEWEEKDAYS:["Pazar", "Pazartesi", "Sal\u0131", "\u00c7ar\u015famba", "Per\u015fembe", 
-"Cuma", "Cumartesi"], SHORTWEEKDAYS:["Paz", "Pzt", "Sal", "\u00c7ar", "Per", "Cum", "Cmt"], STANDALONESHORTWEEKDAYS:["Paz", "Pzt", "Sal", "\u00c7ar", "Per", "Cum", "Cmt"], NARROWWEEKDAYS:["P", "P", "S", "\u00c7", "P", "C", "C"], STANDALONENARROWWEEKDAYS:["P", "P", "S", "\u00c7", "P", "C", "C"], SHORTQUARTERS:["\u00c71", "\u00c72", "\u00c73", "\u00c74"], QUARTERS:["1. \u00e7eyrek", "2. \u00e7eyrek", "3. \u00e7eyrek", "4. \u00e7eyrek"], AMPMS:["AM", "PM"], DATEFORMATS:["dd MMMM y EEEE", "dd MMMM y", 
-"dd MMM y", "dd MM yyyy"], TIMEFORMATS:["HH:mm:ss zzzz", "HH:mm:ss z", "HH:mm:ss", "HH:mm"], AVAILABLEFORMATS:{Md:"dd/MM", MMMMd:"dd MMMM", MMMd:"dd MMM"}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_uk = {ERAS:["\u0434\u043e \u043d.\u0435.", "\u043d.\u0435."], ERANAMES:["\u0434\u043e \u043d\u0430\u0448\u043e\u0457 \u0435\u0440\u0438", "\u043d\u0430\u0448\u043e\u0457 \u0435\u0440\u0438"], NARROWMONTHS:["\u0421", "\u041b", "\u0411", "\u041a", "\u0422", "\u0427", "\u041b", "\u0421", "\u0412", "\u0416", "\u041b", "\u0413"], STANDALONENARROWMONTHS:["\u0421", "\u041b", "\u0411", "\u041a", "\u0422", "\u0427", "\u041b", "\u0421", "\u0412", "\u0416", "\u041b", "\u0413"], MONTHS:["\u0441\u0456\u0447\u043d\u044f", 
-"\u043b\u044e\u0442\u043e\u0433\u043e", "\u0431\u0435\u0440\u0435\u0437\u043d\u044f", "\u043a\u0432\u0456\u0442\u043d\u044f", "\u0442\u0440\u0430\u0432\u043d\u044f", "\u0447\u0435\u0440\u0432\u043d\u044f", "\u043b\u0438\u043f\u043d\u044f", "\u0441\u0435\u0440\u043f\u043d\u044f", "\u0432\u0435\u0440\u0435\u0441\u043d\u044f", "\u0436\u043e\u0432\u0442\u043d\u044f", "\u043b\u0438\u0441\u0442\u043e\u043f\u0430\u0434\u0430", "\u0433\u0440\u0443\u0434\u043d\u044f"], STANDALONEMONTHS:["\u0421\u0456\u0447\u0435\u043d\u044c", 
-"\u041b\u044e\u0442\u0438\u0439", "\u0411\u0435\u0440\u0435\u0437\u0435\u043d\u044c", "\u041a\u0432\u0456\u0442\u0435\u043d\u044c", "\u0422\u0440\u0430\u0432\u0435\u043d\u044c", "\u0427\u0435\u0440\u0432\u0435\u043d\u044c", "\u041b\u0438\u043f\u0435\u043d\u044c", "\u0421\u0435\u0440\u043f\u0435\u043d\u044c", "\u0412\u0435\u0440\u0435\u0441\u0435\u043d\u044c", "\u0416\u043e\u0432\u0442\u0435\u043d\u044c", "\u041b\u0438\u0441\u0442\u043e\u043f\u0430\u0434", "\u0413\u0440\u0443\u0434\u0435\u043d\u044c"], 
-SHORTMONTHS:["\u0441\u0456\u0447.", "\u043b\u044e\u0442.", "\u0431\u0435\u0440.", "\u043a\u0432\u0456\u0442.", "\u0442\u0440\u0430\u0432.", "\u0447\u0435\u0440\u0432.", "\u043b\u0438\u043f.", "\u0441\u0435\u0440\u043f.", "\u0432\u0435\u0440.", "\u0436\u043e\u0432\u0442.", "\u043b\u0438\u0441\u0442.", "\u0433\u0440\u0443\u0434."], STANDALONESHORTMONTHS:["\u0421\u0456\u0447", "\u041b\u044e\u0442", "\u0411\u0435\u0440", "\u041a\u0432\u0456", "\u0422\u0440\u0430", "\u0427\u0435\u0440", "\u041b\u0438\u043f", 
-"\u0421\u0435\u0440", "\u0412\u0435\u0440", "\u0416\u043e\u0432", "\u041b\u0438\u0441", "\u0413\u0440\u0443"], WEEKDAYS:["\u041d\u0435\u0434\u0456\u043b\u044f", "\u041f\u043e\u043d\u0435\u0434\u0456\u043b\u043e\u043a", "\u0412\u0456\u0432\u0442\u043e\u0440\u043e\u043a", "\u0421\u0435\u0440\u0435\u0434\u0430", "\u0427\u0435\u0442\u0432\u0435\u0440", "\u041f\u02bc\u044f\u0442\u043d\u0438\u0446\u044f", "\u0421\u0443\u0431\u043e\u0442\u0430"], STANDALONEWEEKDAYS:["\u041d\u0435\u0434\u0456\u043b\u044f", 
-"\u041f\u043e\u043d\u0435\u0434\u0456\u043b\u043e\u043a", "\u0412\u0456\u0432\u0442\u043e\u0440\u043e\u043a", "\u0421\u0435\u0440\u0435\u0434\u0430", "\u0427\u0435\u0442\u0432\u0435\u0440", "\u041f\u02bc\u044f\u0442\u043d\u0438\u0446\u044f", "\u0421\u0443\u0431\u043e\u0442\u0430"], SHORTWEEKDAYS:["\u041d\u0434", "\u041f\u043d", "\u0412\u0442", "\u0421\u0440", "\u0427\u0442", "\u041f\u0442", "\u0421\u0431"], STANDALONESHORTWEEKDAYS:["\u041d\u0434", "\u041f\u043d", "\u0412\u0442", "\u0421\u0440", "\u0427\u0442", 
-"\u041f\u0442", "\u0421\u0431"], NARROWWEEKDAYS:["\u041d", "\u041f", "\u0412", "\u0421", "\u0427", "\u041f", "\u0421"], STANDALONENARROWWEEKDAYS:["\u041d", "\u041f", "\u0412", "\u0421", "\u0427", "\u041f", "\u0421"], SHORTQUARTERS:["I \u043a\u0432.", "II \u043a\u0432.", "III \u043a\u0432.", "IV \u043a\u0432."], QUARTERS:["I \u043a\u0432\u0430\u0440\u0442\u0430\u043b", "II \u043a\u0432\u0430\u0440\u0442\u0430\u043b", "III \u043a\u0432\u0430\u0440\u0442\u0430\u043b", "IV \u043a\u0432\u0430\u0440\u0442\u0430\u043b"], 
-AMPMS:["\u0434\u043f", "\u043f\u043f"], DATEFORMATS:["EEEE, d MMMM y '\u0440'.", "d MMMM y '\u0440'.", "d MMM y", "dd.MM.yy"], TIMEFORMATS:["HH:mm:ss zzzz", "HH:mm:ss z", "HH:mm:ss", "HH:mm"], AVAILABLEFORMATS:{Md:"M-d", MMMMd:"d MMMM", MMMd:"d MMM"}, FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_ur = {ERAS:["\u0642 \u0645", "\u0639\u064a\u0633\u0648\u06cc \u0633\u0646"], ERANAMES:["\u0642\u0628\u0644 \u0645\u0633\u064a\u062d", "\u0639\u064a\u0633\u0648\u06cc \u0633\u0646"], NARROWMONTHS:["\u062c", "\u0641", "\u0645", "\u0627", "\u0645", "\u062c", "\u062c", "\u0627", "\u0633", "\u0627", "\u0646", "\u062f"], STANDALONENARROWMONTHS:["\u062c", "\u0641", "\u0645", "\u0627", "\u0645", "\u062c", "\u062c", "\u0627", "\u0633", "\u0627", "\u0646", "\u062f"], MONTHS:["\u062c\u0646\u0648\u0631\u06cc", 
-"\u0641\u0631\u0648\u0631\u06cc", "\u0645\u0627\u0631 \u0686", "\u0627\u067e\u0631\u064a\u0644", "\u0645\u0626", "\u062c\u0648\u0646", "\u062c\u0648\u0644\u0627\u0626", "\u0627\u06af\u0633\u062a", "\u0633\u062a\u0645\u0628\u0631", "\u0627\u06a9\u062a\u0648\u0628\u0631", "\u0646\u0648\u0645\u0628\u0631", "\u062f\u0633\u0645\u0628\u0631"], STANDALONEMONTHS:["\u062c\u0646\u0648\u0631\u06cc", "\u0641\u0631\u0648\u0631\u06cc", "\u0645\u0627\u0631 \u0686", "\u0627\u067e\u0631\u064a\u0644", "\u0645\u0626", 
-"\u062c\u0648\u0646", "\u062c\u0648\u0644\u0627\u0626", "\u0627\u06af\u0633\u062a", "\u0633\u062a\u0645\u0628\u0631", "\u0627\u06a9\u062a\u0648\u0628\u0631", "\u0646\u0648\u0645\u0628\u0631", "\u062f\u0633\u0645\u0628\u0631"], SHORTMONTHS:["\u062c\u0646\u0648\u0631\u06cc", "\u0641\u0631\u0648\u0631\u06cc", "\u0645\u0627\u0631 \u0686", "\u0627\u067e\u0631\u064a\u0644", "\u0645\u0626", "\u062c\u0648\u0646", "\u062c\u0648\u0644\u0627\u0626", "\u0627\u06af\u0633\u062a", "\u0633\u062a\u0645\u0628\u0631", 
-"\u0627\u06a9\u062a\u0648\u0628\u0631", "\u0646\u0648\u0645\u0628\u0631", "\u062f\u0633\u0645\u0628\u0631"], STANDALONESHORTMONTHS:["\u062c\u0646\u0648\u0631\u06cc", "\u0641\u0631\u0648\u0631\u06cc", "\u0645\u0627\u0631 \u0686", "\u0627\u067e\u0631\u064a\u0644", "\u0645\u0626", "\u062c\u0648\u0646", "\u062c\u0648\u0644\u0627\u0626", "\u0627\u06af\u0633\u062a", "\u0633\u062a\u0645\u0628\u0631", "\u0627\u06a9\u062a\u0648\u0628\u0631", "\u0646\u0648\u0645\u0628\u0631", "\u062f\u0633\u0645\u0628\u0631"], 
-WEEKDAYS:["\u0627\u062a\u0648\u0627\u0631", "\u067e\u064a\u0631", "\u0645\u0646\u06af\u0644", "\u0628\u062f\u0647", "\u062c\u0645\u0639\u0631\u0627\u062a", "\u062c\u0645\u0639\u06c1", "\u06c1\u0641\u062a\u06c1"], STANDALONEWEEKDAYS:["\u0627\u062a\u0648\u0627\u0631", "\u067e\u064a\u0631", "\u0645\u0646\u06af\u0644", "\u0628\u062f\u0647", "\u062c\u0645\u0639\u0631\u0627\u062a", "\u062c\u0645\u0639\u06c1", "\u06c1\u0641\u062a\u06c1"], SHORTWEEKDAYS:["\u0627\u062a\u0648\u0627\u0631", "\u067e\u064a\u0631", 
-"\u0645\u0646\u06af\u0644", "\u0628\u062f\u0647", "\u062c\u0645\u0639\u0631\u0627\u062a", "\u062c\u0645\u0639\u06c1", "\u06c1\u0641\u062a\u06c1"], STANDALONESHORTWEEKDAYS:["\u0627\u062a\u0648\u0627\u0631", "\u067e\u064a\u0631", "\u0645\u0646\u06af\u0644", "\u0628\u062f\u0647", "\u062c\u0645\u0639\u0631\u0627\u062a", "\u062c\u0645\u0639\u06c1", "\u06c1\u0641\u062a\u06c1"], NARROWWEEKDAYS:["\u0627", "\u067e", "\u0645", "\u0628", "\u062c", "\u062c", "\u06c1"], STANDALONENARROWWEEKDAYS:["1", "2", "3", 
-"4", "5", "6", "7"], SHORTQUARTERS:["1\u0633\u06c1 \u0645\u0627\u06c1\u06cc", "2\u0633\u06c1 \u0645\u0627\u06c1\u06cc", "3\u0633\u06c1 \u0645\u0627\u06c1\u06cc", "4\u0633\u06c1 \u0645\u0627\u06c1\u06cc"], QUARTERS:["\u067e\u06c1\u0644\u06cc \u0633\u06c1 \u0645\u0627\u06c1\u06cc", "\u062f\u0648\u0633\u0631\u06cc \u0633\u06c1 \u0645\u0627\u06c1\u06cc", "\u062a\u064a\u0633\u0631\u06cc \u0633\u06c1 \u0645\u0627\u06c1\u06cc", "\u0686\u0648\u062a\u0647\u06cc \u0633\u06c1 \u0645\u0627\u06c1\u06cc"], AMPMS:["\u0642\u0628\u0644 \u062f\u0648\u067e\u06c1\u0631", 
-"\u0628\u0639\u062f \u062f\u0648\u067e\u06c1\u0631"], DATEFORMATS:["EEEE, d, MMMM y", "d, MMMM y", "d, MMM y", "d/M/yy"], TIMEFORMATS:["h:mm:ss a zzzz", "h:mm:ss a z", "h:mm:ss a", "h:mm a"], AVAILABLEFORMATS:{Md:"M-d", MMMMd:"MMMM d", MMMd:"MMM d"}, FIRSTDAYOFWEEK:6, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:2};
-goog.i18n.DateTimeSymbols_vi = {ERAS:["tr. CN", "sau CN"], ERANAMES:["tr. CN", "sau CN"], NARROWMONTHS:["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"], STANDALONENARROWMONTHS:["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"], MONTHS:["th\u00e1ng m\u1ed9t", "th\u00e1ng hai", "th\u00e1ng ba", "th\u00e1ng t\u01b0", "th\u00e1ng n\u0103m", "th\u00e1ng s\u00e1u", "th\u00e1ng b\u1ea3y", "th\u00e1ng t\u00e1m", "th\u00e1ng ch\u00edn", "th\u00e1ng m\u01b0\u1eddi", "th\u00e1ng m\u01b0\u1eddi m\u1ed9t", 
-"th\u00e1ng m\u01b0\u1eddi hai"], STANDALONEMONTHS:["th\u00e1ng m\u1ed9t", "th\u00e1ng hai", "th\u00e1ng ba", "th\u00e1ng t\u01b0", "th\u00e1ng n\u0103m", "th\u00e1ng s\u00e1u", "th\u00e1ng b\u1ea3y", "th\u00e1ng t\u00e1m", "th\u00e1ng ch\u00edn", "th\u00e1ng m\u01b0\u1eddi", "th\u00e1ng m\u01b0\u1eddi m\u1ed9t", "th\u00e1ng m\u01b0\u1eddi hai"], SHORTMONTHS:["thg 1", "thg 2", "thg 3", "thg 4", "thg 5", "thg 6", "thg 7", "thg 8", "thg 9", "thg 10", "thg 11", "thg 12"], STANDALONESHORTMONTHS:["thg 1", 
-"thg 2", "thg 3", "thg 4", "thg 5", "thg 6", "thg 7", "thg 8", "thg 9", "thg 10", "thg 11", "thg 12"], WEEKDAYS:["Ch\u1ee7 nh\u1eadt", "Th\u1ee9 hai", "Th\u1ee9 ba", "Th\u1ee9 t\u01b0", "Th\u1ee9 n\u0103m", "Th\u1ee9 s\u00e1u", "Th\u1ee9 b\u1ea3y"], STANDALONEWEEKDAYS:["Ch\u1ee7 nh\u1eadt", "Th\u1ee9 hai", "Th\u1ee9 ba", "Th\u1ee9 t\u01b0", "Th\u1ee9 n\u0103m", "Th\u1ee9 s\u00e1u", "Th\u1ee9 b\u1ea3y"], SHORTWEEKDAYS:["CN", "Th 2", "Th 3", "Th 4", "Th 5", "Th 6", "Th 7"], STANDALONESHORTWEEKDAYS:["CN", 
-"Th 2", "Th 3", "Th 4", "Th 5", "Th 6", "Th 7"], NARROWWEEKDAYS:["1", "2", "3", "4", "5", "6", "7"], STANDALONENARROWWEEKDAYS:["1", "2", "3", "4", "5", "6", "7"], SHORTQUARTERS:["Q1", "Q2", "Q3", "Q4"], QUARTERS:["Q1", "Q2", "Q3", "Q4"], AMPMS:["SA", "CH"], DATEFORMATS:["EEEE, 'ng\u00e0y' dd MMMM 'n\u0103m' y", "'Ng\u00e0y' dd 'th\u00e1ng' M 'n\u0103m' y", "dd-MM-yyyy", "dd/MM/yyyy"], TIMEFORMATS:["HH:mm:ss zzzz", "HH:mm:ss z", "HH:mm:ss", "HH:mm"], AVAILABLEFORMATS:{Md:"d-M", MMMMd:"d MMMM", MMMd:"d MMM"}, 
-FIRSTDAYOFWEEK:0, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:3};
-goog.i18n.DateTimeSymbols_zh = {ERAS:["\u516c\u5143\u524d", "\u516c\u5143"], ERANAMES:["\u516c\u5143\u524d", "\u516c\u5143"], NARROWMONTHS:["1\u6708", "2\u6708", "3\u6708", "4\u6708", "5\u6708", "6\u6708", "7\u6708", "8\u6708", "9\u6708", "10\u6708", "11\u6708", "12\u6708"], STANDALONENARROWMONTHS:["1\u6708", "2\u6708", "3\u6708", "4\u6708", "5\u6708", "6\u6708", "7\u6708", "8\u6708", "9\u6708", "10\u6708", "11\u6708", "12\u6708"], MONTHS:["1\u6708", "2\u6708", "3\u6708", "4\u6708", "5\u6708", "6\u6708", 
-"7\u6708", "8\u6708", "9\u6708", "10\u6708", "11\u6708", "12\u6708"], STANDALONEMONTHS:["\u4e00\u6708", "\u4e8c\u6708", "\u4e09\u6708", "\u56db\u6708", "\u4e94\u6708", "\u516d\u6708", "\u4e03\u6708", "\u516b\u6708", "\u4e5d\u6708", "\u5341\u6708", "\u5341\u4e00\u6708", "\u5341\u4e8c\u6708"], SHORTMONTHS:["1\u6708", "2\u6708", "3\u6708", "4\u6708", "5\u6708", "6\u6708", "7\u6708", "8\u6708", "9\u6708", "10\u6708", "11\u6708", "12\u6708"], STANDALONESHORTMONTHS:["\u4e00\u6708", "\u4e8c\u6708", "\u4e09\u6708", 
-"\u56db\u6708", "\u4e94\u6708", "\u516d\u6708", "\u4e03\u6708", "\u516b\u6708", "\u4e5d\u6708", "\u5341\u6708", "\u5341\u4e00\u6708", "\u5341\u4e8c\u6708"], WEEKDAYS:["\u661f\u671f\u65e5", "\u661f\u671f\u4e00", "\u661f\u671f\u4e8c", "\u661f\u671f\u4e09", "\u661f\u671f\u56db", "\u661f\u671f\u4e94", "\u661f\u671f\u516d"], STANDALONEWEEKDAYS:["\u661f\u671f\u65e5", "\u661f\u671f\u4e00", "\u661f\u671f\u4e8c", "\u661f\u671f\u4e09", "\u661f\u671f\u56db", "\u661f\u671f\u4e94", "\u661f\u671f\u516d"], SHORTWEEKDAYS:["\u5468\u65e5", 
-"\u5468\u4e00", "\u5468\u4e8c", "\u5468\u4e09", "\u5468\u56db", "\u5468\u4e94", "\u5468\u516d"], STANDALONESHORTWEEKDAYS:["\u5468\u65e5", "\u5468\u4e00", "\u5468\u4e8c", "\u5468\u4e09", "\u5468\u56db", "\u5468\u4e94", "\u5468\u516d"], NARROWWEEKDAYS:["\u65e5", "\u4e00", "\u4e8c", "\u4e09", "\u56db", "\u4e94", "\u516d"], STANDALONENARROWWEEKDAYS:["\u65e5", "\u4e00", "\u4e8c", "\u4e09", "\u56db", "\u4e94", "\u516d"], SHORTQUARTERS:["1\u5b63", "2\u5b63", "3\u5b63", "4\u5b63"], QUARTERS:["\u7b2c1\u5b63\u5ea6", 
-"\u7b2c2\u5b63\u5ea6", "\u7b2c3\u5b63\u5ea6", "\u7b2c4\u5b63\u5ea6"], AMPMS:["\u4e0a\u5348", "\u4e0b\u5348"], DATEFORMATS:["y\u5e74M\u6708d\u65e5EEEE", "y\u5e74M\u6708d\u65e5", "yyyy-M-d", "yy-M-d"], TIMEFORMATS:["zzzzah\u65f6mm\u5206ss\u79d2", "zah\u65f6mm\u5206ss\u79d2", "ahh:mm:ss", "ah:mm"], AVAILABLEFORMATS:{Md:"M-d", MMMMd:"MMMMd\u65e5", MMMd:"MMMd\u65e5"}, FIRSTDAYOFWEEK:6, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:2};
-goog.i18n.DateTimeSymbols_zh_CN = goog.i18n.DateTimeSymbols_zh;
-goog.i18n.DateTimeSymbols_zh_HK = {ERAS:["\u516c\u5143\u524d", "\u516c\u5143"], ERANAMES:["\u897f\u5143\u524d", "\u897f\u5143"], NARROWMONTHS:["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"], STANDALONENARROWMONTHS:["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"], MONTHS:["1\u6708", "2\u6708", "3\u6708", "4\u6708", "5\u6708", "6\u6708", "7\u6708", "8\u6708", "9\u6708", "10\u6708", "11\u6708", "12\u6708"], STANDALONEMONTHS:["\u4e00\u6708", "\u4e8c\u6708", "\u4e09\u6708", 
-"\u56db\u6708", "\u4e94\u6708", "\u516d\u6708", "\u4e03\u6708", "\u516b\u6708", "\u4e5d\u6708", "\u5341\u6708", "\u5341\u4e00\u6708", "\u5341\u4e8c\u6708"], SHORTMONTHS:["1\u6708", "2\u6708", "3\u6708", "4\u6708", "5\u6708", "6\u6708", "7\u6708", "8\u6708", "9\u6708", "10\u6708", "11\u6708", "12\u6708"], STANDALONESHORTMONTHS:["1\u6708", "2\u6708", "3\u6708", "4\u6708", "5\u6708", "6\u6708", "7\u6708", "8\u6708", "9\u6708", "10\u6708", "11\u6708", "12\u6708"], WEEKDAYS:["\u661f\u671f\u65e5", "\u661f\u671f\u4e00", 
-"\u661f\u671f\u4e8c", "\u661f\u671f\u4e09", "\u661f\u671f\u56db", "\u661f\u671f\u4e94", "\u661f\u671f\u516d"], STANDALONEWEEKDAYS:["\u661f\u671f\u65e5", "\u661f\u671f\u4e00", "\u661f\u671f\u4e8c", "\u661f\u671f\u4e09", "\u661f\u671f\u56db", "\u661f\u671f\u4e94", "\u661f\u671f\u516d"], SHORTWEEKDAYS:["\u9031\u65e5", "\u9031\u4e00", "\u9031\u4e8c", "\u9031\u4e09", "\u9031\u56db", "\u9031\u4e94", "\u9031\u516d"], STANDALONESHORTWEEKDAYS:["\u9031\u65e5", "\u9031\u4e00", "\u9031\u4e8c", "\u9031\u4e09", 
-"\u9031\u56db", "\u9031\u4e94", "\u9031\u516d"], NARROWWEEKDAYS:["\u65e5", "\u4e00", "\u4e8c", "\u4e09", "\u56db", "\u4e94", "\u516d"], STANDALONENARROWWEEKDAYS:["\u65e5", "\u4e00", "\u4e8c", "\u4e09", "\u56db", "\u4e94", "\u516d"], SHORTQUARTERS:["1\u5b63", "2\u5b63", "3\u5b63", "4\u5b63"], QUARTERS:["\u7b2c1\u5b63", "\u7b2c2\u5b63", "\u7b2c3\u5b63", "\u7b2c4\u5b63"], AMPMS:["\u4e0a\u5348", "\u4e0b\u5348"], DATEFORMATS:["y\u5e74M\u6708d\u65e5EEEE", "y\u5e74M\u6708d\u65e5", "y\u5e74M\u6708d\u65e5", 
-"yy\u5e74M\u6708d\u65e5"], TIMEFORMATS:["zzzzah\u6642mm\u5206ss\u79d2", "zah\u6642mm\u5206ss\u79d2", "ahh:mm:ss", "ah:mm"], AVAILABLEFORMATS:{Md:"M/d", MMMMd:"MMMMd\u65e5", MMMd:"MMMd\u65e5"}, FIRSTDAYOFWEEK:6, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:2};
-goog.i18n.DateTimeSymbols_zh_TW = {ERAS:["\u516c\u5143\u524d", "\u516c\u5143"], ERANAMES:["\u897f\u5143\u524d", "\u897f\u5143"], NARROWMONTHS:["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"], STANDALONENARROWMONTHS:["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"], MONTHS:["1\u6708", "2\u6708", "3\u6708", "4\u6708", "5\u6708", "6\u6708", "7\u6708", "8\u6708", "9\u6708", "10\u6708", "11\u6708", "12\u6708"], STANDALONEMONTHS:["\u4e00\u6708", "\u4e8c\u6708", "\u4e09\u6708", 
-"\u56db\u6708", "\u4e94\u6708", "\u516d\u6708", "\u4e03\u6708", "\u516b\u6708", "\u4e5d\u6708", "\u5341\u6708", "\u5341\u4e00\u6708", "\u5341\u4e8c\u6708"], SHORTMONTHS:["1\u6708", "2\u6708", "3\u6708", "4\u6708", "5\u6708", "6\u6708", "7\u6708", "8\u6708", "9\u6708", "10\u6708", "11\u6708", "12\u6708"], STANDALONESHORTMONTHS:["1\u6708", "2\u6708", "3\u6708", "4\u6708", "5\u6708", "6\u6708", "7\u6708", "8\u6708", "9\u6708", "10\u6708", "11\u6708", "12\u6708"], WEEKDAYS:["\u661f\u671f\u65e5", "\u661f\u671f\u4e00", 
-"\u661f\u671f\u4e8c", "\u661f\u671f\u4e09", "\u661f\u671f\u56db", "\u661f\u671f\u4e94", "\u661f\u671f\u516d"], STANDALONEWEEKDAYS:["\u661f\u671f\u65e5", "\u661f\u671f\u4e00", "\u661f\u671f\u4e8c", "\u661f\u671f\u4e09", "\u661f\u671f\u56db", "\u661f\u671f\u4e94", "\u661f\u671f\u516d"], SHORTWEEKDAYS:["\u9031\u65e5", "\u9031\u4e00", "\u9031\u4e8c", "\u9031\u4e09", "\u9031\u56db", "\u9031\u4e94", "\u9031\u516d"], STANDALONESHORTWEEKDAYS:["\u9031\u65e5", "\u9031\u4e00", "\u9031\u4e8c", "\u9031\u4e09", 
-"\u9031\u56db", "\u9031\u4e94", "\u9031\u516d"], NARROWWEEKDAYS:["\u65e5", "\u4e00", "\u4e8c", "\u4e09", "\u56db", "\u4e94", "\u516d"], STANDALONENARROWWEEKDAYS:["\u65e5", "\u4e00", "\u4e8c", "\u4e09", "\u56db", "\u4e94", "\u516d"], SHORTQUARTERS:["1\u5b63", "2\u5b63", "3\u5b63", "4\u5b63"], QUARTERS:["\u7b2c1\u5b63", "\u7b2c2\u5b63", "\u7b2c3\u5b63", "\u7b2c4\u5b63"], AMPMS:["\u4e0a\u5348", "\u4e0b\u5348"], DATEFORMATS:["y\u5e74M\u6708d\u65e5EEEE", "y\u5e74M\u6708d\u65e5", "yyyy/M/d", "yy/M/d"], 
-TIMEFORMATS:["zzzzah\u6642mm\u5206ss\u79d2", "zah\u6642mm\u5206ss\u79d2", "ah:mm:ss", "ah:mm"], AVAILABLEFORMATS:{Md:"M/d", MMMMd:"MMMMd\u65e5", MMMd:"MMMd\u65e5"}, FIRSTDAYOFWEEK:6, WEEKENDRANGE:[5, 6], FIRSTWEEKCUTOFFDAY:2};
-goog.i18n.DateTimeSymbols = goog.LOCALE == "ar" ? goog.i18n.DateTimeSymbols_ar : goog.LOCALE == "bg" ? goog.i18n.DateTimeSymbols_bg : goog.LOCALE == "bn" ? goog.i18n.DateTimeSymbols_bn : goog.LOCALE == "ca" ? goog.i18n.DateTimeSymbols_ca : goog.LOCALE == "cs" ? goog.i18n.DateTimeSymbols_cs : goog.LOCALE == "da" ? goog.i18n.DateTimeSymbols_da : goog.LOCALE == "de" ? goog.i18n.DateTimeSymbols_de : goog.LOCALE == "de_AT" || goog.LOCALE == "de-AT" ? goog.i18n.DateTimeSymbols_de_AT : goog.LOCALE == "de_CH" || 
-goog.LOCALE == "de-CH" ? goog.i18n.DateTimeSymbols_de : goog.LOCALE == "el" ? goog.i18n.DateTimeSymbols_el : goog.LOCALE == "en" ? goog.i18n.DateTimeSymbols_en : goog.LOCALE == "en_AU" || goog.LOCALE == "en-AU" ? goog.i18n.DateTimeSymbols_en_AU : goog.LOCALE == "en_GB" || goog.LOCALE == "en-GB" ? goog.i18n.DateTimeSymbols_en_GB : goog.LOCALE == "en_IE" || goog.LOCALE == "en-IE" ? goog.i18n.DateTimeSymbols_en_IE : goog.LOCALE == "en_IN" || goog.LOCALE == "en-IN" ? goog.i18n.DateTimeSymbols_en_IN : 
-goog.LOCALE == "en_SG" || goog.LOCALE == "en-SG" ? goog.i18n.DateTimeSymbols_en : goog.LOCALE == "en_US" || goog.LOCALE == "en-US" ? goog.i18n.DateTimeSymbols_en : goog.LOCALE == "en_ZA" || goog.LOCALE == "en-ZA" ? goog.i18n.DateTimeSymbols_en_ZA : goog.LOCALE == "es" ? goog.i18n.DateTimeSymbols_es : goog.LOCALE == "et" ? goog.i18n.DateTimeSymbols_et : goog.LOCALE == "eu" ? goog.i18n.DateTimeSymbols_eu : goog.LOCALE == "fa" ? goog.i18n.DateTimeSymbols_fa : goog.LOCALE == "fi" ? goog.i18n.DateTimeSymbols_fi : 
-goog.LOCALE == "fil" ? goog.i18n.DateTimeSymbols_fil : goog.LOCALE == "fr" ? goog.i18n.DateTimeSymbols_fr : goog.LOCALE == "fr_CA" || goog.LOCALE == "fr-CA" ? goog.i18n.DateTimeSymbols_fr_CA : goog.LOCALE == "gl" ? goog.i18n.DateTimeSymbols_gl : goog.LOCALE == "gsw" ? goog.i18n.DateTimeSymbols_gsw : goog.LOCALE == "gu" ? goog.i18n.DateTimeSymbols_gu : goog.LOCALE == "he" ? goog.i18n.DateTimeSymbols_he : goog.LOCALE == "hi" ? goog.i18n.DateTimeSymbols_hi : goog.LOCALE == "hr" ? goog.i18n.DateTimeSymbols_hr : 
-goog.LOCALE == "hu" ? goog.i18n.DateTimeSymbols_hu : goog.LOCALE == "id" ? goog.i18n.DateTimeSymbols_id : goog.LOCALE == "in" ? goog.i18n.DateTimeSymbols_in : goog.LOCALE == "is" ? goog.i18n.DateTimeSymbols_is : goog.LOCALE == "it" ? goog.i18n.DateTimeSymbols_it : goog.LOCALE == "iw" ? goog.i18n.DateTimeSymbols_iw : goog.LOCALE == "ja" ? goog.i18n.DateTimeSymbols_ja : goog.LOCALE == "kn" ? goog.i18n.DateTimeSymbols_kn : goog.LOCALE == "ko" ? goog.i18n.DateTimeSymbols_ko : goog.LOCALE == "ln" ? goog.i18n.DateTimeSymbols_ln : 
-goog.LOCALE == "lt" ? goog.i18n.DateTimeSymbols_lt : goog.LOCALE == "lv" ? goog.i18n.DateTimeSymbols_lv : goog.LOCALE == "ml" ? goog.i18n.DateTimeSymbols_ml : goog.LOCALE == "mo" ? goog.i18n.DateTimeSymbols_mo : goog.LOCALE == "mr" ? goog.i18n.DateTimeSymbols_mr : goog.LOCALE == "ms" ? goog.i18n.DateTimeSymbols_ms : goog.LOCALE == "mt" ? goog.i18n.DateTimeSymbols_mt : goog.LOCALE == "nl" ? goog.i18n.DateTimeSymbols_nl : goog.LOCALE == "no" ? goog.i18n.DateTimeSymbols_no : goog.LOCALE == "or" ? goog.i18n.DateTimeSymbols_or : 
-goog.LOCALE == "pl" ? goog.i18n.DateTimeSymbols_pl : goog.LOCALE == "pt" ? goog.i18n.DateTimeSymbols_pt : goog.LOCALE == "pt_BR" || goog.LOCALE == "pt-BR" ? goog.i18n.DateTimeSymbols_pt : goog.LOCALE == "pt_PT" || goog.LOCALE == "pt-PT" ? goog.i18n.DateTimeSymbols_pt_PT : goog.LOCALE == "ro" ? goog.i18n.DateTimeSymbols_ro : goog.LOCALE == "ru" ? goog.i18n.DateTimeSymbols_ru : goog.LOCALE == "sk" ? goog.i18n.DateTimeSymbols_sk : goog.LOCALE == "sl" ? goog.i18n.DateTimeSymbols_sl : goog.LOCALE == "sq" ? 
-goog.i18n.DateTimeSymbols_sq : goog.LOCALE == "sr" ? goog.i18n.DateTimeSymbols_sr : goog.LOCALE == "sv" ? goog.i18n.DateTimeSymbols_sv : goog.LOCALE == "ta" ? goog.i18n.DateTimeSymbols_ta : goog.LOCALE == "te" ? goog.i18n.DateTimeSymbols_te : goog.LOCALE == "th" ? goog.i18n.DateTimeSymbols_th : goog.LOCALE == "tl" ? goog.i18n.DateTimeSymbols_tl : goog.LOCALE == "tr" ? goog.i18n.DateTimeSymbols_tr : goog.LOCALE == "uk" ? goog.i18n.DateTimeSymbols_uk : goog.LOCALE == "ur" ? goog.i18n.DateTimeSymbols_ur : 
-goog.LOCALE == "vi" ? goog.i18n.DateTimeSymbols_vi : goog.LOCALE == "zh" ? goog.i18n.DateTimeSymbols_zh : goog.LOCALE == "zh_CN" || goog.LOCALE == "zh-CN" ? goog.i18n.DateTimeSymbols_zh : goog.LOCALE == "zh_HK" || goog.LOCALE == "zh-HK" ? goog.i18n.DateTimeSymbols_zh_HK : goog.LOCALE == "zh_TW" || goog.LOCALE == "zh-TW" ? goog.i18n.DateTimeSymbols_zh_TW : goog.i18n.DateTimeSymbols_en;goog.i18n.TimeZone = function() {
-};
-goog.i18n.TimeZone.MILLISECONDS_PER_HOUR_ = 36E5;
-goog.i18n.TimeZone.NameType = {STD_SHORT_NAME:0, STD_LONG_NAME:1, DLT_SHORT_NAME:2, DLT_LONG_NAME:3};
-goog.i18n.TimeZone.createTimeZone = function(b) {
-  if(typeof b == "number") {
-    return goog.i18n.TimeZone.createSimpleTimeZone_(b)
-  }var c = new goog.i18n.TimeZone;
-  c.timeZoneId_ = b.id;
-  c.standardOffset_ = -b.std_offset;
-  c.tzNames_ = b.names;
-  c.transitions_ = b.transitions;
-  return c
-};
-goog.i18n.TimeZone.createSimpleTimeZone_ = function(b) {
-  var c = new goog.i18n.TimeZone;
-  c.standardOffset_ = b;
-  c.timeZoneId_ = goog.i18n.TimeZone.composePosixTimeZoneID_(b);
-  b = goog.i18n.TimeZone.composeUTCString_(b);
-  c.tzNames_ = [b, b];
-  c.transitions_ = [];
-  return c
-};
-goog.i18n.TimeZone.composeGMTString_ = function(b) {
-  var c = ["GMT"];
-  c.push(b <= 0 ? "+" : "-");
-  b = Math.abs(b);
-  c.push(goog.string.padNumber(Math.floor(b / 60) % 100, 2), ":", goog.string.padNumber(b % 60, 2));
-  return c.join("")
-};
-goog.i18n.TimeZone.composePosixTimeZoneID_ = function(b) {
-  if(b == 0) {
-    return"Etc/GMT"
-  }var c = ["Etc/GMT", b < 0 ? "-" : "+"];
-  b = Math.abs(b);
-  c.push(Math.floor(b / 60) % 100);
-  b %= 60;
-  b != 0 && c.push(":", goog.string.padNumber(b, 2));
-  return c.join("")
-};
-goog.i18n.TimeZone.composeUTCString_ = function(b) {
-  if(b == 0) {
-    return"UTC"
-  }var c = ["UTC", b < 0 ? "+" : "-"];
-  b = Math.abs(b);
-  c.push(Math.floor(b / 60) % 100);
-  b %= 60;
-  b != 0 && c.push(":", b);
-  return c.join("")
-};
-a = goog.i18n.TimeZone.prototype;
-a.getTimeZoneData = function() {
-  return{id:this.timeZoneId_, std_offset:-this.standardOffset_, names:goog.array.clone(this.tzNames_), transitions:goog.array.clone(this.transitions_)}
-};
-a.getDaylightAdjustment = function(b) {
-  b = Date.UTC(b.getUTCFullYear(), b.getUTCMonth(), b.getUTCDate(), b.getUTCHours(), b.getUTCMinutes()) / goog.i18n.TimeZone.MILLISECONDS_PER_HOUR_;
-  for(var c = 0;c < this.transitions_.length && b >= this.transitions_[c];) {
-    c += 2
-  }return c == 0 ? 0 : this.transitions_[c - 1]
-};
-a.getGMTString = function(b) {
-  return goog.i18n.TimeZone.composeGMTString_(this.getOffset(b))
-};
-a.getLongName = function(b) {
-  return this.tzNames_[this.isDaylightTime(b) ? goog.i18n.TimeZone.NameType.DLT_LONG_NAME : goog.i18n.TimeZone.NameType.STD_LONG_NAME]
-};
-a.getOffset = function(b) {
-  return this.standardOffset_ - this.getDaylightAdjustment(b)
-};
-a.getRFCTimeZoneString = function(b) {
-  b = -this.getOffset(b);
-  var c = [b < 0 ? "-" : "+"];
-  b = Math.abs(b);
-  c.push(goog.string.padNumber(Math.floor(b / 60) % 100, 2), goog.string.padNumber(b % 60, 2));
-  return c.join("")
-};
-a.getShortName = function(b) {
-  return this.tzNames_[this.isDaylightTime(b) ? goog.i18n.TimeZone.NameType.DLT_SHORT_NAME : goog.i18n.TimeZone.NameType.STD_SHORT_NAME]
-};
-a.getTimeZoneId = function() {
-  return this.timeZoneId_
-};
-a.isDaylightTime = function(b) {
-  return this.getDaylightAdjustment(b) > 0
-};goog.i18n.DateTimeFormat = function(b) {
-  goog.asserts.assert(goog.isDef(b), "Pattern must be defined");
-  this.patternParts_ = [];
-  typeof b == "number" ? this.applyStandardPattern_(b) : this.applyPattern_(b)
-};
-goog.i18n.DateTimeFormat.Format = {FULL_DATE:0, LONG_DATE:1, MEDIUM_DATE:2, SHORT_DATE:3, FULL_TIME:4, LONG_TIME:5, MEDIUM_TIME:6, SHORT_TIME:7, FULL_DATETIME:8, LONG_DATETIME:9, MEDIUM_DATETIME:10, SHORT_DATETIME:11};
-goog.i18n.DateTimeFormat.TOKENS_ = [/^\'(?:[^\']|\'\')*\'/, /^(?:G+|y+|M+|k+|S+|E+|a+|h+|K+|H+|c+|L+|Q+|d+|m+|s+|v+|z+|Z+)/, /^[^\'GyMkSEahKHcLQdmsvzZ]+/];
-goog.i18n.DateTimeFormat.PartTypes_ = {QUOTED_STRING:0, FIELD:1, LITERAL:2};
-a = goog.i18n.DateTimeFormat.prototype;
-a.applyPattern_ = function(b) {
-  for(;b;) {
-    for(var c = 0;c < goog.i18n.DateTimeFormat.TOKENS_.length;++c) {
-      var d = b.match(goog.i18n.DateTimeFormat.TOKENS_[c]);
-      if(d) {
-        d = d[0];
-        b = b.substring(d.length);
-        if(c == goog.i18n.DateTimeFormat.PartTypes_.QUOTED_STRING) {
-          if(d == "''") {
-            d = "'"
-          }else {
-            d = d.substring(1, d.length - 1);
-            d = d.replace(/\'\'/, "'")
-          }
-        }this.patternParts_.push({text:d, type:c});
-        break
-      }
-    }
-  }
-};
-a.format = function(b, c) {
-  var d = c ? (b.getTimezoneOffset() - c.getOffset(b)) * 6E4 : 0, e = d ? new Date(b.getTime() + d) : b, f = e;
-  if(c && e.getTimezoneOffset() != b.getTimezoneOffset()) {
-    d += d > 0 ? -86400000 : 864E5;
-    f = new Date(b.getTime() + d)
-  }d = [];
-  for(var g = 0;g < this.patternParts_.length;++g) {
-    var h = this.patternParts_[g].text;
-    goog.i18n.DateTimeFormat.PartTypes_.FIELD == this.patternParts_[g].type ? d.push(this.formatField_(h, b, e, f, c)) : d.push(h)
-  }return d.join("")
-};
-a.applyStandardPattern_ = function(b) {
-  if(b < 4) {
-    b = goog.i18n.DateTimeSymbols.DATEFORMATS[b]
-  }else {
-    if(b < 8) {
-      b = goog.i18n.DateTimeSymbols.TIMEFORMATS[b - 4]
-    }else {
-      if(b < 12) {
-        b = goog.i18n.DateTimeSymbols.DATEFORMATS[b - 8] + " " + goog.i18n.DateTimeSymbols.TIMEFORMATS[b - 8]
-      }else {
-        this.applyStandardPattern_(goog.i18n.DateTimeFormat.Format.MEDIUM_DATETIME);
-        return
-      }
-    }
-  }this.applyPattern_(b)
-};
-a.formatEra_ = function(b, c) {
-  c = c.getFullYear() > 0 ? 1 : 0;
-  return b >= 4 ? goog.i18n.DateTimeSymbols.ERANAMES[c] : goog.i18n.DateTimeSymbols.ERAS[c]
-};
-a.formatYear_ = function(b, c) {
-  c = c.getFullYear();
-  if(c < 0) {
-    c = -c
-  }return b == 2 ? goog.string.padNumber(c % 100, 2) : String(c)
-};
-a.formatMonth_ = function(b, c) {
-  c = c.getMonth();
-  switch(b) {
-    case 5:
-      return goog.i18n.DateTimeSymbols.NARROWMONTHS[c];
-    case 4:
-      return goog.i18n.DateTimeSymbols.MONTHS[c];
-    case 3:
-      return goog.i18n.DateTimeSymbols.SHORTMONTHS[c];
-    default:
-      return goog.string.padNumber(c + 1, b)
-  }
-};
-a.format24Hours_ = function(b, c) {
-  return goog.string.padNumber(c.getHours() || 24, b)
-};
-a.formatFractionalSeconds_ = function(b, c) {
-  return(c.getTime() % 1E3 / 1E3).toFixed(Math.min(3, b)).substr(2) + (b > 3 ? goog.string.padNumber(0, b - 3) : "")
-};
-a.formatDayOfWeek_ = function(b, c) {
-  c = c.getDay();
-  return b >= 4 ? goog.i18n.DateTimeSymbols.WEEKDAYS[c] : goog.i18n.DateTimeSymbols.SHORTWEEKDAYS[c]
-};
-a.formatAmPm_ = function(b, c) {
-  b = c.getHours();
-  return goog.i18n.DateTimeSymbols.AMPMS[b >= 12 && b < 24 ? 1 : 0]
-};
-a.format1To12Hours_ = function(b, c) {
-  return goog.string.padNumber(c.getHours() % 12 || 12, b)
-};
-a.format0To11Hours_ = function(b, c) {
-  return goog.string.padNumber(c.getHours() % 12, b)
-};
-a.format0To23Hours_ = function(b, c) {
-  return goog.string.padNumber(c.getHours(), b)
-};
-a.formatStandaloneDay_ = function(b, c) {
-  c = c.getDay();
-  switch(b) {
-    case 5:
-      return goog.i18n.DateTimeSymbols.STANDALONENARROWWEEKDAYS[c];
-    case 4:
-      return goog.i18n.DateTimeSymbols.STANDALONEWEEKDAYS[c];
-    case 3:
-      return goog.i18n.DateTimeSymbols.STANDALONESHORTWEEKDAYS[c];
-    default:
-      return goog.string.padNumber(c, 1)
-  }
-};
-a.formatStandaloneMonth_ = function(b, c) {
-  c = c.getMonth();
-  switch(b) {
-    case 5:
-      return goog.i18n.DateTimeSymbols.STANDALONENARROWMONTHS[c];
-    case 4:
-      return goog.i18n.DateTimeSymbols.STANDALONEMONTHS[c];
-    case 3:
-      return goog.i18n.DateTimeSymbols.STANDALONESHORTMONTHS[c];
-    default:
-      return goog.string.padNumber(c + 1, b)
-  }
-};
-a.formatQuarter_ = function(b, c) {
-  c = Math.floor(c.getMonth() / 3);
-  return b < 4 ? goog.i18n.DateTimeSymbols.SHORTQUARTERS[c] : goog.i18n.DateTimeSymbols.QUARTERS[c]
-};
-a.formatDate_ = function(b, c) {
-  return goog.string.padNumber(c.getDate(), b)
-};
-a.formatMinutes_ = function(b, c) {
-  return goog.string.padNumber(c.getMinutes(), b)
-};
-a.formatSeconds_ = function(b, c) {
-  return goog.string.padNumber(c.getSeconds(), b)
-};
-a.formatTimeZoneRFC_ = function(b, c, d) {
-  d = d || goog.i18n.TimeZone.createTimeZone(c.getTimezoneOffset());
-  return b < 4 ? d.getRFCTimeZoneString(c) : d.getGMTString(c)
-};
-a.formatTimeZone_ = function(b, c, d) {
-  d = d || goog.i18n.TimeZone.createTimeZone(c.getTimezoneOffset());
-  return b < 4 ? d.getShortName(c) : d.getLongName(c)
-};
-a.formatTimeZoneId_ = function(b, c) {
-  c = c || goog.i18n.TimeZone.createTimeZone(b.getTimezoneOffset());
-  return c.getTimeZoneId()
-};
-a.formatField_ = function(b, c, d, e, f) {
-  var g = b.length;
-  switch(b.charAt(0)) {
-    case "G":
-      return this.formatEra_(g, d);
-    case "y":
-      return this.formatYear_(g, d);
-    case "M":
-      return this.formatMonth_(g, d);
-    case "k":
-      return this.format24Hours_(g, e);
-    case "S":
-      return this.formatFractionalSeconds_(g, e);
-    case "E":
-      return this.formatDayOfWeek_(g, d);
-    case "a":
-      return this.formatAmPm_(g, e);
-    case "h":
-      return this.format1To12Hours_(g, e);
-    case "K":
-      return this.format0To11Hours_(g, e);
-    case "H":
-      return this.format0To23Hours_(g, e);
-    case "c":
-      return this.formatStandaloneDay_(g, d);
-    case "L":
-      return this.formatStandaloneMonth_(g, d);
-    case "Q":
-      return this.formatQuarter_(g, d);
-    case "d":
-      return this.formatDate_(g, d);
-    case "m":
-      return this.formatMinutes_(g, e);
-    case "s":
-      return this.formatSeconds_(g, e);
-    case "v":
-      return this.formatTimeZoneId_(c, f);
-    case "z":
-      return this.formatTimeZone_(g, c, f);
-    case "Z":
-      return this.formatTimeZoneRFC_(g, c, f);
-    default:
-      return""
-  }
-};jchemhub.io.mdl = {};
-jchemhub.io.mdl.SINGLE_BOND = 1;
-jchemhub.io.mdl.DOUBLE_BOND = 2;
-jchemhub.io.mdl.TRIPLE_BOND = 3;
-jchemhub.io.mdl.AROMATIC_BOND = 4;
-jchemhub.io.mdl.SINGLE_OR_DOUBLE = 5;
-jchemhub.io.mdl.SINGLE_OR_AROMATIC = 6;
-jchemhub.io.mdl.DOUBLE_OR_AROMATIC = 7;
-jchemhub.io.mdl.ANY = 8;
-jchemhub.io.mdl.TRIPLE_BOND = 3;
-jchemhub.io.mdl.NOT_STEREO = 0;
-jchemhub.io.mdl.SINGLE_BOND_UP = 1;
-jchemhub.io.mdl.SINGLE_BOND_UP_OR_DOWN = 4;
-jchemhub.io.mdl.SINGLE_BOND_DOWN = 6;
-jchemhub.io.mdl.getTypeCode = function(b) {
-  if(b instanceof jchemhub.model.SingleBond) {
-    return jchemhub.io.mdl.SINGLE_BOND
-  }if(b instanceof jchemhub.model.DoubleBond) {
-    return jchemhub.io.mdl.DOUBLE_BOND
-  }if(b instanceof jchemhub.model.TripleBond) {
-    return jchemhub.io.mdl.TRIPLE_BOND
-  }if(b instanceof jchemhub.model.AromaticBond) {
-    return jchemhub.io.mdl.AROMATIC_BOND
-  }throw new Error("Invalid bond type [" + b + "]");
-};
-jchemhub.io.mdl.getStereoCode = function(b) {
-  if(b instanceof jchemhub.model.SingleBondUp) {
-    return jchemhub.io.mdl.SINGLE_BOND_UP
-  }if(b instanceof jchemhub.model.SingleBondDown) {
-    return jchemhub.io.mdl.SINGLE_BOND_DOWN
-  }if(b instanceof jchemhub.model.SingleBondUpOrDown) {
-    return jchemhub.io.mdl.SINGLE_BOND_UP_OR_DOWN
-  }return jchemhub.io.mdl.NOT_STEREO
-};
-jchemhub.io.mdl.createBond = function(b, c, d, e) {
-  switch(b) {
-    case jchemhub.io.mdl.SINGLE_BOND:
-      switch(c) {
-        case jchemhub.io.mdl.NOT_STEREO:
-          return new jchemhub.model.SingleBond(d, e);
-        case jchemhub.io.mdl.SINGLE_BOND_UP:
-          return new jchemhub.model.SingleBondUp(d, e);
-        case jchemhub.io.mdl.SINGLE_BOND_UP_OR_DOWN:
-          return new jchemhub.model.SingleBondUpOrDown(d, e);
-        case jchemhub.io.mdl.SINGLE_BOND_DOWN:
-          return new jchemhub.model.SingleBondDown(d, e);
-        default:
-          throw new Error("invalid bond type/stereo [" + b + "]/[" + c + "]");
-      }
-    ;
-    case jchemhub.io.mdl.DOUBLE_BOND:
-      return new jchemhub.model.DoubleBond(d, e);
-    case jchemhub.io.mdl.TRIPLE_BOND:
-      return new jchemhub.model.TripleBond(d, e);
-    case jchemhub.io.mdl.AROMATIC_BOND:
-      return new jchemhub.model.AromaticBond(d, e);
-    case jchemhub.io.mdl.SINGLE_OR_DOUBLE:
-      throw new Error("type not implemented [" + b + "]");;
-    case jchemhub.io.mdl.SINGLE_OR_AROMATIC:
-      throw new Error("type not implemented [" + b + "]");;
-    case jchemhub.io.mdl.DOUBLE_OR_AROMATIC:
-      throw new Error("type not implemented [" + b + "]");;
-    case jchemhub.io.mdl.ANY:
-      throw new Error("type not implemented [" + b + "]");;
-    default:
-      throw new Error("invalid bond type/stereo [" + b + "]/[" + c + "]");
-  }
-};
-jchemhub.io.mdl.readMolfile = function(b) {
-  var c = b.indexOf("\r\n") > 0 ? "\r\n" : "\n";
-  b = b.split(c);
-  c = new jchemhub.model.Molecule(b[0]);
-  for(var d = parseInt(b[3].substr(0, 3)), e = parseInt(b[3].substr(3, 3)), f = 1;f <= d;f++) {
-    var g = b[f + 3], h = g.substr(30, 4).replace(/(^\s*)|(\s*$)/g, ""), j = parseFloat(g.substr(0, 10)), k = parseFloat(g.substr(10, 10));
-    parseInt(g.substr(34, 2));
-    g = parseInt(g.substr(36, 3));
-    var l = 0;
-    if(g != 0) {
-      if(g == 1) {
-        l = 3
-      }else {
-        if(g == 2) {
-          l = 2
+        if(b.indexOf("iPhone") != -1 || b.indexOf("iPod") != -1) {
+          goog.userAgent.product.detectedIphone_ = true
         }else {
-          if(g == 3) {
-            l = 1
+          if(b.indexOf("iPad") != -1) {
+            goog.userAgent.product.detectedIpad_ = true
           }else {
-            if(g != 4) {
-              if(g == 5) {
-                l = -1
+            if(b.indexOf("Android") != -1) {
+              goog.userAgent.product.detectedAndroid_ = true
+            }else {
+              if(b.indexOf("Chrome") != -1) {
+                goog.userAgent.product.detectedChrome_ = true
               }else {
-                if(g == 6) {
-                  l = -2
-                }else {
-                  if(g == 7) {
-                    l = -3
-                  }
+                if(b.indexOf("Safari") != -1) {
+                  goog.userAgent.product.detectedSafari_ = true
                 }
               }
             }
           }
         }
       }
-    }g = new jchemhub.model.Atom(h, j, k, l);
-    c.addAtom(g)
-  }for(f = 1;f <= e;f++) {
-    g = b[f + 3 + d];
-    l = c.getAtom(parseInt(g.substr(0, 3)) - 1);
-    h = c.getAtom(parseInt(g.substr(3, 3)) - 1);
-    j = parseInt(g.substr(6, 3));
-    g = parseInt(g.substr(9, 3));
-    g = jchemhub.io.mdl.createBond(j, g, l, h);
-    c.addBond(g)
-  }f = 4 + d + e;
-  d = b.length;
-  for(e = false;;) {
-    g = b[f++];
-    if(f == d || g.indexOf("M  END") >= 0) {
-      break
-    }if(g.indexOf("M  CHG") >= 0) {
-      if(!e) {
-        e = 0;
-        for(l = c.countAtoms();e < l;e++) {
-          c.getAtom(e).charge = 0
-        }e = true
-      }h = parseInt(g.substr(6, 3));
-      for(j = 0;j < h;j++) {
-        k = parseInt(g.substr(10 + 8 * j, 3));
-        l = parseInt(g.substr(14 + 8 * j, 3));
-        c.getAtom(k - 1).charge = l
-      }
     }
-  }return c
-};
-jchemhub.io.mdl.writeMolfile = function(b) {
-  var c = new String, d = new String, e = new String;
-  c = new String;
-  var f = new String;
-  e = new Date;
-  d = b.name + "\n";
-  e = " JChemHub" + (new goog.i18n.DateTimeFormat("mmddyyHHMM")).format(e) + "\n";
-  d = d + e + "\n";
-  e = (goog.string.repeat(" ", 3) + b.countAtoms()).slice(-3);
-  var g = (goog.string.repeat(" ", 3) + b.countBonds()).slice(-3);
-  e = e + g + "  0  0  0  0            999 V2000\n";
-  for(i = 0;i < b.countAtoms();i++) {
-    var h = b.getAtom(i);
-    g = (goog.string.repeat(" ", 10) + h.coord.x.toFixed(4)).slice(-10);
-    var j = (goog.string.repeat(" ", 10) + h.coord.y.toFixed(4)).slice(-10), k = (goog.string.repeat(" ", 10) + (0).toFixed(4)).slice(-10);
-    h = (goog.string.repeat(" ", 3) + h.symbol).slice(-3);
-    c += g + j + k + h + "\n"
-  }for(i = 0;i < b.countBonds();i++) {
-    g = b.getBond(i);
-    j = b.indexOfAtom(g.source) + 1;
-    j = (goog.string.repeat(" ", 3) + j).slice(-3);
-    k = b.indexOfAtom(g.target) + 1;
-    k = (goog.string.repeat(" ", 3) + k).slice(-3);
-    h = (goog.string.repeat(" ", 3) + jchemhub.io.mdl.getTypeCode(g)).slice(-3);
-    g = (goog.string.repeat(" ", 3) + jchemhub.io.mdl.getStereoCode(g)).slice(-3);
-    f += j + k + h + g + "\n"
-  }return c = d + e + c + f
-};
-jchemhub.io.mdl.readRxnfile = function(b) {
-  var c = b.indexOf("\r\n") > 0 ? "\r\n" : "\n", d = b.split(c, 5);
-  if(d[0].indexOf("$RXN") < 0) {
-    throw"not a RXN file";
-  }var e = new jchemhub.model.Reaction;
-  e.header = d[2] + c + d[3];
-  var f = parseInt(d[4].substr(0, 3));
-  d = parseInt(d[4].substr(3, 3));
-  b = b.split("$MOL" + c);
-  c = 1;
-  for(var g = f;c <= g;c++) {
-    var h = jchemhub.io.mdl.readMolfile(b[c]);
-    e.addReactant(h)
-  }c = 1;
-  for(g = d;c <= g;c++) {
-    h = jchemhub.io.mdl.readMolfile(b[c + f]);
-    e.addProduct(h)
-  }return e
-};jchemhub.controller = {};
-jchemhub.controller.Controller = function(b, c) {
-  this._view = new jchemhub.view.ReactionEditor(b, c)
-};
-jchemhub.controller.Controller.prototype.getModel = function() {
-  return this._view.getModel()
-};
-jchemhub.controller.Controller.prototype.clear = function() {
-  this._model = null;
-  this._view.clear()
-};
-jchemhub.controller.Controller.prototype.setModel = function(b) {
-  this._view.setModel(b);
-  this._view.layoutAndRender()
-};
-jchemhub.controller.Controller.buildReactionDrawing = function(b) {
-  return new jchemhub.view.ReactionDrawing(b)
-};
-jchemhub.controller.Controller.buildMoleculeDrawing = function(b) {
-  return new jchemhub.view.MoleculeDrawing(b)
-};
-jchemhub.controller.Controller.createBondDrawing = function(b) {
-  if(b instanceof jchemhub.model.SingleBondUp) {
-    return new jchemhub.view.SingleBondUpDrawing(b)
-  }if(b instanceof jchemhub.model.SingleBondDown) {
-    return new jchemhub.view.SingleBondDownDrawing(b)
-  }if(b instanceof jchemhub.model.SingleBondUpOrDown) {
-    return new jchemhub.view.SingleBondEitherDrawing(b)
-  }if(b instanceof jchemhub.model.SingleBond) {
-    return new jchemhub.view.SingleBondDrawing(b)
-  }if(b instanceof jchemhub.model.DoubleBond) {
-    return new jchemhub.view.DoubleBondDrawing(b)
-  }if(b instanceof jchemhub.model.TripleBond) {
-    return new jchemhub.view.TripleBondDrawing(b)
   }
 };
+goog.userAgent.product.PRODUCT_KNOWN_ || goog.userAgent.product.init_();
+goog.userAgent.product.OPERA = goog.userAgent.OPERA;
+goog.userAgent.product.IE = goog.userAgent.IE;
+goog.userAgent.product.FIREFOX = goog.userAgent.product.PRODUCT_KNOWN_ ? goog.userAgent.product.ASSUME_FIREFOX : goog.userAgent.product.detectedFirefox_;
+goog.userAgent.product.CAMINO = goog.userAgent.product.PRODUCT_KNOWN_ ? goog.userAgent.product.ASSUME_CAMINO : goog.userAgent.product.detectedCamino_;
+goog.userAgent.product.IPHONE = goog.userAgent.product.PRODUCT_KNOWN_ ? goog.userAgent.product.ASSUME_IPHONE : goog.userAgent.product.detectedIphone_;
+goog.userAgent.product.IPAD = goog.userAgent.product.PRODUCT_KNOWN_ ? goog.userAgent.product.ASSUME_IPAD : goog.userAgent.product.detectedIpad_;
+goog.userAgent.product.ANDROID = goog.userAgent.product.PRODUCT_KNOWN_ ? goog.userAgent.product.ASSUME_ANDROID : goog.userAgent.product.detectedAndroid_;
+goog.userAgent.product.CHROME = goog.userAgent.product.PRODUCT_KNOWN_ ? goog.userAgent.product.ASSUME_CHROME : goog.userAgent.product.detectedChrome_;
+goog.userAgent.product.SAFARI = goog.userAgent.product.PRODUCT_KNOWN_ ? goog.userAgent.product.ASSUME_SAFARI : goog.userAgent.product.detectedSafari_;goog.userAgent.product.determineVersion_ = function() {
+  var b = "", c, d;
+  if(goog.userAgent.product.FIREFOX) {
+    c = /Firefox\/([0-9.]+)/
+  }else {
+    if(goog.userAgent.product.IE || goog.userAgent.product.OPERA) {
+      return goog.userAgent.VERSION
+    }else {
+      if(goog.userAgent.product.CHROME) {
+        c = /Chrome\/([0-9.]+)/
+      }else {
+        if(goog.userAgent.product.SAFARI) {
+          c = /Safari\/([0-9.]+)/
+        }else {
+          if(goog.userAgent.product.IPHONE || goog.userAgent.product.IPAD) {
+            c = /Version\/(\S+).*Mobile\/(\S+)/;
+            d = true
+          }else {
+            if(goog.userAgent.product.ANDROID) {
+              c = /Android\s+([0-9.]+)(?:.*Version\/([0-9.]+))?/
+            }else {
+              if(goog.userAgent.product.CAMINO) {
+                c = /Camino\/([0-9.]+)/
+              }
+            }
+          }
+        }
+      }
+    }
+  }if(c) {
+    b = (b = c.exec(goog.userAgent.getUserAgentString())) ? d ? b[1] + "." + b[2] : b[2] || b[1] : ""
+  }return b
+};
+goog.userAgent.product.VERSION = goog.userAgent.product.determineVersion_();
+goog.userAgent.product.isVersion = function(b) {
+  return goog.string.compareVersions(goog.userAgent.product.VERSION, b) >= 0
+};goog.editor.BrowserFeature = {HAS_IE_RANGES:goog.userAgent.IE, HAS_W3C_RANGES:goog.userAgent.GECKO || goog.userAgent.WEBKIT || goog.userAgent.OPERA, HAS_CONTENT_EDITABLE:goog.userAgent.IE || goog.userAgent.WEBKIT || goog.userAgent.OPERA || goog.editor.defines.USE_CONTENTEDITABLE_IN_FIREFOX_3 && goog.userAgent.GECKO && goog.userAgent.isVersion("1.9"), USE_MUTATION_EVENTS:goog.userAgent.GECKO, HAS_DOM_SUBTREE_MODIFIED_EVENT:goog.userAgent.WEBKIT || goog.editor.defines.USE_CONTENTEDITABLE_IN_FIREFOX_3 && 
+goog.userAgent.GECKO && goog.userAgent.isVersion("1.9"), HAS_DOCUMENT_INDEPENDENT_NODES:goog.userAgent.GECKO, PUTS_CURSOR_BEFORE_FIRST_BLOCK_ELEMENT_ON_FOCUS:goog.userAgent.GECKO, CLEARS_SELECTION_WHEN_FOCUS_LEAVES:goog.userAgent.IE || goog.userAgent.WEBKIT || goog.userAgent.OPERA, HAS_UNSELECTABLE_STYLE:goog.userAgent.GECKO || goog.userAgent.WEBKIT, FORMAT_BLOCK_WORKS_FOR_BLOCKQUOTES:goog.userAgent.GECKO || goog.userAgent.WEBKIT || goog.userAgent.OPERA, CREATES_MULTIPLE_BLOCKQUOTES:goog.userAgent.WEBKIT || 
+goog.userAgent.OPERA, WRAPS_BLOCKQUOTE_IN_DIVS:goog.userAgent.OPERA, PREFERS_READY_STATE_CHANGE_EVENT:goog.userAgent.IE, TAB_FIRES_KEYPRESS:!goog.userAgent.IE, NEEDS_99_WIDTH_IN_STANDARDS_MODE:goog.userAgent.IE, USE_DOCUMENT_FOR_KEY_EVENTS:goog.userAgent.GECKO && !goog.editor.defines.USE_CONTENTEDITABLE_IN_FIREFOX_3, SHOWS_CUSTOM_ATTRS_IN_INNER_HTML:goog.userAgent.IE, COLLAPSES_EMPTY_NODES:goog.userAgent.GECKO || goog.userAgent.WEBKIT || goog.userAgent.OPERA, CONVERT_TO_B_AND_I_TAGS:goog.userAgent.GECKO || 
+goog.userAgent.OPERA, TABS_THROUGH_IMAGES:goog.userAgent.IE, UNESCAPES_URLS_WITHOUT_ASKING:goog.userAgent.IE && !goog.userAgent.isVersion("7.0"), HAS_STYLE_WITH_CSS:goog.userAgent.GECKO && goog.userAgent.isVersion("1.8") || goog.userAgent.WEBKIT || goog.userAgent.OPERA, FOLLOWS_EDITABLE_LINKS:goog.userAgent.WEBKIT, HAS_ACTIVE_ELEMENT:goog.userAgent.IE || goog.userAgent.OPERA || goog.userAgent.GECKO && goog.userAgent.isVersion("1.9"), HAS_SET_CAPTURE:goog.userAgent.IE, EATS_EMPTY_BACKGROUND_COLOR:goog.userAgent.GECKO || 
+goog.userAgent.WEBKIT, SUPPORTS_FOCUSIN:goog.userAgent.IE || goog.userAgent.OPERA, SELECTS_IMAGES_ON_CLICK:goog.userAgent.IE || goog.userAgent.OPERA, MOVES_STYLE_TO_HEAD:goog.userAgent.WEBKIT, COLLAPSES_SELECTION_ONMOUSEDOWN:goog.userAgent.OPERA, CARET_INSIDE_SELECTION:goog.userAgent.OPERA, FOCUSES_EDITABLE_BODY_ON_HTML_CLICK:goog.userAgent.IE || goog.userAgent.GECKO || goog.userAgent.WEBKIT, USES_KEYDOWN:goog.userAgent.IE || goog.userAgent.WEBKIT && goog.userAgent.isVersion("525"), ADDS_NBSPS_IN_REMOVE_FORMAT:goog.userAgent.WEBKIT && 
+!goog.userAgent.isVersion("531"), GETS_STUCK_IN_LINKS:goog.userAgent.WEBKIT && !goog.userAgent.isVersion("528"), NORMALIZE_CORRUPTS_EMPTY_TEXT_NODES:goog.userAgent.GECKO && goog.userAgent.isVersion("1.9") || goog.userAgent.IE || goog.userAgent.OPERA || goog.userAgent.WEBKIT && goog.userAgent.isVersion("531"), NORMALIZE_CORRUPTS_ALL_TEXT_NODES:goog.userAgent.IE, NESTS_SUBSCRIPT_SUPERSCRIPT:goog.userAgent.IE || goog.userAgent.GECKO || goog.userAgent.OPERA, CAN_SELECT_EMPTY_ELEMENT:!goog.userAgent.IE && 
+!goog.userAgent.WEBKIT, FORGETS_FORMATTING_WHEN_LISTIFYING:goog.userAgent.GECKO || goog.userAgent.WEBKIT && !goog.userAgent.isVersion("526"), LEAVES_P_WHEN_REMOVING_LISTS:goog.userAgent.IE || goog.userAgent.OPERA, CAN_LISTIFY_BR:!goog.userAgent.IE && !goog.userAgent.OPERA, DOESNT_OVERRIDE_FONT_SIZE_IN_STYLE_ATTR:!goog.userAgent.WEBKIT, SUPPORTS_HTML5_FILE_DRAGGING:goog.userAgent.product.CHROME && goog.userAgent.product.isVersion("4")};goog.async = {};
+goog.async.Delay = function(b, c, d) {
+  this.listener_ = b;
+  this.interval_ = c || 0;
+  this.handler_ = d;
+  this.callback_ = goog.bind(this.doAction_, this)
+};
+goog.inherits(goog.async.Delay, goog.Disposable);
+goog.Delay = goog.async.Delay;
+a = goog.async.Delay.prototype;
+a.id_ = 0;
+a.disposeInternal = function() {
+  goog.async.Delay.superClass_.disposeInternal.call(this);
+  this.stop();
+  delete this.listener_;
+  delete this.handler_
+};
+a.start = function(b) {
+  this.stop();
+  this.id_ = goog.Timer.callOnce(this.callback_, goog.isDef(b) ? b : this.interval_)
+};
+a.stop = function() {
+  this.isActive() && goog.Timer.clear(this.id_);
+  this.id_ = 0
+};
+a.fire = function() {
+  this.stop();
+  this.doAction_()
+};
+a.fireIfActive = function() {
+  this.isActive() && this.fire()
+};
+a.isActive = function() {
+  return this.id_ != 0
+};
+a.doAction_ = function() {
+  this.id_ = 0;
+  this.listener_ && this.listener_.call(this.handler_)
+};goog.functions = {};
+goog.functions.constant = function(b) {
+  return function() {
+    return b
+  }
+};
+goog.functions.FALSE = goog.functions.constant(false);
+goog.functions.TRUE = goog.functions.constant(true);
+goog.functions.identity = function(b) {
+  return b
+};
+goog.functions.error = function(b) {
+  return function() {
+    throw Error(b);
+  }
+};
+goog.functions.lock = function(b) {
+  return function() {
+    return b.call(this)
+  }
+};
+goog.functions.compose = function() {
+  var b = arguments, c = b.length;
+  return function() {
+    var d;
+    if(c) {
+      d = b[c - 1].apply(this, arguments)
+    }for(var e = c - 2;e >= 0;e--) {
+      d = b[e].call(this, d)
+    }return d
+  }
+};
+goog.functions.sequence = function() {
+  var b = arguments, c = b.length;
+  return function() {
+    for(var d, e = 0;e < c;e++) {
+      d = b[e].apply(this, arguments)
+    }return d
+  }
+};
+goog.functions.and = function() {
+  var b = arguments, c = b.length;
+  return function() {
+    for(var d = 0;d < c;d++) {
+      if(!b[d].apply(this, arguments)) {
+        return false
+      }
+    }return true
+  }
+};
+goog.functions.or = function() {
+  var b = arguments, c = b.length;
+  return function() {
+    for(var d = 0;d < c;d++) {
+      if(b[d].apply(this, arguments)) {
+        return true
+      }
+    }return false
+  }
+};
+goog.functions.create = function(b) {
+  var c = function() {
+  };
+  c.prototype = b.prototype;
+  c = new c;
+  b.apply(c, Array.prototype.slice.call(arguments, 1));
+  return c
+};goog.reflect = {};
+goog.reflect.object = function(b, c) {
+  return c
+};jchemhub.view.Plugin = function() {
+  goog.events.EventTarget.call(this);
+  this.enabled_ = this.activeOnUneditableEditor()
+};
+goog.inherits(jchemhub.view.Plugin, goog.events.EventTarget);
+a = jchemhub.view.Plugin.prototype;
+a.activeOnUneditableEditor = goog.functions.FALSE;
+a.registerEditorObject = function(b) {
+  this.editorObject = b
+};
+a.enable = function(b) {
+  if(this.editorObject == b) {
+    this.enabled_ = true
+  }else {
+    this.logger.severe("Trying to enable an unregistered field with this plugin.")
+  }
+};
+a.disable = function(b) {
+  if(this.editorObject == b) {
+    this.enabled_ = false
+  }else {
+    this.logger.severe("Trying to disable an unregistered field with this plugin.")
+  }
+};
+a.logger = goog.debug.Logger.getLogger("jchemhub.view.Plugin");
+a.isEnabled = function(b) {
+  return this.editorObject == b ? this.enabled_ : false
+};
+a.disposeInternal = function() {
+  this.editorObject && this.unregisterEditorObject(this.editorObject);
+  jchemhub.view.Plugin.superClass_.disposeInternal.call(this)
+};
+a.unregisterEditorObject = function() {
+  if(this.editorObject) {
+    this.disable(this.editorObject);
+    this.editorObject = null
+  }
+};
+a.autoDispose_ = true;
+a.setAutoDispose = function(b) {
+  this.autoDispose_ = b
+};
+a.isAutoDispose = function() {
+  return this.autoDispose_
+};
+jchemhub.view.Plugin.Op = {KEYDOWN:1, KEYPRESS:2, KEYUP:3, SELECTION:4, SHORTCUT:5, EXEC_COMMAND:6, QUERY_COMMAND:7, MOUSEDOWN:8, MOUSEUP:9, MOUSEOVER:10, MOUSEOUT:11, ATOM_MOUSEOVER:12, ATOM_MOUSEOUT:13, BOND_MOUSEOVER:14, BOND_MOUSEOUT:15, BOND_MOUSEDOWN:16};
+jchemhub.view.Plugin.prototype.activeOnUneditableEditors = goog.functions.FALSE;
+jchemhub.view.Plugin.OPCODE = goog.object.transpose(goog.reflect.object(jchemhub.view.Plugin, {handleKeyDown:jchemhub.view.Plugin.Op.KEYDOWN, handleKeyPress:jchemhub.view.Plugin.Op.KEYPRESS, handleKeyUp:jchemhub.view.Plugin.Op.KEYUP, handleSelectionChange:jchemhub.view.Plugin.Op.SELECTION, handleKeyboardShortcut:jchemhub.view.Plugin.Op.SHORTCUT, execCommand:jchemhub.view.Plugin.Op.EXEC_COMMAND, queryCommandValue:jchemhub.view.Plugin.Op.QUERY_COMMAND, handleMouseDown:jchemhub.view.Plugin.Op.MOUSEDOWN, 
+handleMouseUp:jchemhub.view.Plugin.Op.MOUSEUP, handleMouseOver:jchemhub.view.Plugin.Op.MOUSEOVER, handleMouseOut:jchemhub.view.Plugin.Op.MOUSEOUT, handleAtomMouseOver:jchemhub.view.Plugin.Op.ATOM_MOUSEOVER, handleAtomMouseOut:jchemhub.view.Plugin.Op.ATOM_MOUSEOUT, handleBondMouseOver:jchemhub.view.Plugin.Op.BOND_MOUSEOVER, handleBondMouseOut:jchemhub.view.Plugin.Op.BOND_MOUSEOUT, handleBondMouseDown:jchemhub.view.Plugin.Op.BOND_MOUSEDOWN}));
+jchemhub.view.Plugin.prototype.execCommand = function(b) {
+  var c = this.isSilentCommand(b);
+  if(!c) {
+    goog.userAgent.GECKO && this.editorObject.stopChangeEvents(true, true);
+    this.editorObject.dispatchBeforeChange()
+  }try {
+    var d = this.execCommandInternal.apply(this, arguments)
+  }finally {
+    if(!c) {
+      this.editorObject.dispatchChange();
+      this.editorObject.dispatchSelectionChangeEvent()
+    }
+  }return d
+};
+jchemhub.view.Plugin.prototype.isSilentCommand = goog.functions.FALSE;
+jchemhub.view.Plugin.prototype.isSupportedCommand = function() {
+  return false
+};jchemhub.view.ReactionEditor = function(b, c) {
+  goog.events.EventTarget.call(this);
+  this.originalElement = b;
+  this.id = b.id;
+  this.editableDomHelper = goog.dom.getDomHelper(b);
+  this.plugins_ = {};
+  this.indexedPlugins_ = {};
+  for(var d in jchemhub.view.Plugin.OPCODE) {
+    this.indexedPlugins_[d] = []
+  }this.config = new goog.structs.Map(jchemhub.view.ReactionEditor.defaultConfig);
+  c && this.config.addAll(c);
+  this.graphics = goog.graphics.createGraphics(b.clientWidth, b.clientHeight);
+  this.graphics.render(this.originalElement);
+  this.reactionController = new jchemhub.controller.ReactionController(this);
+  this.reactionRenderer = new jchemhub.view.ReactionRenderer(this.reactionController, this.graphics);
+  this.moleculeRenderer = new jchemhub.view.MoleculeRenderer(this, this.graphics);
+  this.isEverModified_ = this.isModified_ = false;
+  this.eventRegister = new goog.events.EventHandler(this);
+  this.wrappers_ = [];
+  this.handleEditorLoad();
+  this.loadState_ = jchemhub.view.ReactionEditor.LoadState_.EDITABLE;
+  this.isEverModified_ = this.isModified_ = false
+};
+goog.inherits(jchemhub.view.ReactionEditor, goog.events.EventTarget);
+jchemhub.view.ReactionEditor.MUTATION_EVENTS_GECKO = ["DOMNodeInserted", "DOMNodeRemoved", "DOMNodeRemovedFromDocument", "DOMNodeInsertedIntoDocument", "DOMCharacterDataModified"];
+jchemhub.view.ReactionEditor.setActiveEditorId = function(b) {
+  jchemhub.view.ReactionEditor.activeEditorId_ = b
+};
+jchemhub.view.ReactionEditor.prototype.getEditableDomHelper = function() {
+  return this.editableDomHelper
+};
+jchemhub.view.ReactionEditor.getActiveEditorId = function() {
+  return jchemhub.view.ReactionEditor.activeEditorId_
+};
+a = jchemhub.view.ReactionEditor.prototype;
+a.clear = function() {
+  this.graphics.clear();
+  this.model = null;
+  var b = new goog.graphics.SolidFill(this.config.get("background").color);
+  this.graphics.drawRect(0, 0, this.graphics.getSize().width, this.graphics.getSize().height, null, b)
+};
+a.getScaleFactor = function() {
+  return this.reactionRenderer.scale_factor
+};
+a.setScaleFactor = function(b) {
+  this.reactionRenderer.scale_factor = b
+};
+a.setModel = function(b) {
+  this.clear();
+  this.model = b;
+  this.render()
+};
+a.render = function() {
+  this.model instanceof jchemhub.model.Reaction && this.reactionRenderer.render(this.model);
+  this.model instanceof jchemhub.model.Molecule && this.moleculeRenderer.render(this.model)
+};
+a.getModel = function() {
+  return this.model
+};
+a.dispatchBeforeChange = function() {
+  this.logger.info("dispatchBeforeChange");
+  this.dispatchEvent(jchemhub.view.ReactionEditor.EventType.BEFORECHANGE)
+};
+a.invokeShortCircuitingOp_ = function(b) {
+  for(var c = this.indexedPlugins_[b], d = goog.array.slice(arguments, 1), e = 0;e < c.length;++e) {
+    var f = c[e];
+    if((f.isEnabled(this) || jchemhub.view.Plugin.IRREPRESSIBLE_OPS[b]) && f[jchemhub.view.Plugin.OPCODE[b]].apply(f, d)) {
+      return true
+    }
+  }return false
+};
+a.handleKeyboardShortcut_ = function(b) {
+  if(!b.altKey) {
+    var c = goog.userAgent.MAC ? b.metaKey : b.ctrlKey;
+    if(c || jchemhub.view.ReactionEditor.POTENTIAL_SHORTCUT_KEYCODES_[b.keyCode]) {
+      var d = b.charCode || b.keyCode;
+      if(d != 17) {
+        d = String.fromCharCode(d).toLowerCase();
+        this.invokeShortCircuitingOp_(jchemhub.view.Plugin.Op.SHORTCUT, b, d, c) && b.preventDefault()
+      }
+    }
+  }
+};
+a.handleChange = function() {
+  this.changeTimerGecko_ && this.changeTimerGecko_.stop();
+  this.isEverModified_ = this.isModified_ = true
+};
+a.handleKeyDown_ = function(b) {
+  this.handleKeyboardShortcut_(b)
+};
+a.handleKeyPress_ = function(b) {
+  this.gotGeneratingKey_ = true;
+  this.dispatchBeforeChange();
+  this.handleKeyboardShortcut_(b)
+};
+a.handleKeyUp_ = function(b) {
+  this.invokeShortCircuitingOp_(jchemhub.view.Plugin.Op.KEYUP, b);
+  this.isEventStopped(jchemhub.view.ReactionEditor.EventType.SELECTIONCHANGE) || this.selectionChangeTimer_.start()
+};
+a.handleMouseDown_ = function(b) {
+  this.invokeShortCircuitingOp_(jchemhub.view.Plugin.Op.MOUSEDOWN, b)
+};
+a.handleMouseUp_ = function(b) {
+  this.invokeShortCircuitingOp_(jchemhub.view.Plugin.Op.MOUSEUP, b)
+};
+a.handleAtomMouseOver_ = function(b) {
+  this.invokeShortCircuitingOp_(jchemhub.view.Plugin.Op.ATOM_MOUSEOVER, b)
+};
+a.handleAtomMouseOut_ = function(b) {
+  this.invokeShortCircuitingOp_(jchemhub.view.Plugin.Op.ATOM_MOUSEOUT, b)
+};
+a.handleBondMouseOver_ = function(b) {
+  this.invokeShortCircuitingOp_(jchemhub.view.Plugin.Op.BOND_MOUSEOVER, b)
+};
+a.handleBondMouseOut_ = function(b) {
+  this.invokeShortCircuitingOp_(jchemhub.view.Plugin.Op.BOND_MOUSEOUT, b)
+};
+a.handleBondMouseDown_ = function(b) {
+  this.invokeShortCircuitingOp_(jchemhub.view.Plugin.Op.BOND_MOUSEDOWN, b)
+};
+a.queryCommandValueInternal_ = function(b, c) {
+  for(var d = this.indexedPlugins_[jchemhub.view.Plugin.Op.QUERY_COMMAND], e = 0;e < d.length;++e) {
+    var f = d[e];
+    if(f.isEnabled(this) && f.isSupportedCommand(b) && (c || f.activeOnUneditableEditors())) {
+      return f.queryCommandValue(b)
+    }
+  }return c ? null : false
+};
+a.queryCommandValue = function(b) {
+  var c = this.isLoaded();
+  if(goog.isString(b)) {
+    return this.queryCommandValueInternal_(b, c)
+  }else {
+    for(var d = {}, e = 0;e < b.length;e++) {
+      d[b[e]] = this.queryCommandValueInternal_(b[e], c)
+    }return d
+  }
+};
+a.dispatchChange = function() {
+  this.handleChange()
+};
+a.dispatchSelectionChangeEvent = function(b) {
+  this.dispatchCommandValueChange();
+  this.dispatchEvent({type:jchemhub.view.ReactionEditor.EventType.SELECTIONCHANGE, originalType:b && b.type});
+  this.invokeShortCircuitingOp_(jchemhub.view.Plugin.Op.SELECTION, b)
+};
+a.dispatchCommandValueChange = function(b) {
+  b ? this.dispatchEvent({type:jchemhub.view.ReactionEditor.EventType.COMMAND_VALUE_CHANGE, commands:b}) : this.dispatchEvent(jchemhub.view.ReactionEditor.EventType.COMMAND_VALUE_CHANGE)
+};
+a.execCommand = function(b) {
+  for(var c = arguments, d, e = this.indexedPlugins_[jchemhub.view.Plugin.Op.EXEC_COMMAND], f = 0;f < e.length;++f) {
+    var g = e[f];
+    if(g.isEnabled(this) && g.isSupportedCommand(b)) {
+      d = g.execCommand.apply(g, c);
+      break
+    }
+  }return d
+};
+a.registerPlugin = function(b) {
+  var c = b.getTrogClassId();
+  this.plugins_[c] && this.logger.severe("Cannot register the same class of plugin twice [" + c + "]");
+  this.plugins_[c] = b;
+  for(var d in jchemhub.view.Plugin.OPCODE) {
+    b[jchemhub.view.Plugin.OPCODE[d]] && this.indexedPlugins_[d].push(b)
+  }b.registerEditorObject(this);
+  this.isLoaded() && b.enable(this)
+};
+a.unregisterPlugin = function(b) {
+  var c = b.getTrogClassId();
+  this.plugins_[c] || this.logger.severe("Cannot unregister a plugin that isn't registered.");
+  delete this.plugins_[c];
+  for(var d in jchemhub.view.Plugin.OPCODE) {
+    b[jchemhub.view.Plugin.OPCODE[d]] && goog.array.remove(this.indexedPlugins_[d], b)
+  }b.unregisterEditorObject(this)
+};
+a.isLoaded = function() {
+  return this.loadState_ == jchemhub.view.ReactionEditor.LoadState_.EDITABLE
+};
+jchemhub.view.ReactionEditor.LoadState_ = {UNEDITABLE:0, LOADING:1, EDITABLE:2};
+jchemhub.view.ReactionEditor.prototype.logger = goog.debug.Logger.getLogger("jchemhub.view.ReactionEditor");
+jchemhub.view.ReactionEditor.EventType = {COMMAND_VALUE_CHANGE:"cvc", LOAD:"load", UNLOAD:"unload", BEFORECHANGE:"beforechange", CHANGE:"change", DELAYEDCHANGE:"delayedchange", BEFOREFOCUS:"beforefocus", FOCUS:"focus", BLUR:"blur", BEFORETAB:"beforetab", SELECTIONCHANGE:"selectionchange"};
+a = jchemhub.view.ReactionEditor.prototype;
+a.disposeInternal = function() {
+  if(this.isLoading() || this.isLoaded()) {
+    this.logger.warning("Disposing an editor that is in use.")
+  }this.getOriginalElement() && this.execCommand(jchemhub.view.Command.CLEAR);
+  this.tearDownEditorObject_();
+  this.clearListeners_();
+  this.originalDomHelper = null;
+  if(this.eventRegister) {
+    this.eventRegister.dispose();
+    this.eventRegister = null
+  }this.removeAllWrappers();
+  jchemhub.view.ReactionEditor.getActiveEditorId() == this.id && jchemhub.view.ReactionEditor.setActiveEditorId(null);
+  for(var b in this.plugins_) {
+    var c = this.plugins_[b];
+    c.isAutoDispose() && c.dispose()
+  }delete this.plugins_;
+  jchemhub.view.ReactionEditor.superClass_.disposeInternal.call(this)
+};
+a.getPluginByClassId = function(b) {
+  return this.plugins_[b]
+};
+a.tearDownEditorObject_ = function() {
+  for(var b in this.plugins_) {
+    var c = this.plugins_[b];
+    c.activeOnUneditableEditors() || c.disable(this)
+  }this.loadState_ = jchemhub.view.ReactionEditor.LoadState_.UNEDITABLE
+};
+a.isLoaded = function() {
+  return this.loadState_ == jchemhub.view.ReactionEditor.LoadState_.EDITABLE
+};
+a.isLoading = function() {
+  return this.loadState_ == jchemhub.view.ReactionEditor.LoadState_.LOADING
+};
+a.getOriginalElement = function() {
+  return this.originalElement
+};
+a.clearListeners_ = function() {
+  this.eventRegister && this.eventRegister.removeAll()
+};
+a.removeAllWrappers = function() {
+  for(var b;b = this.wrappers_.pop();) {
+    b.dispose()
+  }
+};
+a.handleEditorLoad = function() {
+  jchemhub.view.ReactionEditor.getActiveEditorId();
+  this.setupChangeListeners_();
+  this.dispatchLoadEvent_();
+  for(var b in this.plugins_) {
+    this.plugins_[b].enable(this)
+  }
+};
+a.dispatchLoadEvent_ = function() {
+  this.installStyles();
+  this.logger.info("Dispatching load " + this.id);
+  this.dispatchEvent(jchemhub.view.ReactionEditor.EventType.LOAD)
+};
+a.addListener = function(b, c, d, e) {
+  var f = this.getOriginalElement();
+  if(f && goog.editor.BrowserFeature.USE_DOCUMENT_FOR_KEY_EVENTS) {
+    f = f.ownerDocument
+  }this.eventRegister.listen(f, b, c, d, e)
+};
+a.setupChangeListeners_ = function() {
+  this.addListener(goog.events.EventType.BLUR, this.dispatchBlur, goog.editor.BrowserFeature.USE_MUTATION_EVENTS);
+  if(goog.editor.BrowserFeature.USE_MUTATION_EVENTS) {
+    this.setupMutationEventHandlersGecko()
+  }else {
+    this.addListener(["beforecut", "beforepaste", "drop", "dragend"], this.dispatchBeforeChange);
+    this.addListener(["cut", "paste"], this.dispatchChange);
+    this.addListener("drop", this.handleDrop_)
+  }this.addListener(goog.userAgent.WEBKIT ? "dragend" : "dragdrop", this.handleDrop_);
+  this.addListener(goog.events.EventType.KEYDOWN, this.handleKeyDown_);
+  this.addListener(goog.events.EventType.KEYPRESS, this.handleKeyPress_);
+  this.addListener(goog.events.EventType.KEYUP, this.handleKeyUp_);
+  var b = goog.bind(this.dispatchSelectionChangeEvent, this);
+  this.selectionChangeTimer_ = new goog.async.Delay(b, jchemhub.view.ReactionEditor.SELECTION_CHANGE_FREQUENCY_);
+  this.addListener(goog.events.EventType.MOUSEDOWN, this.handleMouseDown_);
+  this.addListener(goog.events.EventType.MOUSEUP, this.handleMouseUp_);
+  this.addEventListener(jchemhub.controller.AtomController.EventType.MOUSEOUT, this.handleAtomMouseOut_);
+  this.addEventListener(jchemhub.controller.AtomController.EventType.MOUSEOVER, this.handleAtomMouseOver_);
+  this.addEventListener(jchemhub.controller.BondController.EventType.MOUSEOUT, this.handleBondMouseOut_);
+  this.addEventListener(jchemhub.controller.BondController.EventType.MOUSEOVER, this.handleBondMouseOver_);
+  this.addEventListener(jchemhub.controller.BondController.EventType.MOUSEDOWN, this.handleBondMouseDown_)
+};
+a.setupMutationEventHandlersGecko = function() {
+  if(goog.editor.BrowserFeature.HAS_DOM_SUBTREE_MODIFIED_EVENT) {
+    this.eventRegister.listen(this.getElement(), "DOMSubtreeModified", this.handleMutationEventGecko_)
+  }else {
+    var b = this.getEditableDomHelper().getDocument();
+    this.eventRegister.listen(b, jchemhub.view.ReactionEditor.MUTATION_EVENTS_GECKO, this.handleMutationEventGecko_, true);
+    this.eventRegister.listen(b, "DOMAttrModified", goog.bind(this.handleDomAttrChange, this, this.handleMutationEventGecko_), true)
+  }
+};
+a.installStyles = function() {
+  this.cssStyles && this.shouldLoadAsynchronously() && goog.style.installStyles(this.cssStyles, this.getElement())
+};
+jchemhub.view.ReactionEditor.SELECTION_CHANGE_FREQUENCY_ = 250;
+jchemhub.view.ReactionEditor.defaultConfig = {background:{color:"#F0FFF0"}, margin:20};
