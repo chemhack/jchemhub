@@ -36,7 +36,7 @@ jchemhub.view.BondRenderer.prototype.render = function(bond, transform) {
 	var fill = new goog.graphics.SolidFill('red', 0.001); // 'transparent'
 	// fill
 	var stroke = null;
-	var radius = this.config.get("highlight").radius * 3;
+	var radius = this.config.get("highlight").radius ;
 	var theta = jchemhub.view.BondRenderer.getTheta(bond);
 
 	var angle_left = theta + (Math.PI / 2);
@@ -78,19 +78,21 @@ jchemhub.view.BondRenderer.prototype.render = function(bond, transform) {
 
 jchemhub.view.BondRenderer.prototype.highlightOn = function(bond, opt_group) {
 
-	var strokeWidth = this.config.get("bond").stroke.width;
+	var strokeWidth = this.config.get("bond").stroke.width * 2;
 	var stroke = new goog.graphics.Stroke(strokeWidth, this.config
 			.get("highlight").color);
 	var fill = null
 	var radius = this.config.get("highlight").radius
 			* this.transform.getScaleX();
-	var theta = jchemhub.view.BondRenderer.getTheta(bond) * 180 / Math.PI;
-
+	var theta = -jchemhub.view.BondRenderer.getTheta(bond) * 180 / Math.PI;
+	console.log('theta: ' + theta);
 	var angle = theta + 90;
+	console.log('angle: ' + angle);
+	
 
 	var arcExtent;
 	if (theta <= 0) {
-		arcExtent = (bond.source.coord.y <= bond.target.coord.y) ? -180 : 180;
+		arcExtent = (bond.source.coord.y <= bond.target.coord.y) ? 180 : -180;
 	} else {
 		arcExtent = (bond.source.coord.y > bond.target.coord.y) ? 180 : -180;
 	}
@@ -99,8 +101,8 @@ jchemhub.view.BondRenderer.prototype.highlightOn = function(bond, opt_group) {
 			bond.target.coord ]);
 
 	var path = new goog.graphics.Path();
-	path.arc(coords[0].x, coords[0].y, radius, radius, angle, -arcExtent);
-	path.arc(coords[1].x, coords[1].y, radius, radius, angle, +arcExtent);
+	path.arc(coords[0].x, coords[0].y, radius, radius, angle, arcExtent);
+	path.arc(coords[1].x, coords[1].y, radius, radius, angle, -arcExtent);
 
 	if (!opt_group) {
 		opt_group = this.graphics.createGroup();
@@ -132,7 +134,7 @@ jchemhub.view.BondRenderer.defaultConfig = {
 		}
 	},
 	highlight : {
-		radius : .2,
+		radius : .3,
 		color : 'blue'
 	}
 };

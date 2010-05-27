@@ -43,7 +43,7 @@ function initPage(){
 			element.clientHeight);
 	var group = graphics.createGroup();
 	graphics.render(element);
-	var sbr = new jchemhub.view.SingleBondRenderer(null, graphics);
+	var sbr = new jchemhub.view.SingleBondRenderer(undefined, graphics);
 	
 	var trans = new jchemhub.graphics.AffineTransform(20,0,0,-20,0,0);
 	var c1 = new jchemhub.model.Atom("C", 2, -2);
