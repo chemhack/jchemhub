@@ -9,11 +9,24 @@
 <script>
     
 function initPage(){
-	var model = jchemhub.io.json.readReaction(reactionDrawing);
+	var buttons = []; 
+	buttons.push(jchemhub.view.ToolbarFactory.makeButton( 
+    	jchemhub.view.plugins.ClearEditor.COMMAND, 'Clear Editor', 'Clear')); 
+    buttons.push(jchemhub.view.ToolbarFactory.makeButton(jchemhub.view.plugins.Zoom.COMMAND.ZOOM_IN, 'zoom in', '+'));
+    buttons.push(jchemhub.view.ToolbarFactory.makeButton(jchemhub.view.plugins.Zoom.COMMAND.ZOOM_OUT, 'zoom out', '-'));
+    buttons.push(jchemhub.view.ToolbarFactory.makeButton(jchemhub.view.plugins.UndoRedo.COMMAND.UNDO, 'undo', 'undo'));
+    buttons.push(jchemhub.view.ToolbarFactory.makeButton(jchemhub.view.plugins.UndoRedo.COMMAND.REDO, 'redo', 'redo'));
 
-	var controller = new jchemhub.controller.Controller(goog.dom.getElement('reactionEditorContainer'));
-
-	controller.setModel(model);
+	var toolbar = jchemhub.view.DefaultToolbar.makeToolbar(buttons, goog.dom.getElement('reactionEditorToolbar')); 
+	var model = jchemhub.io.json.readReaction(reactionDrawing); 
+	var editor = new jchemhub.view.ReactionEditor(goog.dom.getElement('reactionEditorContainer'));
+	editor.registerPlugin(new jchemhub.view.plugins.ClearEditor());
+	editor.registerPlugin(new jchemhub.view.plugins.Zoom());
+	editor.registerPlugin(new jchemhub.view.plugins.UndoRedo());
+	editor.registerPlugin(new jchemhub.view.plugins.Highlight());
+	
+    var toolbarController = new jchemhub.view.ToolbarController(editor, toolbar);
+	editor.setModel(model);
 };
 
 goog.events.listen(window, goog.events.EventType.LOAD, initPage);
