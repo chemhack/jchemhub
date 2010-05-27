@@ -11,6 +11,8 @@ goog.require('goog.editor.BrowserFeature');
 goog.require('goog.async.Delay');
 goog.require('jchemhub.view.Plugin');
 
+goog.require('jchemhub.view.ToolbarFactory');
+
 /**
  * A graphical editor for reactions
  * 
