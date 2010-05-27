@@ -1,12 +1,12 @@
-goog.provide('jchemhub.view.plugins.UndoRedo');
+goog.provide('jchemhub.controller.plugins.UndoRedo');
 goog.require('goog.debug.Logger');
 
 /**
  * @constructor
- * @extends{jchemhubn.view.Plugin}s
+ * @extends{jchemhubn.controller.Plugin}s
  */
-jchemhub.view.plugins.UndoRedo = function() {
-	jchemhub.view.Plugin.call(this);
+jchemhub.controller.plugins.UndoRedo = function() {
+	jchemhub.controller.Plugin.call(this);
 
 	/**
 	 * The maximum number of states on the undo stack at any time. Used to limit
@@ -35,44 +35,44 @@ jchemhub.view.plugins.UndoRedo = function() {
 
 	this.currentState_ = null;
 }
-goog.inherits(jchemhub.view.plugins.UndoRedo, jchemhub.view.Plugin);
+goog.inherits(jchemhub.controller.plugins.UndoRedo, jchemhub.controller.Plugin);
 
 /**
  * Commands implemented by this plugin.
  * 
  * @enum {string}
  */
-jchemhub.view.plugins.UndoRedo.COMMAND = {
+jchemhub.controller.plugins.UndoRedo.COMMAND = {
 	UNDO : 'undo',
 	REDO : 'redo'
 };
 
 /**
  * Inverse map of execCommand strings to
- * {@link jchemhub.view.plugins.UndoRedo.COMMAND} constants. Used to determine
+ * {@link jchemhub.controller.plugins.UndoRedo.COMMAND} constants. Used to determine
  * whether a string corresponds to a command this plugin handles
  * 
  * @type {Object}
  * @private
  */
-jchemhub.view.plugins.UndoRedo.SUPPORTED_COMMANDS_ = goog.object
-		.transpose(jchemhub.view.plugins.UndoRedo.COMMAND);
+jchemhub.controller.plugins.UndoRedo.SUPPORTED_COMMANDS_ = goog.object
+		.transpose(jchemhub.controller.plugins.UndoRedo.COMMAND);
 
 /** @inheritDoc */
-jchemhub.view.plugins.UndoRedo.prototype.getTrogClassId = function() {
+jchemhub.controller.plugins.UndoRedo.prototype.getTrogClassId = function() {
 	return 'UndoRedo';
 };
 
 /** @inheritDoc */
-jchemhub.view.plugins.UndoRedo.prototype.isSupportedCommand = function(command) {
-	return command in jchemhub.view.plugins.UndoRedo.SUPPORTED_COMMANDS_;
+jchemhub.controller.plugins.UndoRedo.prototype.isSupportedCommand = function(command) {
+	return command in jchemhub.controller.plugins.UndoRedo.SUPPORTED_COMMANDS_;
 };
 
 /** @inheritDoc */
-jchemhub.view.plugins.UndoRedo.prototype.execCommandInternal = function(command) {
-	if (command == jchemhub.view.plugins.UndoRedo.COMMAND.UNDO) {
+jchemhub.controller.plugins.UndoRedo.prototype.execCommandInternal = function(command) {
+	if (command == jchemhub.controller.plugins.UndoRedo.COMMAND.UNDO) {
 		this.undo();
-	} else if (command == jchemhub.view.plugins.UndoRedo.COMMAND.REDO) {
+	} else if (command == jchemhub.controller.plugins.UndoRedo.COMMAND.REDO) {
 		this.redo();
 	}
 
@@ -83,7 +83,7 @@ jchemhub.view.plugins.UndoRedo.prototype.execCommandInternal = function(command)
 /**
  * Clear the undo/redo stack.
  */
-jchemhub.view.plugins.UndoRedo.prototype.clearHistory = function() {
+jchemhub.controller.plugins.UndoRedo.prototype.clearHistory = function() {
 	if (this.undoStack_.length > 0 || this.redoStack_.length > 0) {
 		this.undoStack_.length = 0;
 		this.redoStack_.length = 0;
@@ -98,10 +98,10 @@ jchemhub.view.plugins.UndoRedo.prototype.clearHistory = function() {
  *            e The event.
  * @private
  */
-jchemhub.view.plugins.UndoRedo.prototype.handleBeforeChange_ = function(e) {
+jchemhub.controller.plugins.UndoRedo.prototype.handleBeforeChange_ = function(e) {
 	this.logger.info('handleBeforeChange');
 
-	var editorObj = /** @type {jchemhub.view.ReactionEditor} */
+	var editorObj = /** @type {jchemhub.controller.ReactionEditor} */
 	(e.target);
 
 	this.updateCurrentState_(editorObj);
@@ -111,11 +111,11 @@ jchemhub.view.plugins.UndoRedo.prototype.handleBeforeChange_ = function(e) {
 /**
  * Helper method for saving state.
  * 
- * @param {jchemhub.view.ReactionEditor}
+ * @param {jchemhub.controller.ReactionEditor}
  *            edtiorObj The field object.
  * @private
  */
-jchemhub.view.plugins.UndoRedo.prototype.updateCurrentState_ = function(
+jchemhub.controller.plugins.UndoRedo.prototype.updateCurrentState_ = function(
 		editorObj) {
 	var content = editorObj.getModel();
 	if (content) {
@@ -138,7 +138,7 @@ jchemhub.view.plugins.UndoRedo.prototype.updateCurrentState_ = function(
  * @param {goog.editor.plugins.UndoRedoState}
  *            state The state to add to the undo stack.
  */
-jchemhub.view.plugins.UndoRedo.prototype.addState = function(state) {
+jchemhub.controller.plugins.UndoRedo.prototype.addState = function(state) {
 
 	this.undoStack_.push(state);
 	if (this.undoStack_.length > this.maxUndoDepth_) {
@@ -149,7 +149,7 @@ jchemhub.view.plugins.UndoRedo.prototype.addState = function(state) {
 		this.redoStack_.length = 0;
 
 		this.dispatchEvent( {
-			type : jchemhub.view.plugins.UndoRedo.EventType.STATE_ADDED,
+			type : jchemhub.controller.plugins.UndoRedo.EventType.STATE_ADDED,
 			state : state
 		});
 
@@ -167,8 +167,8 @@ jchemhub.view.plugins.UndoRedo.prototype.addState = function(state) {
  * 
  * @private
  */
-jchemhub.view.plugins.UndoRedo.prototype.dispatchStateChange_ = function() {
-	this.dispatchEvent(jchemhub.view.plugins.UndoRedo.EventType.STATE_CHANGE);
+jchemhub.controller.plugins.UndoRedo.prototype.dispatchStateChange_ = function() {
+	this.dispatchEvent(jchemhub.controller.plugins.UndoRedo.EventType.STATE_CHANGE);
 };
 
 /**
@@ -176,7 +176,7 @@ jchemhub.view.plugins.UndoRedo.prototype.dispatchStateChange_ = function() {
  * that state to the top of the redo stack. If the undo stack is empty, does
  * nothing.
  */
-jchemhub.view.plugins.UndoRedo.prototype.undo = function() {
+jchemhub.controller.plugins.UndoRedo.prototype.undo = function() {
 	this.logger.info('undo');
 	this.shiftState_(this.undoStack_, this.redoStack_);
 };
@@ -186,7 +186,7 @@ jchemhub.view.plugins.UndoRedo.prototype.undo = function() {
  * that state to the top of the undo stack. If redo undo stack is empty, does
  * nothing.
  */
-jchemhub.view.plugins.UndoRedo.prototype.redo = function() {
+jchemhub.controller.plugins.UndoRedo.prototype.redo = function() {
 	this.shiftState_(this.redoStack_, this.undoStack_);
 };
 
@@ -194,7 +194,7 @@ jchemhub.view.plugins.UndoRedo.prototype.redo = function() {
  * @return {boolean} Whether the undo stack has items on it, i.e., if it is
  *         possible to perform an undo operation.
  */
-jchemhub.view.plugins.UndoRedo.prototype.hasUndoState = function() {
+jchemhub.controller.plugins.UndoRedo.prototype.hasUndoState = function() {
 	return this.undoStack_.length > 0;
 };
 
@@ -202,7 +202,7 @@ jchemhub.view.plugins.UndoRedo.prototype.hasUndoState = function() {
  * @return {boolean} Wether the redo stack has items on it, i.e., if it is
  *         possible to perform a redo operation.
  */
-jchemhub.view.plugins.UndoRedo.prototype.hasRedoState = function() {
+jchemhub.controller.plugins.UndoRedo.prototype.hasRedoState = function() {
 	return this.redoStack_.length > 0;
 };
 
@@ -216,7 +216,7 @@ jchemhub.view.plugins.UndoRedo.prototype.hasRedoState = function() {
  *            toStack Stack to move the state to.
  * @private
  */
-jchemhub.view.plugins.UndoRedo.prototype.shiftState_ = function(fromStack,
+jchemhub.controller.plugins.UndoRedo.prototype.shiftState_ = function(fromStack,
 		toStack) {
 	if (fromStack.length) {
 		var state = fromStack.pop();
@@ -236,8 +236,8 @@ jchemhub.view.plugins.UndoRedo.prototype.shiftState_ = function(fromStack,
 };
 
 /** @inheritDoc */
-jchemhub.view.plugins.UndoRedo.prototype.enable = function(editorObject) {
-	jchemhub.view.plugins.UndoRedo.superClass_.enable.call(this, editorObject);
+jchemhub.controller.plugins.UndoRedo.prototype.enable = function(editorObject) {
+	jchemhub.controller.plugins.UndoRedo.superClass_.enable.call(this, editorObject);
 
 	// Don't want pending delayed changes from when undo-redo was disabled
 	// firing after undo-redo is enabled since they might cause undo-redo stack
@@ -255,14 +255,14 @@ jchemhub.view.plugins.UndoRedo.prototype.enable = function(editorObject) {
 		// there we fire beforechange, then syncronously file change. The point
 		// of before change is to capture before the user has changed anything.
 		this.eventHandler.listen(editorObject,
-				jchemhub.view.ReactionEditor.EventType.BEFORECHANGE,
+				jchemhub.controller.ReactionEditor.EventType.BEFORECHANGE,
 				this.handleBeforeChange_);
 	}
 	this.eventHandler.listen(editorObject,
-			jchemhub.view.ReactionEditor.EventType.DELAYEDCHANGE,
+			jchemhub.controller.ReactionEditor.EventType.DELAYEDCHANGE,
 			this.handleDelayedChange_);
 	this.eventHandler.listen(editorObject,
-			jchemhub.view.ReactionEditor.EventType.BLUR, this.handleBlur_);
+			jchemhub.controller.ReactionEditor.EventType.BLUR, this.handleBlur_);
 
 	// We want to capture the initial state of a Trogedit field before any
 	// editing has happened. This is necessary so that we can undo the first
@@ -271,7 +271,7 @@ jchemhub.view.plugins.UndoRedo.prototype.enable = function(editorObject) {
 };
 
 /** @inheritDoc */
-jchemhub.view.plugins.UndoRedo.prototype.disable = function(editorObject) {
+jchemhub.controller.plugins.UndoRedo.prototype.disable = function(editorObject) {
 	// Process any pending changes so we don't lose any undo-redo states that we
 	// want prior to disabling undo-redo.
 	editorObject.clearDelayedChange();
@@ -283,7 +283,7 @@ jchemhub.view.plugins.UndoRedo.prototype.disable = function(editorObject) {
 };
 
 /** @inheritDoc */
-jchemhub.view.plugins.UndoRedo.prototype.disposeInternal = function() {
+jchemhub.controller.plugins.UndoRedo.prototype.disposeInternal = function() {
 	goog.editor.plugins.UndoRedo.superClass_.disposeInternal.call(this);
 	this.eventHandler.dispose();
 	this.editorObject = null;
@@ -295,7 +295,7 @@ jchemhub.view.plugins.UndoRedo.prototype.disposeInternal = function() {
  * Event types for the events dispatched by undo-redo 
  * @enum {string}
  */
-jchemhub.view.plugins.UndoRedo.EventType = {
+jchemhub.controller.plugins.UndoRedo.EventType = {
   /**
    * Signifies that he undo or redo stack transitioned between 0 and 1 states,
    * meaning that the ability to perform undo or redo operations has changed.
@@ -335,5 +335,5 @@ jchemhub.view.plugins.UndoRedo.EventType = {
  * @type {goog.debug.Logger}
  * @protected
  */
-jchemhub.view.plugins.UndoRedo.prototype.logger = goog.debug.Logger
-		.getLogger('jchemhub.view.plugins.UndoRedo');
+jchemhub.controller.plugins.UndoRedo.prototype.logger = goog.debug.Logger
+		.getLogger('jchemhub.controller.plugins.UndoRedo');

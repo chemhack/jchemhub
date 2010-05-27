@@ -1,6 +1,6 @@
 
-goog.provide('jchemhub.view.plugins.SelectorRectangle');
-goog.require('jchemhub.view.Plugin');
+goog.provide('jchemhub.controller.plugins.SelectorRectangle');
+goog.require('jchemhub.controller.Plugin');
 goog.require('goog.functions');
 goog.require('goog.debug.Logger');
 
@@ -9,31 +9,31 @@ goog.require('goog.debug.Logger');
  * simple Plugin for highlighting bonds and atoms
  *
  * @constructor
- * @extends {jchemhub.view.Plugin}
+ * @extends {jchemhub.controller.Plugin}
  */
-jchemhub.view.plugins.SelectorRectangle = function() {
-  jchemhub.view.Plugin.call(this);
+jchemhub.controller.plugins.SelectorRectangle = function() {
+  jchemhub.controller.Plugin.call(this);
 };
-goog.inherits(jchemhub.view.plugins.SelectorRectangle, jchemhub.view.Plugin);
+goog.inherits(jchemhub.controller.plugins.SelectorRectangle, jchemhub.controller.Plugin);
 
 /**
  * Commands supported 
  * @enum {string}
  */
-jchemhub.view.plugins.SelectorRectangle.COMMAND = {
+jchemhub.controller.plugins.SelectorRectangle.COMMAND = {
 		MOUSEDOWN: 'mousedown',
 		MOUSEUP: 'mouseup'
 };
 
 /**
  * Inverse map of execCommand strings to
- * {@link jchemhub.view.plugins.SelectorRectangle.COMMAND} constants. Used to
+ * {@link jchemhub.controller.plugins.SelectorRectangle.COMMAND} constants. Used to
  * determine whether a string corresponds to a command this plugin handles
  * @type {Object}
  * @private
  */
-jchemhub.view.plugins.SelectorRectangle.SUPPORTED_COMMANDS_ =
-    goog.object.transpose(jchemhub.view.plugins.SelectorRectangle.COMMAND);
+jchemhub.controller.plugins.SelectorRectangle.SUPPORTED_COMMANDS_ =
+    goog.object.transpose(jchemhub.controller.plugins.SelectorRectangle.COMMAND);
 
 
 /**
@@ -42,14 +42,14 @@ jchemhub.view.plugins.SelectorRectangle.SUPPORTED_COMMANDS_ =
  * @return {boolean} Whether the string corresponds to a command
  *     this plugin handles.
  */
-jchemhub.view.plugins.SelectorRectangle.prototype.isSupportedCommand =
+jchemhub.controller.plugins.SelectorRectangle.prototype.isSupportedCommand =
     function(command) {
-  return command in jchemhub.view.plugins.SelectorRectangle.SUPPORTED_COMMANDS_;
+  return command in jchemhub.controller.plugins.SelectorRectangle.SUPPORTED_COMMANDS_;
 };
 
 /** @inheritDoc */
-jchemhub.view.plugins.SelectorRectangle.prototype.getTrogClassId =
-    goog.functions.constant('jchemhub.view.plugins.SelectorRectangle');
+jchemhub.controller.plugins.SelectorRectangle.prototype.getTrogClassId =
+    goog.functions.constant('jchemhub.controller.plugins.SelectorRectangle');
 
 /**
  * Logging object.
@@ -57,11 +57,11 @@ jchemhub.view.plugins.SelectorRectangle.prototype.getTrogClassId =
  * @type {goog.debug.Logger}
  * @protected
  */
-jchemhub.view.plugins.SelectorRectangle.prototype.logger = goog.debug.Logger
-		.getLogger('jchemhub.view.plugins.SelectorRectangle');
+jchemhub.controller.plugins.SelectorRectangle.prototype.logger = goog.debug.Logger
+		.getLogger('jchemhub.controller.plugins.SelectorRectangle');
 
 
-jchemhub.view.plugins.SelectorRectangle.prototype.handleMouseDown = function(e) {
+jchemhub.controller.plugins.SelectorRectangle.prototype.handleMouseDown = function(e) {
 	this.logger.info('handleMouseDown');
 };
 

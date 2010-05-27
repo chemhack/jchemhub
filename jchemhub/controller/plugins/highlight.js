@@ -1,6 +1,6 @@
 
-goog.provide('jchemhub.view.plugins.Highlight');
-goog.require('jchemhub.view.Plugin');
+goog.provide('jchemhub.controller.plugins.Highlight');
+goog.require('jchemhub.controller.Plugin');
 goog.require('goog.functions');
 goog.require('goog.debug.Logger');
 
@@ -9,17 +9,17 @@ goog.require('goog.debug.Logger');
  * simple Plugin for highlighting bonds and atoms
  *
  * @constructor
- * @extends {jchemhub.view.Plugin}
+ * @extends {jchemhub.controller.Plugin}
  */
-jchemhub.view.plugins.Highlight = function() {
-  jchemhub.view.Plugin.call(this);
+jchemhub.controller.plugins.Highlight = function() {
+  jchemhub.controller.Plugin.call(this);
 };
-goog.inherits(jchemhub.view.plugins.Highlight, jchemhub.view.Plugin);
+goog.inherits(jchemhub.controller.plugins.Highlight, jchemhub.controller.Plugin);
 
 
 /** @inheritDoc */
-jchemhub.view.plugins.Highlight.prototype.getTrogClassId =
-    goog.functions.constant('jchemhub.view.plugins.Highlight');
+jchemhub.controller.plugins.Highlight.prototype.getTrogClassId =
+    goog.functions.constant('jchemhub.controller.plugins.Highlight');
 
 /**
  * Logging object.
@@ -27,31 +27,31 @@ jchemhub.view.plugins.Highlight.prototype.getTrogClassId =
  * @type {goog.debug.Logger}
  * @protected
  */
-jchemhub.view.plugins.Highlight.prototype.logger = goog.debug.Logger
-		.getLogger('jchemhub.view.plugins.Highlight');
+jchemhub.controller.plugins.Highlight.prototype.logger = goog.debug.Logger
+		.getLogger('jchemhub.controller.plugins.Highlight');
 
 
-jchemhub.view.plugins.Highlight.prototype.handleAtomMouseOver = function(e) {
+jchemhub.controller.plugins.Highlight.prototype.handleAtomMouseOver = function(e) {
 
 };
-jchemhub.view.plugins.Highlight.prototype.handleAtomMouseOut = function(e) {
+jchemhub.controller.plugins.Highlight.prototype.handleAtomMouseOut = function(e) {
 	
 };
 
-jchemhub.view.plugins.Highlight.prototype.handleBondMouseOver = function(e) {
+jchemhub.controller.plugins.Highlight.prototype.handleBondMouseOver = function(e) {
 	if (!e.currentTarget.bondHighlightGroup) {
 		e.currentTarget.bondHighlightGroup = this.highlightOn(e.bond);
 	} else {
 		e.currentTarget.bondHighlightGroup = this.highlightOn(e.bond, e.currentTarget.bondHighlightGroup);
 	}
 };
-jchemhub.view.plugins.Highlight.prototype.handleBondMouseOut = function(e) {
+jchemhub.controller.plugins.Highlight.prototype.handleBondMouseOut = function(e) {
 
 	if (e.currentTarget.bondHighlightGroup) {
 		e.currentTarget.bondHighlightGroup.clear();
 	}
 };
 
-jchemhub.view.plugins.Highlight.prototype.highlightOn = function(bond, opt_group){
+jchemhub.controller.plugins.Highlight.prototype.highlightOn = function(bond, opt_group){
 	return this.editorObject.reactionRenderer.moleculeRenderer.bondRendererFactory.get(bond).highlightOn(bond, opt_group);
 }
