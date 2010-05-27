@@ -1,52 +1,52 @@
-goog.provide('jchemhub.view.plugins.Zoom');
+goog.provide('jchemhub.controller.plugins.Zoom');
 goog.require('goog.debug.Logger');
 
 /**
  * @constructor
- * @extends{jchemhubn.view.Plugin}s
+ * @extends{jchemhubn.controller.Plugin}s
  */
-jchemhub.view.plugins.Zoom = function(){
-	  jchemhub.view.Plugin.call(this);
+jchemhub.controller.plugins.Zoom = function(){
+	  jchemhub.controller.Plugin.call(this);
 }
-goog.inherits(jchemhub.view.plugins.Zoom, jchemhub.view.Plugin);
+goog.inherits(jchemhub.controller.plugins.Zoom, jchemhub.controller.Plugin);
 
 /**
  * Commands implemented by this plugin.
  * @enum {string}
  */
-jchemhub.view.plugins.Zoom.COMMAND = {
+jchemhub.controller.plugins.Zoom.COMMAND = {
   ZOOM_IN: 'zoomIn',
   ZOOM_OUT: 'zoomOut'
 };
 
 /**
  * Inverse map of execCommand strings to
- * {@link jchemhub.view.plugins.Zoom.COMMAND} constants. Used to determine
+ * {@link jchemhub.controller.plugins.Zoom.COMMAND} constants. Used to determine
  * whether a string corresponds to a command this plugin handles 
  * @type {Object}
  * @private
  */
-jchemhub.view.plugins.Zoom.SUPPORTED_COMMANDS_ =
-    goog.object.transpose(jchemhub.view.plugins.Zoom.COMMAND);
+jchemhub.controller.plugins.Zoom.SUPPORTED_COMMANDS_ =
+    goog.object.transpose(jchemhub.controller.plugins.Zoom.COMMAND);
 
 /** @inheritDoc */
-jchemhub.view.plugins.Zoom.prototype.getTrogClassId =
-    goog.functions.constant(jchemhub.view.plugins.Zoom.COMMAND);
+jchemhub.controller.plugins.Zoom.prototype.getTrogClassId =
+    goog.functions.constant(jchemhub.controller.plugins.Zoom.COMMAND);
 
 
 /** @inheritDoc */
-jchemhub.view.plugins.Zoom.prototype.isSupportedCommand = function(command) {
-  return command in jchemhub.view.plugins.Zoom.SUPPORTED_COMMANDS_;
+jchemhub.controller.plugins.Zoom.prototype.isSupportedCommand = function(command) {
+  return command in jchemhub.controller.plugins.Zoom.SUPPORTED_COMMANDS_;
 };
 
 
 /** @inheritDoc */
-jchemhub.view.plugins.Zoom.prototype.execCommand = function(command,
+jchemhub.controller.plugins.Zoom.prototype.execCommand = function(command,
     var_args) {
 	var current = this.editorObject.getScaleFactor();
-  if (command == jchemhub.view.plugins.Zoom.COMMAND.ZOOM_IN) {
+  if (command == jchemhub.controller.plugins.Zoom.COMMAND.ZOOM_IN) {
 	  this.editorObject.setScaleFactor(current*1.1);  
-  } else if (command == jchemhub.view.plugins.Zoom.COMMAND.ZOOM_OUT) {
+  } else if (command == jchemhub.controller.plugins.Zoom.COMMAND.ZOOM_OUT) {
 	  this.editorObject.setScaleFactor(current*0.9);
   }
 
@@ -59,5 +59,5 @@ jchemhub.view.plugins.Zoom.prototype.execCommand = function(command,
  * @type {goog.debug.Logger}
  * @protected
  */
-jchemhub.view.plugins.Zoom.prototype.logger =
-    goog.debug.Logger.getLogger('jchemhub.view.plugins.Zoom');
+jchemhub.controller.plugins.Zoom.prototype.logger =
+    goog.debug.Logger.getLogger('jchemhub.controller.plugins.Zoom');

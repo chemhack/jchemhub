@@ -1,7 +1,7 @@
 
-goog.provide('jchemhub.view.plugins.ClearEditor');
+goog.provide('jchemhub.controller.plugins.ClearEditor');
 
-goog.require('jchemhub.view.Plugin');
+goog.require('jchemhub.controller.Plugin');
 goog.require('goog.functions');
 
 
@@ -9,27 +9,27 @@ goog.require('goog.functions');
  * simple Plugin for clearing editor.
  *
  * @constructor
- * @extends {jchemhub.view.Plugin}
+ * @extends {jchemhub.controller.Plugin}
  */
-jchemhub.view.plugins.ClearEditor = function() {
-  jchemhub.view.Plugin.call(this);
+jchemhub.controller.plugins.ClearEditor = function() {
+  jchemhub.controller.Plugin.call(this);
 };
-goog.inherits(jchemhub.view.plugins.ClearEditor, jchemhub.view.Plugin);
+goog.inherits(jchemhub.controller.plugins.ClearEditor, jchemhub.controller.Plugin);
 
 
 /** The clear command. */
-jchemhub.view.plugins.ClearEditor.COMMAND = 'clearEditor';
+jchemhub.controller.plugins.ClearEditor.COMMAND = 'clearEditor';
 
 
 /** @inheritDoc */
-jchemhub.view.plugins.ClearEditor.prototype.getTrogClassId =
-    goog.functions.constant(jchemhub.view.plugins.ClearEditor.COMMAND);
+jchemhub.controller.plugins.ClearEditor.prototype.getTrogClassId =
+    goog.functions.constant(jchemhub.controller.plugins.ClearEditor.COMMAND);
 
 
 /** @inheritDoc */
-jchemhub.view.plugins.ClearEditor.prototype.isSupportedCommand = function(
+jchemhub.controller.plugins.ClearEditor.prototype.isSupportedCommand = function(
     command) {
-  return command == jchemhub.view.plugins.ClearEditor.COMMAND;
+  return command == jchemhub.controller.plugins.ClearEditor.COMMAND;
 };
 
 
@@ -38,7 +38,7 @@ jchemhub.view.plugins.ClearEditor.prototype.isSupportedCommand = function(
  * @param {string} command Command to execute.
  * @return {Object|undefined} The result of the command.
  */
-jchemhub.view.plugins.ClearEditor.prototype.execCommandInternal = function(
+jchemhub.controller.plugins.ClearEditor.prototype.execCommandInternal = function(
     command) {
 	this.editorObject.clear();
 };

@@ -1,4 +1,4 @@
-goog.provide('jchemhub.view.Plugin');
+goog.provide('jchemhub.controller.Plugin');
 goog.require('goog.events.EventTarget');
 goog.require('goog.functions');
 goog.require('goog.debug.Logger');
@@ -11,7 +11,7 @@ goog.require('goog.reflect');
  * @constructor
  * @extends {goog.events.EventTarget}
  */
-jchemhub.view.Plugin = function() {
+jchemhub.controller.Plugin = function() {
 	goog.events.EventTarget.call(this);
 
 	/**
@@ -22,21 +22,21 @@ jchemhub.view.Plugin = function() {
 	 */
 	this.enabled_ = this.activeOnUneditableEditor();
 };
-goog.inherits(jchemhub.view.Plugin, goog.events.EventTarget);
+goog.inherits(jchemhub.controller.Plugin, goog.events.EventTarget);
 
 /**
  * @return {boolean} If true, editor will not disable the command when the
  *         editor becomes uneditable.
  */
-jchemhub.view.Plugin.prototype.activeOnUneditableEditor = goog.functions.FALSE;
+jchemhub.controller.Plugin.prototype.activeOnUneditableEditor = goog.functions.FALSE;
 
 /**
  * Registers the reaction editor object for use with this plugin.
  * 
- * @param {jchemhub.view.ReactionEditor}
+ * @param {jchemhub.controller.ReactionEditor}
  *            fieldObject The reaction editor object.
  */
-jchemhub.view.Plugin.prototype.registerEditorObject = function(editorObject) {
+jchemhub.controller.Plugin.prototype.registerEditorObject = function(editorObject) {
 	this.editorObject = editorObject;
 };
 
@@ -44,10 +44,10 @@ jchemhub.view.Plugin.prototype.registerEditorObject = function(editorObject) {
  * Enables this plugin for the specified, registered reaction editor object. A
  * reaction editor object should only be enabled when it is loaded.
  * 
- * @param {jchemhub.view.ReactionEditor}
+ * @param {jchemhub.controller.ReactionEditor}
  *            editorObject The field object.
  */
-jchemhub.view.Plugin.prototype.enable = function(editorObject) {
+jchemhub.controller.Plugin.prototype.enable = function(editorObject) {
 	if (this.editorObject == editorObject) {
 		this.enabled_ = true;
 	} else {
@@ -59,10 +59,10 @@ jchemhub.view.Plugin.prototype.enable = function(editorObject) {
 /**
  * Disables this plugin for the specified, registered reaction editor object.
  * 
- * @param {jchemhub.view.ReactionEditor}
+ * @param {jchemhub.controller.ReactionEditor}
  *            editorObject The reaction editor object.
  */
-jchemhub.view.Plugin.prototype.disable = function(editorObject) {
+jchemhub.controller.Plugin.prototype.disable = function(editorObject) {
 	if (this.editorObject == editorObject) {
 		this.enabled_ = false;
 	} else {
@@ -77,35 +77,35 @@ jchemhub.view.Plugin.prototype.disable = function(editorObject) {
  * @type {goog.debug.Logger}
  * @protected
  */
-jchemhub.view.Plugin.prototype.logger = goog.debug.Logger
-		.getLogger('jchemhub.view.Plugin');
+jchemhub.controller.Plugin.prototype.logger = goog.debug.Logger
+		.getLogger('jchemhub.controller.Plugin');
 
 /**
  * Returns whether this plugin is enabled for the reaction editor object.
  * 
- * @param {jchemhub.view.ReactionEditor}
+ * @param {jchemhub.controller.ReactionEditor}
  *            editorObject The reaction editor object.
  * @return {boolean} Whether this plugin is enabled for the reaction editor
  *         object.
  */
-jchemhub.view.Plugin.prototype.isEnabled = function(editorObject) {
+jchemhub.controller.Plugin.prototype.isEnabled = function(editorObject) {
 	return this.editorObject == editorObject ? this.enabled_ : false;
 };
 
 /** @inheritDoc */
-jchemhub.view.Plugin.prototype.disposeInternal = function() {
+jchemhub.controller.Plugin.prototype.disposeInternal = function() {
 	if (this.editorObject) {
 		this.unregisterEditorObject(this.editorObject);
 	}
 
-	jchemhub.view.Plugin.superClass_.disposeInternal.call(this);
+	jchemhub.controller.Plugin.superClass_.disposeInternal.call(this);
 };
 
 /**
  * Unregisters and disables this plugin for the current editor object.
  * 
  */
-jchemhub.view.Plugin.prototype.unregisterEditorObject = function() {
+jchemhub.controller.Plugin.prototype.unregisterEditorObject = function() {
 	if (this.editorObject) {
 		this.disable(this.editorObject);
 		this.editorObject = null;
@@ -120,7 +120,7 @@ jchemhub.view.Plugin.prototype.unregisterEditorObject = function() {
  * @type {boolean}
  * @private
  */
-jchemhub.view.Plugin.prototype.autoDispose_ = true;
+jchemhub.controller.Plugin.prototype.autoDispose_ = true;
 
 /**
  * Set if this plugin should automatically be disposed when the registered
@@ -129,7 +129,7 @@ jchemhub.view.Plugin.prototype.autoDispose_ = true;
  * @param {boolean}
  *            autoDispose Whether to autoDispose.
  */
-jchemhub.view.Plugin.prototype.setAutoDispose = function(autoDispose) {
+jchemhub.controller.Plugin.prototype.setAutoDispose = function(autoDispose) {
 	this.autoDispose_ = autoDispose;
 };
 
@@ -137,7 +137,7 @@ jchemhub.view.Plugin.prototype.setAutoDispose = function(autoDispose) {
  * @return {boolean} Whether or not this plugin should automatically be disposed
  *         when it's registered edtior is disposed.
  */
-jchemhub.view.Plugin.prototype.isAutoDispose = function() {
+jchemhub.controller.Plugin.prototype.isAutoDispose = function() {
 	return this.autoDispose_;
 };
 
@@ -146,7 +146,7 @@ jchemhub.view.Plugin.prototype.isAutoDispose = function() {
  * 
  * @enum {number}
  */
-jchemhub.view.Plugin.Op = {
+jchemhub.controller.Plugin.Op = {
 	KEYDOWN : 1,
 	KEYPRESS : 2,
 	KEYUP : 3,
@@ -169,30 +169,30 @@ jchemhub.view.Plugin.Op = {
  * @return {boolean} If true, editor will not disable the command
  *     when the field becomes uneditable.
  */
-jchemhub.view.Plugin.prototype.activeOnUneditableEditors = goog.functions.FALSE;
+jchemhub.controller.Plugin.prototype.activeOnUneditableEditors = goog.functions.FALSE;
 
 /**
  * A map from plugin operations to the names of the methods that invoke those
  * operations.
  */
-jchemhub.view.Plugin.OPCODE = goog.object.transpose(goog.reflect.object(
-		jchemhub.view.Plugin, {
-			handleKeyDown : jchemhub.view.Plugin.Op.KEYDOWN,
-			handleKeyPress : jchemhub.view.Plugin.Op.KEYPRESS,
-			handleKeyUp : jchemhub.view.Plugin.Op.KEYUP,
-			handleSelectionChange : jchemhub.view.Plugin.Op.SELECTION,
-			handleKeyboardShortcut : jchemhub.view.Plugin.Op.SHORTCUT,
-			execCommand : jchemhub.view.Plugin.Op.EXEC_COMMAND,
-			queryCommandValue : jchemhub.view.Plugin.Op.QUERY_COMMAND,
-			handleMouseDown : jchemhub.view.Plugin.Op.MOUSEDOWN,
-			handleMouseUp : jchemhub.view.Plugin.Op.MOUSEUP,
-			handleMouseOver : jchemhub.view.Plugin.Op.MOUSEOVER,
-			handleMouseOut : jchemhub.view.Plugin.Op.MOUSEOUT,
-			handleAtomMouseOver : jchemhub.view.Plugin.Op.ATOM_MOUSEOVER,
-			handleAtomMouseOut : jchemhub.view.Plugin.Op.ATOM_MOUSEOUT,
-			handleBondMouseOver : jchemhub.view.Plugin.Op.BOND_MOUSEOVER,
-			handleBondMouseOut : jchemhub.view.Plugin.Op.BOND_MOUSEOUT,
-			handleBondMouseDown : jchemhub.view.Plugin.Op.BOND_MOUSEDOWN
+jchemhub.controller.Plugin.OPCODE = goog.object.transpose(goog.reflect.object(
+		jchemhub.controller.Plugin, {
+			handleKeyDown : jchemhub.controller.Plugin.Op.KEYDOWN,
+			handleKeyPress : jchemhub.controller.Plugin.Op.KEYPRESS,
+			handleKeyUp : jchemhub.controller.Plugin.Op.KEYUP,
+			handleSelectionChange : jchemhub.controller.Plugin.Op.SELECTION,
+			handleKeyboardShortcut : jchemhub.controller.Plugin.Op.SHORTCUT,
+			execCommand : jchemhub.controller.Plugin.Op.EXEC_COMMAND,
+			queryCommandValue : jchemhub.controller.Plugin.Op.QUERY_COMMAND,
+			handleMouseDown : jchemhub.controller.Plugin.Op.MOUSEDOWN,
+			handleMouseUp : jchemhub.controller.Plugin.Op.MOUSEUP,
+			handleMouseOver : jchemhub.controller.Plugin.Op.MOUSEOVER,
+			handleMouseOut : jchemhub.controller.Plugin.Op.MOUSEOUT,
+			handleAtomMouseOver : jchemhub.controller.Plugin.Op.ATOM_MOUSEOVER,
+			handleAtomMouseOut : jchemhub.controller.Plugin.Op.ATOM_MOUSEOUT,
+			handleBondMouseOver : jchemhub.controller.Plugin.Op.BOND_MOUSEOVER,
+			handleBondMouseOut : jchemhub.controller.Plugin.Op.BOND_MOUSEOUT,
+			handleBondMouseDown : jchemhub.controller.Plugin.Op.BOND_MOUSEDOWN
 		}));
 
 /**
@@ -211,7 +211,7 @@ jchemhub.view.Plugin.OPCODE = goog.object.transpose(goog.reflect.object(
  *            var_args Any additional parameters needed to execute the command.
  * @return {*} The result of the execCommand, if any.
  */
-jchemhub.view.Plugin.prototype.execCommand = function(command, var_args) {
+jchemhub.controller.Plugin.prototype.execCommand = function(command, var_args) {
 	// TODO: Replace all uses of isSilentCommand with plugins that just
 	// override this base execCommand method.
 	var silent = this.isSilentCommand(command);
@@ -259,7 +259,7 @@ jchemhub.view.Plugin.prototype.execCommand = function(command, var_args) {
  * @return {boolean} If true, field will not dispatch change events for commands
  *         of this type.
  */
-jchemhub.view.Plugin.prototype.isSilentCommand = goog.functions.FALSE;
+jchemhub.controller.Plugin.prototype.isSilentCommand = goog.functions.FALSE;
 
 /**
  * Whether the string corresponds to a command this plugin handles.
@@ -268,6 +268,6 @@ jchemhub.view.Plugin.prototype.isSilentCommand = goog.functions.FALSE;
  *            command Command string to check.
  * @return {boolean} Whether the plugin handles this type of command.
  */
-jchemhub.view.Plugin.prototype.isSupportedCommand = function(command) {
+jchemhub.controller.Plugin.prototype.isSupportedCommand = function(command) {
 	return false;
 };
