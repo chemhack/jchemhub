@@ -1,12 +1,4 @@
 goog.provide('jchemhub.view.BondRenderer');
-goog.provide('jchemhub.view.BondRenderer.Factory');
-goog.require('jchemhub.view.SingleBondRenderer');
-goog.require('jchemhub.view.DoubleBondRenderer');
-goog.require('jchemhub.view.TripleBondRenderer');
-goog.require('jchemhub.view.QuadrupleBondRenderer');
-goog.require('jchemhub.view.SingleUpBondRenderer');
-goog.require('jchemhub.view.SingleDownBondRenderer');
-goog.require('jchemhub.view.SingleUpOrDownBondRenderer');
 goog.require('jchemhub.view.Renderer');
 goog.require('jchemhub.math.Line');
 
@@ -85,10 +77,7 @@ jchemhub.view.BondRenderer.prototype.highlightOn = function(bond, opt_group) {
 	var radius = this.config.get("highlight").radius
 			* this.transform.getScaleX();
 	var theta = -jchemhub.view.BondRenderer.getTheta(bond) * 180 / Math.PI;
-	console.log('theta: ' + theta);
 	var angle = theta + 90;
-	console.log('angle: ' + angle);
-	
 
 	var arcExtent;
 	if (theta <= 0) {
@@ -139,70 +128,3 @@ jchemhub.view.BondRenderer.defaultConfig = {
 	}
 };
 
-/**
- * factory class for BondRenderers
- * 
- * @param graphics
- * @param opt_config
- * @return
- */
-jchemhub.view.BondRenderer.Factory = function(controller, graphics, opt_config) {
-	this.controller = controller;
-	this.graphics = graphics;
-	this.config = new goog.structs.Map();
-	if (opt_config) {
-		this.config.addAll(opt_config); // merge optional config
-	}
-}
-
-jchemhub.view.BondRenderer.Factory.prototype.get = function(bond) {
-	if (bond instanceof jchemhub.model.SingleBondUp) {
-		if (!this.singleUpBondRenderer) {
-			this.singleUpBondRenderer = new jchemhub.view.SingleUpBondRenderer(
-					this.controller, this.graphics, this.config);
-		}
-		return this.singleUpBondRenderer;
-	}
-	if (bond instanceof jchemhub.model.SingleBondDown) {
-		if (!this.singleDownBondRenderer) {
-			this.singleDownBondRenderer = new jchemhub.view.SingleDownBondRenderer(
-					this.controller, this.graphics, this.config);
-		}
-		return this.singleDownBondRenderer;
-	}
-	if (bond instanceof jchemhub.model.SingleBondUpOrDown) {
-		if (!this.singleUpOrDownBondRenderer) {
-			this.singleUpOrDownBondRenderer = new jchemhub.view.SingleUpOrDownBondRenderer(
-					this.controller, this.graphics, this.config);
-		}
-		return this.singleUpOrDownBondRenderer;
-	}
-	if (bond instanceof jchemhub.model.SingleBond) {
-		if (!this.singleBondRenderer) {
-			this.singleBondRenderer = new jchemhub.view.SingleBondRenderer(
-					this.controller, this.graphics, this.config);
-		}
-		return this.singleBondRenderer;
-	}
-	if (bond instanceof jchemhub.model.DoubleBond) {
-		if (!this.doubleBondRenderer) {
-			this.doubleBondRenderer = new jchemhub.view.DoubleBondRenderer(
-					this.controller, this.graphics, this.config);
-		}
-		return this.doubleBondRenderer;
-	}
-	if (bond instanceof jchemhub.model.TripleBond) {
-		if (!this.tripleBondRenderer) {
-			this.tripleBondRenderer = new jchemhub.view.TripleBondRenderer(
-					this.controller, this.graphics, this.config);
-		}
-		return this.tripleBondRenderer;
-	}
-	if (bond instanceof jchemhub.model.QuadrupleBond) {
-		if (!this.quadrupleBondRenderer) {
-			this.quadrupleBondRenderer = new jchemhub.view.QuadrupleBondRenderer(
-					this.controller, this.graphics, this.config);
-		}
-		return this.quadrupleBondRenderer;
-	}
-};

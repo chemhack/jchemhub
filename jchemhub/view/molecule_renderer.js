@@ -1,7 +1,7 @@
 goog.provide('jchemhub.view.MoleculeRenderer');
 goog.require('jchemhub.controller.BondController');
 goog.require('jchemhub.view.BondRenderer');
-goog.require('jchemhub.view.BondRenderer.Factory');
+goog.require('jchemhub.view.BondRendererFactory');
 goog.require('jchemhub.view.AtomRenderer');
 goog.require('jchemhub.controller.AtomController');
 
@@ -16,7 +16,7 @@ goog.require('jchemhub.controller.AtomController');
 jchemhub.view.MoleculeRenderer = function(controller, graphics, opt_config) {
 	jchemhub.view.Renderer.call(this, controller, graphics, opt_config, jchemhub.view.MoleculeRenderer.defaultConfig);
 	this.bondController = new jchemhub.controller.BondController(controller);
-	this.bondRendererFactory = new jchemhub.view.BondRenderer.Factory(this.bondController, graphics);
+	this.bondRendererFactory = new jchemhub.view.BondRendererFactory(this.bondController, graphics);
 	this.atomController = new jchemhub.controller.AtomController(controller);
 	this.atomRenderer = new jchemhub.view.AtomRenderer(this.atomController, graphics);
 }
