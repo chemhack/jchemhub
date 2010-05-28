@@ -6,8 +6,8 @@
 <script src="../deps.js"></script>
 <script>
   goog.require('goog.dom.Range');
-  goog.require('jchemhub.view.ReactionEditor');
-  goog.require('jchemhub.view.Plugin');
+  goog.require('jchemhub.controller.ReactionEditor');
+  goog.require('jchemhub.controller.Plugin');
   goog.require('goog.events');
   goog.require('goog.events.KeyCodes');
   goog.require('goog.functions');
@@ -44,7 +44,7 @@ function tearDown() {
 /**
  * Dummy plugin for test usage.
  * @constructor
- * @extends {jchemhub.view.Plugin}
+ * @extends {jchemhub.controller.Plugin}
  */
 function TestPlugin () {
   this.getTrogClassId = function() {
@@ -61,7 +61,7 @@ function TestPlugin () {
   this.activeOnUneditableFields = goog.nullFunction;
   this.handleSelectionChange = goog.nullFunction;
 }
-goog.inherits(TestPlugin, jchemhub.view.Plugin);
+goog.inherits(TestPlugin, jchemhub.controller.Plugin);
 
 
 /**
@@ -70,7 +70,7 @@ goog.inherits(TestPlugin, jchemhub.view.Plugin);
  */
 
 function testRegisterPlugin() {
-  var editor = new jchemhub.view.ReactionEditor(goog.dom.getElement('testEditor'));
+  var editor = new jchemhub.controller.ReactionEditor(goog.dom.getElement('testEditor'));
   var plugin = new TestPlugin();
 
   editor.registerPlugin(plugin);
@@ -79,26 +79,26 @@ function testRegisterPlugin() {
       plugin, editor.plugins_[plugin.getTrogClassId()]);
   assertEquals('Plugin has a keydown handler, should be in keydown map',
       plugin,
-      editor.indexedPlugins_[jchemhub.view.Plugin.Op.KEYDOWN][0]);
+      editor.indexedPlugins_[jchemhub.controller.Plugin.Op.KEYDOWN][0]);
   assertEquals('Plugin has a keypress handler, should be in keypress map',
       plugin,
-      editor.indexedPlugins_[jchemhub.view.Plugin.Op.KEYPRESS][0]);
+      editor.indexedPlugins_[jchemhub.controller.Plugin.Op.KEYPRESS][0]);
   assertEquals('Plugin has a keyup handler, should be in keuup map',
       plugin,
-      editor.indexedPlugins_[jchemhub.view.Plugin.Op.KEYUP][0]);
+      editor.indexedPlugins_[jchemhub.controller.Plugin.Op.KEYUP][0]);
   assertEquals(
       'Plugin has a selectionchange handler, should be in selectionchange map',
       plugin,
-      editor.indexedPlugins_[jchemhub.view.Plugin.Op.SELECTION][0]);
+      editor.indexedPlugins_[jchemhub.controller.Plugin.Op.SELECTION][0]);
   assertEquals('Plugin has a shortcut handler, should be in shortcut map',
       plugin,
-      editor.indexedPlugins_[jchemhub.view.Plugin.Op.SHORTCUT][0]);
+      editor.indexedPlugins_[jchemhub.controller.Plugin.Op.SHORTCUT][0]);
   assertEquals('Plugin has a execCommand, should be in execCommand map',
       plugin,
-      editor.indexedPlugins_[jchemhub.view.Plugin.Op.EXEC_COMMAND][0]);
+      editor.indexedPlugins_[jchemhub.controller.Plugin.Op.EXEC_COMMAND][0]);
   assertEquals('Plugin has a queryCommand, should be in queryCommand map',
       plugin,
-      editor.indexedPlugins_[jchemhub.view.Plugin.Op.QUERY_COMMAND][0]);
+      editor.indexedPlugins_[jchemhub.controller.Plugin.Op.QUERY_COMMAND][0]);
 
 
   editor.dispose();
@@ -109,7 +109,7 @@ function testRegisterPlugin() {
  * the map.
  */
 function testUnregisterPlugin() {
-  var editor = new jchemhub.view.ReactionEditor(goog.dom.getElement('testEditor'));
+  var editor = new jchemhub.controller.ReactionEditor(goog.dom.getElement('testEditor'));
   var plugin = new TestPlugin();
 
   editor.registerPlugin(plugin);
@@ -125,7 +125,7 @@ function testUnregisterPlugin() {
  * Tests that registered plugins can be fetched by their id.
  */
 function testGetPluginByClassId() {
-  var editor = new jchemhub.view.ReactionEditor(goog.dom.getElement('testEditor'));
+  var editor = new jchemhub.controller.ReactionEditor(goog.dom.getElement('testEditor'));
   var plugin = new TestPlugin();
 
   assertUndefined('Must not be able to get unregistered plugins by class id.',
@@ -143,10 +143,10 @@ function testGetPluginByClassId() {
  * field is disposed.
  */
 function testDisposed_PluginAutoDispose() {
-  var editor = new jchemhub.view.ReactionEditor(goog.dom.getElement('testEditor'));
+  var editor = new jchemhub.controller.ReactionEditor(goog.dom.getElement('testEditor'));
   var plugin = new TestPlugin();
 
-  var noDisposePlugin = new jchemhub.view.Plugin();
+  var noDisposePlugin = new jchemhub.controller.Plugin();
   noDisposePlugin.getTrogClassId = function() {
     return 'noDisposeId';
   };
@@ -190,7 +190,7 @@ function testPluginExecCommand() {
     passedArg = arg;
   }
 
-  var editor = new jchemhub.view.ReactionEditor(goog.dom.getElement('testEditor'));
+  var editor = new jchemhub.controller.ReactionEditor(goog.dom.getElement('testEditor'));
   editor.registerPlugin(plugin);
   plugin.enable(editor);
   plugin.isSupportedCommand = goog.functions.constant(true);
@@ -220,7 +220,7 @@ function testPluginExecCommand() {
  * get a chance to handle the execComand.
  */
 function testSupportedExecCommand() {
-  var editor = new jchemhub.view.ReactionEditor(goog.dom.getElement('testEditor'));
+  var editor = new jchemhub.controller.ReactionEditor(goog.dom.getElement('testEditor'));
   var plugin = new TestPlugin();
 
   var mockPlugin1 = new goog.testing.LooseMock(plugin);
@@ -255,7 +255,7 @@ function testSupportedExecCommand() {
  * plugins get a chance to handle the execCommand.
  */
 function testNotSupportedExecCommand() {
-  var editor = new jchemhub.view.ReactionEditor(goog.dom.getElement('testEditor'));
+  var editor = new jchemhub.controller.ReactionEditor(goog.dom.getElement('testEditor'));
   var plugin = new TestPlugin();
 
   var mockPlugin1 = new goog.testing.LooseMock(plugin);
@@ -291,7 +291,7 @@ function testNotSupportedExecCommand() {
  * gets called and no further plugins can handle the queryCommandValue.
  */
 function testSupportedQueryCommand() {
-  var editor = new jchemhub.view.ReactionEditor(goog.dom.getElement('testEditor'));
+  var editor = new jchemhub.controller.ReactionEditor(goog.dom.getElement('testEditor'));
   var plugin = new TestPlugin();
 
   var mockPlugin1 = new goog.testing.LooseMock(plugin);
@@ -326,7 +326,7 @@ function testSupportedQueryCommand() {
  * no further plugins can handle the selectionChange.
  */
 function testHandledSelectionChange() {
-  var editor = new jchemhub.view.ReactionEditor(goog.dom.getElement('testEditor'));
+  var editor = new jchemhub.controller.ReactionEditor(goog.dom.getElement('testEditor'));
   var plugin = new TestPlugin();
   var e = getBrowserEvent();
 
@@ -359,7 +359,7 @@ function testHandledSelectionChange() {
  * the next plugin gets a chance to handle it.
  */
 function testNotHandledSelectionChange() {
-  var editor = new jchemhub.view.ReactionEditor(goog.dom.getElement('testEditor'));
+  var editor = new jchemhub.controller.ReactionEditor(goog.dom.getElement('testEditor'));
   var plugin = new TestPlugin();
   var e = getBrowserEvent();
 

@@ -1,6 +1,6 @@
-goog.provide('jchemhub.view.ToolbarController');
+goog.provide('jchemhub.controller.ToolbarController');
 
-goog.require('jchemhub.view.ReactionEditor.EventType');
+goog.require('jchemhub.controller.ReactionEditor.EventType');
 goog.require('goog.events.EventHandler');
 goog.require('goog.events.EventTarget');
 goog.require('goog.ui.Component.EventType');
@@ -8,23 +8,23 @@ goog.require('goog.ui.Component.EventType');
 
 /**
  * A class for managing the editor toolbar.  Acts as a bridge between
- * a {@link jchemhub.view.ReactionEditor} and a {@link goog.ui.Toolbar}.
+ * a {@link jchemhub.controller.ReactionEditor} and a {@link goog.ui.Toolbar}.
  *
  * The {@code toolbar} argument must be an instance of {@link goog.ui.Toolbar}
  * or a subclass.  This class doesn't care how the toolbar was created.  As
  * long as one or more controls hosted  in the toolbar have IDs that match
- * built-in {@link jchemhub.view.ReactionEditor.Command}s, they will function as expected.  It is
+ * built-in {@link jchemhub.controller.ReactionEditor.Command}s, they will function as expected.  It is
  * the caller's responsibility to ensure that the toolbar is already rendered
  * or that it decorates an existing element.
  *
  *
- * @param {!jchemhub.view.ReactionEditor} editor to be controlled by the
+ * @param {!jchemhub.controller.ReactionEditor} editor to be controlled by the
  *     toolbar.
  * @param {!goog.ui.Toolbar} toolbar Toolbar to control the editable editor.
  * @constructor
  * @extends {goog.events.EventTarget}
  */
-jchemhub.view.ToolbarController = function(editor, toolbar) {
+jchemhub.controller.ToolbarController = function(editor, toolbar) {
   goog.events.EventTarget.call(this);
 
   /**
@@ -36,7 +36,7 @@ jchemhub.view.ToolbarController = function(editor, toolbar) {
 
   /**
    * The editor instance controlled by the toolbar.
-   * @type {!jchemhub.view.ToolbarController}
+   * @type {!jchemhub.controller.ToolbarController}
    * @private
    */
   this.editor_ = editor;
@@ -70,17 +70,17 @@ jchemhub.view.ToolbarController = function(editor, toolbar) {
   // Hook up handlers that update the toolbar in response to editor events,
   // and to execute editor commands in response to toolbar events.
   this.handler_.
-      listen(this.editor_, jchemhub.view.ReactionEditor.EventType.COMMAND_VALUE_CHANGE,
+      listen(this.editor_, jchemhub.controller.ReactionEditor.EventType.COMMAND_VALUE_CHANGE,
           this.updateToolbar).
       listen(this.toolbar_, goog.ui.Component.EventType.ACTION,
           this.handleAction);
 };
-goog.inherits(jchemhub.view.ToolbarController, goog.events.EventTarget);
+goog.inherits(jchemhub.controller.ToolbarController, goog.events.EventTarget);
 
 
 /**
  * Returns the Closure component ID of the control that corresponds to the
- * given {@link jchemhub.view.Command} constant.
+ * given {@link jchemhub.controller.Command} constant.
  * Subclasses may override this method if they want to use a custom mapping
  * scheme from commands to controls.
  * @param {string} command Editor command.
@@ -88,7 +88,7 @@ goog.inherits(jchemhub.view.ToolbarController, goog.events.EventTarget);
  *     control, if any.
  * @protected
  */
-jchemhub.view.ToolbarController.prototype.getComponentId = function(command) {
+jchemhub.controller.ToolbarController.prototype.getComponentId = function(command) {
   // The default implementation assumes that the component ID is the same as
   // the command constant.
   return command;
@@ -96,7 +96,7 @@ jchemhub.view.ToolbarController.prototype.getComponentId = function(command) {
 
 
 /**
- * Returns the {@link jchemhub.view.Command} constant
+ * Returns the {@link jchemhub.controller.Command} constant
  * that corresponds to the given Closure component ID.  Subclasses may override
  * this method if they want to use a custom mapping scheme from controls to
  * commands.
@@ -105,7 +105,7 @@ jchemhub.view.ToolbarController.prototype.getComponentId = function(command) {
  *     toolbar control, if any.
  * @protected
  */
-jchemhub.view.ToolbarController.prototype.getCommand = function(id) {
+jchemhub.controller.ToolbarController.prototype.getCommand = function(id) {
   // The default implementation assumes that the component ID is the same as
   // the command constant.
   return id;
@@ -114,32 +114,32 @@ jchemhub.view.ToolbarController.prototype.getCommand = function(id) {
 
 /**
  * Returns the event handler object for the editor toolbar.  Useful for classes
- * that extend {@code jchemhub.view.ToolbarController}.
+ * that extend {@code jchemhub.controller.ToolbarController}.
  * @return {!goog.events.EventHandler} The event handler object.
  * @protected
  */
-jchemhub.view.ToolbarController.prototype.getHandler = function() {
+jchemhub.controller.ToolbarController.prototype.getHandler = function() {
   return this.handler_;
 };
 
 
 /**
  * Returns the editor instance managed by the toolbar.  Useful for
- * classes that extend {@code jchemhub.view.ToolbarController}.
- * @return {!jchemhub.view.ReactionEditor} The editor managed by the toolbar.
+ * classes that extend {@code jchemhub.controller.ToolbarController}.
+ * @return {!jchemhub.controller.ReactionEditor} The editor managed by the toolbar.
  * @protected
  */
-jchemhub.view.ToolbarController.prototype.getEditor= function() {
+jchemhub.controller.ToolbarController.prototype.getEditor= function() {
   return this.editor_;
 };
 
 
 /**
  * Returns the toolbar UI component that manages the editor.  Useful for
- * classes that extend {@code jchemhub.view.ToolbarController}.
+ * classes that extend {@code jchemhub.controller.ToolbarController}.
  * @return {!goog.ui.Toolbar} The toolbar UI component.
  */
-jchemhub.view.ToolbarController.prototype.getToolbar = function() {
+jchemhub.controller.ToolbarController.prototype.getToolbar = function() {
   return this.toolbar_;
 };
 
@@ -147,7 +147,7 @@ jchemhub.view.ToolbarController.prototype.getToolbar = function() {
 /**
  * @return {boolean} Whether the toolbar is visible.
  */
-jchemhub.view.ToolbarController.prototype.isVisible = function() {
+jchemhub.controller.ToolbarController.prototype.isVisible = function() {
   return this.toolbar_.isVisible();
 };
 
@@ -156,7 +156,7 @@ jchemhub.view.ToolbarController.prototype.isVisible = function() {
  * Shows or hides the toolbar.
  * @param {boolean} visible Whether to show or hide the toolbar.
  */
-jchemhub.view.ToolbarController.prototype.setVisible = function(visible) {
+jchemhub.controller.ToolbarController.prototype.setVisible = function(visible) {
   this.toolbar_.setVisible(visible);
 };
 
@@ -164,7 +164,7 @@ jchemhub.view.ToolbarController.prototype.setVisible = function(visible) {
 /**
  * @return {boolean} Whether the toolbar is enabled.
  */
-jchemhub.view.ToolbarController.prototype.isEnabled = function() {
+jchemhub.controller.ToolbarController.prototype.isEnabled = function() {
   return this.toolbar_.isEnabled();
 };
 
@@ -173,7 +173,7 @@ jchemhub.view.ToolbarController.prototype.isEnabled = function() {
  * Enables or disables the toolbar.
  * @param {boolean} enabled Whether to enable or disable the toolbar.
  */
-jchemhub.view.ToolbarController.prototype.setEnabled = function(enabled) {
+jchemhub.controller.ToolbarController.prototype.setEnabled = function(enabled) {
   this.toolbar_.setEnabled(enabled);
 };
 
@@ -182,7 +182,7 @@ jchemhub.view.ToolbarController.prototype.setEnabled = function(enabled) {
  * Programmatically blurs the editor toolbar, un-highlighting the currently
  * highlighted item, and closing the currently open menu (if any).
  */
-jchemhub.view.ToolbarController.prototype.blur = function() {
+jchemhub.controller.ToolbarController.prototype.blur = function() {
   // We can't just call this.toolbar_.getElement().blur(), because the toolbar
   // element itself isn't focusable, so goog.ui.Container#handleBlur isn't
   // registered to handle blur events.
@@ -191,8 +191,8 @@ jchemhub.view.ToolbarController.prototype.blur = function() {
 
 
 /** @inheritDoc */
-jchemhub.view.ToolbarController.prototype.disposeInternal = function() {
-  jchemhub.view.ToolbarController.superClass_.disposeInternal.call(this);
+jchemhub.controller.ToolbarController.prototype.disposeInternal = function() {
+  jchemhub.controller.ToolbarController.superClass_.disposeInternal.call(this);
   if (this.handler_) {
     this.handler_.dispose();
     delete this.handler_;
@@ -213,7 +213,7 @@ jchemhub.view.ToolbarController.prototype.disposeInternal = function() {
  * @param {goog.events.Event} e Editor event to handle.
  * @protected
  */
-jchemhub.view.ToolbarController.prototype.updateToolbar = function(e) {
+jchemhub.controller.ToolbarController.prototype.updateToolbar = function(e) {
   if (!this.toolbar_.isEnabled() ||
       !this.dispatchEvent(goog.ui.Component.EventType.CHANGE)) {
     return;
@@ -244,7 +244,7 @@ jchemhub.view.ToolbarController.prototype.updateToolbar = function(e) {
  * Updates the toolbar to reflect a given state.
  * @param {Object} state Object mapping editor commands to values.
  */
-jchemhub.view.ToolbarController.prototype.updateToolbarFromState =
+jchemhub.controller.ToolbarController.prototype.updateToolbarFromState =
     function(state) {
   for (var command in state) {
     var button = this.toolbar_.getChild(this.getComponentId(command));
@@ -266,7 +266,7 @@ jchemhub.view.ToolbarController.prototype.updateToolbarFromState =
  * @param {goog.events.Event} e Action event to handle.
  * @protected
  */
-jchemhub.view.ToolbarController.prototype.handleAction = function(e) {
+jchemhub.controller.ToolbarController.prototype.handleAction = function(e) {
   var command = this.getCommand(e.target.getId());
   this.editor_.execCommand(command, e.target.getValue());
 };

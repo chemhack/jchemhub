@@ -1,6 +1,6 @@
 
 
-goog.provide('jchemhub.view.ToolbarFactory');
+goog.provide('jchemhub.controller.ToolbarFactory');
 
 goog.require('goog.array');
 goog.require('goog.dom');
@@ -26,7 +26,7 @@ goog.require('goog.userAgent');
  * @param {string} fontSpec Font specification.
  * @return {string} The primary font name, in lowercase.
  */
-jchemhub.view.ToolbarFactory.getPrimaryFont = function(fontSpec) {
+jchemhub.controller.ToolbarFactory.getPrimaryFont = function(fontSpec) {
   var i = fontSpec.indexOf(',');
   var fontName = (i != -1 ? fontSpec.substring(0, i) : fontSpec).toLowerCase();
   // Strip leading/trailing quotes from the font name (bug 1050118).
@@ -47,9 +47,9 @@ jchemhub.view.ToolbarFactory.getPrimaryFont = function(fontSpec) {
  * @param {!Array.<{caption: string, value: string}>} fonts Array of
  *     font descriptors.
  */
-jchemhub.view.ToolbarFactory.addFonts = function(button, fonts) {
+jchemhub.controller.ToolbarFactory.addFonts = function(button, fonts) {
   goog.array.forEach(fonts, function(font) {
-    jchemhub.view.ToolbarFactory.addFont(button, font.caption, font.value);
+    jchemhub.controller.ToolbarFactory.addFont(button, font.caption, font.value);
   });
 };
 
@@ -62,10 +62,10 @@ jchemhub.view.ToolbarFactory.addFonts = function(button, fonts) {
  * @param {string} caption Caption to show for the font menu.
  * @param {string} value Value for the corresponding 'font-family' CSS style.
  */
-jchemhub.view.ToolbarFactory.addFont = function(button, caption, value) {
+jchemhub.controller.ToolbarFactory.addFont = function(button, caption, value) {
   // The font ID is the first font listed in the CSS style, normalized to
   // lowercase.
-  var id = jchemhub.view.ToolbarFactory.getPrimaryFont(value);
+  var id = jchemhub.controller.ToolbarFactory.getPrimaryFont(value);
 
   // Construct the option, and add it to the button.
   var option = new goog.ui.Option(caption, value, button.dom_);
@@ -89,9 +89,9 @@ jchemhub.view.ToolbarFactory.addFont = function(button, caption, value) {
  * @param {!Array.<{caption: string, value:number}>} sizes Array of font
  *     size descriptors.
  */
-jchemhub.view.ToolbarFactory.addFontSizes = function(button, sizes) {
+jchemhub.controller.ToolbarFactory.addFontSizes = function(button, sizes) {
   goog.array.forEach(sizes, function(size) {
-    jchemhub.view.ToolbarFactory.addFontSize(button, size.caption, size.value);
+    jchemhub.controller.ToolbarFactory.addFontSize(button, size.caption, size.value);
   });
 };
 
@@ -103,7 +103,7 @@ jchemhub.view.ToolbarFactory.addFontSizes = function(button, sizes) {
  * @param {string} caption Caption to show in the font size menu.
  * @param {number} value Value for the corresponding HTML font size.
  */
-jchemhub.view.ToolbarFactory.addFontSize = function(button, caption, value) {
+jchemhub.controller.ToolbarFactory.addFontSize = function(button, caption, value) {
   // Construct the option, and add it to the button.
   var option = new goog.ui.Option(caption, value, button.dom_);
   option.setId(caption);
@@ -114,7 +114,7 @@ jchemhub.view.ToolbarFactory.addFontSize = function(button, caption, value) {
   // the corresponding font size, and lining up the checkbox is tricky.
   var content = option.getContentElement();
   content.style.fontSize =
-      jchemhub.view.ToolbarFactory.getPxFromLegacySize(value) + 'px';
+      jchemhub.controller.ToolbarFactory.getPxFromLegacySize(value) + 'px';
   content.firstChild.style.height = '1.1em';
 };
 
@@ -125,8 +125,8 @@ jchemhub.view.ToolbarFactory.addFontSize = function(button, caption, value) {
  * @param {number} fontSize Legacy font size spec in the 0-7 range.
  * @return {number} Equivalent pixel size.
  */
-jchemhub.view.ToolbarFactory.getPxFromLegacySize = function(fontSize) {
-  return jchemhub.view.ToolbarFactory.LEGACY_SIZE_TO_PX_MAP_[fontSize] || 10;
+jchemhub.controller.ToolbarFactory.getPxFromLegacySize = function(fontSize) {
+  return jchemhub.controller.ToolbarFactory.LEGACY_SIZE_TO_PX_MAP_[fontSize] || 10;
 };
 
 /**
@@ -138,11 +138,11 @@ jchemhub.view.ToolbarFactory.getPxFromLegacySize = function(fontSize) {
  * @return {number} Equivalent legacy size spec in the 0-7 range, or -1 if none
  *     exists.
  */
-jchemhub.view.ToolbarFactory.getLegacySizeFromPx = function(px) {
+jchemhub.controller.ToolbarFactory.getLegacySizeFromPx = function(px) {
   // Use lastIndexOf to get the largest legacy size matching the pixel size
   // (most notably returning 1 instead of 0 for 10px).
   return goog.array.lastIndexOf(
-      jchemhub.view.ToolbarFactory.LEGACY_SIZE_TO_PX_MAP_, px);
+      jchemhub.controller.ToolbarFactory.LEGACY_SIZE_TO_PX_MAP_, px);
 };
 
 /**
@@ -150,7 +150,7 @@ jchemhub.view.ToolbarFactory.getLegacySizeFromPx = function(px) {
  * @type {Array.<number>}
  * @private
  */
-jchemhub.view.ToolbarFactory.LEGACY_SIZE_TO_PX_MAP_ =
+jchemhub.controller.ToolbarFactory.LEGACY_SIZE_TO_PX_MAP_ =
     [10, 10, 13, 16, 18, 24, 32, 48];
 
 
@@ -167,9 +167,9 @@ jchemhub.view.ToolbarFactory.LEGACY_SIZE_TO_PX_MAP_ =
  * @param {!Array.<{caption: string, command: string}>} formats Array of format
  *     option descriptors.
  */
-jchemhub.view.ToolbarFactory.addFormatOptions = function(button, formats) {
+jchemhub.controller.ToolbarFactory.addFormatOptions = function(button, formats) {
   goog.array.forEach(formats, function(format) {
-    jchemhub.view.ToolbarFactory.addFormatOption(button, format.caption,
+    jchemhub.controller.ToolbarFactory.addFormatOption(button, format.caption,
         format.command);
   });
 };
@@ -181,7 +181,7 @@ jchemhub.view.ToolbarFactory.addFormatOptions = function(button, formats) {
  * @param {string} caption Caption to show in the menu.
  * @param {goog.dom.TagName} tag Corresponding block format tag.
  */
-jchemhub.view.ToolbarFactory.addFormatOption = function(button, caption, tag) {
+jchemhub.controller.ToolbarFactory.addFormatOption = function(button, caption, tag) {
   // Construct the option, and add it to the button.
   // TODO: Create boring but functional menu item for now...
   var option = new goog.ui.Option(button.dom_.createDom(goog.dom.TagName.DIV,
@@ -204,7 +204,7 @@ jchemhub.view.ToolbarFactory.addFormatOption = function(button, caption, tag) {
  * @return {!goog.ui.Toolbar} Editor toolbar, rendered into the given parent
  *     element.
  */
-jchemhub.view.ToolbarFactory.makeToolbar = function(items, elem,
+jchemhub.controller.ToolbarFactory.makeToolbar = function(items, elem,
     opt_isRightToLeft) {
   var domHelper = goog.dom.getDomHelper(elem);
 
@@ -253,10 +253,10 @@ jchemhub.view.ToolbarFactory.makeToolbar = function(items, elem,
  *     creation; defaults to the current document if unspecified.
  * @return {!goog.ui.Button} A toolbar button.
  */
-jchemhub.view.ToolbarFactory.makeButton = function(id, tooltip, caption,
+jchemhub.controller.ToolbarFactory.makeButton = function(id, tooltip, caption,
     opt_classNames, opt_renderer, opt_domHelper) {
   var button = new goog.ui.ToolbarButton(
-      jchemhub.view.ToolbarFactory.createContent_(caption, opt_classNames,
+      jchemhub.controller.ToolbarFactory.createContent_(caption, opt_classNames,
           opt_domHelper),
       opt_renderer,
       opt_domHelper);
@@ -282,9 +282,9 @@ jchemhub.view.ToolbarFactory.makeButton = function(id, tooltip, caption,
  *     creation; defaults to the current document if unspecified.
  * @return {!goog.ui.Button} A toggle button.
  */
-jchemhub.view.ToolbarFactory.makeToggleButton = function(id, tooltip, caption,
+jchemhub.controller.ToolbarFactory.makeToggleButton = function(id, tooltip, caption,
     opt_classNames, opt_renderer, opt_domHelper) {
-  var button = jchemhub.view.ToolbarFactory.makeButton(id, tooltip, caption,
+  var button = jchemhub.controller.ToolbarFactory.makeButton(id, tooltip, caption,
       opt_classNames, opt_renderer, opt_domHelper);
   button.setSupportedState(goog.ui.Component.State.CHECKED, true);
   return button;
@@ -309,10 +309,10 @@ jchemhub.view.ToolbarFactory.makeToggleButton = function(id, tooltip, caption,
  *     creation; defaults to the current document if unspecified.
  * @return {!goog.ui.MenuButton} A menu button.
  */
-jchemhub.view.ToolbarFactory.makeMenuButton = function(id, tooltip, caption,
+jchemhub.controller.ToolbarFactory.makeMenuButton = function(id, tooltip, caption,
     opt_classNames, opt_renderer, opt_domHelper) {
   var button = new goog.ui.ToolbarMenuButton(
-      jchemhub.view.ToolbarFactory.createContent_(caption, opt_classNames,
+      jchemhub.controller.ToolbarFactory.createContent_(caption, opt_classNames,
           opt_domHelper),
       null,
       opt_renderer,
@@ -342,7 +342,7 @@ jchemhub.view.ToolbarFactory.makeMenuButton = function(id, tooltip, caption,
  *     creation; defaults to the current document if unspecified.
  * @return {!goog.ui.Select} A select button.
  */
-jchemhub.view.ToolbarFactory.makeSelectButton = function(id, tooltip, caption,
+jchemhub.controller.ToolbarFactory.makeSelectButton = function(id, tooltip, caption,
     opt_classNames, opt_renderer, opt_domHelper) {
   var button = new goog.ui.ToolbarSelect(null, null,
       opt_renderer,
@@ -380,10 +380,10 @@ jchemhub.view.ToolbarFactory.makeSelectButton = function(id, tooltip, caption,
  *     creation; defaults to the current document if unspecified.
  * @return {!goog.ui.ColorMenuButton} A color menu button.
  */
-jchemhub.view.ToolbarFactory.makeColorMenuButton = function(id, tooltip,
+jchemhub.controller.ToolbarFactory.makeColorMenuButton = function(id, tooltip,
     caption, opt_classNames, opt_renderer, opt_domHelper) {
   var button = new goog.ui.ToolbarColorMenuButton(
-      jchemhub.view.ToolbarFactory.createContent_(caption, opt_classNames,
+      jchemhub.controller.ToolbarFactory.createContent_(caption, opt_classNames,
           opt_domHelper),
       null,
       opt_renderer,
@@ -405,7 +405,7 @@ jchemhub.view.ToolbarFactory.makeColorMenuButton = function(id, tooltip,
  * @return {!Element} DIV that wraps the caption.
  * @private
  */
-jchemhub.view.ToolbarFactory.createContent_ = function(caption, opt_classNames,
+jchemhub.controller.ToolbarFactory.createContent_ = function(caption, opt_classNames,
     opt_domHelper) {
   // FF2 doesn't like empty DIVs, especially when rendered right-to-left.
   if ((!caption || caption == '') && goog.userAgent.GECKO &&
