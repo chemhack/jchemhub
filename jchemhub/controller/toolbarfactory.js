@@ -1,5 +1,3 @@
-
-
 goog.provide('jchemhub.controller.ToolbarFactory');
 
 goog.require('goog.array');
