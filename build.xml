@@ -3,7 +3,7 @@
 <project 
     name="Jchemhub" 
     basedir="."
->
+> 
     
     <!-- Full path of the current project -->
     <property name="projectPath" value="jchemhub" />
@@ -14,25 +14,27 @@
     <property name="closurePath" value="third-party/closure/closure" />
     
     <!-- List of javascript files to compile -->
-    <property name="filesToCompile" value="jchemhub/controller/reaction_editor.js" />
+    <property name="filesToCompile" value="jchemhub/controller/reaction_editor.js -i jchemhub/controller/plugins -i jchemhub/controller/toolbarfactory.js -i jchemhub/controller/defaulttoolbar.js -i jchemhub/controller/toolbarcontroller.js -i jchemhub/io/json.js" />
     
     <!-- Full path to the compiler jar -->
     <property name="compilerPath" value="../closure-compiler/compiler.jar" />
     
     <!-- Full path to the compiled file (created if not defined) -->
-    <property name="outputPath" value="../jchemhub_compiled.js" />
-    
-    <!-- Full path to the file which will contains debug output and errors -->
-    <property name="logPath" value="closure-compiler.log" />
+    <property name="outputPath" value="../temp/jchemhub/jchemhub_compiled.js" />
+   
+
+    <property name="err_output" value="" />
     
     <!-- Compilation level -->
     <property name="compilation" value="WHITESPACE_ONLY" />
     
     <target name="compile">
         
-        <exec error="${logPath}" output="${outputPath}" executable="${closurePath}/bin/calcdeps.py">
-            <arg line="-i ${filesToCompile} -p ${closurePath} -p ${projectPath} -o compiled -c ${compilerPath} -f '--compilation_level=${compilation}'" />
+        <exec  output="${outputPath}" executable="${closurePath}/bin/calcdeps.py" errorproperty="err.output">
+            <arg line="-i ${filesToCompile} -p ${closurePath} -p ${projectPath} -o compiled -c ${compilerPath} -f '--formatting=PRETTY_PRINT' -f '--compilation_level=WHITESPACE_ONLY'" />
+	   
         </exec>
+<echo message="${err.output}" />
         
     </target>
     
