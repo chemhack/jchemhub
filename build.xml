@@ -4,7 +4,7 @@
 
 	<property name="base.dir" location="." />
 	<property name="build.dir" value="${base.dir}/build" />
-	<property name="closure-library.dir" value="${base.dir}/third-party/closure/closure/" />
+	<property name="closure-library.dir" value="${base.dir}/third-party/closure/closure" />
 	<property name="closure-compiler.jar" value="${base.dir}/../closure-compiler/compiler.jar" />
 	<property name="js-src.dir" value="${base.dir}/jchemhub" />
 
@@ -48,7 +48,7 @@
 
 	<target name="build-deps" description="rebuild deps.js file">
 		<exec executable="python" failonerror="true" logError="true" output="${js-src.dir}/deps.js">
-			<arg value="${closure-library.dir}/closure/bin/calcdeps.py" />
+			<arg value="${closure-library.dir}/bin/calcdeps.py" />
 			<arg line='-p "${closure-library.dir}"' />
 			<arg line='-p "${js-src.dir}"' />
 			<arg line="-o deps" />
