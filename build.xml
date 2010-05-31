@@ -14,8 +14,12 @@
 			<file name="defaulttoolbar.js" />
 			<file name="toolbarcontroller.js" />
 		</filelist>
+		<fileset dir="${js-src.dir}/controller/plugins" />
 		<filelist dir="${js-src.dir}/io">
 			<file name="json.js" />
+		</filelist>
+		<filelist>
+			<file name="export.js" />
 		</filelist>
 	</path>
 
@@ -56,19 +60,19 @@
 	</target>
 
 	<target name='compile-check' description='check by compiling all jchemhub files'>
-			<exec executable="python" failonerror="true" logError="true" output="${build.dir}/compile-check.js">
-				<arg value="${closure-library.dir}/bin/calcdeps.py" />
-				<arg line='-i ${js-src.dir}' />
-				<arg line='-p ${closure-library.dir}' />
-				<arg line='-p ${js-src.dir}' />
-				<arg line="-o compiled" />
-				<arg line='-c "${closure-compiler.jar}"' />
-				<arg line='-f "--compilation_level=ADVANCED_OPTIMIZATIONS"' />
-			</exec>
+		<exec executable="python" failonerror="true" logError="true" output="${build.dir}/compile-check.js">
+			<arg value="${closure-library.dir}/bin/calcdeps.py" />
+			<arg line='-i ${js-src.dir}' />
+			<arg line='-p ${closure-library.dir}' />
+			<arg line='-p ${js-src.dir}' />
+			<arg line="-o compiled" />
+			<arg line='-c "${closure-compiler.jar}"' />
+			<arg line='-f "--compilation_level=ADVANCED_OPTIMIZATIONS"' />
+		</exec>
 	</target>
 
 	<target name="compile-advanced" description="compile with ADVANCED_OPTIMIZATIONS setting">
-		<calcdeps input='-i ${jsfiles}' outputfile="jchemhub-advanced.js" />
+		<calcdeps outputfile="jchemhub-advanced.js" />
 	</target>
 
 	<target name="compile-simple" description="compile with SIMPLE_OPTIMIZATIONS setting">
