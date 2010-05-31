@@ -1,41 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
- 
-<project 
-    name="Jchemhub" 
-    basedir="."
-> 
-    
-    <!-- Full path of the current project -->
-    <property name="projectPath" value="jchemhub" />
-    <property name="base_dir" value="." />
 
-    
-    <!-- Full path to Closure library -->
-    <property name="closurePath" value="third-party/closure/closure" />
-    
-    <!-- List of javascript files to compile -->
-    <property name="filesToCompile" value="jchemhub/controller/reaction_editor.js -i jchemhub/controller/plugins -i jchemhub/controller/toolbarfactory.js -i jchemhub/controller/defaulttoolbar.js -i jchemhub/controller/toolbarcontroller.js -i jchemhub/io/json.js" />
-    
-    <!-- Full path to the compiler jar -->
-    <property name="compilerPath" value="../closure-compiler/compiler.jar" />
-    
-    <!-- Full path to the compiled file (created if not defined) -->
-    <property name="outputPath" value="../temp/jchemhub/jchemhub_compiled.js" />
-   
+<project name="jchemhub" default="usage">
 
-    <property name="err_output" value="" />
-    
-    <!-- Compilation level -->
-    <property name="compilation" value="WHITESPACE_ONLY" />
-    
-    <target name="compile">
-        
-        <exec  output="${outputPath}" executable="${closurePath}/bin/calcdeps.py" errorproperty="err.output">
-            <arg line="-i ${filesToCompile} -p ${closurePath} -p ${projectPath} -o compiled -c ${compilerPath} -f '--formatting=PRETTY_PRINT' -f '--compilation_level=WHITESPACE_ONLY'" />
-	   
-        </exec>
-<echo message="${err.output}" />
-        
-    </target>
-    
+	<property name="base.dir" location="." />
+	<property name="build.dir" value="${base.dir}/build" />
+	<property name="closure-library.dir" value="${base.dir}/third-party/closure/closure/" />
+	<property name="closure-compiler.jar" value="${base.dir}/../closure-compiler/compiler.jar" />
+	<property name="js-src.dir" value="${base.dir}/jchemhub" />
+
+	<path id="input-files">
+		<filelist dir="${js-src.dir}/controller">
+			<file name="reaction_editor.js" />
+			<file name="defaulttoolbar.js" />
+			<file name="toolbarcontroller.js" />
+		</filelist>
+		<filelist dir="${js-src.dir}/io">
+			<file name="json.js" />
+		</filelist>
+	</path>
+
+	<pathconvert pathsep=' -i ' property="jsfiles" refid="input-files" />
+
+	<macrodef name="calcdeps">
+		<attribute name="outputfile" />
+		<attribute name="compilerjarfile" default="${closure-compiler.jar}" />
+		<attribute name="compilationlevel" default="ADVANCED_OPTIMIZATIONS" />
+		<attribute name="outputmode" default="compiled" />
+		<element name="extraflags" optional="yes" />
+		<sequential>
+			<mkdir dir="${build.dir}" />
+			<exec executable="python" failonerror="true" logError="true" output="${build.dir}/@{outputfile}">
+				<arg value="${closure-library.dir}/bin/calcdeps.py" />
+				<arg line='-i ${jsfiles}' />
+				<arg line='-p ${closure-library.dir}' />
+				<arg line='-p ${js-src.dir}' />
+				<arg line="-o @{outputmode}" />
+				<arg line='-c "@{compilerjarfile}"' />
+				<arg line='-f "--compilation_level=@{compilationlevel}"' />
+				<extraflags />
+			</exec>
+		</sequential>
+	</macrodef>
+
+	<target name="clean" description="delete generated files">
+		<delete dir="${build.dir}" />
+	</target>
+
+	<target name="build-deps" description="rebuild deps.js file">
+		<exec executable="python" failonerror="true" logError="true" output="${js-src.dir}/deps.js">
+			<arg value="${closure-library.dir}/closure/bin/calcdeps.py" />
+			<arg line='-p "${closure-library.dir}"' />
+			<arg line='-p "${js-src.dir}"' />
+			<arg line="-o deps" />
+		</exec>
+	</target>
+
+	<target name='compile-check' description='check by compiling all jchemhub files'>
+			<exec executable="python" failonerror="true" logError="true" output="${build.dir}/compile-check.js">
+				<arg value="${closure-library.dir}/bin/calcdeps.py" />
+				<arg line='-i ${js-src.dir}' />
+				<arg line='-p ${closure-library.dir}' />
+				<arg line='-p ${js-src.dir}' />
+				<arg line="-o compiled" />
+				<arg line='-c "${closure-compiler.jar}"' />
+				<arg line='-f "--compilation_level=ADVANCED_OPTIMIZATIONS"' />
+			</exec>
+	</target>
+
+	<target name="compile-advanced" description="compile with ADVANCED_OPTIMIZATIONS setting">
+		<calcdeps input='-i ${jsfiles}' outputfile="jchemhub-advanced.js" />
+	</target>
+
+	<target name="compile-simple" description="compile with SIMPLE_OPTIMIZATIONS setting">
+		<calcdeps outputfile="jchemhub-simple.js" compilationlevel="SIMPLE_OPTIMIZATIONS" />
+	</target>
+
+	<target name="compile-whitespace-only" description="compile with WHITESPACE_ONLY setting">
+		<calcdeps outputfile="jchemhub-whitespace-only.js" compilationlevel="WHITESPACE_ONLY" />
+	</target>
+
+	<target name="usage" description="Display main targets by running 'ant -projecthelp'">
+		<java classname="org.apache.tools.ant.Main">
+			<arg value="-projecthelp" />
+		</java>
+	</target>
+
 </project>

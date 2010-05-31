@@ -28,8 +28,8 @@ jchemhub.view.ReactionRenderer = function(controller, graphics, opt_config) {
 goog.inherits(jchemhub.view.ReactionRenderer, jchemhub.view.Renderer);
 /**
  * 
- * @param reaction
- * @return
+ * @param {jchemhub.model.Reaction} reaction
+ * @return {goog.graphics.GroupElement}
  */
 jchemhub.view.ReactionRenderer.prototype.render = function(reaction) {
 	var previousReactant;
@@ -56,7 +56,7 @@ jchemhub.view.ReactionRenderer.prototype.render = function(reaction) {
 		previousProduct=product;
 		this.moleculeRenderer.render(product, transform, group);
 	}, this);
-
+	return group;
 }
 
 /**
@@ -98,16 +98,16 @@ jchemhub.view.ReactionRenderer.prototype.logger = goog.debug.Logger
 
 /**
  * 
- * @param molecules
- * @return
+ * @param {Array.<jchemhub.model.Molecule>} molecules
+ * @return {goog.math.Rect}
  */
 jchemhub.view.ReactionRenderer.boundingRect = function(molecules){
-	return goog.math.Rect.createFromBox(this.boundingBox(molecules));
+	return goog.math.Rect.createFromBox(jchemhub.view.ReactionRenderer.boundingBox(molecules));
 }
 /**
  * 
- * @param reaction
- * @return
+ * @param {jchemhub.model.Reaction} reaction
+ * @return {jchemhub.graphics.AffineTransform}
  */
 jchemhub.view.ReactionRenderer.prototype.getTransform=function(reaction){
 	var molecules = goog.array.concat(reaction.reactants, reaction.products);

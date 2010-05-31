@@ -18,10 +18,9 @@ jchemhub.view.AtomRenderer = function(controller, graphics, opt_config) {
 goog.inherits(jchemhub.view.AtomRenderer, jchemhub.view.Renderer);
 /**
  * 
- * @param atom
- * @param transform
- * @param group
- * @return
+ * @param {jchemhub.model.Atom} atom
+ * @param {jchemhub.graphics.AffineTransform} transform
+ * @return {goog.graphics.GroupElement}
  */
 jchemhub.view.AtomRenderer.prototype.render = function(atom, transform) {
 	this.transform = transform;
@@ -95,8 +94,8 @@ jchemhub.view.AtomRenderer.prototype.render = function(atom, transform) {
 /**
  * return a compound symbol (e.g. NH, CH3), the plain symbol, or ""
  * 
- * @param{}
- * @return String
+ * @param{jchemhun.model.Atom} atom
+ * @return {String}
  */
 jchemhub.view.AtomRenderer.prototype.compoundSymbol = function(atom) {
 	var retval = {
@@ -174,8 +173,8 @@ jchemhub.view.AtomRenderer.bondOrientation = function(atom, i) {
  * returns the compass direction toward which to draw H atoms N NW NE W E SW SE
  * S
  * 
- * @param{i}
- * @return{String} compass direction
+ * @param{jchemhub.model.Atom} atom
+ * @return{String}
  */
 jchemhub.view.AtomRenderer.bondDirection = function(atom) {
 	var nbonds = atom.bonds.getCount();

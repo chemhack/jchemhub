@@ -11,6 +11,11 @@ goog.require('goog.editor.BrowserFeature');
 goog.require('goog.async.Delay');
 goog.require('jchemhub.controller.Plugin');
 
+// these are needed for the demo.html
+//goog.exportSymbol("goog.events.listen", goog.events.listen);
+//goog.exportSymbol("goog.events.EventType.LOAD", goog.events.EventType);
+goog.exportSymbol("goog.debug.Console", goog.debug.Console);
+
 
 /**
  * A graphical editor for reactions
@@ -398,8 +403,7 @@ jchemhub.controller.ReactionEditor.prototype.queryCommandValueInternal_ = functi
 /**
  * Gets the value of command(s).
  * 
- * @param {string|Array.
- *            <string>} commands String name(s) of the command.
+ * @param {string|Array.<string>} commands String name(s) of the command.
  * @return {*} Value of each command. Returns false (or array of falses) if
  *         designMode is off or the editor is otherwise uneditable, and there
  *         are no activeOnUneditable plugins for the command.
@@ -477,8 +481,7 @@ jchemhub.controller.ReactionEditor.prototype.dispatchSelectionChangeEvent = func
 /**
  * Dispatches a command value change event.
  * 
- * @param {Array.
- *            <string>=} opt_commands Commands whose state has changed.
+ * @param {Array.<string>=} opt_commands Commands whose state has changed.
  */
 jchemhub.controller.ReactionEditor.prototype.dispatchCommandValueChange = function(
 		opt_commands) {
@@ -859,8 +862,7 @@ jchemhub.controller.ReactionEditor.prototype.dispatchLoadEvent_ = function() {
  * Gecko since the fields are contained in an iFrame and there is no way to
  * auto-propagate key events up to the main window.
  * 
- * @param {string|Array.
- *            <string>} type Event type to listen for or array of event types,
+ * @param {string|Array.<string>} type Event type to listen for or array of event types,
  *            for example goog.events.EventType.KEYDOWN.
  * @param {Function}
  *            listener Function to be used as the listener.

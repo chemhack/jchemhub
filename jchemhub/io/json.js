@@ -88,7 +88,7 @@ jchemhub.io.json.getTypeCode = function(bond){
 /**
  * maps bond class to stereo type code
  * 
- * @param{jchemhub.model.Bond}
+ * @param{jchemhub.model.Bond} bond
  * @return{jchemhub.io.json.StereoType}
  */
 jchemhub.io.json.getStereoCode = function(bond){

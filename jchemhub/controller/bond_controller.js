@@ -34,6 +34,14 @@ jchemhub.controller.BondController.EventType = {
 	MOUSEDOWN : 'bond_mousedown'
 };
 
+/**
+ * 
+ * @param {jchemhub.controller.BondController} controller
+ * @param {jchemhub.model.Bond} bond
+ * @param {jchemhub.controller.BondController.EventType} type
+ * @constructor
+ * @extends {goog.events.Event}
+ */
 jchemhub.controller.BondController.BondEvent = function(controller, bond, type) {
 	goog.events.Event.call(this, type, controller);
 	this.bond = bond;

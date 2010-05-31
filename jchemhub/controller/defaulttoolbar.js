@@ -273,8 +273,7 @@ jchemhub.controller.DefaultToolbar.makeDefaultToolbar = function(elem,
  * built-in button) or a subclass of {@link goog.ui.Control} (to create a custom
  * control).
  * 
- * @param {!Array.
- *            <string|goog.ui.Control>} items Toolbar items; each must be a
+ * @param {!Array.<string|goog.ui.Control>} items Toolbar items; each must be a
  *            {@link goog.editor.Command} or a {@link goog.ui.Control}.
  * @param {!Element}
  *            elem Toolbar parent element.

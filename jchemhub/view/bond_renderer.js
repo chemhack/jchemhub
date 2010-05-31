@@ -18,9 +18,9 @@ goog.inherits(jchemhub.view.BondRenderer, jchemhub.view.Renderer);
 /**
  * renders the box surrounding the bond to serve as a click target
  * 
- * @param bond
- * @param transform
- * @return
+ * @param {jchemhub.model.Bond} bond
+ * @param {jchemhub.graphics.AffineTransform} transform
+ * @return {goog.graphics.GroupElement}
  */
 jchemhub.view.BondRenderer.prototype.render = function(bond, transform) {
 	this.transform = transform;
@@ -65,6 +65,8 @@ jchemhub.view.BondRenderer.prototype.render = function(bond, transform) {
 			this.controller.handleMouseOut, this.controller, bond));
 	group.addEventListener(goog.events.EventType.MOUSEDOWN, goog.bind(
 			this.controller.handleMouseDown, this.controller, bond));
+	
+	return group;
 
 };
 
