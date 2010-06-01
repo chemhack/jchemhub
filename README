@@ -15,34 +15,55 @@ This will pull in the google closure library:
 	
 
 If you make an edit that changes a goog.provide or goog.require statement, 
-execute the calcdeps.py python script as follows to re-generate deps.js:
+there are two ways to update deps.js: the first (recommended) is with the ant build script or you can use 
+the command line to invoke calcdeps.py as described below.  The ant script also provides for running the closure compiler
+which, in addition to minimizing the code to a single file, also provides many useful checks.
+
+With ant:
+
+You need to have ant installed (http://ant.apache.org).  
+
+From the base jchemhub directory, to see the usage message, just execute
+
+	ant
+	
+Usage is the default target, so you should see output something like this:
+	
+	Buildfile: build.xml
+
+	usage:
+    	 [java] Buildfile: build.xml
+
+	Main targets:
+
+ 	 build-deps               rebuild deps.js file
+	 clean                    delete generated files
+	 compile-advanced         compile with ADVANCED_OPTIMIZATIONS setting
+	 compile-check            check by compiling all jchemhub files
+	 compile-simple           compile with SIMPLE_OPTIMIZATIONS setting
+	 compile-whitespace-only  compile with WHITESPACE_ONLY setting
+	 usage                    Display main targets by running 'ant -projecthelp'
+	Default target: usage
+	
+To update deps.js, execute the build-deps target:
+	
+	ant build-deps
+	
+The targets compile-whitespace-only, compile-simple, compile-advanced include only files to support jchemhub.controller.ReactionEditor.  
+The smallest download size will result from executing:
+	
+	ant compile-advanced
+	
+The compile output will be created in a 'build' directory that will be created if necessary.
+
+The target compile-check attempts to compile all jchemhub code.  This purpose of this target is to take advantage of the closure compile-time checks that
+include static type checking, access violations, etc.  For more information on options (not all of which are currently enabled in the ant build script) see 
+http://code.google.com/p/closure-compiler/wiki/Warnings.
+
+
+Alternatively, without ant, it is also possibly to execute the calcdeps python script as follows to re-generate deps.js:
 
 	cd third-party/closure/closure/goog/
 	
 	python ../bin/calcdeps.py -o deps -p ../../../../jchemhub/ -p ../../closure/ > ../../../../jchemhub/deps.js 
-
-
-The foregoing is sufficient to edit and run the code, but it is also a good idea to use the closure compiler as follows described below. 
-
-Create a directory for the compiler to live in, then retrieve and unpack it (the example below assumes that is it in a directory named 'closure-compiler' 
-adjacent to the jchemhub directory:
-	
-	mkdir closure-compiler
-	
-	cd closure-compiler
-	
-	wget http://closure-compiler.googlecode.com/files/compiler-latest.zip
-	
-	unzip compiler-latest.zip
-	
-	rm compiler-latest.zip
-	
-Not that the compiler.jar file can go into any convenient location, just adjust the --compiler_jar argument below accordingly
-
-Execute the compiler with a command like:
-	
-	cd third-party/closure/closure/goog/
-	
-	python ../bin/calcdeps.py -o compiled -p ../../closure -p ../../../../jchemhub --compiler_jar ../../../../../closure-compiler/compiler.jar --input ../../../../jchemhub/controller/controller.js > ../../../../../jchemhub_compiled.js 
-
 
