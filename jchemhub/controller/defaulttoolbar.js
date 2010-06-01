@@ -8,6 +8,8 @@ goog.require('goog.style');
 goog.require('goog.ui.ControlContent');
 goog.require('jchemhub.controller.ToolbarFactory');
 
+goog.exportSymbol('jchemhub.controller.DefaultToolbar.makeToolbar', jchemhub.controller.DefaultToolbar.makeToolbar);
+
 // Font menu creation.
 
 /** @desc Font menu item caption for the default sans-serif font. */

@@ -41,6 +41,12 @@
 				<arg line="-o @{outputmode}" />
 				<arg line='-c "@{compilerjarfile}"' />
 				<arg line='-f "--compilation_level=@{compilationlevel}"' />
+				<arg line='-f "--jscomp_warning=checkTypes"' />
+				<arg line='-f "--jscomp_warning=accessControls"' />
+				<arg line='-f "--jscomp_warning=missingProperties"' />
+				<arg line='-f "--jscomp_warning=unknownDefines"' />
+				<arg line='-f "--jscomp_warning=strictModuleDepCheck"' />
+				
 				<extraflags />
 			</exec>
 		</sequential>
@@ -68,6 +74,7 @@
 			<arg line="-o compiled" />
 			<arg line='-c "${closure-compiler.jar}"' />
 			<arg line='-f "--compilation_level=ADVANCED_OPTIMIZATIONS"' />
+			<arg line='-f "--jscomp_warning=checkTypes"' />
 		</exec>
 	</target>
 

@@ -3,15 +3,44 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Jchemhub Demo</title>
+<!-- 
+<script src="build/jchemhub-whitespace-only.js"></script>
+<script src="build/jchemhub-simple.js"></script>
+ -->
 <script src="build/jchemhub-advanced.js"></script>
-<script src="io/json_test_rxn.js"></script>
+<script src="jchemhub/io/json_test_rxn.js"></script>
+
+<link rel="stylesheet"
+	href="third-party/closure/closure/goog/demos/css/demo.css">
+<link rel="stylesheet"
+	href="third-party/closure/closure/goog/css/button.css" />
+<link rel="stylesheet"
+	href="third-party/closure/closure/goog/css/dialog.css" />
+<link rel="stylesheet"
+	href="third-party/closure/closure/goog/css/linkbutton.css" />
+<link rel="stylesheet"
+	href="third-party/closure/closure/goog/css/menus.css" />
+<link rel="stylesheet"
+	href="third-party/closure/closure/goog/css/tab.css" />
+<link rel="stylesheet"
+	href="third-party/closure/closure/goog/css/tabbar.css" />
+<link rel="stylesheet"
+	href="third-party/closure/closure/goog/css/toolbar.css" />
+<link rel="stylesheet"
+	href="third-party/closure/closure/goog/css/colormenubutton.css" />
+<link rel="stylesheet"
+	href="third-party/closure/closure/goog/css/palette.css" />
+<link rel="stylesheet"
+	href="third-party/closure/closure/goog/css/colorpalette.css" />
+<link rel="stylesheet"
+	href="third-party/closure/closure/goog/css/editortoolbar.css" />
+
+
 
 <script>
     
 function initPage(){
-	// uncomment next two lines to debug to console
-	var c = new goog.debug.Console(); 
-	c.setCapturing(true); 
+
 	var buttons = []; 
 	buttons.push(jchemhub.controller.ToolbarFactory.makeButton( 
     	jchemhub.controller.plugins.ClearEditor.COMMAND, 'Clear Editor', 'Clear')); 
@@ -32,21 +61,21 @@ function initPage(){
 	editor.setModel(model);
 };
 
-goog.events.listen(window, goog.events.EventType.LOAD, initPage);
---></script>
+
+</script>
 </head>
 
-<body>
+<body onload="initPage();">
 
 <table style="width: 100%">
-	<tr >
+	<tr>
 		<td>
 		<div id="reactionEditorToolbar"></div>
 		</td>
 	</tr>
-	<tr >
+	<tr>
 		<td>
-		<div id="reactionEditorContainer" style="height:400px"></div>
+		<div id="reactionEditorContainer" style="height: 400px"></div>
 		</td>
 	</tr>
 </table>

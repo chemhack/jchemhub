@@ -1,6 +1,9 @@
 goog.provide('jchemhub.controller.plugins.UndoRedo');
 goog.require('goog.debug.Logger');
 
+goog.exportSymbol('jchemhub.controller.plugins.UndoRedo.COMMAND.UNDO', jchemhub.controller.plugins.UndoRedo.COMMAND.UNDO);
+goog.exportSymbol('jchemhub.controller.plugins.UndoRedo.COMMAND.REDO', jchemhub.controller.plugins.UndoRedo.COMMAND.REDO);
+
 /**
  * @constructor
  * @extends{jchemhubn.controller.Plugin}s
@@ -76,7 +79,6 @@ jchemhub.controller.plugins.UndoRedo.prototype.execCommandInternal = function(co
 		this.redo();
 	}
 
-	this.editorObject.layoutAndRender();
 
 };
 
@@ -224,7 +226,7 @@ jchemhub.controller.plugins.UndoRedo.prototype.shiftState_ = function(fromStack,
 		// Push the current state into the redo stack.
 		toStack.push(state);
 		this.editorObject.setModel(jchemhub.io.json.readReaction(state));
-		this.editorObject.layoutAndRender();
+	
 
 		// If either stack transitioned between 0 and 1 in size then the ability
 		// to do an undo or redo has changed and we must dispatch a state
