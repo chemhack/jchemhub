@@ -46,7 +46,7 @@
 				<arg line='-f "--jscomp_warning=missingProperties"' />
 				<arg line='-f "--jscomp_warning=unknownDefines"' />
 				<arg line='-f "--jscomp_warning=strictModuleDepCheck"' />
-				
+
 				<extraflags />
 			</exec>
 		</sequential>
@@ -66,6 +66,7 @@
 	</target>
 
 	<target name='compile-check' description='check by compiling all jchemhub files'>
+		<mkdir dir="${build.dir}" />
 		<exec executable="python" failonerror="true" logError="true" output="${build.dir}/compile-check.js">
 			<arg value="${closure-library.dir}/bin/calcdeps.py" />
 			<arg line='-i ${js-src.dir}' />
