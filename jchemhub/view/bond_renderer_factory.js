@@ -9,7 +9,7 @@ goog.require('jchemhub.view.SingleUpOrDownBondRenderer');
 
 /**
  * factory class for BondRenderers
- * 
+ *
  * @param {goog.graphics.AbstractGraphics} graphics
  * @param {Object} opt_config
  * @constructor

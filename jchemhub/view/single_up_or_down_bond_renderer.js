@@ -3,7 +3,7 @@ goog.require('jchemhub.view.BondRenderer');
 
 /**
  * Class to render a Single-UpOrDown bond object to a graphics object
- * 
+ *
  * @constructor
  * @param graphics
  *            {goog.graphics.AbstractGraphics} graphics to draw on.

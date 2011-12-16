@@ -7,7 +7,7 @@ goog.require('jchemhub.controller.AtomController');
 
 /**
  * Class to render a molecule object to a graphics object
- * 
+ *
  * @constructor
  * @param graphics
  *            {goog.graphics.AbstractGraphics} graphics to draw on.

@@ -3,7 +3,7 @@ goog.require('goog.graphics.AffineTransform');
 
 /**
  * {@inheritDoc}
- * 
+ *
  * @constructor
  * @extends {goog.graphics.AffineTransform}
  */
@@ -23,13 +23,13 @@ jchemhub.graphics.AffineTransform = function(opt_m00, opt_m10, opt_m01,
 		(opt_m02),
 		/** @type {number} */
 		(opt_m12));
-	}	
+	}
 }
 goog.inherits(jchemhub.graphics.AffineTransform, goog.graphics.AffineTransform);
 
 /**
  * transform array of coordinates
- * 
+ *
  * @param source_coords{!Array.
  *            <goog.math.Coordinate>}
  * @return {!Array.<goog.math.Coordinate>}

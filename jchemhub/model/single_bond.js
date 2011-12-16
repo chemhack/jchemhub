@@ -11,7 +11,7 @@ goog.require('jchemhub.model.Bond');
 jchemhub.model.SingleBond = function(source, target){
 	jchemhub.model.Bond.call(this, source, target);
 }
-goog.inherits(jchemhub.model.SingleBond, jchemhub.model.Bond);	
+goog.inherits(jchemhub.model.SingleBond, jchemhub.model.Bond);
 
 /**
  * static value for order of this type of bond

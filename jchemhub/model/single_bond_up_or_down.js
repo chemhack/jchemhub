@@ -11,7 +11,7 @@ goog.require('jchemhub.model.SingleBond');
 jchemhub.model.SingleBondUpOrDown = function(source, target){
 	jchemhub.model.SingleBond.call(this, source, target);
 }
-goog.inherits(jchemhub.model.SingleBondUpOrDown, jchemhub.model.SingleBond);	
+goog.inherits(jchemhub.model.SingleBondUpOrDown, jchemhub.model.SingleBond);
 /**
  * static value for order of this type of bond
  * @type{number}

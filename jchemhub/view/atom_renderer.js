@@ -5,7 +5,7 @@ goog.require('goog.debug.Logger');
 
 /**
  * Class to render an atom object to a graphics object
- * 
+ *
  * @constructor
  * @param graphics
  *            {goog.graphics.AbstractGraphics} graphics to draw on.
@@ -17,7 +17,7 @@ jchemhub.view.AtomRenderer = function(controller, graphics, opt_config) {
 }
 goog.inherits(jchemhub.view.AtomRenderer, jchemhub.view.Renderer);
 /**
- * 
+ *
  * @param {jchemhub.model.Atom} atom
  * @param {jchemhub.graphics.AffineTransform} transform
  * @return {goog.graphics.GroupElement}
@@ -41,7 +41,7 @@ jchemhub.view.AtomRenderer.prototype.render = function(atom, transform) {
 	var w = symbol.text.length * 0.55 * font.size;
 	var h = font.size;
 	var group = graphics.createGroup();
-	
+
 	if (symbol.text) {
 		group.atomLabelBackground = graphics.drawEllipse(point.x, point.y,
 				h * 0.7, h * 0.7, new goog.graphics.Stroke(1, this.config
@@ -82,10 +82,10 @@ jchemhub.view.AtomRenderer.prototype.render = function(atom, transform) {
 			}
 		}
 	}
-	group.addEventListener(goog.events.EventType.MOUSEOVER, 
-		   goog.bind(this.controller.handleMouseOver, this.controller, atom)); 
-	group.addEventListener(goog.events.EventType.MOUSEOUT, 
-			   goog.bind(this.controller.handleMouseOut, this.controller, atom)); 
+	group.addEventListener(goog.events.EventType.MOUSEOVER,
+		   goog.bind(this.controller.handleMouseOver, this.controller, atom));
+	group.addEventListener(goog.events.EventType.MOUSEOUT,
+			   goog.bind(this.controller.handleMouseOut, this.controller, atom));
 
 	return group;
 
@@ -93,7 +93,7 @@ jchemhub.view.AtomRenderer.prototype.render = function(atom, transform) {
 
 /**
  * return a compound symbol (e.g. NH, CH3), the plain symbol, or ""
- * 
+ *
  * @param{jchemhun.model.Atom} atom
  * @return {String}
  */
@@ -148,7 +148,7 @@ jchemhub.view.AtomRenderer.prototype.compoundSymbol = function(atom) {
 /**
  * return an angle between 0 and 360 at which the i-th bond to this atom is
  * drawn
- * 
+ *
  * @param{integer} i-th bond to this atom
  * @return number
  */
@@ -172,7 +172,7 @@ jchemhub.view.AtomRenderer.bondOrientation = function(atom, i) {
 /**
  * returns the compass direction toward which to draw H atoms N NW NE W E SW SE
  * S
- * 
+ *
  * @param{jchemhub.model.Atom} atom
  * @return{String}
  */
@@ -212,7 +212,7 @@ jchemhub.view.AtomRenderer.bondDirection = function(atom) {
 
 /**
  * Logging object.
- * 
+ *
  * @type {goog.debug.Logger}
  * @protected
  */

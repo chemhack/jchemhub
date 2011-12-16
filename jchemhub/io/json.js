@@ -36,12 +36,12 @@ goog.exportSymbol('jchemhub.io.json.readReaction', jchemhub.io.json.readReaction
 
 /**
  * enum for bond types
- * 
+ *
  * @enum {string}
- */ 
+ */
 jchemhub.io.json.BondType = {
 		SINGLE_BOND:"SINGLE_BOND",
-		DOUBLE_BOND:"DOUBLE_BOND",		
+		DOUBLE_BOND:"DOUBLE_BOND",
 		TRIPLE_BOND:"TRIPLE_BOND",
 		QUADRUPLE_BOND:"QUADRUPLE_BOND",
 		AROMATIC:"AROMATIC",
@@ -53,9 +53,9 @@ jchemhub.io.json.BondType = {
 
 /**
  * enum for stereo types
- * 
+ *
  * @enum {string}
- */ 
+ */
 jchemhub.io.json.StereoType = {
 		NOT_STEREO:"NOT_STEREO",
 		SINGLE_BOND_UP:"SINGLE_BOND_UP",
@@ -65,7 +65,7 @@ jchemhub.io.json.StereoType = {
 
 /**
  * maps bond class to bond type code
- * 
+ *
  * @param{jchemhub.model.Bond} bond
  * @return{jchembun.io.json.BondType}
  */
@@ -80,12 +80,12 @@ jchemhub.io.json.getTypeCode = function(bond){
 		return jchemhub.io.json.BondType.TRIPLE_BOND;
 	}
 	throw new Error("Invalid bond type [" + bond + "]");
-	
+
 };
 
 /**
  * maps bond class to stereo type code
- * 
+ *
  * @param{jchemhub.model.Bond} bond
  * @return{jchemhub.io.json.StereoType}
  */
@@ -100,18 +100,18 @@ jchemhub.io.json.getStereoCode = function(bond){
 		return jchemhub.io.json.StereoType.SINGLE_BOND_UP_OR_DOWN;
 	}
 	return jchemhub.io.json.StereoType.NOT_STEREO;
-	
-	
+
+
 }
 
 /**
  * factory method for bonds
- * 
+ *
  * @param{jchemhub.io.json.BondType}type bond-type code
  * @param{jchemhub.io.json.StereoType}stereo stereo-type code
  * @param{jchemhub.model.Atom} source atom at source end of bond
  * @param{jchemhub.model.Atom} target atom at target end of bond
- * 
+ *
  * @return{jchemhub.model.Bond}
  */
 jchemhub.io.json.createBond = function(type, stereo, source, target) {
@@ -138,8 +138,8 @@ jchemhub.io.json.createBond = function(type, stereo, source, target) {
 		return new jchemhub.model.AromaticBond(source, target);
 	case jchemhub.io.json.BondType.SINGLE_OR_DOUBLE:
 	case jchemhub.io.json.BondType.SINGLE_OR_AROMATIC:
-	case jchemhub.io.json.BondType.DOUBLE_OR_AROMATIC: 
-	case jchemhub.io.json.BondType.ANY: 
+	case jchemhub.io.json.BondType.DOUBLE_OR_AROMATIC:
+	case jchemhub.io.json.BondType.ANY:
 	default:
 		throw new Error("invalid bond type/stereo [" + type + "]/[" + stereo
 				+ "]");
@@ -149,7 +149,7 @@ jchemhub.io.json.createBond = function(type, stereo, source, target) {
 
 /**
  * convert jmol JSON object or string to molecule
- * 
+ *
  * @param{string} arg
  * @return{jchemhub.model.Molecule}
  */
@@ -169,7 +169,7 @@ jchemhub.io.json.readMolecule = function(arg) {
 	goog.array.forEach(jmol.bondindex, function(b){
 		mol.addBond(jchemhub.io.json.createBond(b.type, b.stereo, mol.getAtom(b.source), mol.getAtom(b.target)));
 	});
-	
+
 	return mol;
 };
 
@@ -180,7 +180,7 @@ jchemhub.io.json.writeMolecule = function(mol) {
 
 /**
  * convert molecule object to json representation
- * 
+ *
  * @param{jchemhub.model.Molecule} mol the molecule to convert
  * @returns{object} in json molecule format
  */
@@ -204,7 +204,7 @@ jchemhub.io.json.moleculeToJson = function(mol) {
 
 /**
  * convert JSON reaction representation to reaction object
- * 
+ *
  * @param {string|Object}
  *            arg The JSON object string, or object itself
  * @return {jchemhub.model.Reaction}
@@ -225,7 +225,7 @@ jchemhub.io.json.readReaction = function(arg) {
 
 /**
  * converts a reaction object to JSON representation
- * 
+ *
  * @param{jchemhub.model.Reaction} rxn. The reaction to convert to json
  * @return{object} json representation
  */

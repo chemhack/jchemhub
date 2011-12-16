@@ -2,10 +2,10 @@ goog.provide("jchemhub.view.SingleBondDrawing");
 
 /**
  * A single bond graphical element in the reaction editor.
- * 
+ *
  * @param {jchemhub.model.Bond}
  *            bond
- * 
+ *
  * @constructor
  * @extends {jchemhub.view.BondDrawing}
  */
@@ -24,7 +24,7 @@ jchemhub.view.SingleBondDrawing.prototype.render = function() {
 			this.getConfig().get("bond").stroke.width, this.getConfig().get(
 					"bond").stroke.color);
 	var bondFill = null;
-	
+
 	var coords = this.transformCoords(this.getTransform(), this.getCoords());
 
 	bondPath.moveTo(coords[0].x, coords[0].y);

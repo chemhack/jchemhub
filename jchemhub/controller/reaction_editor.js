@@ -16,8 +16,8 @@ goog.require('jchemhub.controller.Plugin');
 
 /**
  * A graphical editor for reactions
- * 
- * 
+ *
+ *
  * @constructor
  * @extends {goog.events.EventTarget}
  */
@@ -28,7 +28,7 @@ jchemhub.controller.ReactionEditor = function(element, opt_config) {
 	this.editableDomHelper = goog.dom.getDomHelper(element);
 	/**
 	 * Map of class id to registered plugin.
-	 * 
+	 *
 	 * @type {Object}
 	 * @private
 	 */
@@ -37,7 +37,7 @@ jchemhub.controller.ReactionEditor = function(element, opt_config) {
 	/**
 	 * Plugins registered on this field, indexed by the jchemhub.controller.Plugin.Op
 	 * that they support.
-	 * 
+	 *
 	 * @type {Object.<Array>}
 	 * @private
 	 */
@@ -94,7 +94,7 @@ goog.inherits(jchemhub.controller.ReactionEditor, goog.events.EventTarget);
 
 /**
  * List of mutation events in Gecko browsers.
- * 
+ *
  * @type {Array.<string>}
  * @protected
  */
@@ -104,7 +104,7 @@ jchemhub.controller.ReactionEditor.MUTATION_EVENTS_GECKO = [ 'DOMNodeInserted',
 
 /**
  * Sets the active editor id.
- * 
+ *
  * @param {?string}
  *            editorId The active editor id.
  */
@@ -160,7 +160,7 @@ jchemhub.controller.ReactionEditor.prototype.render = function() {
 
 /**
  * gets model
- * 
+ *
  * @return{jchemhub.model.Reaction | jchemhub.model.Molecule}
  */
 jchemhub.controller.ReactionEditor.prototype.getModel = function() {
@@ -196,7 +196,7 @@ jchemhub.controller.ReactionEditor.prototype.dispatchBeforeChange = function() {
  * Calls all the plugins of the given operation, in sequence, with the given
  * arguments. This is short-circuiting: once one plugin cancels the event, no
  * more plugins will be invoked.
- * 
+ *
  * @param {jchemhub.controller.Plugin.Op}
  *            op A plugin op.
  * @param {...*}
@@ -234,7 +234,7 @@ jchemhub.controller.ReactionEditor.prototype.invokeShortCircuitingOp_ = function
  * goog.ui.KeyboardShortcutHandler for performance reasons. Since these are
  * handled on every key stroke, we do not want to be going out to the event
  * system every time.
- * 
+ *
  * @param {goog.events.BrowserEvent}
  *            e The browser event.
  * @private
@@ -299,7 +299,7 @@ jchemhub.controller.ReactionEditor.prototype.handleChange = function() {
 
 /**
  * Handles keydown on the editor.
- * 
+ *
  * @param {goog.events.BrowserEvent}
  *            e The browser event.
  * @private
@@ -311,7 +311,7 @@ jchemhub.controller.ReactionEditor.prototype.handleKeyDown_ = function(e) {
 
 /**
  * Handles keypress on the field.
- * 
+ *
  * @param {goog.events.BrowserEvent}
  *            e The browser event.
  * @private
@@ -324,7 +324,7 @@ jchemhub.controller.ReactionEditor.prototype.handleKeyPress_ = function(e) {
 
 /**
  * Handles keyup on the editor.
- * 
+ *
  * @param {goog.events.BrowserEvent}
  *            e The browser event.
  * @private
@@ -374,7 +374,7 @@ jchemhub.controller.ReactionEditor.prototype.handleBondMouseDown_ = function(e){
 
 /**
  * Gets the value of this command.
- * 
+ *
  * @param {string}
  *            command The command to check.
  * @param {boolean}
@@ -399,7 +399,7 @@ jchemhub.controller.ReactionEditor.prototype.queryCommandValueInternal_ = functi
 
 /**
  * Gets the value of command(s).
- * 
+ *
  * @param {string|Array.<string>} commands String name(s) of the command.
  * @return {*} Value of each command. Returns false (or array of falses) if
  *         designMode is off or the editor is otherwise uneditable, and there
@@ -441,7 +441,7 @@ jchemhub.controller.ReactionEditor.prototype.queryCommandValue = function(comman
  * change events in blended-mode, iframe-using mozilla. It just starts the
  * appropriate timer for jchemhub.controller.ReactionEditor.DELAYEDCHANGE. This also
  * starts up change events again if they were stopped.
- * 
+ *
  * @param {boolean=}
  *            opt_noDelay True if jchemhub.controller.ReactionEditor.DELAYEDCHANGE
  *            should be fired syncronously.
@@ -454,7 +454,7 @@ jchemhub.controller.ReactionEditor.prototype.dispatchChange = function(opt_noDel
 /**
  * Dispatch a selection change event, optionally caused by the given browser
  * event.
- * 
+ *
  * @param {goog.events.BrowserEvent=}
  *            opt_e Optional browser event causing this event.
  */
@@ -477,7 +477,7 @@ jchemhub.controller.ReactionEditor.prototype.dispatchSelectionChangeEvent = func
 
 /**
  * Dispatches a command value change event.
- * 
+ *
  * @param {Array.<string>=} opt_commands Commands whose state has changed.
  */
 jchemhub.controller.ReactionEditor.prototype.dispatchCommandValueChange = function(
@@ -495,7 +495,7 @@ jchemhub.controller.ReactionEditor.prototype.dispatchCommandValueChange = functi
 
 /**
  * Executes an editing command as per the registered plugins.
- * 
+ *
  * @param {string}
  *            command The command to execute.
  * @param {...*}
@@ -523,7 +523,7 @@ jchemhub.controller.ReactionEditor.prototype.execCommand = function(command, var
 
 /**
  * Registers the plugin with the editor.
- * 
+ *
  * @param {jchemhub.controller.Plugin}
  *            plugin The plugin to register.
  */
@@ -556,7 +556,7 @@ jchemhub.controller.ReactionEditor.prototype.registerPlugin = function(plugin) {
 
 /**
  * Unregisters the plugin with this editor.
- * 
+ *
  * @param {jchemhub.controller.Plugin}
  *            plugin The plugin to unregister.
  */
@@ -587,7 +587,7 @@ jchemhub.controller.ReactionEditor.prototype.isLoaded = function() {
 
 /**
  * The load state of the editor.
- * 
+ *
  * @enum {number}
  * @private
  */
@@ -599,7 +599,7 @@ jchemhub.controller.ReactionEditor.LoadState_ = {
 
 /**
  * Logging object.
- * 
+ *
  * @type {goog.debug.Logger}
  * @protected
  */
@@ -608,7 +608,7 @@ jchemhub.controller.ReactionEditor.prototype.logger = goog.debug.Logger
 
 /**
  * Event types that can be stopped/started.
- * 
+ *
  * @enum {string}
  */
 jchemhub.controller.ReactionEditor.EventType = {
@@ -665,7 +665,7 @@ jchemhub.controller.ReactionEditor.EventType = {
 
 /**
  * Removes all listeners and destroys the eventhandler object.
- * 
+ *
  * @override
  */
 jchemhub.controller.ReactionEditor.prototype.disposeInternal = function() {
@@ -705,7 +705,7 @@ jchemhub.controller.ReactionEditor.prototype.disposeInternal = function() {
 
 /**
  * Returns the registered plugin with the given classId.
- * 
+ *
  * @param {string}
  *            classId classId of the plugin.
  * @return {jchemhub.controller.Plugin} Registered plugin with the given classId.
@@ -717,7 +717,7 @@ jchemhub.controller.ReactionEditor.prototype.getPluginByClassId = function(class
 /**
  * Help make the editor not editable by setting internal data structures to
  * null, and disabling this editor with all registered plugins.
- * 
+ *
  * @private
  */
 jchemhub.controller.ReactionEditor.prototype.tearDownEditorObject_ = function() {
@@ -749,7 +749,7 @@ jchemhub.controller.ReactionEditor.prototype.isLoading = function() {
 /**
  * Returns original DOM element for the Editor null if that element has not yet
  * been found in the appropriate document.
- * 
+ *
  * @return {Element} The original element.
  */
 jchemhub.controller.ReactionEditor.prototype.getOriginalElement = function() {
@@ -782,7 +782,7 @@ jchemhub.controller.ReactionEditor.prototype.getOriginalElement = function() {
 
 /**
  * Stops all listeners and timers.
- * 
+ *
  * @private
  */
 jchemhub.controller.ReactionEditor.prototype.clearListeners_ = function() {
@@ -808,7 +808,7 @@ jchemhub.controller.ReactionEditor.prototype.removeAllWrappers = function() {
 
 /**
  * Handle the loading of the editor (e.g. once the editor is ready to setup).
- * 
+ *
  * @protected
  */
 jchemhub.controller.ReactionEditor.prototype.handleEditorLoad = function() {
@@ -844,7 +844,7 @@ jchemhub.controller.ReactionEditor.prototype.handleEditorLoad = function() {
 /**
  * Signal that the editor is loaded and ready to use. Change events now are in
  * effect.
- * 
+ *
  * @private
  */
 jchemhub.controller.ReactionEditor.prototype.dispatchLoadEvent_ = function() {
@@ -858,7 +858,7 @@ jchemhub.controller.ReactionEditor.prototype.dispatchLoadEvent_ = function() {
  * Registers a keyboard event listener on the editor. This is necessary for
  * Gecko since the fields are contained in an iFrame and there is no way to
  * auto-propagate key events up to the main window.
- * 
+ *
  * @param {string|Array.<string>} type Event type to listen for or array of event types,
  *            for example goog.events.EventType.KEYDOWN.
  * @param {Function}
@@ -882,7 +882,7 @@ jchemhub.controller.ReactionEditor.prototype.addListener = function(type, listen
 
 /**
  * Initialize listeners on the editor.
- * 
+ *
  * @private
  */
 jchemhub.controller.ReactionEditor.prototype.setupChangeListeners_ = function() {
@@ -961,7 +961,7 @@ jchemhub.controller.ReactionEditor.prototype.setupChangeListeners_ = function() 
 
 /**
  * Mutation events tell us when something has changed for mozilla.
- * 
+ *
  * @protected
  */
 jchemhub.controller.ReactionEditor.prototype.setupMutationEventHandlersGecko = function() {
@@ -986,7 +986,7 @@ jchemhub.controller.ReactionEditor.prototype.setupMutationEventHandlersGecko = f
 /**
  * Installs styles if needed. Only writes styles when they can't be written
  * inline directly into the field.
- * 
+ *
  * @protected
  */
 jchemhub.controller.ReactionEditor.prototype.installStyles = function() {
@@ -1029,7 +1029,7 @@ jchemhub.controller.ReactionEditor.prototype.installStyles = function() {
 
 /**
  * Frequency to check for selection changes.
- * 
+ *
  * @type {number}
  * @private
  */

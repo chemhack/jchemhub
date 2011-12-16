@@ -3,7 +3,7 @@ goog.require('jchemhub.view.Renderer');
 
 /**
  * Class to render an Plus object to a graphics object
- * 
+ *
  * @constructor
  * @param graphics
  *            {goog.graphics.AbstractGraphics} graphics to draw on.
@@ -21,13 +21,13 @@ jchemhub.view.PlusRenderer.prototype.render=function(coord, transform){
 	h1 = new goog.math.Coordinate(coord.x, coord.y + w);
 	v0 = new goog.math.Coordinate(coord.x - w, coord.y);
 	v1 = new goog.math.Coordinate(coord.x + w, coord.y);
-	
+
 	var path = new goog.graphics.Path();
 	var stroke = new goog.graphics.Stroke(
 			this.config.get("plus").stroke.width, this.config.get(
 					"plus").stroke.color);
 	var fill = null;
-	
+
 	var coords = transform.transformCoords( [h0, h1, v0, v1]);
 
 	path.moveTo(coords[0].x, coords[0].y);

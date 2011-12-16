@@ -8,7 +8,7 @@ goog.exportSymbol('jchemhub.controller.plugins.ClearEditor.COMMAND',
 
 /**
  * simple Plugin for clearing editor.
- * 
+ *
  * @constructor
  * @extends {jchemhub.controller.Plugin}
  */
@@ -33,7 +33,7 @@ jchemhub.controller.plugins.ClearEditor.prototype.isSupportedCommand = function(
 
 /**
  * clears the editor.
- * 
+ *
  * @param {string}
  *            command Command to execute.
  * @return {Object|undefined} The result of the command.

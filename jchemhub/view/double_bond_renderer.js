@@ -3,7 +3,7 @@ goog.require('jchemhub.view.BondRenderer');
 
 /**
  * Class to render a double bond object to a graphics object
- * 
+ *
  * @constructor
  * @param graphics
  *            {goog.graphics.AbstractGraphics} graphics to draw on.
@@ -89,7 +89,7 @@ jchemhub.view.DoubleBondRenderer.prototype.render = function(bond, transform,
 };
 
 /**
- * 
+ *
  * @return{jchemhub.ring.Ring} first ring that contains this bond
  */
 jchemhub.view.DoubleBondRenderer.getFirstRing = function(bond) {

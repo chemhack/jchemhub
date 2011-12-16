@@ -9,7 +9,7 @@ goog.require("jchemhub.graphics.AffineTransform");
 
 /**
  * Class to render a reaction object to a graphics object
- * 
+ *
  * @constructor
  * @param parentEventTarget {goog.events.EventTarget}
  * @param graphics
@@ -27,7 +27,7 @@ jchemhub.view.ReactionRenderer = function(controller, graphics, opt_config) {
 }
 goog.inherits(jchemhub.view.ReactionRenderer, jchemhub.view.Renderer);
 /**
- * 
+ *
  * @param {jchemhub.model.Reaction} reaction
  * @return {goog.graphics.GroupElement}
  */
@@ -43,7 +43,7 @@ jchemhub.view.ReactionRenderer.prototype.render = function(reaction) {
 		previousReactant = reactant;
 		this.moleculeRenderer.render(reactant, transform, group);
 	},this);
-	
+
 	var reaction_center = jchemhub.view.ReactionRenderer.center(goog.array.concat(reaction.reactants, reaction.products));
 	this.arrowRenderer.render(reaction_center, transform, group);
 
@@ -61,7 +61,7 @@ jchemhub.view.ReactionRenderer.prototype.render = function(reaction) {
 
 /**
  * finds center of an array of molecules
- * 
+ *
  * @return goog.math.Coordinate
  */
 jchemhub.view.ReactionRenderer.center = function(molecules) {
@@ -72,7 +72,7 @@ jchemhub.view.ReactionRenderer.center = function(molecules) {
 
 /**
  * finds bounding box of an array of molecules
- * 
+ *
  * @param molecules
  * @return goog.math.Box
  */
@@ -89,7 +89,7 @@ jchemhub.view.ReactionRenderer.boundingBox = function(molecules) {
 
 /**
  * Logging object.
- * 
+ *
  * @type {goog.debug.Logger}
  * @protected
  */
@@ -97,7 +97,7 @@ jchemhub.view.ReactionRenderer.prototype.logger = goog.debug.Logger
 		.getLogger('jchemhub.view.ReactionRenderer');
 
 /**
- * 
+ *
  * @param {Array.<jchemhub.model.Molecule>} molecules
  * @return {goog.math.Rect}
  */
@@ -105,7 +105,7 @@ jchemhub.view.ReactionRenderer.boundingRect = function(molecules){
 	return goog.math.Rect.createFromBox(jchemhub.view.ReactionRenderer.boundingBox(molecules));
 }
 /**
- * 
+ *
  * @param {jchemhub.model.Reaction} reaction
  * @return {jchemhub.graphics.AffineTransform}
  */
@@ -114,10 +114,10 @@ jchemhub.view.ReactionRenderer.prototype.getTransform=function(reaction){
 	var fromRect = jchemhub.view.ReactionRenderer.boundingRect(molecules);
 	var toSize = fromRect.getSize().scaleToFit(this.graphics.getSize());
 	var scale = this.scale_factor * toSize.width / fromRect.getSize().width;
-	
-	var transform = new jchemhub.graphics.AffineTransform(scale,0,0,-scale,-fromRect.left*scale,-fromRect.top*scale );	
+
+	var transform = new jchemhub.graphics.AffineTransform(scale,0,0,-scale,-fromRect.left*scale,-fromRect.top*scale );
 
 	return transform;
 };
 
-	
+

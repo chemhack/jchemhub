@@ -27,7 +27,7 @@ jchemhub.controller.DefaultToolbar.MSG_FONT_NORMAL_SERIF = goog
  * <li>{@code value} - Value for the corresponding 'font-family' CSS style
  * (e.g. 'Tahoma, Arial, sans-serif')
  * </ul>
- * 
+ *
  * @type {!Array.<{caption:string, value:string}>}
  * @private
  */
@@ -54,7 +54,7 @@ jchemhub.controller.DefaultToolbar.FONTS_ = [ {
 /**
  * Locale-specific font descriptors. The object is a map of locale strings to
  * arrays of font descriptors.
- * 
+ *
  * @type {!Object.<!Array.<{caption:string, value:string}>>}
  * @private
  */
@@ -100,7 +100,7 @@ jchemhub.controller.DefaultToolbar.I18N_FONTS_ = {
 
 /**
  * Default locale for font names.
- * 
+ *
  * @type {string}
  * @private
  */
@@ -110,7 +110,7 @@ jchemhub.controller.DefaultToolbar.locale_ = 'en-us';
  * Sets the locale for the font names. If not set, defaults to 'en-us'. Used
  * only for default creation of font names name. Must be set before font name
  * menu is created.
- * 
+ *
  * @param {string}
  *            locale Locale to use for the toolbar font names.
  */
@@ -123,7 +123,7 @@ jchemhub.controller.DefaultToolbar.setLocale = function(locale) {
  * If jchemhub.controller.DefaultToolbar.setLocale was called to specify a locale for
  * which locale-specific default fonts exist, those are added before common
  * fonts.
- * 
+ *
  * @param {!goog.ui.Select}
  *            button Font menu button.
  */
@@ -165,7 +165,7 @@ jchemhub.controller.DefaultToolbar.MSG_FONT_SIZE_HUGE = goog.getMsg('Huge');
  * <li>{@code caption} - Caption to show in the font size menu (e.g. 'Huge')
  * <li>{@code value} - Value for the corresponding HTML font size (e.g. 6)
  * </ul>
- * 
+ *
  * @type {!Array.<{caption:string, value:number}>}
  * @private
  */
@@ -186,7 +186,7 @@ jchemhub.controller.DefaultToolbar.FONT_SIZES_ = [ {
 /**
  * Initializes the given font size menu button by adding default font sizes to
  * it.
- * 
+ *
  * @param {!goog.ui.Select}
  *            button Font size menu button.
  */
@@ -216,7 +216,7 @@ jchemhub.controller.DefaultToolbar.MSG_FORMAT_NORMAL = goog.getMsg('Normal');
  * <li>{@code caption} - Caption to show in the menu (e.g. 'Minor heading')
  * <li>{@code command} - Corresponding {@link goog.dom.TagName} (e.g. 'H4')
  * </ul>
- * 
+ *
  * @type {!Array.<{caption:string, command:string}>}
  * @private
  */
@@ -237,7 +237,7 @@ jchemhub.controller.DefaultToolbar.FORMAT_OPTIONS_ = [ {
 /**
  * Initializes the given "Format block" menu button by adding default format
  * options to the menu.
- * 
+ *
  * @param {!goog.ui.Select}
  *            button "Format block" menu button.
  */
@@ -249,7 +249,7 @@ jchemhub.controller.DefaultToolbar.addDefaultFormatOptions = function(button) {
 /**
  * Creates a {@link goog.ui.Toolbar} containing a default set of editor toolbar
  * buttons, and renders it into the given parent element.
- * 
+ *
  * @param {!Element}
  *            elem Toolbar parent element.
  * @param {boolean=}
@@ -274,7 +274,7 @@ jchemhub.controller.DefaultToolbar.makeDefaultToolbar = function(elem,
  * {@code items} array must either be a {@link goog.editor.Command} (to create a
  * built-in button) or a subclass of {@link goog.ui.Control} (to create a custom
  * control).
- * 
+ *
  * @param {!Array.<string|goog.ui.Control>} items Toolbar items; each must be a
  *            {@link goog.editor.Command} or a {@link goog.ui.Control}.
  * @param {!Element}
@@ -309,7 +309,7 @@ jchemhub.controller.DefaultToolbar.makeToolbar = function(items, elem,
  * {@link goog.editor.Command}, or null if no built-in button exists for the
  * command. Note that this function is only intended to create built-in buttons;
  * please don't try to hack it!
- * 
+ *
  * @param {string}
  *            command Editor command ID.
  * @param {goog.dom.DomHelper=}
@@ -347,7 +347,7 @@ jchemhub.controller.DefaultToolbar.makeBuiltInToolbarButton = function(command,
 
 /**
  * A set of built-in buttons to display in the default editor toolbar.
- * 
+ *
  * @type {!Array.<string>}
  */
 jchemhub.controller.DefaultToolbar.DEFAULT_BUTTONS = [  ];
@@ -355,7 +355,7 @@ jchemhub.controller.DefaultToolbar.DEFAULT_BUTTONS = [  ];
 /**
  * A set of built-in buttons to display in the default editor toolbar when the
  * editor chrome is right-to-left (BiDi mode only).
- * 
+ *
  * @type {!Array.<string>}
  */
 jchemhub.controller.DefaultToolbar.DEFAULT_BUTTONS_RTL = [];
@@ -364,7 +364,7 @@ jchemhub.controller.DefaultToolbar.DEFAULT_BUTTONS_RTL = [];
  * Creates a toolbar button with the given ID, tooltip, and caption. Applies any
  * custom CSS class names to the button's caption element. This button is
  * designed to be used as the RTL button.
- * 
+ *
  * @param {string}
  *            id Button ID; must equal a {@link jchemhub.controller.Command} for
  *            built-in buttons, anything else for custom buttons.
@@ -405,7 +405,7 @@ jchemhub.controller.DefaultToolbar.rtlButtonFactory_ = function(id, tooltip, cap
  * Creates a toolbar button with the given ID, tooltip, and caption. Applies any
  * custom CSS class names to the button's caption element. Designed to be used
  * to create undo and redo buttons.
- * 
+ *
  * @param {string}
  *            id Button ID; must equal a {@link jchemhub.controller.Command} for
  *            built-in buttons, anything else for custom buttons.
@@ -438,7 +438,7 @@ jchemhub.controller.DefaultToolbar.undoRedoButtonFactory_ = function(id, tooltip
  * Creates a toolbar button with the given ID, tooltip, and caption. Applies any
  * custom CSS class names to the button's caption element. Used to create a font
  * face button, filled with default fonts.
- * 
+ *
  * @param {string}
  *            id Button ID; must equal a {@link jchemhub.controller.Command} for
  *            built-in buttons, anything else for custom buttons.
@@ -493,7 +493,7 @@ jchemhub.controller.DefaultToolbar.fontFaceFactory_ = function(id, tooltip, capt
  * Creates a toolbar button with the given ID, tooltip, and caption. Applies any
  * custom CSS class names to the button's caption element. Use to create a font
  * size button, filled with default font sizes.
- * 
+ *
  * @param {string}
  *            id Button ID; must equal a {@link jchemhub.controller.Command} for
  *            built-in buttons, anything else for custom buttons.
@@ -544,7 +544,7 @@ jchemhub.controller.DefaultToolbar.fontSizeFactory_ = function(id, tooltip, capt
 
 /**
  * Function to update the state of a color menu button.
- * 
+ *
  * @param {goog.ui.ToolbarColorMenuButton}
  *            button The button to which the color menu is attached.
  * @param {number}
@@ -575,7 +575,7 @@ jchemhub.controller.DefaultToolbar.colorUpdateFromValue_ = function(button, valu
  * Creates a toolbar button with the given ID, tooltip, and caption. Applies any
  * custom CSS class names to the button's caption element. Use to create a font
  * color button.
- * 
+ *
  * @param {string}
  *            id Button ID; must equal a {@link jchemhub.controller.Command} for
  *            built-in buttons, anything else for custom buttons.
@@ -609,7 +609,7 @@ jchemhub.controller.DefaultToolbar.fontColorFactory_ = function(id, tooltip, cap
  * Creates a toolbar button with the given ID, tooltip, and caption. Applies any
  * custom CSS class names to the button's caption element. Use to create a font
  * background color button.
- * 
+ *
  * @param {string}
  *            id Button ID; must equal a {@link jchemhub.controller.Command} for
  *            built-in buttons, anything else for custom buttons.
@@ -643,7 +643,7 @@ jchemhub.controller.DefaultToolbar.backgroundColorFactory_ = function(id, toolti
  * Creates a toolbar button with the given ID, tooltip, and caption. Applies any
  * custom CSS class names to the button's caption element. Use to create the
  * format menu, prefilled with default formats.
- * 
+ *
  * @param {string}
  *            id Button ID; must equal a {@link jchemhub.controller.Command} for
  *            built-in buttons, anything else for custom buttons.
@@ -811,7 +811,7 @@ jchemhub.controller.DefaultToolbar.MSG_EDIT_HTML_CAPTION = goog.getMsg('Edit HTM
  * Note that this object is only used for creating toolbar buttons for built-in
  * editor commands; custom buttons aren't listed here. Please don't try to hack
  * this!
- * 
+ *
  * @type {Object.<!jchemhub.controller.ReactionEditor.ButtonDescriptor>}.
  * @private
  */
@@ -831,7 +831,7 @@ jchemhub.controller.DefaultToolbar.ButtonDescriptor = goog.typedef;
  * descriptor objects. This array is processed at JS parse time; each item is
  * inserted into {@link jchemhub.controller.DefaultToolbar.buttons_}, and the array
  * itself is deleted and (hopefully) garbage-collected.
- * 
+ *
  * @type {Array.<!jchemhub.controller.ReactionEditor.ButtonDescriptor>}.
  * @private
  */

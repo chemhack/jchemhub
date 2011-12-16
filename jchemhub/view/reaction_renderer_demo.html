@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>jchemhub.view.ReactionRenderer</title>
-<!-- 
+<!--
  <script src="../../jchemhub_compiled.js"></script>
  -->
 <script src="../../third-party/closure/closure/goog/base.js"></script>
@@ -21,10 +21,10 @@
 	goog.require('goog.debug.Console');
 </script>
 <script><!--
-    
+
 function initPage(){
-	var c = new goog.debug.Console(); 
-	c.setCapturing(true); 
+	var c = new goog.debug.Console();
+	c.setCapturing(true);
 	var reaction = jchemhub.io.json.readReaction(reactionDrawing);
 	var element = goog.dom.getElement('reactionContainer')
 	var graphics = goog.graphics.createGraphics(element.clientWidth,

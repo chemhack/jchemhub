@@ -14,7 +14,7 @@ jchemhub.controller.plugins.UndoRedo = function() {
 	/**
 	 * The maximum number of states on the undo stack at any time. Used to limit
 	 * the memory footprint of the undo-redo stack.
-	 * 
+	 *
 	 * @type {number}
 	 * @private
 	 */
@@ -22,7 +22,7 @@ jchemhub.controller.plugins.UndoRedo = function() {
 
 	/**
 	 * The undo stack.
-	 * 
+	 *
 	 * @type {Array}
 	 * @private
 	 */
@@ -30,7 +30,7 @@ jchemhub.controller.plugins.UndoRedo = function() {
 
 	/**
 	 * The redo stack.
-	 * 
+	 *
 	 * @type {Array}
 	 * @private
 	 */
@@ -42,7 +42,7 @@ goog.inherits(jchemhub.controller.plugins.UndoRedo, jchemhub.controller.Plugin);
 
 /**
  * Commands implemented by this plugin.
- * 
+ *
  * @enum {string}
  */
 jchemhub.controller.plugins.UndoRedo.COMMAND = {
@@ -54,7 +54,7 @@ jchemhub.controller.plugins.UndoRedo.COMMAND = {
  * Inverse map of execCommand strings to
  * {@link jchemhub.controller.plugins.UndoRedo.COMMAND} constants. Used to determine
  * whether a string corresponds to a command this plugin handles
- * 
+ *
  * @type {Object}
  * @private
  */
@@ -95,7 +95,7 @@ jchemhub.controller.plugins.UndoRedo.prototype.clearHistory = function() {
 
 /**
  * Before the editor changes, we want to save the state.
- * 
+ *
  * @param {goog.events.Event}
  *            e The event.
  * @private
@@ -112,7 +112,7 @@ jchemhub.controller.plugins.UndoRedo.prototype.handleBeforeChange_ = function(e)
 
 /**
  * Helper method for saving state.
- * 
+ *
  * @param {jchemhub.controller.ReactionEditor}
  *            edtiorObj The field object.
  * @private
@@ -122,7 +122,7 @@ jchemhub.controller.plugins.UndoRedo.prototype.updateCurrentState_ = function(
 	var content = editorObj.getModel();
 	if (content) {
 		//serialize to json object
-		content = jchemhub.io.json.reactionToJson(editorObj.getModel());		
+		content = jchemhub.io.json.reactionToJson(editorObj.getModel());
 	}
 	var currentState = this.currentState_;
 
@@ -136,7 +136,7 @@ jchemhub.controller.plugins.UndoRedo.prototype.updateCurrentState_ = function(
 
 /**
  * Add state to the undo stack. This clears the redo stack.
- * 
+ *
  * @param {goog.editor.plugins.UndoRedoState}
  *            state The state to add to the undo stack.
  */
@@ -166,7 +166,7 @@ jchemhub.controller.plugins.UndoRedo.prototype.addState = function(state) {
 
 /**
  * Dispatches a STATE_CHANGE event with this as the target.
- * 
+ *
  * @private
  */
 jchemhub.controller.plugins.UndoRedo.prototype.dispatchStateChange_ = function() {
@@ -211,7 +211,7 @@ jchemhub.controller.plugins.UndoRedo.prototype.hasRedoState = function() {
 /**
  * Move a state from one stack to the other, performing the appropriate undo or
  * redo action.
- * 
+ *
  * @param {Array}
  *            fromStack Stack to move the state from.
  * @param {Array}
@@ -226,7 +226,7 @@ jchemhub.controller.plugins.UndoRedo.prototype.shiftState_ = function(fromStack,
 		// Push the current state into the redo stack.
 		toStack.push(state);
 		this.editorObject.setModel(jchemhub.io.json.readReaction(state));
-	
+
 
 		// If either stack transitioned between 0 and 1 in size then the ability
 		// to do an undo or redo has changed and we must dispatch a state
@@ -294,7 +294,7 @@ jchemhub.controller.plugins.UndoRedo.prototype.disposeInternal = function() {
 
 
 /**
- * Event types for the events dispatched by undo-redo 
+ * Event types for the events dispatched by undo-redo
  * @enum {string}
  */
 jchemhub.controller.plugins.UndoRedo.EventType = {
@@ -333,7 +333,7 @@ jchemhub.controller.plugins.UndoRedo.EventType = {
 
 /**
  * The logger for this class.
- * 
+ *
  * @type {goog.debug.Logger}
  * @protected
  */
