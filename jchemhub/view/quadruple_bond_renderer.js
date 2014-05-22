@@ -3,7 +3,7 @@ goog.require('jchemhub.view.BondRenderer');
 
 /**
  * Class to render a quadruple bond object to a graphics object
- * 
+ *
  * @constructor
  * @param graphics
  *            {goog.graphics.AbstractGraphics} graphics to draw on.
@@ -70,7 +70,7 @@ jchemhub.view.QuadrupleBondRenderer.prototype.render = function(bond,
 
 	 bondPath.moveTo(coords[4].x, coords[4].y);
 	 bondPath.lineTo(coords[5].x, coords[5].y);
-	 
+
 	 bondPath.moveTo(coords[6].x, coords[6].y);
 	 bondPath.lineTo(coords[7].x, coords[7].y);
 

@@ -10,10 +10,10 @@ goog.require("goog.math.Box");
 
 /**
  * A molecule graphical element in the reaction editor.
- * 
+ *
  * @param {jchemhub.model.Molecule}
  *            molecule. The molecule to render.
- * 
+ *
  * @constructor
  * @extends {jchemhub.view.Drawing}
  */
@@ -100,7 +100,7 @@ jchemhub.view.MoleculeDrawing.prototype.getRect = function(){
 
 /**
  * finds bounding box of an array of molecules
- * 
+ *
  * @param molecules
  * @return goog.math.Box
  */
@@ -113,7 +113,7 @@ jchemhub.view.MoleculeDrawing.boundingBox = function(molecules) {
 		return a.coord;
 	})
 	if(coords.length>0){
-		return goog.math.Box.boundingBox.apply(null, coords);	
+		return goog.math.Box.boundingBox.apply(null, coords);
 	} else{
 		return new goog.math.Box(0,0,0,0);
 	}

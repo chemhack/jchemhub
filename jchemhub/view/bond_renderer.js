@@ -4,7 +4,7 @@ goog.require('jchemhub.math.Line');
 
 /**
  * Class to render a bond object to a graphics object
- * 
+ *
  * @constructor
  * @param graphics
  *            {goog.graphics.AbstractGraphics} graphics to draw on.
@@ -17,7 +17,7 @@ jchemhub.view.BondRenderer = function(controller, graphics, opt_config) {
 goog.inherits(jchemhub.view.BondRenderer, jchemhub.view.Renderer);
 /**
  * renders the box surrounding the bond to serve as a click target
- * 
+ *
  * @param {jchemhub.model.Bond} bond
  * @param {jchemhub.graphics.AffineTransform} transform
  * @return {goog.graphics.GroupElement}
@@ -65,7 +65,7 @@ jchemhub.view.BondRenderer.prototype.render = function(bond, transform) {
 			this.controller.handleMouseOut, this.controller, bond));
 	group.addEventListener(goog.events.EventType.MOUSEDOWN, goog.bind(
 			this.controller.handleMouseDown, this.controller, bond));
-	
+
 	return group;
 
 };
@@ -103,7 +103,7 @@ jchemhub.view.BondRenderer.prototype.highlightOn = function(bond, opt_group) {
 }
 
 /**
- * 
+ *
  * @return{number} bond angle of elevation
  */
 jchemhub.view.BondRenderer.getTheta = function(bond) {

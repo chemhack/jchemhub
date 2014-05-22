@@ -1,13 +1,13 @@
 /*
- * Copyright [2010] [Mark Rijnbeek] 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 
- * 
- * Unless required by applicable law or agreed to in writing, software distributed under the License 
- * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+ * Copyright [2010] [Mark Rijnbeek]
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
- * 
+ *
  * Ring finder classes, a JavaScript->Java conversion using
  * the MX Hanser ring finder classes.
  * For MX Java source see:
@@ -56,7 +56,7 @@ jchemhub.ring.RingFinder.findRings = function(_molecule){
     }
     //xtra: sort array according to ring size
     goog.array.sort(atomOnlyRings);
-	
+
 	var rings=new Array();
     for (var i = 0, il = atomOnlyRings.length; i < il; i++) {
 		rings.push(this.createRing(atomOnlyRings[i],molecule));
@@ -71,7 +71,7 @@ jchemhub.ring.RingFinder.findRings = function(_molecule){
  * @param {Object} atoms
  */
 jchemhub.ring.RingFinder.createRing = function(atoms,molecule){
-	
+
     var bonds = new Array();
     for (var i = 0, il = atoms.length-1; i < il; i++) {
 		bond = molecule.findBond(atoms[i],atoms[i+1]);
@@ -81,8 +81,8 @@ jchemhub.ring.RingFinder.createRing = function(atoms,molecule){
 	}
     //Hanser last atom is same as first atom, remove it..
     goog.array.removeAt(atoms, atoms.length - 1);
-    
-	var ring = new jchemhub.ring.Ring(atoms,bonds);  
+
+	var ring = new jchemhub.ring.Ring(atoms,bonds);
     return ring;
 }
 
@@ -123,15 +123,15 @@ jchemhub.ring.PathGraph.prototype.remove = function(atom){
             goog.array.remove(this.edges, result[i]);
         }
     }
-    
+
     newEdges = this.spliceEdges(oldEdges);
-    
+
     for (var i = 0,il=oldEdges.length; i < il; i++) {
         if (goog.array.contains(this.edges, oldEdges[i])) {
             goog.array.remove(this.edges, oldEdges[i]);
         }
     }
-    
+
     for (var i = 0,il=newEdges.length; i < il; i++) {
         if (!goog.array.contains(this.edges, newEdges[i])) {
             this.edges.push(newEdges[i]);
@@ -144,10 +144,10 @@ jchemhub.ring.PathGraph.prototype.remove = function(atom){
 
 jchemhub.ring.PathGraph.prototype.getEdges = function(atom){
     var result = new Array();
-    
+
     for (var i = 0,il=this.edges.length; i < il; i++) {
         edge = this.edges[i];
-        
+
         if (edge.isCycle()) {
             if (goog.array.contains(edge.atoms, atom)) {
                 result.push(edge);
@@ -165,7 +165,7 @@ jchemhub.ring.PathGraph.prototype.getEdges = function(atom){
 
 jchemhub.ring.PathGraph.prototype.spliceEdges = function(_edges){
     var result = new Array();
-    
+
     for (var i = 0,il=_edges.length; i < il; i++) {
         for (var j = i + 1; j < il; j++) {
             spliced = _edges[j].splice(_edges[i]);
@@ -199,11 +199,11 @@ jchemhub.ring.PathEdge.prototype.splice = function(other){
     for (var i = 0,il=this.atoms.length; i < il; i++) {
         newAtoms.push(this.atoms[i]);
     }
-    
+
     if (this.atoms[0] == intersection) {
         newAtoms.reverse();
     }
-    
+
     if (other.atoms[0] == intersection) {
         for (var i = 1,il=other.atoms.length; i < il; i++) {
             newAtoms.push(other.atoms[i]);
@@ -214,11 +214,11 @@ jchemhub.ring.PathEdge.prototype.splice = function(other){
             newAtoms.push(other.atoms[i]);
         }
     }
-    
+
     if (!this.isRealPath(newAtoms)) {
         return null;
     }
-    
+
     return new jchemhub.ring.PathEdge(newAtoms);
 }
 

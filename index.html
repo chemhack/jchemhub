@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Jchemhub Demo</title>
-<!-- 
+<!--
 <script src="build/jchemhub-whitespace-only.js"></script>
 <script src="build/jchemhub-simple.js"></script>
  -->
@@ -38,25 +38,25 @@
 
 
 <script>
-    
+
 function initPage(){
 
-	var buttons = []; 
-	buttons.push(jchemhub.controller.ToolbarFactory.makeButton( 
-    	jchemhub.controller.plugins.ClearEditor.COMMAND, 'Clear Editor', 'Clear')); 
+	var buttons = [];
+	buttons.push(jchemhub.controller.ToolbarFactory.makeButton(
+    	jchemhub.controller.plugins.ClearEditor.COMMAND, 'Clear Editor', 'Clear'));
     buttons.push(jchemhub.controller.ToolbarFactory.makeButton(jchemhub.controller.plugins.Zoom.COMMAND.ZOOM_IN, 'zoom in', '+'));
     buttons.push(jchemhub.controller.ToolbarFactory.makeButton(jchemhub.controller.plugins.Zoom.COMMAND.ZOOM_OUT, 'zoom out', '-'));
     buttons.push(jchemhub.controller.ToolbarFactory.makeButton(jchemhub.controller.plugins.UndoRedo.COMMAND.UNDO, 'undo', 'undo'));
     buttons.push(jchemhub.controller.ToolbarFactory.makeButton(jchemhub.controller.plugins.UndoRedo.COMMAND.REDO, 'redo', 'redo'));
 
-	var toolbar = jchemhub.controller.DefaultToolbar.makeToolbar(buttons, goog.dom.getElement('reactionEditorToolbar')); 
-	var model = jchemhub.io.json.readReaction(reactionDrawing); 
+	var toolbar = jchemhub.controller.DefaultToolbar.makeToolbar(buttons, goog.dom.getElement('reactionEditorToolbar'));
+	var model = jchemhub.io.json.readReaction(reactionDrawing);
 	var editor = new jchemhub.controller.ReactionEditor(goog.dom.getElement('reactionEditorContainer'));
 	editor.registerPlugin(new jchemhub.controller.plugins.ClearEditor());
 	editor.registerPlugin(new jchemhub.controller.plugins.Zoom());
 	editor.registerPlugin(new jchemhub.controller.plugins.UndoRedo());
 	editor.registerPlugin(new jchemhub.controller.plugins.Highlight());
-	
+
     var toolbarController = new jchemhub.controller.ToolbarController(editor, toolbar);
 	editor.setModel(model);
 };

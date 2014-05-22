@@ -23,7 +23,7 @@ jchemhub.controller.plugins.Highlight.prototype.getTrogClassId =
 
 /**
  * Logging object.
- * 
+ *
  * @type {goog.debug.Logger}
  * @protected
  */
@@ -35,7 +35,7 @@ jchemhub.controller.plugins.Highlight.prototype.handleAtomMouseOver = function(e
 
 };
 jchemhub.controller.plugins.Highlight.prototype.handleAtomMouseOut = function(e) {
-	
+
 };
 
 jchemhub.controller.plugins.Highlight.prototype.handleBondMouseOver = function(e) {

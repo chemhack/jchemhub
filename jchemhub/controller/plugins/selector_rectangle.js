@@ -17,7 +17,7 @@ jchemhub.controller.plugins.SelectorRectangle = function() {
 goog.inherits(jchemhub.controller.plugins.SelectorRectangle, jchemhub.controller.Plugin);
 
 /**
- * Commands supported 
+ * Commands supported
  * @enum {string}
  */
 jchemhub.controller.plugins.SelectorRectangle.COMMAND = {
@@ -53,7 +53,7 @@ jchemhub.controller.plugins.SelectorRectangle.prototype.getTrogClassId =
 
 /**
  * Logging object.
- * 
+ *
  * @type {goog.debug.Logger}
  * @protected
  */

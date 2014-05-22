@@ -35,7 +35,7 @@ jchemhub.controller.BondController.EventType = {
 };
 
 /**
- * 
+ *
  * @param {jchemhub.controller.BondController} controller
  * @param {jchemhub.model.Bond} bond
  * @param {jchemhub.controller.BondController.EventType} type

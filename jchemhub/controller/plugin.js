@@ -7,7 +7,7 @@ goog.require('goog.reflect');
 
 /**
  * Abstract API for reaction editor plugins.
- * 
+ *
  * @constructor
  * @extends {goog.events.EventTarget}
  */
@@ -16,7 +16,7 @@ jchemhub.controller.Plugin = function() {
 
 	/**
 	 * Whether this plugin is enabled for the registered field object.
-	 * 
+	 *
 	 * @type {boolean}
 	 * @private
 	 */
@@ -32,7 +32,7 @@ jchemhub.controller.Plugin.prototype.activeOnUneditableEditor = goog.functions.F
 
 /**
  * Registers the reaction editor object for use with this plugin.
- * 
+ *
  * @param {jchemhub.controller.ReactionEditor}
  *            fieldObject The reaction editor object.
  */
@@ -43,7 +43,7 @@ jchemhub.controller.Plugin.prototype.registerEditorObject = function(editorObjec
 /**
  * Enables this plugin for the specified, registered reaction editor object. A
  * reaction editor object should only be enabled when it is loaded.
- * 
+ *
  * @param {jchemhub.controller.ReactionEditor}
  *            editorObject The field object.
  */
@@ -58,7 +58,7 @@ jchemhub.controller.Plugin.prototype.enable = function(editorObject) {
 
 /**
  * Disables this plugin for the specified, registered reaction editor object.
- * 
+ *
  * @param {jchemhub.controller.ReactionEditor}
  *            editorObject The reaction editor object.
  */
@@ -73,7 +73,7 @@ jchemhub.controller.Plugin.prototype.disable = function(editorObject) {
 
 /**
  * The logger for this plugin.
- * 
+ *
  * @type {goog.debug.Logger}
  * @protected
  */
@@ -82,7 +82,7 @@ jchemhub.controller.Plugin.prototype.logger = goog.debug.Logger
 
 /**
  * Returns whether this plugin is enabled for the reaction editor object.
- * 
+ *
  * @param {jchemhub.controller.ReactionEditor}
  *            editorObject The reaction editor object.
  * @return {boolean} Whether this plugin is enabled for the reaction editor
@@ -103,7 +103,7 @@ jchemhub.controller.Plugin.prototype.disposeInternal = function() {
 
 /**
  * Unregisters and disables this plugin for the current editor object.
- * 
+ *
  */
 jchemhub.controller.Plugin.prototype.unregisterEditorObject = function() {
 	if (this.editorObject) {
@@ -116,7 +116,7 @@ jchemhub.controller.Plugin.prototype.unregisterEditorObject = function() {
  * Indicates if this plugin should be automatically disposed when the registered
  * editor is disposed. This should be changed to false for plugins used as
  * multi-editor plugins.
- * 
+ *
  * @type {boolean}
  * @private
  */
@@ -125,7 +125,7 @@ jchemhub.controller.Plugin.prototype.autoDispose_ = true;
 /**
  * Set if this plugin should automatically be disposed when the registered
  * editor is disposed.
- * 
+ *
  * @param {boolean}
  *            autoDispose Whether to autoDispose.
  */
@@ -143,7 +143,7 @@ jchemhub.controller.Plugin.prototype.isAutoDispose = function() {
 
 /**
  * An enum of operations that plugins may support.
- * 
+ *
  * @enum {number}
  */
 jchemhub.controller.Plugin.Op = {
@@ -156,7 +156,7 @@ jchemhub.controller.Plugin.Op = {
 	QUERY_COMMAND : 7,
 	MOUSEDOWN: 8,
 	MOUSEUP: 9,
-	MOUSEOVER: 10, 
+	MOUSEOVER: 10,
 	MOUSEOUT: 11,
 	ATOM_MOUSEOVER : 12,
 	ATOM_MOUSEOUT : 13,
@@ -201,10 +201,10 @@ jchemhub.controller.Plugin.OPCODE = goog.object.transpose(goog.reflect.object(
  * execCommandInternal to perform the actual command. Plugins that want to do
  * their own event dispatching should override execCommand, otherwise it is
  * preferred to only override execCommandInternal.
- * 
+ *
  * This version of execCommand will only work for single field plugins.
  * Multi-field plugins must override execCommand.
- * 
+ *
  * @param {string}
  *            command The command to execute.
  * @param {...*}
@@ -263,7 +263,7 @@ jchemhub.controller.Plugin.prototype.isSilentCommand = goog.functions.FALSE;
 
 /**
  * Whether the string corresponds to a command this plugin handles.
- * 
+ *
  * @param {string}
  *            command Command string to check.
  * @return {boolean} Whether the plugin handles this type of command.

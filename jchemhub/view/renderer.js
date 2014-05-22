@@ -4,7 +4,7 @@ goog.require("goog.structs.Map");
 
 /**
  * Abstract Class to render a model object to a graphics object
- * 
+ *
  * @constructor
  * @param graphics
  *            {goog.graphics.AbstractGraphics} graphics to draw on.

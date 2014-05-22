@@ -23,7 +23,7 @@ goog.exportSymbol('jchemhub.controller.ToolbarFactory.makeButton', jchemhub.cont
 /**
  * Takes a font spec (e.g. "Arial, Helvetica, sans-serif") and returns the
  * primary font name, normalized to lowercase (e.g. "arial").
- * 
+ *
  * @param {string}
  *            fontSpec Font specification.
  * @return {string} The primary font name, in lowercase.
@@ -44,7 +44,7 @@ jchemhub.controller.ToolbarFactory.getPrimaryFont = function(fontSpec) {
  * <li>{@code value} - Value for the corresponding 'font-family' CSS style
  * (e.g. 'Tahoma, Arial, sans-serif')
  * </ul>
- * 
+ *
  * @param {!goog.ui.Select}
  *            button Font menu button.
  * @param {!Array.
@@ -62,7 +62,7 @@ jchemhub.controller.ToolbarFactory.addFonts = function(button, fonts) {
  * Adds a menu item to the given font menu button. The first font listed in the
  * {@code value} argument is considered the font ID, so adding two items whose
  * CSS style starts with the same font may lead to unpredictable results.
- * 
+ *
  * @param {!goog.ui.Select}
  *            button Font menu button.
  * @param {string}
@@ -92,7 +92,7 @@ jchemhub.controller.ToolbarFactory.addFont = function(button, caption, value) {
  * <li>{@code caption} - Caption to show in the font size menu (e.g. 'Huge')
  * <li>{@code value} - Value for the corresponding HTML font size (e.g. 6)
  * </ul>
- * 
+ *
  * @param {!goog.ui.Select}
  *            button Font size menu button.
  * @param {!Array.
@@ -109,7 +109,7 @@ jchemhub.controller.ToolbarFactory.addFontSizes = function(button, sizes) {
 /**
  * Adds a menu item to the given font size menu button. The {@code value}
  * argument must be a legacy HTML font size in the 0-7 range.
- * 
+ *
  * @param {!goog.ui.Select}
  *            button Font size menu button.
  * @param {string}
@@ -136,7 +136,7 @@ jchemhub.controller.ToolbarFactory.addFontSize = function(button, caption,
 /**
  * Converts a legacy font size specification into an equivalent pixel size. For
  * example, {@code &lt;font size="6"&gt;} is {@code font-size: 32px;}, etc.
- * 
+ *
  * @param {number}
  *            fontSize Legacy font size spec in the 0-7 range.
  * @return {number} Equivalent pixel size.
@@ -150,7 +150,7 @@ jchemhub.controller.ToolbarFactory.getPxFromLegacySize = function(fontSize) {
  * example, {@code font-size: 32px;} is {@code &lt;font size="6"&gt;}, etc. If
  * the given pixel size doesn't exactly match one of the legacy sizes, -1 is
  * returned.
- * 
+ *
  * @param {number}
  *            px Pixel font size.
  * @return {number} Equivalent legacy size spec in the 0-7 range, or -1 if none
@@ -165,7 +165,7 @@ jchemhub.controller.ToolbarFactory.getLegacySizeFromPx = function(px) {
 
 /**
  * Map of legacy font sizes (0-7) to equivalent pixel sizes.
- * 
+ *
  * @type {Array.<number>}
  * @private
  */
@@ -180,7 +180,7 @@ jchemhub.controller.ToolbarFactory.LEGACY_SIZE_TO_PX_MAP_ = [ 10, 10, 13, 16,
  * <li>{@code caption} - Caption to show in the menu (e.g. 'Minor heading')
  * <li>{@code command} - Corresponding {@link goog.dom.TagName} (e.g. 'H4')
  * </ul>
- * 
+ *
  * @param {!goog.ui.Select}
  *            button "Format block" menu button.
  * @param {!Array.
@@ -196,7 +196,7 @@ jchemhub.controller.ToolbarFactory.addFormatOptions = function(button, formats) 
 
 /**
  * Adds a menu item to the given "Format block" menu button.
- * 
+ *
  * @param {!goog.ui.Select}
  *            button "Format block" menu button.
  * @param {string}
@@ -218,7 +218,7 @@ jchemhub.controller.ToolbarFactory.addFormatOption = function(button, caption,
  * Creates a {@link goog.ui.Toolbar} containing the specified set of toolbar
  * buttons, and renders it into the given parent element. Each item in the
  * {@code items} array must a {@link goog.ui.Control}.
- * 
+ *
  * @param {!Array.
  *            <goog.ui.Control>} items Toolbar items; each must be a
  *            {@link goog.ui.Control}.
@@ -267,7 +267,7 @@ jchemhub.controller.ToolbarFactory.makeToolbar = function(items, elem,
 /**
  * Creates a toolbar button with the given ID, tooltip, and caption. Applies any
  * custom CSS class names to the button's caption element.
- * 
+ *
  * @param {string}
  *            id Button ID; must equal a {@link goog.editor.Command} for
  *            built-in buttons, anything else for custom buttons.
@@ -299,7 +299,7 @@ jchemhub.controller.ToolbarFactory.makeButton = function(id, tooltip, caption,
  * Creates a toggle button with the given ID, tooltip, and caption. Applies any
  * custom CSS class names to the button's caption element. The button returned
  * has checkbox-like toggle semantics.
- * 
+ *
  * @param {string}
  *            id Button ID; must equal a {@link goog.editor.Command} for
  *            built-in buttons, anything else for custom buttons.
@@ -330,7 +330,7 @@ jchemhub.controller.ToolbarFactory.makeToggleButton = function(id, tooltip,
  * custom CSS class names to the button's caption element. The button returned
  * doesn't have an actual menu attached; use {@link goog.ui.MenuButton#setMenu}
  * to attach a {@link goog.ui.Menu} to the button.
- * 
+ *
  * @param {string}
  *            id Button ID; must equal a {@link goog.editor.Command} for
  *            built-in buttons, anything else for custom buttons.
@@ -365,7 +365,7 @@ jchemhub.controller.ToolbarFactory.makeMenuButton = function(id, tooltip,
  * doesn't have an actual menu attached; use {@link goog.ui.Select#setMenu} to
  * attach a {@link goog.ui.Menu} containing {@link goog.ui.Option}s to the
  * select button.
- * 
+ *
  * @param {string}
  *            id Button ID; must equal a {@link goog.editor.Command} for
  *            built-in buttons, anything else for custom buttons.
@@ -408,7 +408,7 @@ jchemhub.controller.ToolbarFactory.makeSelectButton = function(id, tooltip,
  * Creates a color menu button with the given ID, tooltip, and caption. Applies
  * any custom CSS class names to the button's caption element. The button is
  * created with a default color menu containing standard color palettes.
- * 
+ *
  * @param {string}
  *            id Button ID; must equal a {@link goog.editor.Command} for
  *            built-in toolbar buttons, but can be anything else for custom
@@ -441,7 +441,7 @@ jchemhub.controller.ToolbarFactory.makeColorMenuButton = function(id, tooltip,
 /**
  * Creates a new DIV that wraps a button caption, optionally applying CSS class
  * names to it. Used as a helper function in button factory methods.
- * 
+ *
  * @param {goog.ui.ControlContent}
  *            caption Button caption.
  * @param {string=}

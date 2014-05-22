@@ -5,7 +5,7 @@
 <title>jchemhub.view.ReactionEditor</title>
 <script src="../../third-party/closure/closure/goog/base.js"></script>
 <script src="../deps.js"></script>
-<!-- 
+<!--
  <script src="../../jchemhub_compiled.js"></script>
  -->
 <script src="json_templates.js"></script>
@@ -17,10 +17,10 @@
 	goog.require('goog.dom');
 </script>
 <script>
-    
+
 function initPage(){
 	var container = goog.dom.getElement('theContainer');
-		
+
 	goog.array.forEach(templates, function(t){
 		var model = jchemhub.io.json.readMolecule(t);
 	  	var el = goog.dom.createDom('div', {'style': 'width: 100px; height: 100px'});
@@ -28,7 +28,7 @@ function initPage(){
 		var controller = new jchemhub.controller.Controller(el);
 		controller.setModel(model);
 	});
-	
+
 };
 
 goog.events.listen(window, goog.events.EventType.LOAD, initPage);

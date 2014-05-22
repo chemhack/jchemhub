@@ -181,15 +181,15 @@ jchemhub.io.smiles.parseAtom = function (item) {
 
     // periodicTable has entries for c,n,o,s,as,se
     if (this.periodicTable[atomProp[2]]) atom.symbol = atomProp[2];
-    
+
     if (atomProp[3] == jchemhub.io.smiles.BondStereo.CLOCKWISE) {
 	    atom.stereo = atomProp[3];
 	} else if (atomProp[3] == jchemhub.io.smiles.BondStereo.COUNTER_CLOCKWISE) {
-	    atom.stereo = atomProp[3]; 
+	    atom.stereo = atomProp[3];
 	} else {
 		atom.stereo = jchemhub.io.smiles.BondStereo.NONE;
 	}
-    
+
     if (atomProp[4] == 'H') {
       if (atomProp[5]) {
         atom.hcount = atomProp[5];
@@ -197,7 +197,7 @@ jchemhub.io.smiles.parseAtom = function (item) {
         atom.hcount = 1;
       }
     }
-    
+
     if (atomProp[6] == "+") {
       atom.charge = 1;
     } else if (atomProp[6] == "-") {
@@ -205,7 +205,7 @@ jchemhub.io.smiles.parseAtom = function (item) {
     } else {
       atom.charge = parseInt(atomProp[6]);
     }
-  
+
     } else {
     if (this.specialAtoms[item]) {
       atom.symbol = item;
@@ -242,7 +242,7 @@ jchemhub.io.smiles.createBond = function(type, stereo, source, target) {
 			}
 		}
         switch (atype) {
-        
+
         case jchemhub.io.smiles.BondType.SINGLE_BOND:
                 switch (stereo) {
                 case jchemhub.io.smiles.BondStereo.CLOCKWISE:

@@ -25,7 +25,7 @@ jchemhub.controller.plugins.Zoom.COMMAND = {
 /**
  * Inverse map of execCommand strings to
  * {@link jchemhub.controller.plugins.Zoom.COMMAND} constants. Used to determine
- * whether a string corresponds to a command this plugin handles 
+ * whether a string corresponds to a command this plugin handles
  * @type {Object}
  * @private
  */
@@ -48,7 +48,7 @@ jchemhub.controller.plugins.Zoom.prototype.execCommand = function(command,
     var_args) {
 	var current = this.editorObject.getScaleFactor();
   if (command == jchemhub.controller.plugins.Zoom.COMMAND.ZOOM_IN) {
-	  this.editorObject.setScaleFactor(current*1.1);  
+	  this.editorObject.setScaleFactor(current*1.1);
   } else if (command == jchemhub.controller.plugins.Zoom.COMMAND.ZOOM_OUT) {
 	  this.editorObject.setScaleFactor(current*0.9);
   }
